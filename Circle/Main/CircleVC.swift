@@ -23,14 +23,6 @@ class CircleVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let ref = DataService.instance.REF_USERS
-        ref.document(Auth.auth().currentUser!.uid).addSnapshotListener { (snapshot, error) in
-            if error != nil {
-                print("ERROR RETRIEVING USER INFO")
-            }
-            
-            print(snapshot)
-
         setupViews()
 
         // just for giggles and grins, let's show the insertion of a cell
@@ -49,10 +41,10 @@ class CircleVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
 //            })
 //        }
     }
-    
+            
     // update collection view if size changes (e.g. rotate device)
     
-        func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animateAlongsideTransition(in: view, animation: { _ in
             self.collectionView?.performBatchUpdates(nil)
         })
@@ -78,10 +70,10 @@ class CircleVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         collectionView.collectionViewLayout = CircleLayout()
         
         }
-    }
 }
-// MARK: UICollectionViewDataSource
 
+
+// MARK: UICollectionViewDataSource
 extension CircleVC {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -14,7 +14,6 @@ public extension UIView {
         get {
             return layer.cornerRadius
         }
-        
         set {
             layer.cornerRadius = newValue
         }

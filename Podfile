@@ -7,6 +7,7 @@ target 'Circle' do
 
   # Pods for Circle
 
+    pod 'Reusable'
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
     pod 'Firebase/Firestore'

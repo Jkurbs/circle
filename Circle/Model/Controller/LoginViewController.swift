@@ -27,26 +27,20 @@ class LoginViewController {
     }
     
     
-    func retrieveUserInfo(_ userUID: String?, completionBlock: @escaping (_ success: Bool, _ error: Error?, _ user: User) -> ()) {
+    func retrieveUserInfo(_ userUID: String?, completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?) -> ()) {
         let ref = DataService.instance.REF_USERS
-        ref.document(userUID!).addSnapshotListener { (snapshot, error) in
+        ref.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
             if error != nil {
-                print("ERROR RETRIEVING USER INFO")
+                completion(true, error, nil)
+            } else {
+                if let data = snapshot?.data() {
+                    let key = snapshot?.documentID
+                    if let user = User(key: key!, data: data) as? User {
+                        completion(true, nil, user)
+                    }
+                }
             }
-            
-            print(snapshot)
-
         }
-        
-        
-        
-//        ref.child(userUID!).observe(.value) { (snapshot: DataSnapshot) in
-//            if  let postDict = snapshot.value as? Dictionary<String, AnyObject> {
-//                let key = snapshot.key
-//                let user = User(key: key, data: postDict)
-//                completionBlock(true, nil, user)
-//            }
-//        }
     }
 }
 
