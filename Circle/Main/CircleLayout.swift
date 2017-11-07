@@ -24,7 +24,6 @@ class CircleLayout: UICollectionViewLayout {
         let shortestAxisLength = min(collectionView.bounds.width, collectionView.bounds.height)
         itemSize = CGSize(width: shortestAxisLength * 0.1, height: shortestAxisLength * 0.1)
         radius = shortestAxisLength * 0.4
-        print("RADIUS:\(radius)")
         numberOfItems = collectionView.numberOfItems(inSection: 0)
     }
     

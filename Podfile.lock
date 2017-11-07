@@ -77,6 +77,11 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.4.0)
+  - Reusable (4.0.0):
+    - Reusable/Storyboard (= 4.0.0)
+    - Reusable/View (= 4.0.0)
+  - Reusable/Storyboard (4.0.0)
+  - Reusable/View (4.0.0)
   - SwiftyUserDefaults (3.0.0)
 
 DEPENDENCIES:
@@ -85,6 +90,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - HGCircularSlider (~> 2.0.0)
   - IGListKit (~> 3.0)
+  - Reusable
   - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
@@ -106,8 +112,9 @@ SPEC CHECKSUMS:
   leveldb-library: 44ef425bfde64f5b41daef86b38db2d13edbbee1
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
+  Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: 795e8db70fa4fcbed67a2683ba3e0f7e6b2f2ceb
+PODFILE CHECKSUM: 131697cd997f7c90b70132c2ec8bbc53b19ed061
 
 COCOAPODS: 1.3.1

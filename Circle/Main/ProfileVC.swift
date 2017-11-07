@@ -14,7 +14,7 @@ import FirebaseAuth
 class ProfileVC: UIViewController, ListAdapterDataSource, ListSingleSectionControllerDelegate {
 
     lazy var loginVC = LoginViewController()
-    var user: User?
+    private var user = [User]()
 
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 2)
@@ -46,7 +46,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource, ListSingleSectionContr
             if !success {
                 print("ERROR LOADING USER INFO")
             } else {
-                self.user = user
+                self.user.insert(user!, at: 0)
             }
         })
     }
@@ -63,7 +63,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource, ListSingleSectionContr
     // MARK: ListAdapterDataSource
 
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return user as! [ListDiffable]
+        return user
     }
 }
 

@@ -28,10 +28,10 @@ class ProfileSectionController: ListSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: ArtCell.self, for: self, at: index) as? ArtCell else {
-            fatalError()
-        }
-        return cell
+//        guard let cell = collectionContext?.dequeueReusableCell(of: ArtCell.self, for: self, at: index) as? ArtCell else {
+//            fatalError()
+//        }
+        return UICollectionViewCell()
     }
     
     override func didUpdate(to object: Any) {
