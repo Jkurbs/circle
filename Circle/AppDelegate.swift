@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SwiftyUserDefaults
+import IQKeyboardManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,13 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        IQKeyboardManager.shared().isEnabled = true
+
         let navigationBarAppearance = UINavigationBar.appearance()
         navigationBarAppearance.setBackgroundImage(UIImage(), for: .default)
         navigationBarAppearance.shadowImage = UIImage()
         navigationBarAppearance.isTranslucent = false
+        navigationBarAppearance.tintColor = UIColor.darkText
         self.window?.backgroundColor = UIColor.white
         
-        userIsLoggingIn()
+        //userIsLoggingIn()
         
         return true
     }

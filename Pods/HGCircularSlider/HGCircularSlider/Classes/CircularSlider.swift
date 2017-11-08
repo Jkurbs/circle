@@ -196,15 +196,27 @@ open class CircularSlider: UIControl {
     /**
      * The radius of circle
      */
-    internal var radius: CGFloat {
+    
+    
+    @IBInspectable public var radius: CGFloat {
         get {
-            // the minimum between the height/2 and the width/2
-            var radius =  min(bounds.center.x, bounds.center.y)
-            // all elements should be inside the view rect, for that we should subtract the highest value between the radius of thumb and the line width
-            radius = 150//max(lineWidth, (thumbRadius + thumbLineWidth))
-            return radius
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
         }
     }
+    
+    
+//    open var radius: CGFloat {
+//        get {
+//            // the minimum between the height/2 and the width/2
+//            var radius =  min(bounds.center.x, bounds.center.y)
+//            // all elements should be inside the view rect, for that we should subtract the highest value between the radius of thumb and the line width
+//            radius = new//max(lineWidth, (thumbRadius + thumbLineWidth))
+//            return radius
+//        }
+//    }
     
     ///  See superclass documentation
     override open var isHighlighted: Bool {

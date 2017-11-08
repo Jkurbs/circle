@@ -10,10 +10,14 @@ target 'Circle' do
     pod 'Reusable'
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
+    pod 'Firebase/Storage'
     pod 'Firebase/Firestore'
     pod 'SwiftyUserDefaults'
     pod 'IGListKit', '~> 3.0'
+    pod 'SDWebImage', '~> 4.0'
     pod 'HGCircularSlider', '~> 2.0.0'
+    pod 'IQKeyboardManager'
+
 
 
   target 'CircleTests' do
