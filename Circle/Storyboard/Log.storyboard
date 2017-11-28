@@ -97,16 +97,16 @@
             </objects>
             <point key="canvasLocation" x="489" y="-794"/>
         </scene>
-        <!--View Controller-->
+        <!--WelcomeVC-->
         <scene sceneID="XkT-ZG-add">
             <objects>
-                <viewController storyboardIdentifier="WelcomeVC" id="tZx-Y2-FZi" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeVC" id="tZx-Y2-FZi" customClass="WelcomeVC" customModule="Circle" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o37-E4-v8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save money with your circle of friends and familly. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAb-tj-QfK">
-                                <rect key="frame" x="37" y="372" width="300" height="57.5"/>
+                                <rect key="frame" x="37" y="372" width="300" height="58"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -133,29 +133,41 @@
                                     </attributedString>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PrN-fO-PP4">
-                                <rect key="frame" x="37" y="453" width="300" height="33"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                <state key="normal" title="Get started"/>
-                                <connections>
-                                    <segue destination="7Wd-TK-LHX" kind="show" id="Ivn-Bw-BEQ"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Aj1-Tq-qUH">
+                                <rect key="frame" x="37" y="453" width="300" height="34"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PrN-fO-PP4">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33.5" id="98i-Jt-I5v"/>
+                                            <constraint firstAttribute="width" constant="300" id="guo-zg-Vxm"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <state key="normal" title="Get started"/>
+                                        <connections>
+                                            <segue destination="7Wd-TK-LHX" kind="show" id="Ivn-Bw-BEQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LRN-KG-52P" firstAttribute="trailing" secondItem="hFz-sG-uUX" secondAttribute="trailing" constant="38" id="0Wb-HF-03G"/>
-                            <constraint firstItem="PrN-fO-PP4" firstAttribute="leading" secondItem="LRN-KG-52P" secondAttribute="leading" constant="37" id="6mi-T0-IEg"/>
+                            <constraint firstItem="Aj1-Tq-qUH" firstAttribute="leading" secondItem="hAb-tj-QfK" secondAttribute="leading" id="7RO-Rw-3jo"/>
                             <constraint firstItem="hFz-sG-uUX" firstAttribute="leading" secondItem="LRN-KG-52P" secondAttribute="leading" constant="37" id="B6W-JL-PvF"/>
+                            <constraint firstItem="Aj1-Tq-qUH" firstAttribute="top" secondItem="hAb-tj-QfK" secondAttribute="bottom" constant="23" id="BVo-V5-TxE"/>
                             <constraint firstItem="hAb-tj-QfK" firstAttribute="leading" secondItem="LRN-KG-52P" secondAttribute="leading" constant="37" id="Fak-ij-MvO"/>
-                            <constraint firstItem="PrN-fO-PP4" firstAttribute="top" secondItem="hAb-tj-QfK" secondAttribute="bottom" constant="23.5" id="SGg-Nm-Zvd"/>
-                            <constraint firstItem="LRN-KG-52P" firstAttribute="trailing" secondItem="PrN-fO-PP4" secondAttribute="trailing" constant="38" id="VAo-CB-EcW"/>
                             <constraint firstItem="LRN-KG-52P" firstAttribute="trailing" secondItem="hAb-tj-QfK" secondAttribute="trailing" constant="38" id="gZS-qZ-5yc"/>
                             <constraint firstItem="LRN-KG-52P" firstAttribute="bottom" secondItem="hFz-sG-uUX" secondAttribute="bottom" constant="34" id="jh8-Ng-490"/>
                             <constraint firstItem="hAb-tj-QfK" firstAttribute="top" secondItem="LRN-KG-52P" secondAttribute="top" constant="352" id="jrd-rI-HrA"/>
+                            <constraint firstItem="Aj1-Tq-qUH" firstAttribute="top" secondItem="o37-E4-v8X" secondAttribute="top" constant="453" id="rMI-V9-omD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LRN-KG-52P"/>
                     </view>
+                    <connections>
+                        <outlet property="stackView" destination="Aj1-Tq-qUH" id="KnD-kM-uiu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zci-IW-M5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

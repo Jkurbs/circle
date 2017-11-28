@@ -8,10 +8,14 @@ target 'Circle' do
   # Pods for Circle
 
     pod 'Reusable'
+    pod 'Firebase'
     pod 'Firebase/Core'
+    pod 'GoogleSignIn'
     pod 'Firebase/Auth'
     pod 'Firebase/Storage'
+    pod 'Firebase/Invites'
     pod 'Firebase/Firestore'
+    pod 'Firebase/DynamicLinks'
     pod 'SwiftyUserDefaults'
     pod 'IGListKit', '~> 3.0'
     pod 'SDWebImage', '~> 4.0'

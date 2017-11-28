@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 import SwiftyUserDefaults
 
 class SettingsVC: UITableViewController {
@@ -31,6 +32,7 @@ class SettingsVC: UITableViewController {
         
         
         if indexPath.row == 1 {
+            GIDSignIn.sharedInstance().signOut()
             Defaults.remove(.key_uid)
             let firebaseAuth = Auth.auth()
             do {

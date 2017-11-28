@@ -29,7 +29,7 @@ class EmailVC: UITableViewController {
                 print("Error creating user")
             } else {
                 let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = mainStoryBoard.instantiateViewController(withIdentifier: "CircleNav") as! UINavigationController
+                let vc = CircleVC()
                 self.present(vc, animated: true, completion: nil)
             }
         }
