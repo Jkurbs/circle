@@ -11,7 +11,14 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>GTMOAuth2.xcscheme</key>
+		<key>CountryList.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>GSMessages.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -24,13 +31,6 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>9</integer>
-		</dict>
-		<key>GoogleAPIClientForREST.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
@@ -88,19 +88,19 @@
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
-		<key>Reusable.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>19</integer>
-		</dict>
-		<key>SDWebImage.xcscheme</key>
+		<key>Stripe-Stripe.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>20</integer>
+		</dict>
+		<key>Stripe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>19</integer>
 		</dict>
 		<key>SwiftyUserDefaults.xcscheme</key>
 		<dict>

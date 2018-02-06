@@ -6,7 +6,7 @@
 //  Copyright © 2017 Kerby Jean. All rights reserved.
 //
 
-import Firebase
+import FirebaseAuth
 import SwiftyUserDefaults
 
 typealias Completion = (_ success: Bool?, _ error: Error?) -> Void
@@ -17,6 +17,8 @@ class AuthService {
         return _instance
     }
     
+    let appDel : AppDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     
     func signIn(email: String, password: String, completion: @escaping Completion){
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
@@ -25,15 +27,46 @@ class AuthService {
             } else {
                 completion(true, nil)
                 //Successfully logged in
-                Analytics.setUserID(user?.uid)
                 Defaults[.key_uid] = user?.uid
                 Defaults[.email] = email
                 DispatchQueue.main.async {
-                    let appDel : AppDelegate = UIApplication.shared.delegate as! AppDelegate
-                    appDel.logInUser()
+                   // self.appDel.logInUser()
                 }
             }
         })
+    }
+    
+    
+   func phoneAuth(phoneNumber: String, viewController: UIViewController, completion: @escaping Completion) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationID, error) in
+            if let error = error {
+                completion(false, error)
+                return
+            }
+            UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            print("VERIFICATION ID:", verificationID)
+            completion(true, nil)
+        }
+    }
+    
+    func phoneVerification(phoneNumber: String, verificationCode: String, completion: @escaping Completion) {
+        let defaults = UserDefaults.standard
+        let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: defaults.string(forKey: "authVerificationID")!, verificationCode: verificationCode)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            if let error = error {
+                print("ERROR:", error.localizedDescription)
+                completion(false, error)
+            } else {
+                defaults.setValue(user?.uid, forKey: "userId")
+                let ip = DataService.instance.getIP()[1]
+                DataService.instance.saveDeviceInfo(phoneNumber: phoneNumber, ipAddress: ip)
+                    completion(true, nil)
+            }
+        }
+    }
+    
+    func resendVerificationCode() {
+ 
     }
     
     

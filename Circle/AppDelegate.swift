@@ -7,36 +7,146 @@
 //
 
 import UIKit
-import CoreData
+import Stripe
 import Firebase
-import FirebaseInvites
-import GoogleSignIn
-import SwiftyUserDefaults
+import UserNotifications
 import IQKeyboardManager
+import SwiftyUserDefaults
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    private let customURLScheme = "com.Kurbs.Circle"
+    
+    private let publishableKey: String = "pk_test_7El6nynr3wdrWwMltimfThlk"
+    
+    let gcmMessageIDKey = "gcm.message_id"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseOptions.defaultOptions()?.deepLinkURLScheme = self.customURLScheme
         FirebaseApp.configure()
         
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = true
+
+        let db = Firestore.firestore()
+        db.settings = settings
+
+        // Stripe payment configuration
+        STPPaymentConfiguration.shared().companyName = "Circle"
+        
+        if !publishableKey.isEmpty {
+            STPPaymentConfiguration.shared().publishableKey = publishableKey
+        }
         
         IQKeyboardManager.shared().isEnabled = true
-
-        let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.setBackgroundImage(UIImage(), for: .default)
-        navigationBarAppearance.shadowImage = UIImage()
-        navigationBarAppearance.isTranslucent = false
-        navigationBarAppearance.tintColor = UIColor.darkText
-        self.window?.backgroundColor = UIColor.white
-        userIsLoggingIn()
+        
+        initialize(application)
         return true
     }
+    
+    
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if let incomingUrl = userActivity.webpageURL {
+            let linkHandled = DynamicLinks.dynamicLinks()!.handleUniversalLink(incomingUrl, completion: { (dynamicLink, error) in
+                
+                if let dynamicLink = dynamicLink, let _ = dynamicLink.url {
+                    self.handleDynamicLink(dynamicLink)
+                }
+            })
+            return linkHandled
+        }
+        return false
+    }
+    
+    func handleDynamicLink(_ dynamicLink: DynamicLink) {
+        print("handle")
+        let link = dynamicLink.url?.absoluteString ?? ""
+        let matchConfidence: String
+        if dynamicLink.matchType == .weak {
+            matchConfidence = "Weak"
+        } else {
+            matchConfidence = "Strong"
+            let initialViewController =  WelcomeVC()
+            initialViewController.link = link
+            let navigationController = UINavigationController(rootViewController: initialViewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }
+    }
+    
+    
+    func showDeepLinkAlertView(withMessage message: String, link: String) {
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            print("OKAY")
+        }
+        let alertController = UIAlertController(title: "Deep-link Data", message: message, preferredStyle: .alert)
+        alertController.addAction(okAction)
+        self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+    
+
+
+    
+    // [START receive_message]
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    // [END receive_message]
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Unable to register for remote notifications: \(error.localizedDescription)")
+    }
+    
+    
+    // This function is added here only for debugging purposes, and can be removed if swizzling is enabled.
+    // If swizzling is disabled then this function must be implemented so that the APNs token can be paired to
+    // the FCM registration token.
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        if let refreshedToken = InstanceID.instanceID().token() {
+            UserDefaults.standard.set(refreshedToken, forKey: "deviceToken")
+            print("InstanceID token: \(refreshedToken)")
+        }
+        
+        // With swizzling disabled you must set the APNs token here.
+        // Messaging.messaging().apnsToken = deviceToken
+    }
+
     
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -61,132 +171,112 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+ 
+    func userNotification()  {
+        Messaging.messaging().delegate = self
         
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        // ...
-        if let error = error {
-            print("ERROR")
-            // ...
-            return
-        }
-        
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                          accessToken: authentication.accessToken)
-        
-        print("clientID:----->\(authentication.clientID)")
-        print("idToken:----->\(authentication.idToken)")
-        print("accessToken:----->\(authentication.accessToken)")
-        print("credential:----->\(credential)")
-        
-        
-        Auth.auth().signIn(with: credential) { (user, error) in
-            // ...
-            if error != nil {
-                // ...
-                print("ERROR: \(error.debugDescription)")
-                print("Success")
-                self.logInUser()
-                
-                return
-            } else {
-                self.logInUser()
-
-                print("Failure:----->\(error.debugDescription)")
-            }
-            // ...
-        }
-    }
-    
-    
-    @available(iOS 9.0, *)
-    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
-        -> Bool {
-            //            return GIDSignIn.sharedInstance().handle(url,
-            //                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-            //                                                     annotation: [:])
-            return self.application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: "")
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
             
-    }
-    
-    func application(_ application: UIApplication,
-                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        if let invite = Invites.handle(url, sourceApplication: sourceApplication, annotation: annotation) as? ReceivedInvite {
-            let matchType = (invite.matchType == .weak) ? "Weak" : "Strong"
-            print("Invite received from: \(sourceApplication ?? "") Deeplink: \(invite.deepLink)," +
-                "Id: \(invite.inviteId), Type: \(matchType)")
-            return true
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+               UIApplication.shared.registerUserNotificationSettings(settings)
         }
         
-        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
-    }
-    
-    // MARK: - Core Data stack
-    
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-         */
-        let container = NSPersistentContainer(name: "TestAppInvite")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-    
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     
-    func logInUser() {
-        print("LOG IN")
-        // Called when the user log in.
-        let circleVC = CircleVC()
-        self.window?.rootViewController = circleVC
+    
+    private func initialize(_ application: UIApplication) {
+    
+         let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = UIColor.blueColor
+        
+        let initialViewController =  PhoneViewController()
+        let navigationController = UINavigationController(rootViewController: initialViewController)
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-    }
-    
-    func userIsLoggingIn() {
-        if let uid = Defaults[.key_uid] {
+        
+        
+        if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
             if !uid.isEmpty {
-                let circleVC = CircleVC()
-                self.window?.rootViewController = circleVC
+                let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PendingInvitesVC") as! PendingInvitesVC
+                self.window?.rootViewController = vc
+                self.window?.makeKeyAndVisible()
+            } else {
+                print("INITIALIZE")
+                let initialViewController =  PhoneViewController()
+                let navigationController = UINavigationController(rootViewController: initialViewController)
+                self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
             }
         }
     }
+}
+
+// [START ios_10_message_handling]
+@available(iOS 10, *)
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+        
+        // Change this to your preferred presentation option
+        completionHandler([])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+        
+        completionHandler()
+    }
+}
+// [END ios_10_message_handling]
+
+extension AppDelegate : MessagingDelegate {
+    // [START refresh_token]
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    // [END refresh_token]
+    // [START ios_10_data_message]
+    // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
+    // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("Received data message: \(remoteMessage.appData)")
+    }
+    // [END ios_10_data_message]
 }
 

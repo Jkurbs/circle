@@ -12,11 +12,14 @@ import IGListKit
 
 final class User {
     
+    var circleId: String?
     var photoUrl: String?
     var email: String?
-    var name: String?
+    var firstName: String?
+    var lastName: String?
     var phoneNumber: String?
     var userId: String?
+    
     
     init(key: String, data: [String: Any]) {
         
@@ -26,11 +29,19 @@ final class User {
             self.userId = userId
         }
         
-        if let name = data["name"] as? String {
-            self.name = name
+        if let circleId = data["circle_Id"] as? String {
+            self.circleId = circleId
         }
         
-        if let email = data["email"] as? String {
+        if let firstName = data["first_name"] as? String {
+            self.firstName = firstName
+        }
+        
+        if let lastName = data["last_name"] as? String {
+            self.lastName = lastName
+        }
+        
+        if let email = data["email_address"] as? String {
             self.email = email
         }
         

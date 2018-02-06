@@ -8,17 +8,20 @@
 
 
 import UIKit
+import IGListKit
 
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
     
     lazy var collectionView: UICollectionView = {
-        let layout = CircleLayout()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = .clear
-        view.isPagingEnabled = true
-        view.showsHorizontalScrollIndicator = false
-        view.alwaysBounceVertical = false
-        view.alwaysBounceHorizontal = true
+        view.allowsMultipleSelection = true
+        view.backgroundColor = .white
+        view.isPagingEnabled = false
+        view.showsVerticalScrollIndicator = true
+        view.alwaysBounceVertical = true
+        view.alwaysBounceHorizontal = false
         self.contentView.addSubview(view)
         return view
     }()

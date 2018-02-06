@@ -7,22 +7,20 @@ target 'Circle' do
 
   # Pods for Circle
 
-    pod 'Reusable'
     pod 'Firebase'
     pod 'Firebase/Core'
-    pod 'GoogleSignIn'
+    pod 'Firebase/Messaging'
     pod 'Firebase/Auth'
     pod 'Firebase/Storage'
-    pod 'Firebase/Invites'
+    pod 'Firebase/Database'
     pod 'Firebase/Firestore'
     pod 'Firebase/DynamicLinks'
-    pod 'SwiftyUserDefaults'
+    pod 'Stripe'
     pod 'IGListKit', '~> 3.0'
-    pod 'SDWebImage', '~> 4.0'
+    pod 'GSMessages'
     pod 'HGCircularSlider', '~> 2.0.0'
     pod 'IQKeyboardManager'
-
-
+    pod 'CountryList'
 
   target 'CircleTests' do
     inherit! :search_paths

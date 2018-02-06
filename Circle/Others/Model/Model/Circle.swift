@@ -14,26 +14,26 @@ import FirebaseFirestore
 
 final class Circle {
     
-    var circleId: String?
+    var id: String?
     var maxAmount: NSNumber?
-    var insiders: [User]?
+    var insiders: [String]?
     var postDate: NSDate?
     var startDate: NSDate?
     var endDate: NSDate?
     
     init(key: String, data: [String: Any]) {
         
-        self.circleId = key
+        self.id = key
         
-        if let circleId = data["circleId"] as? String {
-            self.circleId = circleId
+        if let id = data["id"] as? String {
+            self.id = id
         }
         
         if let maxAmount = data["maxAmount"] as? NSNumber {
             self.maxAmount = maxAmount
         }
 
-        if let insiders = data["insiders"] as? [User] {
+        if let insiders = data["insiders"] as? [String] {
             self.insiders = insiders
         }
         
@@ -55,20 +55,20 @@ final class Circle {
 extension Circle: Equatable {
     
     static public func ==(rhs: Circle, lhs: Circle) -> Bool {
-        return  rhs.circleId == lhs.circleId
+        return  rhs.id == lhs.id
     }
 }
 
 extension Circle: ListDiffable {
     
     public func diffIdentifier() -> NSObjectProtocol {
-        return circleId! as NSObjectProtocol
+        return id! as NSObjectProtocol
     }
     
     public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? Circle else { return false }
-        return self.circleId == object.circleId
+        return self.id == object.id
     }
 }
 

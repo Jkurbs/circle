@@ -27,7 +27,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource, ListSingleSectionContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("PROFILE VC")
         view.addSubview(collectionView)
         collectionView.backgroundColor = UIColor.white
         adapter.collectionView = collectionView

@@ -29,18 +29,18 @@ class LoginViewController {
     
     func retrieveUserInfo(_ userUID: String?, completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?) -> ()) {
         let ref = DataService.instance.REF_USERS
-        ref.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
-            if error != nil {
-                completion(true, error, nil)
-            } else {
-                if let data = snapshot?.data() {
-                    let key = snapshot?.documentID
-                    if let user = User(key: key!, data: data) as? User {
-                        completion(true, nil, user)
-                    }
-                }
-            }
-        }
+//        ref.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
+//            if error != nil {
+//                completion(true, error, nil)
+//            } else {
+//                if let data = snapshot?.data() {
+//                    let key = snapshot?.documentID
+//                    if let user = User(key: key!, data: data) as? User {
+//                        completion(true, nil, user)
+//                    }
+//                }
+//            }
+//        }
     }
 }
 
