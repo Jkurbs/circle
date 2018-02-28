@@ -15,6 +15,8 @@ import FirebaseFirestore
 final class Circle {
     
     var id: String?
+    var activated: Bool?
+    
     var maxAmount: NSNumber?
     var insiders: [String]?
     var postDate: NSDate?
@@ -27,6 +29,10 @@ final class Circle {
         
         if let id = data["id"] as? String {
             self.id = id
+        }
+        
+        if let activated = data["activated"] as? Bool {
+            self.activated = activated
         }
         
         if let maxAmount = data["maxAmount"] as? NSNumber {

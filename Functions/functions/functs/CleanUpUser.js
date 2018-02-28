@@ -12,9 +12,9 @@ exports = module.exports = functions.auth.user().onDelete(event => {
     console.log('USER DELETING DATA..', snapshot.data());
     return snapshot.data();
   }).then(customer => {
-        console.log('CUSTOMER ID.', customer.customer_id);
+        console.log('CUSTOMER ID.', customer.account_id);
 // change below, customer.customer_id vs customer
-    return stripe.accounts.del(customer.customer_id);
+    return stripe.accounts.del(customer.account_id);
   }).then(() => {
     return admin.firestore().collection('users').doc(`${event.data.uid}`).delete();
   });

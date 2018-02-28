@@ -109,7 +109,7 @@ open class CircularSlider: UIControl {
      * The default value of this property is blue
      */
     @IBInspectable
-    open var endThumbStrokeHighlightedColor: UIColor = .blue
+    open var endThumbStrokeHighlightedColor: UIColor = .red
     
     /**
      * The color used to tint the stroke of the end thumb
@@ -196,27 +196,15 @@ open class CircularSlider: UIControl {
     /**
      * The radius of circle
      */
-    
-    
-    @IBInspectable public var radius: CGFloat {
+    internal var radius: CGFloat {
         get {
-            return layer.cornerRadius
-        }
-        set {
-            layer.cornerRadius = newValue
+            // the minimum between the height/2 and the width/2
+            var radius =  min(bounds.center.x, bounds.center.y)
+            // all elements should be inside the view rect, for that we should subtract the highest value between the radius of thumb and the line width
+            radius -= max(lineWidth, (thumbRadius + thumbLineWidth))
+            return radius
         }
     }
-    
-    
-//    open var radius: CGFloat {
-//        get {
-//            // the minimum between the height/2 and the width/2
-//            var radius =  min(bounds.center.x, bounds.center.y)
-//            // all elements should be inside the view rect, for that we should subtract the highest value between the radius of thumb and the line width
-//            radius = new//max(lineWidth, (thumbRadius + thumbLineWidth))
-//            return radius
-//        }
-//    }
     
     ///  See superclass documentation
     override open var isHighlighted: Bool {

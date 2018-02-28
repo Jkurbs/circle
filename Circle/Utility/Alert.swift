@@ -16,4 +16,15 @@ final class Alert {
         alert.addAction(actionOne)
         vc.present(alert, animated: true, completion: nil)
     }
+    
+    func showMoreSheet(_ vc: UIViewController, title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let actionOne = UIAlertAction(title: "Action one", style: .cancel, handler: nil)
+        let actionTwo = UIAlertAction(title: "Action two", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(actionOne)
+        alert.addAction(actionTwo)
+        alert.addAction(cancel)
+        vc.present(alert, animated: true, completion: nil)
+    }
 }

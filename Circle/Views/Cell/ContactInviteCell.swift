@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PendingInviteCell: UICollectionViewCell {
     
@@ -18,22 +19,26 @@ class PendingInviteCell: UICollectionViewCell {
         return view
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.layoutIfNeeded()
-
+    var view = CALayer()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         contentView.backgroundColor = .white
-        
-        
-        layer.masksToBounds = true
-        layer.borderWidth = 2.0
-        layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
-        
     }
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        layer.cornerRadius = self.bounds.width / 2
+        layer.masksToBounds = true
+        layer.borderWidth = 2.5
+        layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
+        
         imageView.frame = CGRect(x: 2, y: 2, width: contentView.frame.width - 8, height: contentView.frame.height - 8)
         imageView.center = contentView.center
         imageView.layer.cornerRadius = imageView.frame.width / 2
@@ -41,16 +46,35 @@ class PendingInviteCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 0.5
         imageView.layer.borderColor = UIColor.lightGray.cgColor
+        imageView.backgroundColor = UIColor.textFieldBackgroundColor
+        
+        
         
         contentView.addSubview(imageView)
+        
+        view.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height)
+        view.cornerRadius = view.frame.width / 2
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
     }
     
     
     
-    func configure(_ image: UIImage?) {
-        imageView.image = image
-        DispatchQueue.main.async {
-            self.layer.cornerRadius = self.bounds.height / 2
+    func image(_ img: UIImage) {
+        imageView.image = img 
+    }
+    
+    
+    func configure(_ user: User?) {
+    
+        if user?.activated != true {
+            print("NOT ACTIVATED")
+            imageView.layer.addSublayer(view)
+        }
+        
+
+        if user?.photoUrl != nil {
+            view.position = imageView.center
+            imageView.sd_setImage(with: URL(string: user!.photoUrl!))
         }
     }
 }

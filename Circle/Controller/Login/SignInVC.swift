@@ -16,7 +16,6 @@
 
 import UIKit
 import FirebaseAuth
-import SwiftyUserDefaults
 
 class SignInVC: UITableViewController, UITextFieldDelegate {
     
@@ -31,7 +30,7 @@ class SignInVC: UITableViewController, UITextFieldDelegate {
         
         emailField.delegate = self
         passwordField.delegate = self
-        emailField.text = Defaults[.email]
+        
         NotificationCenter.default.addObserver(self, selector: #selector(SignInVC.textChanged(sender:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
         signInBtn.isEnabled = false
         

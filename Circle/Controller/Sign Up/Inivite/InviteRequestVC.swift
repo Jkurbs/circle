@@ -14,17 +14,18 @@ class InviteRequestVC: UIViewController {
     let headline                = Headline()
     let subhead                 = Subhead()
     let footnote                = Footnote()
-    
     let nextButton              = LogButton()
     
+    var circleId: String?
+    var pendingInsiders: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupView()
+        print("CIRCLE ID", circleId)
+
     }
-    
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -59,12 +60,13 @@ class InviteRequestVC: UIViewController {
         nextButton.alpha = 1.0
         nextButton.setTitle("Access contacts", for: .normal)
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
-    
-        
     }
+    
     
     @objc func nextStep() {
         let vc = InviteVC()
+        vc.circleId = circleId ?? ""
+    
         let store = CNContactStore()
         let authorizationStatus = CNContactStore.authorizationStatus(for: .contacts)
         switch authorizationStatus {
@@ -87,7 +89,8 @@ class InviteRequestVC: UIViewController {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        self.navigationController?.pushViewController(InviteVC(), animated: true)
+                        
                     }
                 }
             })

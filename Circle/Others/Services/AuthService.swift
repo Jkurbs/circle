@@ -7,7 +7,7 @@
 //
 
 import FirebaseAuth
-import SwiftyUserDefaults
+
 
 typealias Completion = (_ success: Bool?, _ error: Error?) -> Void
 
@@ -25,16 +25,25 @@ class AuthService {
             if error != nil {
                 completion(false, error)
             } else {
-                completion(true, nil)
-                //Successfully logged in
-                Defaults[.key_uid] = user?.uid
-                Defaults[.email] = email
-                DispatchQueue.main.async {
-                   // self.appDel.logInUser()
+                UserDefaults.standard.set(user!.uid, forKey: "userId")
+                DataService.instance.REF_USERS.document(user!.uid).getDocument { (document, error) in
+                    if let error = error {
+                        print("ERROR:::", error.localizedDescription)
+                        return
+                    }
+                    
+                    let data = document?.data()
+                    let circleId = data!["circle"] as! String
+                    
+                    completion(true, nil)
+
+                    
+                    
                 }
             }
         })
     }
+
     
     
    func phoneAuth(phoneNumber: String, viewController: UIViewController, completion: @escaping Completion) {
@@ -57,7 +66,6 @@ class AuthService {
                 print("ERROR:", error.localizedDescription)
                 completion(false, error)
             } else {
-                defaults.setValue(user?.uid, forKey: "userId")
                 let ip = DataService.instance.getIP()[1]
                 DataService.instance.saveDeviceInfo(phoneNumber: phoneNumber, ipAddress: ip)
                     completion(true, nil)
@@ -87,7 +95,6 @@ class AuthService {
     
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
         DataService.instance.createFirebaseDBUser(id, userData: userData)
-        Defaults[.key_uid] = id
     }
 }
 

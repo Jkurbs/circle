@@ -12,25 +12,30 @@ import IGListKit
 
 final class User {
     
-    var circleId: String?
+    var userId: String?
+    var accountId: String?
+    var circle: String?
     var photoUrl: String?
     var email: String?
     var firstName: String?
     var lastName: String?
     var phoneNumber: String?
-    var userId: String?
+    var status: String?
+    var activated: Bool?
+    var card: Card?
+
     
     
-    init(key: String, data: [String: Any]) {
+    init(key: String, data: [String: Any], card: Card?) {
         
         self.userId = key
         
-        if let userId = data["uid"] as? String {
-            self.userId = userId
+        if let accountId = data["account_id"] as? String {
+            self.accountId = accountId
         }
         
-        if let circleId = data["circle_Id"] as? String {
-            self.circleId = circleId
+        if let circle = data["circle"] as? String {
+            self.circle = circle
         }
         
         if let firstName = data["first_name"] as? String {
@@ -45,8 +50,20 @@ final class User {
             self.email = email
         }
         
-        if let photoUrl = data["photoUrl"] as? String {
+        if let photoUrl = data["image_url"] as? String {
             self.photoUrl = photoUrl
+        }
+        
+        if let status = data["status"] as? String {
+            self.status = status
+        }
+        
+        if let activated = data["activated"] as? Bool {
+            self.activated = activated
+        }
+        if let card = card {
+            self.card = card
+            print("card in user", card.imageUrl)
         }
     }
 }

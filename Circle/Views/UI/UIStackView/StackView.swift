@@ -9,16 +9,24 @@
 import UIKit
 
 
-extension UIStackView {
+class StackView: UIStackView {
     
-    func addBackgroundView(_ color: UIColor) {
-        let subView = UIView(frame: bounds)
-        subView.backgroundColor = color
-        subView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        subView.layer.borderWidth = 0.5
-        subView.layer.cornerRadius = 5
-        subView.layer.borderColor = UIColor.lightGray.cgColor
-        self.insertSubview(subView, at: 0)
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
     }
     
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    
+    func setup() {
+        self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+        self.axis = .horizontal
+        self.spacing = 0
+        self.distribution = .equalSpacing
+        self.alignment = .center
+    }
 }

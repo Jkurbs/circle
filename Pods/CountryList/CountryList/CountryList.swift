@@ -40,7 +40,7 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Select Country"
+        self.title = "Country List"
         self.view.backgroundColor = .white
         
         tableView = UITableView(frame: view.frame)
@@ -49,10 +49,9 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = UIColor(white: 0.9, alpha: 1.0)
         
         self.view.addSubview(tableView)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(handleCancel))
         
         setUpSearchBar()
     }
@@ -81,7 +80,6 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
         
 //        self.searchController?.searchBar.backgroundImage = UIImage()
         self.searchController?.dimsBackgroundDuringPresentation = false
-        self.searchController?.searchBar.searchBarStyle = .minimal
 //        self.searchController?.searchBar.barTintColor = UIColor.white
         self.searchController?.searchBar.placeholder = "Search"
 //        self.searchController?.searchBar.tintColor = Constants.Colors.mainColor
@@ -105,6 +103,7 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
         if searchController!.isActive && searchController!.searchBar.text != "" {
             return filteredCountries.count
         }
+        
         return countryList.count
     }
     

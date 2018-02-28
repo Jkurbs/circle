@@ -8,9 +8,9 @@ target 'Circle' do
   # Pods for Circle
 
     pod 'Firebase'
+    pod 'Firebase/Auth'
     pod 'Firebase/Core'
     pod 'Firebase/Messaging'
-    pod 'Firebase/Auth'
     pod 'Firebase/Storage'
     pod 'Firebase/Database'
     pod 'Firebase/Firestore'
@@ -21,6 +21,7 @@ target 'Circle' do
     pod 'HGCircularSlider', '~> 2.0.0'
     pod 'IQKeyboardManager'
     pod 'CountryList'
+    pod 'SDWebImage', '~> 4.0'
 
   target 'CircleTests' do
     inherit! :search_paths

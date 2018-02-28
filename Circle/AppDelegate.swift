@@ -11,7 +11,6 @@ import Stripe
 import Firebase
 import UserNotifications
 import IQKeyboardManager
-import SwiftyUserDefaults
 
 
 @UIApplicationMain
@@ -27,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+                
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = self.customURLScheme
         FirebaseApp.configure()
         
@@ -65,19 +65,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleDynamicLink(_ dynamicLink: DynamicLink) {
-        print("handle")
-        let link = dynamicLink.url?.absoluteString ?? ""
-        let matchConfidence: String
-        if dynamicLink.matchType == .weak {
-            matchConfidence = "Weak"
+        
+        let url = dynamicLink.url?.absoluteString ?? ""
+        let components = URLComponents(string: url)!
+
+        if let queryItems = components.queryItems,
+            let hlsvp = queryItems.first(where: { $0.name == "id" }) {
+            print("HLSVP:::>>>:",hlsvp.value!)
+            
+            let matchConfidence: String
+            if dynamicLink.matchType == .weak {
+                matchConfidence = "Weak"
+                print("ITS WEEAK")
+            } else {
+                matchConfidence = "Strong"
+                let phoneViewController = PhoneViewController()
+                let initialViewController = WelcomeVC()
+                let pageViewController =  PageViewController()
+                pageViewController.pages.insert(initialViewController, at: 0)
+                initialViewController.circleId = hlsvp.value
+                            
+                self.window?.rootViewController = pageViewController
+                self.window?.makeKeyAndVisible()
+            }
+            
         } else {
-            matchConfidence = "Strong"
-            let initialViewController =  WelcomeVC()
-            initialViewController.link = link
-            let navigationController = UINavigationController(rootViewController: initialViewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
+            print("hlsvp not found")
         }
+        
+        
     }
     
     
@@ -204,14 +220,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
-        
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
             if !uid.isEmpty {
-                let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PendingInvitesVC") as! PendingInvitesVC
+                let initialViewController = PendingVC()
+                let navigationController = UINavigationController(rootViewController: initialViewController)
+                let vc = navigationController
                 self.window?.rootViewController = vc
                 self.window?.makeKeyAndVisible()
             } else {
-                print("INITIALIZE")
                 let initialViewController =  PhoneViewController()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 self.window?.rootViewController = navigationController

@@ -9,12 +9,11 @@
 import UIKit
 import MessageUI
 
-class ContactCell: UICollectionViewCell, MFMessageComposeViewControllerDelegate {
+class ContactCell: UITableViewCell {
 
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var selectImageView: UIImageView!
+ var profileImageView = UIImageView()
+ var nameLabel = UILabel()
+ var selectImageView = UIImageView()
     
     var contact: Contact?
     
@@ -25,27 +24,58 @@ class ContactCell: UICollectionViewCell, MFMessageComposeViewControllerDelegate 
         view.textColor = UIColor(white: 7, alpha: 1.0)
         return view
     }()
+
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        
+        
+        
+        profileImageView.contentMode = .scaleAspectFill
+        contentView.addSubview(profileImageView)
+        
+        contentView.addSubview(nameLabel)
+        nameLabel.font = UIFont.systemFont(ofSize: 15)
+        contentView.addSubview(selectImageView)
+
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        let blueColor = UIColor(red: 0.0/255.0, green: 153.0/255.0, blue: 229.0/255.0, alpha: 0.5)
+        
+        self.contentView.backgroundColor = selected ? blueColor : nil
+        
+        if selected {
+            print("SELECTED")
+        } else {
+            print("DESELECTED")
+        }
+    }
     
     
     
     override func layoutSubviews() {
-        label.frame = profileImageView.bounds
+        
         profileImageView.addSubview(label)
-//        button.frame = CGRect(x: 0, y: contentView.frame.maxY, width: self.contentView.frame.width, height: 60)
-//        contentView.addSubview(button)
-    }
         
-    @IBAction func inviteAction(_ sender: UIButton) {
+        profileImageView.frame = CGRect(x: 10, y: 10, width: 50, height: 50)
+        profileImageView.layer.cornerRadius = profileImageView.frame.width/2
+        profileImageView.clipsToBounds = true 
+        profileImageView.backgroundColor = UIColor.textFieldBackgroundColor
         
-    }
-    
-    
-    
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-         controller.dismiss(animated: true, completion: nil)
+        label.frame = profileImageView.bounds
+        
+        nameLabel.frame = CGRect(x: profileImageView.frame.maxX + 10, y: 25, width: contentView.frame.width, height: 20)
     }
 
+    
     
     func configure(_ contact: Contact) {
         self.contact = contact
@@ -59,19 +89,14 @@ class ContactCell: UICollectionViewCell, MFMessageComposeViewControllerDelegate 
                label.text = "\(String(describing: letter!))"
             }
         } else {
-             label.isHidden = true
+            label.isHidden = true
             let imageData = contact.imageData
             let image = UIImage(data: imageData!)
             profileImageView.image = image
         }
-
         
         if let phoneNumber = contact.phoneNumber, let givenName = contact.givenName {
-            nameLabel.text = givenName
-            emailLabel.text = phoneNumber
-            if phoneNumber.isEmpty {
-                emailLabel.text = contact.emailAddress
-            }
+            nameLabel.text = "\(givenName) \(contact.familyName ?? "")"
         }
     }
 }

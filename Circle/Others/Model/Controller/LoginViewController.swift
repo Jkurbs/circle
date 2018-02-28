@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import SwiftyUserDefaults
 
 
 class LoginViewController {
@@ -20,8 +19,7 @@ class LoginViewController {
                 completionBlock(false, err)
             } else {
                 completionBlock(true, err)
-                Defaults[.key_uid] = user?.uid
-                Defaults[.key_uid] = user?.displayName
+                
             }
         }
     }

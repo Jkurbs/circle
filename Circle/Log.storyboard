@@ -16,13 +16,22 @@
                     <view key="view" contentMode="scaleToFill" id="xaN-uh-2n2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="two" translatesAutoresizingMaskIntoConstraints="NO" id="fU0-uX-N8g">
+                                <rect key="frame" x="54" y="137" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="mpB-HX-XOp"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qRh-zc-Y7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="-556"/>
+            <point key="canvasLocation" x="116" y="-556.37181409295351"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="two" width="736" height="1104"/>
+    </resources>
 </document>

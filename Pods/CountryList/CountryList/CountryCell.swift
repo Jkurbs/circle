@@ -41,7 +41,7 @@ class CountryCell: UITableViewCell {
         
         nameLabel = UILabel()
         nameLabel?.textColor = UIColor.black
-        nameLabel?.font = UIFont.systemFont(ofSize: 17)
+        nameLabel?.font = UIFont.systemFont(ofSize: 20)
         nameLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(nameLabel!)
         
@@ -50,7 +50,7 @@ class CountryCell: UITableViewCell {
         
         extensionLabel = UILabel()
         extensionLabel?.textColor = UIColor.gray
-        extensionLabel?.font = UIFont.systemFont(ofSize: 16)
+        extensionLabel?.font = UIFont.systemFont(ofSize: 18)
         extensionLabel?.translatesAutoresizingMaskIntoConstraints = false
         addSubview(extensionLabel!)
         extensionLabel?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true

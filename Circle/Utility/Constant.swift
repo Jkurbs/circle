@@ -6,13 +6,11 @@
 //  Copyright © 2017 Kerby Jean. All rights reserved.
 //
 
-import SwiftyUserDefaults
 
-extension DefaultsKeys {
-    static let key_uid = DefaultsKey<String?>("uid")
-    static let email = DefaultsKey<String>("email")
-    static let name = DefaultsKey<String>("name")
-}
+
+import Foundation
+import UIKit
+import Dispatch
 
 let textFieldBackgroundColor = UIColor(red: 247.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 0.5)
 

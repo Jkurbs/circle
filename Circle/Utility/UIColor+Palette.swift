@@ -14,6 +14,8 @@ extension UIColor {
     
     
     static let textFieldBackgroundColor = UIColor(red: 232.0/255.0, green:  232.0/255.0, blue:  232.0/255.0, alpha: 0.5)
+    static let textFieldOpaqueBackgroundColor = UIColor(red: 232.0/255.0, green:  232.0/255.0, blue:  232.0/255.0, alpha: 1.0)
+
     
     static let subheaderColor = UIColor(red: 55.0/255.0, green: 62.0/255.0, blue: 66.0/255.0, alpha: 1.0)
     

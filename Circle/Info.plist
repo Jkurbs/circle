@@ -44,6 +44,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+    <key>NSCameraUsageDescription</key>
+    <string>Circle would like to access your camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Circle would like to access your contacts.</string>
 	<key>UIBackgroundModes</key>

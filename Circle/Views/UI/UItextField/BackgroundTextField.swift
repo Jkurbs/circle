@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class BackgroundTextField: UITextField, UITextFieldDelegate {
         
     required init(coder aDecoder: NSCoder) {
@@ -34,7 +35,6 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
         self.textColor = UIColor.darkGray
         self.borderStyle                = .none
         self.borderColor = UIColor.lightGray
-        //self.borderWidth = 0.5
         self.cornerRadius = 5.0
         self.backgroundColor = textFieldBackgroundColor
     }
@@ -100,6 +100,17 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
     func ifPasswordValid(_ password: String) -> Bool {
         let passwordValidated = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{6,}")
         return passwordValidated.evaluate(with: password)
+    }
+    
+    
+    @IBInspectable public var rightViewImage: UIView {
+        get {
+            return self.rightView!
+        }
+        
+        set {
+            self.rightView = newValue
+        }
     }
 }
 

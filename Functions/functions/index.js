@@ -13,11 +13,7 @@ admin.initializeApp(functions.config().firebase);
 const stripe = require('stripe')("sk_test_QfBDc4JT7E6iz8EwrsuJcR58"),
       currency = 'USD';
 
-
-
-
 var db = admin.firestore();
-
 
 const fs = require('fs');
 const path = require('path');
@@ -36,31 +32,52 @@ fs.readdirSync(path.resolve(__dirname, FUNCTIONS_FOLDER)).forEach(file => { // l
 
 
 // [START chargecustomer]
-// Charge the Stripe customer whenever an amount is written to the Realtime database
-//exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id}').onWrite(event => {
-//  const val = event.data.val();
+//Charge the Stripe customer whenever an amount is written to the Realtime database
+//exports.createStripeCharge = functions.firestore.document('/users/{userId}/charges/{id}').onWrite(event => {
+//   const val = event.data.data();
+//   if (val === null) return null;
+//    const amount = val.amount;
+//    console.log("AMOUNT", val);
 //  // This onWrite will trigger whenever anything is written to the path, so
 //  // noop if the charge was deleted, errored out, or the Stripe API returned a result (id exists) 
-//  if (val === null || val.id || val.error) return null;
 //  // Look up the Stripe customer id written in createStripeAccount
-//  return admin.database().ref(`/users/${event.params.userId}/customer_id`).once('value').then(snapshot => {
-//    return snapshot.val();
+//    
+//  return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
+//    return snapshot.data();
 //  }).then(customer => {
 //    // Create a charge using the pushId as the idempotency key, protecting against double charges 
 //    const amount = val.amount;
-//    const idempotency_key = event.params.id;
+//    const idempotency_key = "boiDbxmRdjhfIznKhVkNd2mjJrX22";
+//    const customer_id = customer.customer_id;
+//    console.log("IDEMPOTENCY KEY", idempotency_key);
+//    console.log("CUSTOMER ID", customer_id);
+//    console.log("AMOUNT", amount);
+//
 //    let charge = {amount, currency, customer};
 //    if (val.source !== null) charge.source = val.source;
-//    return stripe.charges.create(charge, {idempotency_key});
+////    return stripe.charges.create(charge, {idempotency_key});
+//      
+//    stripe.charges.create({
+//        amount: 1000,
+//        currency: "usd",
+//        source: "tok_1BxntHFbgISkFatwh1oGLu2q",
+//     destination: {
+//        account: "{acct_1BzfLaGmDAbKYpKG}",
+//      },
+//    });
 //  }).then(response => {
+//       console.log("RESPONSE", response);
+//
 //      // If the result is successful, write it back to the database
 //      return event.data.adminRef.set(response);
 //    }, error => {
+//        console.log("ERROR", error);
+//
 //      // We want to capture errors and render them in a user-friendly way, while
 //      // still logging an exception with Stackdriver
-//      return event.data.adminRef.child('error').set(userFacingMessage(error)).then(() => {
-//        return reportError(error, {user: event.params.userId});
-//      });
+////      return event.data.adminRef.child('error').set(userFacingMessage(error)).then(() => {
+////        return reportError(error, {user: event.params.userId});
+////      });
 //    }
 //  );
 //});
@@ -68,22 +85,7 @@ fs.readdirSync(path.resolve(__dirname, FUNCTIONS_FOLDER)).forEach(file => { // l
 
 
 
-
-
-
-
-// When a user is created, register them with Stripe
-//
-//exports.createStripeCustomer =  functions.database.ref('/users/{userId}').onUpdate(event => {
-//    return admin.database().ref(`/users/${event.params.userId}/customer_id`).once('value').then(snapshot => {
-//         return snapshot.val(); 
-//      }).then(customer => {
-//        return admin.database().ref(`/users/${event.params.userId}/customer_id`).set(customer.id);
-//      });
-//    });
-
-
-// Add a payment source (card) for a user by writing a stripe payment source token to Realtime database
+ //Add a payment source (card) for a user by writing a stripe payment source token to Realtime database
 //exports.addPaymentSource = functions.database.ref('/users/{userId}/sources/{pushId}/token').onWrite(event => {
 //  const source = event.data.val();
 //  if (source === null) return null;
