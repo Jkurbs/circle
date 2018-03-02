@@ -16,6 +16,7 @@
     "google-datastore": "0.0.2",
     "google-speech": "0.0.5",
     "node-mailer": "^0.1.1",
+    "plaid": "^2.3.0",
     "stripe": "^5.4.0"
   },
   "private": true

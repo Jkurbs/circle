@@ -25,7 +25,7 @@ class CardField: STPPaymentCardTextField {
     
     
     func setup() {
-        self.backgroundColor = textFieldBackgroundColor
+        self.backgroundColor =  .textFieldBackgroundColor
         self.textColor = theme.primaryForegroundColor
         self.placeholderColor = theme.secondaryForegroundColor
         self.borderColor = .lightGray

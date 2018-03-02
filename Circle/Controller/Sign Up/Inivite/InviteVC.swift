@@ -250,7 +250,7 @@ extension InviteVC: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     UserDefaults.standard.setValue(Auth.auth().currentUser!.uid, forKey: "userId")
                     self.button.removeFromSuperview()
-                    let pendingVC = PendingVC()
+                    let pendingVC = CircleVC()
                     self.navigationController?.setNavigationBarHidden(true, animated: false)
                     self.navigationController?.pushViewController(pendingVC, animated: true)
                 }

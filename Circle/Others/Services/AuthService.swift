@@ -19,27 +19,24 @@ class AuthService {
     
     let appDel : AppDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    
-    func signIn(email: String, password: String, completion: @escaping Completion){
+    func signIn(email: String, password: String, completion: @escaping (_ success: Bool, _ error: Error?, _ circleId: String?) -> ()){
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil {
-                completion(false, error)
+                completion(false, error, nil)
             } else {
                 UserDefaults.standard.set(user!.uid, forKey: "userId")
-                DataService.instance.REF_USERS.document(user!.uid).getDocument { (document, error) in
-                    if let error = error {
-                        print("ERROR:::", error.localizedDescription)
-                        return
+                DispatchQueue.background(delay: 0.0, background: {
+                    DataService.instance.REF_USERS.document(user!.uid).getDocument { (document, error) in
+                        if let error = error {
+                            print("ERROR:::", error.localizedDescription)
+                            return
+                        }
+                        let data = document?.data()
+                        let circleId = data!["circle"] as! String
+                        UserDefaults.standard.set(circleId, forKey: "circleId")
+                        completion(true, nil, circleId)
                     }
-                    
-                    let data = document?.data()
-                    let circleId = data!["circle"] as! String
-                    
-                    completion(true, nil)
-
-                    
-                    
-                }
+                }, completion: nil)
             }
         })
     }

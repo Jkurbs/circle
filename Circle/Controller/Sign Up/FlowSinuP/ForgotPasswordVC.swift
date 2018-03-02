@@ -29,12 +29,8 @@ class ForgotPasswordVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
         
-        headline.frame = CGRect(x: 0, y: y , width: width + 20, height: 60)
+        headline.frame = CGRect(x: 0, y: 45 , width: width + 20, height: 60)
         headline.center.x = centerX
         
         subhead.frame = CGRect(x: 0, y: headline.layer.position.y + 10 , width: width, height: 60)

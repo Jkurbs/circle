@@ -14,8 +14,9 @@ class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDel
     var countryList = CountryList()
     var phoneTextField = BackgroundTextField()
     
-    let headline                = Headline()
-    let subhead                 = Subhead()
+
+    var upperView = IntroView()
+    
     let footnote                = Footnote()
     
     let nextButton              = LogButton()
@@ -38,18 +39,13 @@ class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDel
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
                 
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
+
+        upperView = IntroView(frame: CGRect(x: 0, y: 45, width: view.frame.width, height: 100))
+        upperView.center.x = centerX
+        upperView.setText("Register with your phone number", "You'll use your phone number when you login")
+        view.addSubview(upperView)
         
-        headline.frame = CGRect(x: 0, y: y , width: width + 20, height: 60)
-        headline.center.x = centerX
-        
-        subhead.frame = CGRect(x: 0, y: headline.layer.position.y + 10 , width: width, height: 60)
-        subhead.center.x = centerX
-        
-        phoneTextField.frame = CGRect(x: 0, y: subhead.layer.position.y + 40, width: width, height: 50)
+        phoneTextField.frame = CGRect(x: 0, y: upperView.layer.position.y + 100, width: width, height: 50)
         phoneTextField.center.x = centerX
         
         nextButton.frame = CGRect(x: 0, y: phoneTextField.layer.position.y + 50, width: width, height: 50)
@@ -67,12 +63,6 @@ class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDel
     
     
     func setupView() {
-
-        view.addSubview(headline)
-        headline.text = "Register with your phone number"
-        
-        view.addSubview(subhead)
-        subhead.text = "You'll use your phone number when you login"
 
         view.addSubview(footnote)
         footnote.text = "You may receive SMS updates from Circle and can opt out at any time."

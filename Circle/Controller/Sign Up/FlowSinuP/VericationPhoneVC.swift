@@ -20,7 +20,6 @@ class VericationPhoneVC: UIViewController {
     var verificationTextField   = BackgroundTextField()
     
     let headline                = Headline()
-    let subhead                 = Subhead()
     let cardField               = CardField()
     let footnote                = Footnote()
     
@@ -34,19 +33,12 @@ class VericationPhoneVC: UIViewController {
         view.backgroundColor = .white
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(textChanged(sender:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
-        
-        print("VericationPhoneVC CIRCLE::::", circleId)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
-        
-        headline.frame = CGRect(x: 0, y: y , width: width, height: 60)
+        headline.frame = CGRect(x: 0, y: 45 , width: width, height: 60)
         headline.center.x = centerX
         
         verificationTextField.frame = CGRect(x: 0, y: headline.layer.position.y + 40, width: width, height: 50)

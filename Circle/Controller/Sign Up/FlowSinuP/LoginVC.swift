@@ -31,12 +31,7 @@ class LoginVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
-        
-        headline.frame = CGRect(x: 0, y: y , width: width, height: 60)
+        headline.frame = CGRect(x: 0, y: 50 , width: width, height: 60)
         headline.center.x = centerX
         
         phoneEmailField.frame = CGRect(x: 0, y: headline.layer.position.y + 40, width: width, height: 50)
@@ -95,13 +90,14 @@ class LoginVC: UIViewController {
     
     @objc func login() {
         nextButton.showLoading()
-        AuthService.instance.signIn(email: phoneEmailField.text!, password: passwordField.text!) { (success, error) in
-            if !success! {
+        AuthService.instance.signIn(email: phoneEmailField.text!, password: passwordField.text!) { (success, error, circleId)  in
+            if !success {
                 self.nextButton.hideLoading()
             } else {
                 self.nextButton.hideLoading()
-                let vc = PendingVC()
-                self.navigationController?.pushViewController(vc, animated: true)
+                let circleVC = CircleVC()
+                circleVC.circleId = circleId
+                self.navigationController?.pushViewController(circleVC, animated: true)
             }
         }
     }

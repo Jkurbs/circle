@@ -127,23 +127,16 @@ class DataService {
     }
 }
     
-    private var insider: String?
     
-    func retrieveCircle(_ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?, _ insider: User?) -> ()) {
-        
-        self.retrieveUser(Auth.auth().currentUser!.uid) { (success, error, currentUser, data, card, cardData)   in
-            if !success {
-                print("ERROR GETTING CIRCLE")
-            } else {
-                print("CARD DATA:::", currentUser?.card?.token)
-                
-                currentUser?.card = card
-                
-                let circleId = currentUser?.circle ?? ""
-                let ref = DataService.instance.REF_CIRCLES.document(circleId)
-                ref.getDocument { (document, error) in
-                    if let document = document {
-                        
+    
+    func retrieveCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?, _ insider: User?) -> ()){
+    
+        guard let circleId = circleId else {
+            return
+          }
+            let ref = DataService.instance.REF_CIRCLES.document(circleId)
+            ref.getDocument { (document, error) in
+                if let document = document {
                     if document.exists {
                         let data = document.data()
                         let key = document.documentID
@@ -153,17 +146,16 @@ class DataService {
                                 print("ERROR GETTING INSIDERS")
                             } else {
                                 completion(true, nil, circle, insider)
-                            }
-                        })
-                    }
+                        }
+                    })
                 }
             }
         }
     }
-}
     
     
-    
+    private var insider: String?
+
     func getInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ insiders: User?) -> ()) {
        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders")
             ref.getDocuments { (documents, error) in

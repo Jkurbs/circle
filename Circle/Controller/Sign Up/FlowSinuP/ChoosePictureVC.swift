@@ -15,6 +15,7 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     let subhead                   = Subhead()
     
     let imageView                 = UIImageView()
+    let addButton = UIButton()
 
     let nextButton                = LogButton()
     
@@ -32,8 +33,6 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         setup()
         nextButton.isEnabled = true
         nextButton.alpha = 1.0
-        print(" ChoosePictureVC CIRCLE ID", circleId)
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,22 +43,26 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
-        
-        headline.frame = CGRect(x: 0, y: y , width: width, height: 60)
+        headline.frame = CGRect(x: 0, y: 50 , width: width, height: 60)
         headline.center.x = centerX
         
         subhead.frame = CGRect(x: 0, y: headline.layer.position.y , width: width, height: 60)
         subhead.center.x = centerX
-
+        
         imageView.frame = CGRect(x: 0, y: subhead.layer.position.y + 50, width: 100, height: 100)
         imageView.center.x = centerX
         imageView.cornerRadius = imageView.frame.height / 2
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor.textFieldBackgroundColor
+        
+        
+        addButton.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height)
+        addButton.setImage(#imageLiteral(resourceName: "Add-24"), for: .normal)
+        imageView.addSubview(addButton)
+        
+        
+        
+        
 
         nextButton.frame = CGRect(x: 0, y: imageView.layer.position.y + 100, width: width, height: 50)
         nextButton.center.x = centerX
@@ -85,6 +88,7 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(editPhotoAlert))
         imageView.addGestureRecognizer(tapGesture)
+        addButton.addGestureRecognizer(tapGesture)
     }
     
     @objc func editPhotoAlert() {
@@ -114,22 +118,30 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
         vc.name = self.name
         vc.circleId = circleId ?? ""
         
-        let image = imageView.image!
-        
-        if let data = UIImageJPEGRepresentation(image, 1.0) {
-            DataService.instance.saveImageData(data) { (url, success, error) in
-                if !success {
-                    let alert = Alert()
-                    dispatch.async {
-                        self.nextButton.hideLoading()
-                        alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+        if imageView == nil {
+            
+            
+        } else {
+            let image = imageView.image!
+            DispatchQueue.background(delay: 0.0, background: {
+                if let data = UIImageJPEGRepresentation(image, 1.0) {
+                    DataService.instance.saveImageData(data) { (url, success, error) in
+                        if !success {
+                            let alert = Alert()
+                            dispatch.async {
+                                self.nextButton.hideLoading()
+                                alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+                            }
+                        } else {
+                            DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["image_url": url ?? ""], options: SetOptions.merge())
+                            dispatch.async {
+                                self.nextButton.hideLoading()
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            }
+                        }
                     }
-                } else {
-                    DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["image_url": url ?? ""], options: SetOptions.merge())
-                    self.nextButton.hideLoading()
-                    self.navigationController?.pushViewController(vc, animated: true)
                 }
-            }
+            }, completion: nil)
         }
     }
     
@@ -150,6 +162,7 @@ class ChoosePictureVC: UIViewController, UIImagePickerControllerDelegate, UINavi
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            addButton.removeFromSuperview()
             self.imageView.image = image
         }
         dismiss(animated: true, completion: nil)

@@ -12,7 +12,10 @@ import Foundation
 import UIKit
 import Dispatch
 
-let textFieldBackgroundColor = UIColor(red: 247.0/255.0, green: 248.0/255.0, blue: 249.0/255.0, alpha: 0.5)
+let padding: CGFloat = 25
+let width = UIScreen.main.bounds.width - (padding * 2)  - 20
+let centerX = UIScreen.main.bounds.size.width * 0.5
+
 
 let dispatch = DispatchQueue.main
 
@@ -27,5 +30,5 @@ extension DispatchQueue {
             }
         }
     }
-    
 }
+

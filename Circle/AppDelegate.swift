@@ -71,7 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if let queryItems = components.queryItems,
             let hlsvp = queryItems.first(where: { $0.name == "id" }) {
-            print("HLSVP:::>>>:",hlsvp.value!)
             
             let matchConfidence: String
             if dynamicLink.matchType == .weak {
@@ -79,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("ITS WEEAK")
             } else {
                 matchConfidence = "Strong"
-                let phoneViewController = PhoneViewController()
                 let initialViewController = WelcomeVC()
                 let pageViewController =  PageViewController()
                 pageViewController.pages.insert(initialViewController, at: 0)
@@ -216,13 +214,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearance.tintColor = UIColor.blueColor
         
         let initialViewController =  PhoneViewController()
-        let navigationController = UINavigationController(rootViewController: initialViewController)
-        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
             if !uid.isEmpty {
-                let initialViewController = PendingVC()
+                let initialViewController = CircleVC()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 let vc = navigationController
                 self.window?.rootViewController = vc
@@ -242,9 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate : UNUserNotificationCenterDelegate {
     
     // Receive displayed notifications for iOS 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,  withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
         
         // With swizzling disabled you must let Messaging know about the message, for Analytics

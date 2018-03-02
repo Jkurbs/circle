@@ -18,8 +18,7 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     var circleId: String?
     var pendingInsiders: Int?
     
-    let headline                  = Headline()
-    let subhead                   = Subhead()
+    var upperView                 = IntroView()
     let footnote                  = Footnote()
     
     let nextButton                = LogButton()
@@ -52,20 +51,14 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)  - 20
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
+        upperView = IntroView(frame: CGRect(x: 0, y: 45, width: view.frame.width, height: 100))
+        upperView.center.x = centerX
+        upperView.setText("Name and Password", "Your name will help you be recognized")
+        view.addSubview(upperView)
         
-        headline.frame = CGRect(x: 0, y: y , width: width, height: 60)
-        headline.center.x = centerX
+        firstNameTextField.frame = CGRect(x: padding + 10, y: upperView.layer.position.y + 40, width:  (width / 2) - padding, height: 50)
         
-        subhead.frame = CGRect(x: 0, y: headline.layer.position.y , width: width, height: 60)
-        subhead.center.x = centerX
-        
-        firstNameTextField.frame = CGRect(x: padding + 10, y: subhead.layer.position.y + 40, width:  (width / 2) - padding, height: 50)
-        
-        lastNameTextField.frame = CGRect(x: self.firstNameTextField.frame.maxX + padding, y: subhead.layer.position.y + 40, width: width / 2, height: 50)
+        lastNameTextField.frame = CGRect(x: self.firstNameTextField.frame.maxX + padding, y: upperView.layer.position.y + 40, width: width / 2, height: 50)
         
         selectDobField.frame = CGRect(x: 0, y: firstNameTextField.layer.position.y + 40, width: width, height: 50)
         selectDobField.center.x = centerX
@@ -79,12 +72,6 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
 
     
     func setupView() {
-        
-        view.addSubview(headline)
-        headline.text = "Name and Password"
-        
-        view.addSubview(subhead)
-        subhead.text = "Your name will help you be recognized"
         
         view.addSubview(firstNameTextField)
         firstNameTextField.keyboardType = .default

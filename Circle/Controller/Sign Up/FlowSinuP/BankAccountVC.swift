@@ -50,12 +50,8 @@ class BankAccountVC: UIViewController, STPPaymentCardTextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let padding: CGFloat = 25
-        let width = self.view.bounds.width - (padding * 2)
-        let y = (self.navigationController?.navigationBar.frame.height)! + 40
-        let centerX = view.center.x
         
-        headline.frame = CGRect(x: 0, y: y , width: width, height: 40)
+        headline.frame = CGRect(x: 0, y: 45 , width: width, height: 40)
         headline.center.x = centerX
 
         subhead.frame = CGRect(x: 0, y: headline.layer.position.y + 10 , width: width, height: 50)

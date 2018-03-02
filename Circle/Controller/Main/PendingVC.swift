@@ -9,14 +9,14 @@
 import UIKit
 import FirebaseAuth
 
-class PendingVC: UIViewController {
+class CircleVC: UIViewController {
     
     // Views
     let contentView = ContentView()
     var settingsView: SettingsView!
-    var welcomeView: WelcomeView!
+    var welcomeView: IntroView!
     var insightView = InsightView()
-    let userView: UserView = UIView.fromNib()
+    let dashboardView: DashboardView = UIView.fromNib()
 
     var loadingView = LoadingView()
     var circleView = CircleView()
@@ -29,6 +29,7 @@ class PendingVC: UIViewController {
     
     var userViewIsShow: Bool = false
     
+    var circleId: String?
     
     lazy var collectionView: UICollectionView = {
         let layout = CircleLayout()
@@ -37,7 +38,6 @@ class PendingVC: UIViewController {
         contentView.addSubview(view)
         return view
     }()
-    
     
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero)
@@ -93,8 +93,9 @@ class PendingVC: UIViewController {
         settingsView.settingbutton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         contentView.addSubview(settingsView)
 
-        // welcome View
-        welcomeView = WelcomeView(frame: CGRect(x: 0, y: 45, width: contentView.frame.width, height: height))
+        welcomeView = IntroView(frame: CGRect(x: 0, y: 45, width: contentView.frame.width, height: height))
+        welcomeView.headline.text = "Welcome to your Circle dashboard"
+        welcomeView.subhead.text = "You'll receive an notification when an invitation has been accepted"
         
         // insight View
         self.insightView.frame = CGRect(x: 0, y: 45, width: contentView.frame.width, height:  height)
@@ -103,9 +104,9 @@ class PendingVC: UIViewController {
         insightView.addSubview(tableView)
         
         // add userView
-        userView.frame = CGRect(x: 0, y: 60, width: userView.frame.width, height:  200)
-        //userView.isHidden = true
-        self.view.addSubview(userView)
+        dashboardView.frame = CGRect(x: 0, y: 60, width: dashboardView.frame.width, height:  dashboardView.frame.height)
+        dashboardView.isHidden = false
+        self.view.addSubview(dashboardView)
         
         collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 20, width: welcomeView.frame.width, height: 300)
 
@@ -134,30 +135,30 @@ class PendingVC: UIViewController {
     }
     
     
-    var circleId = ""
-    
     func retrieveUser() {
         users = []
         self.view.addSubview(loadingView)
-        DataService.instance.retrieveCircle({ (success, error, circle, insider) in
-                if !success { 
+        let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as? String ?? ""
+        DataService.instance.retrieveCircle(circleId){ (success, error, circle, insider) in
+            if !success {
                     print("ERRROR RETRIVING CIRCLE")
-                } else {
-                    self.users.append(insider)
-                    self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
-                    self.tableView.reloadData()
-                    if circle?.activated == true {
-                        dispatch.async {
-                            self.contentView.addSubview(self.userView)
+            } else {
+                self.users.append(insider)
+                self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
+                self.tableView.reloadData()
+
+                if circle?.activated == true {
+                    dispatch.async {
+                           self.contentView.addSubview(self.dashboardView)
                         }
                     } else {
                         dispatch.async {
-                            //self.contentView.addSubview(self.welcomeView)
+                            self.contentView.addSubview(self.dashboardView)
                         }
                     }
                 self.loadingView.removeFromSuperview()
             }
-        })
+        }
     }
 }
 
@@ -165,9 +166,9 @@ class PendingVC: UIViewController {
 
 
 
-// MARK: COLLECTIONVIEW DELEGATE, DATASOURCE
+// MARK: TABLEVIEW DELEGATE, DATASOURCE
 
-extension PendingVC: UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
+extension CircleVC: UITableViewDelegate, UITableViewDataSource {
     
 
     
@@ -189,9 +190,7 @@ extension PendingVC: UICollectionViewDelegate, UICollectionViewDataSource, UITab
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let cell = tableView.cellForRow(at: indexPath) as? InsightCell {
-//
-//        }
+
     }
     
     
@@ -200,6 +199,25 @@ extension PendingVC: UICollectionViewDelegate, UICollectionViewDataSource, UITab
     }
     
     
+    @objc func logOut() {
+        
+        UserDefaults.standard.removeObject(forKey: "userId")
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            DispatchQueue.main.async {
+                let controller = PhoneViewController()
+                self.present(controller, animated: true, completion: nil)
+            }
+        } catch let signOutError as NSError {
+            print("SIGNOUT ERROR:\(signOutError)")
+        }
+    }
+}
+
+// MARK: COLLECTIONVIEW DELEGATE, DATASOURCE
+
+extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
@@ -217,23 +235,23 @@ extension PendingVC: UICollectionViewDelegate, UICollectionViewDataSource, UITab
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         if (userViewIsShow) {
             userViewIsShow = false
         } else {
             //First Tap
             userViewIsShow = true
-            contentView.addSubview(userView)
-            userView.isHidden = false
+            contentView.addSubview(dashboardView)
+            dashboardView.isHidden = false
         }
         
         let user = self.users[indexPath.row]
-
+        
         if(selectedIndex != indexPath) {
             var indicesArray = [IndexPath]()
             if(selectedIndex != nil) {
                 
-            let cell = collectionView.cellForItem(at: selectedIndex!) as! PendingInviteCell
+                let cell = collectionView.cellForItem(at: selectedIndex!) as! PendingInviteCell
                 UIView.animate(withDuration: 0.3, animations: {
                     cell.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
                     cell.transform = CGAffineTransform.identity
@@ -244,46 +262,20 @@ extension PendingVC: UICollectionViewDelegate, UICollectionViewDataSource, UITab
             
             selectedIndex = indexPath
             let cell = collectionView.cellForItem(at: indexPath) as! PendingInviteCell
-
-                UIView.animate(withDuration: 0.3, animations: {
-                    cell.layer.borderColor = UIColor.blueColor.cgColor
-                    cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-
-                }, completion: { (completion) in
-                    dispatch.async {
-                        self.userView.configure(user)
-                    }
-                })
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.layer.borderColor = UIColor.blueColor.cgColor
+                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                
+            }, completion: { (completion) in
+                dispatch.async {
+                    self.dashboardView.configure(user)
+                }
+            })
             indicesArray.append(indexPath)
         }
     }
-    
-    @objc func logOut() {
-        
-        UserDefaults.standard.removeObject(forKey: "userId")
-        
-        //Defaults.remove(.key_uid)
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            DispatchQueue.main.async {
-                let controller = PhoneViewController()
-                let nav = UINavigationController(rootViewController: controller)
-                self.present(nav, animated: true, completion: nil)
-            }
-        } catch let signOutError as NSError {
-            print("SIGNOUT ERROR:\(signOutError)")
-        }
-        
-//        let vc = SettingsVC()
-//        let nav = UINavigationController(rootViewController: vc)
-//        self.navigationController?.pushViewController(vc, animated: true)
-
-    }
 }
-
-
-
 
 
 

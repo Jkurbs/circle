@@ -13,6 +13,8 @@ class SettingsView: UIView {
     
     var settingbutton = UIButton()
     
+    let label = UILabel()
+    
     let separator: CALayer = {
         let layer = CALayer()
         layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
@@ -42,6 +44,13 @@ class SettingsView: UIView {
         
 //        gradientLayer.frame = self.bounds
 //        self.layer.addSublayer(gradientLayer)
+
+        label.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 50)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .darkText
+        label.textAlignment = .center
+        label.text = "Dashboard"
+        self.addSubview(label)
         
         self.backgroundColor = UIColor.textFieldBackgroundColor
         settingbutton.frame = CGRect(x: 3, y: 3, width: 45, height: 45)

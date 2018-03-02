@@ -13,6 +13,8 @@ admin.initializeApp(functions.config().firebase);
 const stripe = require('stripe')("sk_test_QfBDc4JT7E6iz8EwrsuJcR58"),
       currency = 'USD';
 
+var plaid = require('plaid');
+
 var db = admin.firestore();
 
 const fs = require('fs');

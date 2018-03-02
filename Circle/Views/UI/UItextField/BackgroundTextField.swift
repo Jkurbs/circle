@@ -36,7 +36,7 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
         self.borderStyle                = .none
         self.borderColor = UIColor.lightGray
         self.cornerRadius = 5.0
-        self.backgroundColor = textFieldBackgroundColor
+        self.backgroundColor = .textFieldBackgroundColor
     }
     
     
