@@ -25,15 +25,18 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
   }).then(customer => {
          // Create a charge using the pushId as the idempotency key, protecting against double charges 
         const amount = val.amount;
-        const customer_id = customer.customer_id;
+        //const customer_id = customer.customer_id;
         stripe.charges.create({
             amount: amount * 100,
             currency: "usd",
-            customer: customer_id,
+            //customer: customer_id,
             destination: {
                account: destination,
            },
         }, function(err, charge) {
+            
+            var customer = charge.customer;
+            
             var data = {
               status: charge.status, 
               created: new Date(),
@@ -51,9 +54,9 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
     }).catch((error) => {
       
       var data = {
-          response: 'ERROR', 
+          customer_id: customer, 
       };
-      return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('charges').doc(`${event.params.id}`).set(data, {merge: true});
+      return admin.firestore().collection('users').doc(`${event.params.userId}`).set(data, {merge: true});
           //return event.data.ref.doc('errors').set(userFacingMessage(error));
       }).then(() => {
        return;

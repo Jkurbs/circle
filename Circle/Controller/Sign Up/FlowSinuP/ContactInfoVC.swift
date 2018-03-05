@@ -9,7 +9,7 @@
 import UIKit
 import CountryList
 
-class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDelegate {
+class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate {
 
     var countryList = CountryList()
     var phoneTextField = BackgroundTextField()
@@ -30,6 +30,7 @@ class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true 
         countryList.delegate = self
         view.backgroundColor = .white
         setupView()
@@ -167,6 +168,7 @@ class PhoneViewController: UIViewController, UITextFieldDelegate, CountryListDel
                 return
             } else {
                 dispatch.async {
+                print("PUSH")
                 self.nextButton.hideLoading()
                 self.navigationController?.pushViewController(vc, animated: true)
             }

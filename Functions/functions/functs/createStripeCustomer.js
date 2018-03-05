@@ -1,5 +1,4 @@
 
-'use strict';
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -19,7 +18,6 @@ exports = module.exports = functions.firestore.document('/users/{userId}/sources
     return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
     return snapshot.data();
   }).then(customer => {
-        console.log('CUSTOMER EMAIL', customer.email_address);
     return stripe.customers.create({
         email: email,
         source: token,
