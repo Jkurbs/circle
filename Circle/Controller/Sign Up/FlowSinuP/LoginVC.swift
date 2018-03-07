@@ -94,6 +94,7 @@ class LoginVC: UIViewController {
             if !success {
                 self.nextButton.hideLoading()
             } else {
+                print("CIRCLE_ID", circleId)
                 self.nextButton.hideLoading()
                 let circleVC = CircleVC()
                 circleVC.circleId = circleId
@@ -112,7 +113,7 @@ class LoginVC: UIViewController {
     
     @objc func register() {
         
-        let nav = UINavigationController(rootViewController: PhoneViewController())
+        let nav = UINavigationController(rootViewController: ContactInfoVC())
         self.present(nav, animated: true, completion: nil)
     }
     

@@ -17,12 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="two" translatesAutoresizingMaskIntoConstraints="NO" id="fU0-uX-N8g">
-                                <rect key="frame" x="54" y="137" width="240" height="240"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhE-QA-0GD">
+                                <rect key="frame" x="137" y="318" width="101" height="30"/>
+                                <state key="normal" title="CHOOSE"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yhE-QA-0GD" firstAttribute="centerY" secondItem="xaN-uh-2n2" secondAttribute="centerY" id="IUu-G8-6vb"/>
+                            <constraint firstItem="yhE-QA-0GD" firstAttribute="centerX" secondItem="xaN-uh-2n2" secondAttribute="centerX" id="MGQ-fJ-7Ht"/>
+                            <constraint firstItem="yhE-QA-0GD" firstAttribute="leading" secondItem="mpB-HX-XOp" secondAttribute="leading" constant="137" id="YEp-Hw-QFn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="mpB-HX-XOp"/>
                     </view>
                 </viewController>
@@ -31,7 +36,4 @@
             <point key="canvasLocation" x="116" y="-556.37181409295351"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="two" width="736" height="1104"/>
-    </resources>
 </document>

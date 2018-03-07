@@ -22,11 +22,11 @@ final class User {
     var phoneNumber: String?
     var status: String?
     var activated: Bool?
-    var card: Card?
+    var bank: Bank?
 
     
     
-    init(key: String, data: [String: Any], card: Card?) {
+    init(key: String, data: [String: Any], bank: Bank?) {
         
         self.userId = key
         
@@ -61,9 +61,9 @@ final class User {
         if let activated = data["activated"] as? Bool {
             self.activated = activated
         }
-        if let card = card {
-            self.card = card
-            print("card in user", card.imageUrl)
+        
+        if let bank = bank {
+            self.bank = bank
         }
     }
 }

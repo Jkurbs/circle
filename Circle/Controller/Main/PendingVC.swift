@@ -136,13 +136,15 @@ class CircleVC: UIViewController {
     
     
     func retrieveUser() {
+        print("RETRIEVE")
         users = []
         self.view.addSubview(loadingView)
-        let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as? String ?? ""
+        let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as! String
         DataService.instance.retrieveCircle(circleId){ (success, error, circle, insider) in
             if !success {
-                    print("ERRROR RETRIVING CIRCLE")
+                    print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
+                print("SUCCESS")
                 self.users.append(insider)
                 self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
                 self.tableView.reloadData()
@@ -206,7 +208,7 @@ extension CircleVC: UITableViewDelegate, UITableViewDataSource {
         do {
             try firebaseAuth.signOut()
             DispatchQueue.main.async {
-                let controller = PhoneViewController()
+                let controller = ContactInfoVC()
                 self.present(controller, animated: true, completion: nil)
             }
         } catch let signOutError as NSError {

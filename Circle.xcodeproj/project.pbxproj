@@ -45,7 +45,7 @@
 		D10BB2AC201975A1004F5262 /* InviteRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */; };
 		D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */; };
 		D10BDC1D20451C6000D22860 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1C20451C5F00D22860 /* MoneyService.swift */; };
-		D10BDC212045CC7600D22860 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC202045CC7600D22860 /* Card.swift */; };
+		D10BDC212045CC7600D22860 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC202045CC7600D22860 /* Bank.swift */; };
 		D10FA25B203340F300BBB671 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10FA25A203340F300BBB671 /* IntroView.swift */; };
 		D10FA25D2033625C00BBB671 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10FA25C2033625C00BBB671 /* ContentView.swift */; };
 		D10FC6312040B53200BCBFCA /* DashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D10FC6302040B53200BCBFCA /* DashboardView.xib */; };
@@ -56,12 +56,12 @@
 		D11775ED200CFB9E00B1953C /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */; };
 		D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EE200D03AB00B1953C /* PageThreeVC.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
-		D142F1CE200D18E500DBA881 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* PhoneViewController.swift */; };
+		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
 		D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */; };
 		D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15586D02015885D00E4984B /* UIColor+Palette.swift */; };
+		D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */; };
 		D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* WelcomeVC.swift */; };
 		D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407A202EB79F00B2A1F5 /* PendingVC.swift */; };
-		D165407D2030989900B2A1F5 /* ChoosePictureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407C2030989900B2A1F5 /* ChoosePictureVC.swift */; };
 		D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407F2030990700B2A1F5 /* ChooseImageView.swift */; };
 		D16938391FB386830095F5A7 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16938381FB386830095F5A7 /* Circle.swift */; };
 		D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */; };
@@ -175,7 +175,7 @@
 		D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRequestVC.swift; sourceTree = "<group>"; };
 		D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVCTwo.swift; sourceTree = "<group>"; };
 		D10BDC1C20451C5F00D22860 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
-		D10BDC202045CC7600D22860 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		D10BDC202045CC7600D22860 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
 		D10FA25A203340F300BBB671 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		D10FA25C2033625C00BBB671 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D10FC6302040B53200BCBFCA /* DashboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardView.xib; sourceTree = "<group>"; };
@@ -186,12 +186,12 @@
 		D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D11775EE200D03AB00B1953C /* PageThreeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageThreeVC.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		D142F1CD200D18E500DBA881 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
+		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRect.swift; sourceTree = "<group>"; };
 		D15586D02015885D00E4984B /* UIColor+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Palette.swift"; sourceTree = "<group>"; };
+		D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBankVC.swift; sourceTree = "<group>"; };
 		D1619200202814AD0073C8B8 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		D165407A202EB79F00B2A1F5 /* PendingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingVC.swift; sourceTree = "<group>"; };
-		D165407C2030989900B2A1F5 /* ChoosePictureVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePictureVC.swift; sourceTree = "<group>"; };
 		D165407F2030990700B2A1F5 /* ChooseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseImageView.swift; sourceTree = "<group>"; };
 		D166AB43201250690080F5A8 /* Circle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Circle.entitlements; sourceTree = "<group>"; };
 		D16938381FB386830095F5A7 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
@@ -218,6 +218,8 @@
 		D171982C200F95CC009BC920 /* Footnote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote.swift; sourceTree = "<group>"; };
 		D1753CF21FB1543F00267B35 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountVC.swift; sourceTree = "<group>"; };
+		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1B076622022A4BD00229F45 /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
 		D1D7C5762036850E00842B4C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D1E306752008210B000A5845 /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
@@ -273,6 +275,8 @@
 		411F650BA35A34C9C43FBDCC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D192E4DE204A4C90004519D9 /* GSMessages.framework */,
+				D192E4DC204A4C79004519D9 /* CountryList.framework */,
 				4AE2EE066E32930CF15C1720 /* Pods_Circle.framework */,
 				43396F483DDA5442400DF8EE /* Pods_CircleTests.framework */,
 				D9870F315D21109C1FAC6C75 /* Pods_CircleUITests.framework */,
@@ -415,11 +419,11 @@
 		D10BB2A820196554004F5262 /* FlowSinUp */ = {
 			isa = PBXGroup;
 			children = (
-				D142F1CD200D18E500DBA881 /* PhoneViewController.swift */,
+				D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */,
 				D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */,
 				D171981F200E852B009BC920 /* NamePasswordVC.swift */,
-				D165407C2030989900B2A1F5 /* ChoosePictureVC.swift */,
 				D17197F4200E632C009BC920 /* BankAccountVC.swift */,
+				D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */,
 				D12B97442030D313001B44FB /* LoginVC.swift */,
 				D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */,
 			);
@@ -523,7 +527,7 @@
 				D100D9AB2009F9B700CAEB83 /* Contact.swift */,
 				D16938381FB386830095F5A7 /* Circle.swift */,
 				D108D21920276EAD00679ACE /* Link.swift */,
-				D10BDC202045CC7600D22860 /* Card.swift */,
+				D10BDC202045CC7600D22860 /* Bank.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -610,6 +614,7 @@
 				79284736FDFD2AE506014783 /* [CP] Embed Pods Frameworks */,
 				CFFA614ADBD56B5191702EF0 /* [CP] Copy Pods Resources */,
 				D100D9A62009105A00CAEB83 /* Embed Frameworks */,
+				D192E4DA204A43E9004519D9 /* Prepare for Distribution */,
 			);
 			buildRules = (
 			);
@@ -835,6 +840,7 @@
 				"${BUILT_PRODUCTS_DIR}/HGCircularSlider/HGCircularSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
+				"${PODS_ROOT}/Plaid/ios/LinkKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
@@ -855,6 +861,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HGCircularSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LinkKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
@@ -938,6 +945,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Circle/Pods-Circle-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D192E4DA204A43E9004519D9 /* Prepare for Distribution */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare for Distribution";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -965,7 +986,7 @@
 				D17197F5200E632C009BC920 /* BankAccountVC.swift in Sources */,
 				D1719820200E852B009BC920 /* NamePasswordVC.swift in Sources */,
 				D10A57B2202B70ED00D93405 /* ContactService.swift in Sources */,
-				D142F1CE200D18E500DBA881 /* PhoneViewController.swift in Sources */,
+				D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */,
 				D10FA25D2033625C00BBB671 /* ContentView.swift in Sources */,
 				D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */,
 				D108D21C2027A82A00679ACE /* CircleView.swift in Sources */,
@@ -1003,17 +1024,17 @@
 				D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */,
 				D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */,
 				D16938391FB386830095F5A7 /* Circle.swift in Sources */,
-				D10BDC212045CC7600D22860 /* Card.swift in Sources */,
+				D10BDC212045CC7600D22860 /* Bank.swift in Sources */,
 				D100D9AE200A0C2900CAEB83 /* SegmentedControl.swift in Sources */,
 				D10820282033C9C5000BF41D /* LoadingView.swift in Sources */,
 				D1B076632022A4BD00229F45 /* InfoCell.swift in Sources */,
 				D1719816200E725A009BC920 /* AKMaskFieldBlockCharacter.swift in Sources */,
 				D10A6DB9203F365800E7AEB5 /* HistoryVC.swift in Sources */,
-				D165407D2030989900B2A1F5 /* ChoosePictureVC.swift in Sources */,
 				6D0CCE501FAE7D8E00DF5F13 /* ChoiceCell.swift in Sources */,
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
 				D12B97452030D313001B44FB /* LoginVC.swift in Sources */,
 				D171982D200F95CC009BC920 /* Footnote.swift in Sources */,
+				D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */,
 				D10BB2AA20196735004F5262 /* FacebookCell.swift in Sources */,
 				D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */,
 				D1719822200F8AC7009BC920 /* BackgroundTextField.swift in Sources */,
@@ -1189,6 +1210,7 @@
 				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Circle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1210,6 +1232,7 @@
 				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Circle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

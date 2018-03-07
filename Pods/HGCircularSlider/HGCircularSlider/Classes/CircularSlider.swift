@@ -109,7 +109,7 @@ open class CircularSlider: UIControl {
      * The default value of this property is blue
      */
     @IBInspectable
-    open var endThumbStrokeHighlightedColor: UIColor = .red
+    open var endThumbStrokeHighlightedColor: UIColor = .blue
     
     /**
      * The color used to tint the stroke of the end thumb

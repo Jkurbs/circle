@@ -27,19 +27,20 @@ class DashboardView: UIView {
     @IBOutlet weak var confirmButton: OptionButton!
  
     var amountTextField = BackgroundTextField()
+    var formatter: NumberFormatter!
  
     // CONFIRMATION VIEW
     @IBOutlet weak var confirmationView: UIView!
-    @IBOutlet weak var cardImageView: UIImageView!
-    @IBOutlet weak var cardButton: UIButton!
+    @IBOutlet weak var sourceType: UILabel!
+    @IBOutlet weak var sourceLast4: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var destinationLabel: UILabel!
-    
+
     
     // PRCESSESSING VIEW
     @IBOutlet weak var processingView: UIView!
+    @IBOutlet weak var successImageView: OptionButton!
     @IBOutlet weak var statusLabel: UILabel!
-    
     
     
     var user: User?
@@ -175,9 +176,7 @@ extension DashboardView: UITextFieldDelegate {
             self.amountTextField.text = ""
             self.amountTextField.resignFirstResponder()
         }
-    }
-    
- 
+    } 
  
     func showConfirmationView() {
           resize(toFitSubviews: confirmationView)
@@ -189,8 +188,8 @@ extension DashboardView: UITextFieldDelegate {
             self.amountTextField.resignFirstResponder()
         }
         
-        cardImageView.sd_setImage(with: URL(string: user?.card?.imageUrl ?? ""))
-        cardButton.setTitle("•••• \(user?.card!.last4 ?? "")", for: .normal)
+        //sourceType.text = u
+        //cardButton.setTitle("•••• \(user?.card!.last4 ?? "")", for: .normal)
         destinationLabel.text = "\(user?.firstName ?? "") \(user?.lastName ?? "")"
         amountLabel.text = amountTextField.text!
     }
@@ -199,48 +198,62 @@ extension DashboardView: UITextFieldDelegate {
     func sendMoney() {
         self.showProcessingView()
         let amount = amountLabel.text!
-        MoneyService.instance.sendMoney("\(amount)", user?.accountId ?? "") { (status) in
-            self.statusLabel.text = status
+        let firstName = user?.firstName ?? ""
+        let lastName = user?.lastName ?? ""
+        
+        
+        MoneyService.instance.sendMoney("\(amount)", user?.accountId ?? "", firstName, lastName) { (status, success)  in
+                self.statusLabel.text = "Succeeded"
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(0.4 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+                    UIView.animate(withDuration: 0.3) {
+                    self.resize(toFitSubviews: self.userView)
+                    self.processingView.alpha = 0.0
+                    self.processingView.isHidden = true
+                    self.userView.alpha = 1.0
+                    self.userView.isHidden = false
+                        
+                }
+            }
         }
     }
  
     func showProcessingView() {
         UIView.animate(withDuration: 0.3) {
             self.resize(toFitSubviews: self.processingView)
+            self.successImageView.isHidden = false
             self.confirmationView.alpha = 0.0
             self.confirmationView.isHidden = true
             self.processingView.alpha = 1.0
             self.processingView.isHidden = false
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-            UIView.animate(withDuration: 0.3) {
-                self.resize(toFitSubviews: self.userView)
-                self.processingView.alpha = 0.0
-                self.processingView.isHidden = true
-                self.userView.alpha = 1.0
-                self.userView.isHidden = false
-            }
-        }
     }
 
  
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == amountTextField {
-            var startString = ""
-            if (textField.text != nil) {
-                startString += textField.text!
-            }
-            startString += string
-            let limitNumber = Int(startString)!
-            if limitNumber > 5000 {
-                return false
-            }
-            else {
-                return true
-            }
-        } else {
-            
-        }
+        
+        // Uses the number format corresponding to your Locale
+//        formatter = NumberFormatter()
+//        formatter.numberStyle = .decimal
+//        formatter.locale = Locale.current
+//        formatter.maximumFractionDigits = 0
+        
+//        if let groupingSeparator = formatter.groupingSeparator {
+//
+//            if string == groupingSeparator {
+//                return true
+//            }
+//            if let textWithoutGroupingSeparator = textField.text?.replacingOccurrences(of: groupingSeparator, with: "") {
+//                var totalTextWithoutGroupingSeparators = textWithoutGroupingSeparator + string
+//                if string == "" { // pressed Backspace key
+//                    totalTextWithoutGroupingSeparators.removeLast()
+//                }
+//                if let numberWithoutGroupingSeparator = formatter.number(from: totalTextWithoutGroupingSeparators),
+//                    let formattedText = formatter.string(from: numberWithoutGroupingSeparator) {
+//                    textField.text = formattedText
+//                    return false
+//                }
+//            }
+//        }
         return true
     }
     

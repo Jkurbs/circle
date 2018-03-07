@@ -17,15 +17,14 @@ class MoneyService {
         return _instance
     }
     
-    func sendMoney(_ amount: String, _ destination: String, _ completion: @escaping (_ status: String) -> ()) {
-        let data: [String: Any] = ["amount": amount, "destination": destination]
+    func sendMoney(_ amount: String, _ destination: String, _ first_name: String, _ last_name: String, _ completion: @escaping (_ status: String, _ success: String) -> ()) {
+        let data: [String: Any] = ["amount": amount, "destination": destination, "first_name": first_name, "last_name": last_name]
         let ref = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("charges").document()
         ref.setData(data, options: SetOptions.merge()) { (error) in
             if let error = error {
                 print("ERROR SENDING TRANSACTION", error.localizedDescription)
                 return
             } else {
-                print("SEND")
                 ref.addSnapshotListener { (document, error) in
                     if let error = error {
                         print("ERROR GETTING TRANSACTION", error.localizedDescription)
@@ -33,8 +32,8 @@ class MoneyService {
                         if (document?.exists)! {
                             let data = document?.data()
                             if let data = data {
-                                if let status = data["status"] as? String {
-                                    completion(status)
+                                if let status = data["status"] as? String, let failureMessage = data["failure_message"] as? String {
+                                    completion(status, failureMessage)
                                 }
                             }
                         } else {

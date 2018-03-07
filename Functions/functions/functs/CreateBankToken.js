@@ -23,20 +23,23 @@ exports = module.exports = functions.firestore.document('/users/{userId}/plaid/{
     return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
     return snapshot.data();
   }).then(customer => {
+        console.log('ACCOUNT ID', accountId);
+        console.log('CUSTOMER EMAIL', customer.email_address);
           return plaidClient.exchangePublicToken(publicToken, function(err, res) {
+            console.log('ACCOUNT_ID', res.account_id);
             var accessToken = res.access_token;
             var item_id = res.item_id;
+            console.log('REF', res);
+           console.log('ACCESS TOKEN', accessToken);
           // Generate a bank account token
+            console.log('SECOND ACCOUNT ID', accountId);
           plaidClient.createStripeToken(accessToken, accountId, function(err, res) {
+              console.log('BANK ACCOUNT TOKEN ERROR', err);
+              console.log('BANK ACCOUNT TOKEN RESULT', res);
               var bankAccountToken = res.stripe_bank_account_token;
               var data = {
-                token: bankAccountToken,
+               token: bankAccountToken,
               };
-              
-              return stripe.accounts.createExternalAccount(customer.account_id,{ 
-                external_account: source, 
-              });
-              
              return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('sources').doc(`${event.params.id}`).set(data, {merge: true});
 
           });

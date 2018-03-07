@@ -16,6 +16,7 @@ target 'Circle' do
     pod 'Firebase/Firestore'
     pod 'Firebase/DynamicLinks'
     pod 'Stripe'
+    pod 'Plaid'
     pod 'IGListKit', '~> 3.0'
     pod 'GSMessages'
     pod 'HGCircularSlider', '~> 2.0.0'

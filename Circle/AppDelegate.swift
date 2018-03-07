@@ -8,6 +8,7 @@
 
 import UIKit
 import Stripe
+import LinkKit
 import Firebase
 import UserNotifications
 import IQKeyboardManager
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let customURLScheme = "com.Kurbs.Circle"
     
     private let publishableKey: String = "pk_test_7El6nynr3wdrWwMltimfThlk"
+    private let plaidKey: String = "f4ca51e7acd2e7241957a0df256d8e"
     
     let gcmMessageIDKey = "gcm.message_id"
 
@@ -42,6 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !publishableKey.isEmpty {
             STPPaymentConfiguration.shared().publishableKey = publishableKey
         }
+        
+        #if USE_CUSTOM_CONFIG
+            setupPlaidWithCustomConfiguration()
+        #else
+            setupPlaidLinkWithSharedConfiguration()
+        #endif
         
         IQKeyboardManager.shared().isEnabled = true
         
@@ -207,14 +215,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+    // MARK: Plaid Link setup with shared configuration from Info.plist
+    func setupPlaidLinkWithSharedConfiguration() {
+        // <!-- SMARTDOWN_SETUP_SHARED -->
+        // With shared configuration from Info.plist
+        PLKPlaidLink.setup { (success, error) in
+            if (success) {
+                // Handle success here, e.g. by posting a notification
+                NSLog("Plaid Link setup was successful")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PLDPlaidLinkSetupFinished"), object: self)
+            }
+            else if let error = error {
+                NSLog("Unable to setup Plaid Link due to: \(error.localizedDescription)")
+            }
+            else {
+                NSLog("Unable to setup Plaid Link")
+            }
+        }
+        // <!-- SMARTDOWN_SETUP_SHARED -->
+    }
+    
+    // MARK: Plaid Link setup with custom configuration
+    func setupPlaidWithCustomConfiguration() {
+        // <!-- SMARTDOWN_SETUP_CUSTOM -->
+        // With custom configuration
+        let linkConfiguration = PLKConfiguration(key: "f4ca51e7acd2e7241957a0df256d8e", env: .sandbox, product: .auth)
+        linkConfiguration.clientName = "Link Demo"
+        PLKPlaidLink.setup(with: linkConfiguration) { (success, error) in
+            if (success) {
+                // Handle success here, e.g. by posting a notification
+                NSLog("Plaid Link setup was successful")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PLDPlaidLinkSetupFinished"), object: self)
+            }
+            else if let error = error {
+                NSLog("Unable to setup Plaid Link due to: \(error.localizedDescription)")
+            }
+            else {
+                NSLog("Unable to setup Plaid Link")
+            }
+        }
+        // <!-- SMARTDOWN_SETUP_CUSTOM -->
+    }
+    
     
     private func initialize(_ application: UIApplication) {
     
          let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = UIColor.blueColor
+        navigationBarAppearance.tintColor = UIColor.blueColor        
         
-        let initialViewController =  PhoneViewController()
-        self.window?.rootViewController = initialViewController
+        let initialViewController =  ContactInfoVC()
+        let navigationController = UINavigationController(rootViewController: initialViewController)
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
@@ -225,7 +276,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.window?.rootViewController = vc
                 self.window?.makeKeyAndVisible()
             } else {
-                let initialViewController =  PhoneViewController()
+                let initialViewController =  ContactInfoVC()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 self.window?.rootViewController = navigationController
                 self.window?.makeKeyAndVisible()
@@ -272,6 +323,8 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
 }
 // [END ios_10_message_handling]
+
+
 
 extension AppDelegate : MessagingDelegate {
     // [START refresh_token]

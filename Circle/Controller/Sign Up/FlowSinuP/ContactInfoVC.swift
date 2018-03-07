@@ -1,5 +1,5 @@
 //
-//  PhoneViewController.swift
+//  ContactInfoVC.swift
 //  Circle
 //
 //  Created by Kerby Jean on 1/15/18.
@@ -12,6 +12,8 @@ import CountryList
 class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate {
 
     var countryList = CountryList()
+    
+    let emailTextField = BackgroundTextField()
     var phoneTextField = BackgroundTextField()
     
 
@@ -34,7 +36,6 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         countryList.delegate = self
         view.backgroundColor = .white
         setupView()
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,7 +47,11 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         upperView.setText("Register with your phone number", "You'll use your phone number when you login")
         view.addSubview(upperView)
         
-        phoneTextField.frame = CGRect(x: 0, y: upperView.layer.position.y + 100, width: width, height: 50)
+        emailTextField.frame = CGRect(x: 0, y: upperView.layer.position.y + 100, width: width, height: 50)
+        emailTextField.center.x = centerX
+        emailTextField.placeholder = "Email address"
+        
+        phoneTextField.frame = CGRect(x: 0, y: emailTextField.layer.position.y + 50, width: width, height: 50)
         phoneTextField.center.x = centerX
         
         nextButton.frame = CGRect(x: 0, y: phoneTextField.layer.position.y + 50, width: width, height: 50)
@@ -68,6 +73,11 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         view.addSubview(footnote)
         footnote.text = "You may receive SMS updates from Circle and can opt out at any time."
 
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.autocapitalizationType = .none
+        emailTextField.autocorrectionType = .no
+        view.addSubview(emailTextField)
+        
         view.addSubview(phoneTextField)
         phoneTextField.delegate = self
         phoneTextField.keyboardType = .phonePad
@@ -77,7 +87,7 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         countryButton.addTarget(self, action: #selector(presentCountryList), for: .touchUpInside)
         
         view.addSubview(nextButton)
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle("Continue", for: .normal)
         nextButton.isEnabled = true
         nextButton.alpha = 1.0
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
@@ -155,7 +165,10 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         vc.country = self.country
         vc.phoneExtension = self.phoneExtension
         let phoneNumber = "+\(self.phoneExtension)\(phoneTextField.text!)"
+        let emailAddress = emailTextField.text!
+        vc.emailAddress = emailAddress
         vc.phoneNumber = phoneNumber
+        
 
         AuthService.instance.phoneAuth(phoneNumber: phoneNumber, viewController: self) { (success, error) in
             if !success! {
@@ -167,9 +180,8 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
                 self.nextButton.hideLoading()
                 return
             } else {
-                dispatch.async {
-                print("PUSH")
                 self.nextButton.hideLoading()
+                dispatch.async {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

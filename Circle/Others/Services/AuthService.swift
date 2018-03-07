@@ -33,6 +33,7 @@ class AuthService {
                         }
                         let data = document?.data()
                         let circleId = data!["circle"] as! String
+                        print("CIRCLE", circleId)
                         UserDefaults.standard.set(circleId, forKey: "circleId")
                         completion(true, nil, circleId)
                     }

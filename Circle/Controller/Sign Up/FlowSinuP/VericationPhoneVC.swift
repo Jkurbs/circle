@@ -13,6 +13,7 @@ class VericationPhoneVC: UIViewController {
     var phoneNumber: String!
     var phoneExtension: String!
     var country: String!
+    var emailAddress: String!
     
     var circleId: String?
     var pendingInsiders: Int?
@@ -67,7 +68,7 @@ class VericationPhoneVC: UIViewController {
         resendButton.addTarget(self, action: #selector(resendCode), for: .touchUpInside)
         
         view.addSubview(nextButton)
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle("Continue", for: .normal)
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
     }
     
@@ -97,6 +98,7 @@ class VericationPhoneVC: UIViewController {
         vc.country = self.country
         vc.phoneNumber = phoneNumber
         vc.circleId = circleId ?? ""
+        vc.emailAddress = emailAddress
         nextButton.showLoading()
         
         AuthService.instance.phoneVerification(phoneNumber: phoneNumber, verificationCode: verificationTextField.text!) { (success, error) in

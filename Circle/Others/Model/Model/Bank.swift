@@ -1,5 +1,5 @@
 //
-//  Card.swift
+//  Bank.swift
 //  Circle
 //
 //  Created by Kerby Jean on 2/27/18.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-final class Card {
+final class Bank {
     
 var key: String?
 var token: String?
 var last4: String?
-var imageUrl: String?
+var type: String?
         
     
     init(_ key: String, _ data: [String: Any]) {
@@ -28,8 +28,8 @@ var imageUrl: String?
         self.last4 = last4
     }
     
-    if let imageUrl = data["image_url"] as? String {
-        self.imageUrl = imageUrl
+    if let type = data["type"] as? String {
+        self.type = type
     }
   }
     

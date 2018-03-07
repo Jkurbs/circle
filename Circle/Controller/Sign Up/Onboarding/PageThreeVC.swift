@@ -62,7 +62,7 @@ class PageThreeVC: UIViewController {
             } else {
                 
                 DispatchQueue.main.async {
-                    let vc = PhoneViewController()
+                    let vc = ContactInfoVC()
                     let navigationController = UINavigationController(rootViewController: vc)
                     self.present(navigationController, animated: true, completion: nil)
                 }

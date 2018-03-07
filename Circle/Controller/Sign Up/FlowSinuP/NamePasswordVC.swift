@@ -14,6 +14,7 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     
     var phoneNumber: String!
     var country: String!
+    var emailAddress: String!
     
     var circleId: String?
     var pendingInsiders: Int?
@@ -25,10 +26,10 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     var verifiedButton            = UIButton()
     var datePicker                = UIDatePicker()
     
-    var firstNameTextField        = BackgroundTextField()
-    var lastNameTextField         = BackgroundTextField()
-    var passwordTextField         = BackgroundTextField()
+    
+    var legalNameField            = BackgroundTextField()
     var selectDobField            = BackgroundTextField()
+    var passwordTextField         = BackgroundTextField()
 
     
     override func viewDidLoad() {
@@ -56,12 +57,10 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
         upperView.setText("Name and Password", "Your name will help you be recognized")
         view.addSubview(upperView)
         
-        firstNameTextField.frame = CGRect(x: padding + 10, y: upperView.layer.position.y + 40, width:  (width / 2) - padding, height: 50)
+        legalNameField.frame = CGRect(x: padding + 10, y: upperView.layer.position.y + 60, width:  (width / 2) - padding, height: 50)
         
-        lastNameTextField.frame = CGRect(x: self.firstNameTextField.frame.maxX + padding, y: upperView.layer.position.y + 40, width: width / 2, height: 50)
+        selectDobField.frame = CGRect(x: self.legalNameField.frame.maxX + padding, y: upperView.layer.position.y + 60, width: width / 2, height: 50)
         
-        selectDobField.frame = CGRect(x: 0, y: firstNameTextField.layer.position.y + 40, width: width, height: 50)
-        selectDobField.center.x = centerX
         
         passwordTextField.frame = CGRect(x: 0, y: selectDobField.layer.position.y + 40, width: width, height: 50)
         passwordTextField.center.x = centerX
@@ -73,17 +72,11 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     
     func setupView() {
         
-        view.addSubview(firstNameTextField)
-        firstNameTextField.keyboardType = .default
-        firstNameTextField.autocorrectionType = .no
-        firstNameTextField.autocapitalizationType = .words
-        firstNameTextField.placeholder = "First name"
-        
-        view.addSubview(lastNameTextField)
-        lastNameTextField.keyboardType = .default
-        lastNameTextField.autocorrectionType = .no
-        lastNameTextField.autocapitalizationType = .words
-        lastNameTextField.placeholder = "Last name"
+        view.addSubview(legalNameField)
+        legalNameField.keyboardType = .default
+        legalNameField.autocorrectionType = .no
+        legalNameField.autocapitalizationType = .words
+        legalNameField.placeholder = "First name, last name"
         
         view.addSubview(selectDobField)
         selectDobField.placeholder = "Select date of birth"
@@ -95,10 +88,9 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
         passwordTextField.placeholder = "Password"
         verifiedButton = passwordTextField.button(iconName: "")
         verifiedButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        
 
         view.addSubview(nextButton)
-        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitle("Continue", for: .normal)
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
     }
 
@@ -123,19 +115,20 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     
     @objc func nextStep() {
         self.nextButton.showLoading()
-        let firstName = firstNameTextField.text!
-        let lastName = lastNameTextField.text!
+        let legalName = legalNameField.text!
+        
+        var nameArr = legalName.components(separatedBy: " ")
+        let firstName = nameArr[0]
+        let lastName = nameArr[1]
         let password = passwordTextField.text!
-        let vc = ChoosePictureVC()
-        vc.password = password
-        vc.name = [firstName, lastName]
-        vc.circleId = circleId ?? ""
+        let vc = ChooseBankVC()
+        vc.emailAddress = emailAddress
         let dob =  selectDobField.text!.components(separatedBy: "/")
         let dobMonth = dob.first!
         let dobDay = dob[1]
         let dobYear = dob[2]
         
-        DataService.instance.saveNamePassword(firstName: firstName, lastName: lastName, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
+        DataService.instance.saveNamePassword(firstName: firstName, lastName: lastName, email: emailAddress, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
             if !success {
                 let alert = Alert()
                 dispatch.async {
@@ -144,7 +137,9 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
                 }
             } else {
                 self.nextButton.hideLoading()
-                self.navigationController?.pushViewController(vc, animated: true)
+                dispatch.async {
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }
     }
@@ -155,7 +150,7 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textChanged(sender: NSNotification) {
-        if firstNameTextField.hasText && lastNameTextField.hasText && passwordTextField.hasText && !selectDobField.text!.isEmpty {
+        if legalNameField.hasText && !selectDobField.text!.isEmpty {
             nextButton.isEnabled = true
             nextButton.alpha = 1.0
         } else {

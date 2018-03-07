@@ -40,12 +40,25 @@
 			<array/>
 		</dict>
 	</array>
+	<key>PLKPlaidLinkConfiguration</key>
+	<dict>
+		<key>clientName</key>
+		<string>$(PRODUCT_NAME)</string>
+		<key>env</key>
+		<string>sandbox</string>
+		<key>key</key>
+		<string>f4ca51e7acd2e7241957a0df256d8e</string>
+		<key>product</key>
+		<string>auth</string>
+		<key>selectAccount</key>
+		<true/>
+	</dict>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSCameraUsageDescription</key>
-    <string>Circle would like to access your camera.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Circle would like to access your camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Circle would like to access your contacts.</string>
 	<key>UIBackgroundModes</key>
