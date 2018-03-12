@@ -22,10 +22,23 @@ exports = module.exports = functions.firestore.document('/users/{userId}/sources
         email: email,
         source: token,
        }).then(customer => {
-         var data = {
-             customer_id: customer.id
-        };
-          return admin.firestore().collection('users').doc(`${event.params.userId}`).set(data, {merge: true});
-        });
+        stripe.customers.retrieveSource(
+            customer.id,
+            customer.default_source,
+        function(err, external_account) {
+            var last4 = external_account.last4;  
+             var data = {
+                 customer_id: customer.id
+             };
+            
+             var sourceData = {
+                 last_4: last4
+             };
+             admin.firestore().collection('users').doc(`${event.params.userId}`).collection('sources').doc(`${event.params.id}`).set(sourceData, {merge: true});
+             admin.firestore().collection('users').doc(`${event.params.userId}`).set(sourceData, {merge: true});
+              return admin.firestore().collection('users').doc(`${event.params.userId}`).set(data, {merge: true});
+            });
+          }
+       );
     });
 });

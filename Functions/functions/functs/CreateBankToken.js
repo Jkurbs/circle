@@ -17,32 +17,23 @@ exports = module.exports = functions.firestore.document('/users/{userId}/plaid/{
     if (val === null) return null;
     const publicToken = val.public_token; 
     const accountId = val.account_id; 
+    const customerId = val.customer_id; 
+
     const email = val.email_address; 
-    console.log('CUSTOMER token', publicToken);
-    console.log('EMAIL_ADDRESS', email);
     return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
     return snapshot.data();
   }).then(customer => {
-        console.log('ACCOUNT ID', accountId);
-        console.log('CUSTOMER EMAIL', customer.email_address);
           return plaidClient.exchangePublicToken(publicToken, function(err, res) {
-            console.log('ACCOUNT_ID', res.account_id);
             var accessToken = res.access_token;
             var item_id = res.item_id;
-            console.log('REF', res);
-           console.log('ACCESS TOKEN', accessToken);
           // Generate a bank account token
-            console.log('SECOND ACCOUNT ID', accountId);
           plaidClient.createStripeToken(accessToken, accountId, function(err, res) {
-              console.log('BANK ACCOUNT TOKEN ERROR', err);
-              console.log('BANK ACCOUNT TOKEN RESULT', res);
-              var bankAccountToken = res.stripe_bank_account_token;
+              var bankAccountToken = res.stripe_bank_account_token;  
               var data = {
-               token: bankAccountToken,
-              };
-             return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('sources').doc(`${event.params.id}`).set(data, {merge: true});
-
-          });
+                    token: bankAccountToken,
+                 };   
+                return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('sources').doc(`${event.params.id}`).set(data, {merge: true});
+            });
         });        
     });
 });

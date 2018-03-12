@@ -14,7 +14,6 @@ exports = module.exports = functions.firestore.document('/users/{userId}').onWri
       return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
          return snapshot.data(); 
       }).then(account => {
-          
            const email_address = val.email_address;
            const first_name = val.first_name;
            const last_name = val.last_name;

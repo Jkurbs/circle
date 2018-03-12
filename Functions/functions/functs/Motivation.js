@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 
 // TODO: Make sure you configure the 'dev_motivator.device_token' Google Cloud environment variables.
-const deviceToken = 'f0t2SmIJtXs:APA91bF0FkN9yn354oWiUmA0V8-pvEIYNFkIekxPny68XZ92G1UxjlQ-h4Llro7icotn4BqTqK1lb_fPzzWeU8f0naZO9LEWSPfTogJuMDN4fNY-PH5CQao8F1OWAgxcIJvOb6XLBv2t'
+const deviceToken = 'fLQweBJF-dU:APA91bE7BCyn9Y_cqTbRfTzlrcLqPzzapPl1pGsSEgYR3_3v-u7ieaEYTmre2vh5oVnOIrb1z9P1VkNitljRYoY2UI0K9bxN0aO2pZ1astR2D2_wUrGVI68LSeYoDF_7VLyMm01rWLbF'
 
 
 /**
@@ -13,14 +13,19 @@ const deviceToken = 'f0t2SmIJtXs:APA91bF0FkN9yn354oWiUmA0V8-pvEIYNFkIekxPny68XZ9
  */
 
 exports = module.exports = functions.analytics.event('first_open').onLog((event) => {
+    
+    
+   const options = {
+      priority: 'high',
+   };
   const payload = {
     notification: {
       title: 'You have a new user \uD83D\uDE43',
       body: event.data.user.deviceInfo.mobileModelName + ' from ' + event.data.user.geoInfo.city + ', ' + event.data.user.geoInfo.country,
-      sound:"default",
-      vibrate:"true"
+      sound:'default',
+      vibrate:'true',
     },
   };
-    return admin.messaging().sendToDevice(deviceToken, payload);
+    return admin.messaging().sendToDevice(deviceToken, payload, options);
 });
 
