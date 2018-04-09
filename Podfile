@@ -23,6 +23,8 @@ target 'Circle' do
     pod 'IQKeyboardManager'
     pod 'CountryList'
     pod 'SDWebImage', '~> 4.0'
+    pod 'TableViewHelper', :path => 'TableViewHelper'
+
 
   target 'CircleTests' do
     inherit! :search_paths

@@ -37,19 +37,23 @@ class SettingsView: UIView {
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
      }
     
     func setup() {
-        
-//        gradientLayer.frame = self.bounds
-//        self.layer.addSublayer(gradientLayer)
 
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        //        gradientLayer.frame = self.bounds
+        //        self.layer.addSublayer(gradientLayer)
+        
         label.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 50)
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textColor = .darkText
         label.textAlignment = .center
-        label.text = "Dashboard"
         self.addSubview(label)
         
         self.backgroundColor = UIColor.textFieldBackgroundColor
@@ -61,4 +65,20 @@ class SettingsView: UIView {
         separator.frame = CGRect(x: 0, y: self.bounds.height - height, width: self.bounds.width, height: height)
         self.layer.addSublayer(separator)
     }
+    
+    
+    func configure(_ userName: String) {
+        label.text = ""
+        label.text = userName
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

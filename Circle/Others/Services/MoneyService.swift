@@ -17,32 +17,75 @@ class MoneyService {
         return _instance
     }
     
-    func sendMoney(_ amount: String, _ destination: String, _ first_name: String, _ last_name: String, _ completion: @escaping (_ status: String, _ success: String) -> ()) {
-        let data: [String: Any] = ["amount": amount, "destination": destination, "first_name": first_name, "last_name": last_name]
+    
+    func requestMoney() {
+        
+    }
+    
+    var listener: ListenerRegistration!
+
+    func sendMoney(_ recipient_id: String, _ amount: String, _ destination: String, _ first_name: String, _ last_name: String, _ completion: @escaping (_ success: Bool, _ error: String?) -> ()) {
+        let data: [String: Any] = ["amount": amount, "to": recipient_id, "destination": destination, "first_name": first_name, "last_name": last_name, "type": "send"]
         let ref = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("charges").document()
         ref.setData(data, options: SetOptions.merge()) { (error) in
             if let error = error {
                 print("ERROR SENDING TRANSACTION", error.localizedDescription)
                 return
             } else {
-                ref.addSnapshotListener { (document, error) in
+                self.listener = ref.addSnapshotListener { document, error in
                     if let error = error {
                         print("ERROR GETTING TRANSACTION", error.localizedDescription)
                     } else {
                         if (document?.exists)! {
-                            let data = document?.data()
-                            if let data = data {
-                                if let status = data["status"] as? String, let failureMessage = data["failure_message"] as? String {
-                                    completion(status, failureMessage)
+                            let data = document!.data()
+                            if let success = data["success"] as? Bool  {
+                                if success == false {
+                                    let error = data["error"] as? String
+                                    completion(success, error)
+                                    ref.delete()
+                                    self.listener.remove()
+                                } else {
+                                DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("events").document().setData(data)
+                                    completion(true, nil)
+                                    completion(success, nil)
+                                    self.listener.remove()
                                 }
                             }
-                        } else {
-                            
                         }
                     }
                 }
             }
         }
+    }
+    
+    
+    
+    func requestMoney(_ user: User, data: [String: Any], completion: @escaping (_ success: Bool, _ error: String?) -> ()) {
+        let ref = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("requests").document()
+        ref.setData(data, options: SetOptions.merge()) { (error) in
+            if let error = error {
+                print("ERROR SENDING TRANSACTION", error.localizedDescription)
+                completion(false, nil)
+                return
+            } else {
+                DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("events").document().setData(data)
+                completion(true, nil)
+            }
+        }
+    }
+    
+    
+    func retrieveBalance(_ userId: String, completion: @escaping (_ balance: Balance) -> ()) {
+        DataService.instance.REF_USERS.document(userId).collection("balance").getDocuments(completion: { (documents, error) in
+            if let error = error {
+                print("Error getting source", error.localizedDescription)
+            } else {
+                for document in (documents?.documents)! {
+                    let data = document.data()
+                    print("DATA:::", data)
+                }
+            }
+        })
     }
 }
 

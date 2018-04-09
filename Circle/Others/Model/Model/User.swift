@@ -23,10 +23,12 @@ final class User {
     var status: String?
     var activated: Bool?
     var bank: Bank?
+    var event: Event?
+    var balance: Balance?
 
     
     
-    init(key: String, data: [String: Any], bank: Bank?) {
+    init(key: String, data: [String: Any], bank: Bank?, event: Event?, balance: Balance?) {
         
         self.userId = key
         
@@ -64,6 +66,14 @@ final class User {
         
         if let bank = bank {
             self.bank = bank
+        }
+        
+        if let event = event {
+            self.event = event
+        }
+        
+        if let balance = balance {
+            self.balance = balance
         }
     }
 }

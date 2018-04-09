@@ -10,10 +10,10 @@ import UIKit
 
 final class Bank {
     
-var key: String?
-var token: String?
-var last4: String?
-var type: String?
+    var key: String?
+    var token: String?
+    var last4: String?
+    var type: String?
         
     
     init(_ key: String, _ data: [String: Any]) {
@@ -24,7 +24,7 @@ var type: String?
         self.token = token
     }
     
-    if let last4 = data["last4"] as? String {
+    if let last4 = data["last_4"] as? String {
         self.last4 = last4
     }
     

@@ -180,9 +180,9 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
                 self.nextButton.hideLoading()
                 return
             } else {
-                self.nextButton.hideLoading()
                 dispatch.async {
                 self.navigationController?.pushViewController(vc, animated: true)
+                self.nextButton.hideLoading()
             }
         }
     }

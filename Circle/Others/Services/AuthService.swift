@@ -19,7 +19,7 @@ class AuthService {
     
     let appDel : AppDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    func signIn(email: String, password: String, completion: @escaping (_ success: Bool, _ error: Error?, _ circleId: String?) -> ()){
+    func signIn(email: String, password: String, completion: @escaping (_ success: Bool, _ error: Error?, _ circleId: String?) -> ()) {
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil {
                 completion(false, error, nil)
@@ -31,11 +31,13 @@ class AuthService {
                             print("ERROR:::", error.localizedDescription)
                             return
                         }
-                        let data = document?.data()
-                        let circleId = data!["circle"] as! String
-                        print("CIRCLE", circleId)
-                        UserDefaults.standard.set(circleId, forKey: "circleId")
-                        completion(true, nil, circleId)
+                        if (document?.exists)! {
+                            let data = document?.data()
+                            if let circleId = data!["circle"] as? String {
+                                UserDefaults.standard.set(circleId, forKey: "circleId")
+                                completion(true, nil, circleId)
+                            }
+                        }
                     }
                 }, completion: nil)
             }
@@ -65,7 +67,7 @@ class AuthService {
                 completion(false, error)
             } else {
                 let ip = DataService.instance.getIP()[1]
-                DataService.instance.saveDeviceInfo(phoneNumber: phoneNumber, ipAddress: ip)
+                DataService.instance.saveDeviceInfo(phoneNumber, ip)
                     completion(true, nil)
             }
         }

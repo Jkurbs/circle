@@ -50,23 +50,22 @@ class PageThreeVC: UIViewController {
     
     
     @objc func notificationAccess() {
-        AuthService.instance.appDel.userNotification()
+        //AuthService.instance.appDel.userNotification()
         
+        DispatchQueue.main.async {
+            let vc = ContactInfoVC()
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true, completion: nil)
+        }
         if let circleId = UserDefaults.standard.string(forKey: "circleId") as? String {
-            if circleId != nil {
-                DispatchQueue.main.async {
-                    let vc = PhoneVCTwo()
-                    let navigationController = UINavigationController(rootViewController: vc)
-                    self.present(navigationController, animated: true, completion: nil)
-                }
-            } else {
-                
-                DispatchQueue.main.async {
-                    let vc = ContactInfoVC()
-                    let navigationController = UINavigationController(rootViewController: vc)
-                    self.present(navigationController, animated: true, completion: nil)
-                }
-            }
+//            if circleId != nil {
+//                DispatchQueue.main.async {
+//                    let vc = PhoneVCTwo()
+//                    let navigationController = UINavigationController(rootViewController: vc)
+//                    self.present(navigationController, animated: true, completion: nil)
+//                }
+//            } else {
+//            }
         }
     }
 }

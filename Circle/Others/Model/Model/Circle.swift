@@ -16,16 +16,22 @@ final class Circle {
     
     var id: String?
     var activated: Bool?
+    var users: User?
     
-    var maxAmount: NSNumber?
+    var maxAmount: Int?
+    var weeklyAmount: Int?
+    var weeks: Int?
     var insiders: [String]?
     var postDate: NSDate?
     var startDate: NSDate?
     var endDate: NSDate?
+
     
-    init(key: String, data: [String: Any]) {
+    init(key: String, data: [String: Any], users: User) {
         
         self.id = key
+        
+        self.users = users
         
         if let id = data["id"] as? String {
             self.id = id
@@ -35,8 +41,16 @@ final class Circle {
             self.activated = activated
         }
         
-        if let maxAmount = data["maxAmount"] as? NSNumber {
+        if let maxAmount = data["max_amount"] as? Int {
             self.maxAmount = maxAmount
+        }
+        
+        if let weeklyAmount = data["weekly_amount"] as? Int {
+            self.weeklyAmount = weeklyAmount
+        }
+        
+        if let weeks = data["weeks"] as? Int {
+            self.weeks = weeks
         }
 
         if let insiders = data["insiders"] as? [String] {

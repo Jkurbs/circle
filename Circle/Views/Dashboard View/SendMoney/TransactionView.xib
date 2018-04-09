@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="j73-RV-o09" userLabel="TransactionView" customClass="TransactionView" customModule="Circle" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="215"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="2vf-ct-Nc3">
+                    <rect key="frame" x="102" y="125" width="170" height="83.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bql-XB-n8u">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="83.5"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ymr-T7-oW7" customClass="OptionButton" customModule="Circle" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="KXK-Vi-hlz"/>
+                                        <constraint firstAttribute="height" constant="60" id="lxz-vq-pKZ"/>
+                                    </constraints>
+                                    <state key="normal" image="Cancel-25"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="30"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="actions:" destination="j73-RV-o09" eventType="touchUpInside" id="KC1-kP-gh4"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSF-HC-tGq">
+                                    <rect key="frame" x="11.5" y="70" width="37" height="13.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Ymr-T7-oW7" secondAttribute="trailing" id="xv2-EE-hlq"/>
+                            </constraints>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="E3Y-Hi-6s1">
+                            <rect key="frame" x="110" y="0.0" width="60" height="83.5"/>
+                            <subviews>
+                                <button opaque="NO" alpha="0.5" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otc-7B-mKq" customClass="OptionButton" customModule="Circle" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="FoL-lu-Yg8"/>
+                                        <constraint firstAttribute="height" constant="60" id="sy3-Ud-vqV"/>
+                                    </constraints>
+                                    <state key="normal" image="Confirm-25"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="30"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="actions:" destination="j73-RV-o09" eventType="touchUpInside" id="5FH-l4-VTk"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proceed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qth-01-9cV">
+                                    <rect key="frame" x="8" y="70" width="44.5" height="13.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLH-Jk-kPY">
+                    <rect key="frame" x="55" y="27" width="264" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="9pw-jC-dPA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="2vf-ct-Nc3" firstAttribute="centerX" secondItem="j73-RV-o09" secondAttribute="centerX" id="56D-UN-bmI"/>
+                <constraint firstItem="jLH-Jk-kPY" firstAttribute="centerX" secondItem="j73-RV-o09" secondAttribute="centerX" id="8xO-24-GVm"/>
+                <constraint firstItem="jLH-Jk-kPY" firstAttribute="top" secondItem="ty3-wb-plY" secondAttribute="top" constant="27" id="Rgs-bm-nL5"/>
+                <constraint firstItem="2vf-ct-Nc3" firstAttribute="top" secondItem="jLH-Jk-kPY" secondAttribute="bottom" constant="73" id="dOk-4s-Gve"/>
+                <constraint firstItem="jLH-Jk-kPY" firstAttribute="leading" secondItem="ty3-wb-plY" secondAttribute="leading" constant="55" id="iDx-Js-D7X"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="ty3-wb-plY"/>
+            <connections>
+                <outlet property="confirmButton" destination="otc-7B-mKq" id="4Zv-Vm-6yh"/>
+            </connections>
+            <point key="canvasLocation" x="-795.5" y="22.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Cancel-25" width="25" height="25"/>
+        <image name="Confirm-25" width="25" height="25"/>
+    </resources>
+</document>

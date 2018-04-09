@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import FirebaseAuth
 
 class PendingInviteCell: UICollectionViewCell {
     
@@ -48,14 +49,20 @@ class PendingInviteCell: UICollectionViewCell {
         imageView.layer.borderColor = UIColor.lightGray.cgColor
         imageView.backgroundColor = UIColor.textFieldBackgroundColor
         
-        
-        
         contentView.addSubview(imageView)
         
         view.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height)
         view.cornerRadius = view.frame.width / 2
         view.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
     }
+    
+    
+    
+    
+    func isSelected() {
+         self.layer.borderColor = UIColor.blueColor.cgColor
+    }
+    
     
     
     
@@ -66,8 +73,12 @@ class PendingInviteCell: UICollectionViewCell {
     
     func configure(_ user: User?) {
     
+        
+        if user!.userId == Auth.auth().currentUser!.uid {
+            isSelected()
+        }
+        
         if user?.activated != true {
-            print("NOT ACTIVATED")
             imageView.layer.addSublayer(view)
         }
         

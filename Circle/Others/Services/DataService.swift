@@ -94,7 +94,8 @@ class DataService {
     }
     
     
-    func retrieveUser(_ uid: String,   _ completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?, _ data: [String : Any]?, _ bank: Bank?, _ cardData: [String: Any]?)  -> ()) {
+    
+    func retrieveUser(_ uid: String,   _ completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?, _ data: [String : Any]?, _ bank: Bank?, _ bankData: [String: Any]?)  -> ()) {
         let ref = DataService.instance.REF_USERS.document(uid)
         ref.getDocument { (document, error) in
             if let error = error {
@@ -112,7 +113,7 @@ class DataService {
                                     let bankData = document.data()
                                     let bankKey = document.documentID
                                     let bank = Bank(bankKey, bankData)
-                                    let user = User(key: key, data: data, bank: bank)
+                                    let user = User(key: key, data: data, bank: bank, event: nil, balance: nil)
                                     completion(true, nil, user, data, bank, bankData)
                                 }
                             }
@@ -133,20 +134,18 @@ class DataService {
             return
           }
             let ref = DataService.instance.REF_CIRCLES.document(circleId)
-            ref.getDocument { (document, error) in
+        ref.getDocument { (document, error) in
                 if let document = document {
                     if document.exists {
-                        print("EXIST")
                         let data = document.data()
-                        print("DATA", data)
                         let key = document.documentID
-                        let circle = Circle(key: key, data: data)
                         self.getInsiders(key, { (success, error, insider) in
                             if !success {
                                 print("ERROR GETTING INSIDERS", error!.localizedDescription)
                             } else {
-                                print("GET INSIDERS")
-                                completion(true, nil, circle, insider)
+                            print("GET INSIDERS")
+                            let circle = Circle(key: key, data: data, users: insider!)
+                            completion(true, nil, circle, insider)
                         }
                     })
                 }
@@ -169,17 +168,17 @@ class DataService {
                 if document.exists {
                     let data = document.data()
                     let key = document.documentID
-                DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("sources").getDocuments(completion: { (documents, error) in
-                        if let error = error {
-                            print("Error getting source", error.localizedDescription)
-                        } else {
-                            for document in (documents?.documents)! {
-                                if document.exists {
-                                    let bankData = document.data()
-                                    let bankKey = document.documentID
-                                    let bank = Bank(bankKey, bankData)
-                                    let insiders = User(key: key, data: data, bank: bank)
-                                    completion(true, nil, insiders)
+                        DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("sources").getDocuments(completion: { (documents, error) in
+                            if let error = error {
+                                print("Error getting source", error.localizedDescription)
+                            } else {
+                                for document in (documents?.documents)! {
+                                    if document.exists {
+                                        let bankData = document.data()
+                                        let bankKey = document.documentID
+                                        let bank = Bank(bankKey, bankData)
+                                        let insiders = User(key: key, data: data, bank: bank, event: nil, balance: nil)
+                                        completion(true, nil, insiders)
                                 }
                             }
                         }
@@ -188,7 +187,7 @@ class DataService {
             }
         }
     }
-    
+
     
     func getPendingInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ pendingnUsers: User?) -> ()) {
         
@@ -201,7 +200,7 @@ class DataService {
             for document in (documents?.documents)! {
                 let data = document.data()
                 let key = document.documentID
-                let pendingInsiders = User(key: key, data: data, bank: nil)
+                let pendingInsiders = User(key: key, data: data, bank: nil, event: nil, balance: nil)
                 completion(true, nil, pendingInsiders)
             }
         }
@@ -278,7 +277,6 @@ class DataService {
             // Check for running IPv4, IPv6 interfaces. Skip the loopback interface.
             if (flags & (IFF_UP|IFF_RUNNING|IFF_LOOPBACK)) == (IFF_UP|IFF_RUNNING) {
                 if addr.sa_family == UInt8(AF_INET) || addr.sa_family == UInt8(AF_INET6) {
-                    
                     // Convert interface address to a human readable string:
                     var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
                     if (getnameinfo(&addr, socklen_t(addr.sa_len), &hostname, socklen_t(hostname.count),
@@ -295,7 +293,7 @@ class DataService {
     
     
     
-func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
+    func saveDeviceInfo(_ phoneNumber: String, _ ipAddress: String) {
     let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") ?? ""
     let data: [String: Any] = ["ip_address": ipAddress, "device_token": deviceToken, "phone_number": phoneNumber]
 
@@ -307,7 +305,6 @@ func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
           }
        })
     }
-    
     
     
     func saveContacts(contacts: [Contact]) {
@@ -374,7 +371,6 @@ func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
     
     
     func addInsidersToCircle(id: String, _ insiders: [Contact], _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
-        
         self.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["circle": id], options: SetOptions.merge())
 
         for insider in insiders {
@@ -490,7 +486,7 @@ func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
                                         print("DATA:::: =>>>", data)
                                         let key = document.documentID
                                         print("KEY:::: =>>>", key)
-                                        let admin = User(key: key, data: data, bank: nil)
+                                        let admin = User(key: key, data: data, bank: nil, event: nil, balance: nil)
                                         DataService.instance.REF_CIRCLES.document(id).collection("insiders").getDocuments(completion: { (documents, error) in
                                             if let error = error {
                                                 return
@@ -501,7 +497,7 @@ func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
                                                     let data = document.data()
                                                     print("DATA:::: =>>>", data)
                                                     let key = document.documentID
-                                                    let insider = User(key: key, data: data, bank: nil)
+                                                    let insider = User(key: key, data: data, bank: nil, event: nil, balance: nil)
                                                     completion(true, nil, admin, insider)
                                                 }
                                             }
@@ -545,14 +541,21 @@ func saveDeviceInfo(phoneNumber: String, ipAddress: String) {
                 if document.exists {
                     let data = document.data()
                     let key = document.documentID
-                    let user = User(key: key, data: data, bank: nil)
+                    let user = User(key: key, data: data, bank: nil, event: nil, balance: nil)
                     print("GOT YOU::", user.firstName)
                     completion(true, error, user)
                 }
             }
         }
     }
+    
+    func setupCircle(_ circleId: String) {
+//        let data = ["max_amount": maxAmount, "weeks": weeks, "weekly_amount": weeklyAmount, "activated": true] as [String : Any]
+//        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
+    }
 }
+
+
 
 
 extension String {
@@ -560,15 +563,3 @@ extension String {
         return components(separatedBy: .whitespaces).joined()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,6 +6,10 @@ try {admin.initializeApp(functions.config().firebase);} catch(e) {}
 
 const stripe = require('stripe')("sk_test_QfBDc4JT7E6iz8EwrsuJcR58");
 
+var plaid = require('plaid');
+var plaidClient = new plaid.Client('5a996f57bdc6a467e110751b', 'c3748d52f353056b2319ecc5aced77', 'f4ca51e7acd2e7241957a0df256d8e', plaid.environments.sandbox);
+
+
 // [START chargecustomer]
 //Charge the Stripe customer whenever an amount is written to the Realtime database
 
@@ -23,11 +27,12 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
   return admin.firestore().collection('users').doc(`${event.params.userId}`).get().then(snapshot => {
     return snapshot.data();
   }).then(customer => {
-      
+
         const userId = event.params.userId;
         const recipient_id = val.to;
         const amount = val.amount;
       
+        const account_id = customer.account_id;
         const customer_id = customer.customer_id;
         const email_address = customer.email_address;
       
@@ -35,7 +40,6 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
         const last_name = customer.last_name;
       
         stripe.charges.create({
-            
             amount: amount * 100,
             currency: 'usd',
             description: "Example charge",
@@ -47,18 +51,16 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
            },
         }, function(err, charge) {
             if (err !== null) {
-               console.log('ERROR PAYMENT', err.message);
              var data = {
                success: false,
                error: err.message,
              };
                return admin.firestore().collection('users').doc(`${userId}`).collection('charges').doc(`${event.params.id}`).set(data, {merge: true});
             } else {
-            var customer = charge.customer;
             var data = {
               chargeId: charge.id,
               status: charge.status, 
-              created: new Date(),
+              date: new Date(),
               success: true,
             };   
                 
@@ -68,29 +70,40 @@ exports = module.exports = functions.firestore.document('/users/{userId}/charges
               last_name: last_name, 
               chargeId: charge.id,
               status: charge.status, 
-              send: new Date(),
+              date: new Date(),
               amount: amount,
               customer: customer_id,
+              type: 'received',
             };   
                 
-            admin.firestore().collection('users').doc(`${userId}`).collection('charges').doc(`${event.params.id}`).set(data, {merge: true});
-            return admin.firestore().collection('users').doc(recipient_id).collection('event').doc(`${event.params.id}`).set(receivedData, {merge: true});
+              admin.firestore().collection('users').doc(`${userId}`).collection('charges').doc(`${event.params.id}`).set(data, {merge: true});
+              admin.firestore().collection('users').doc(recipient_id).collection('events').doc(`${event.params.id}`).set(receivedData, {merge: true});                
+              console.log('ACCOUNT_ID::', account_id)
+              return stripe.balance.retrieve({
+                     stripe_account: account_id
+                }, function(err, charge) {
+                   const available = charge.available[0].amount;
+                   const pending = charge.pending[0].amount;
+               var data = {
+                   available_amount: available,
+                   pending_amount: pending,
+               };  
+                  return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('insight').doc('balance').set(data, {merge: true});
+
+              });
             }
         });
   }).then(response => {
+
       // If the result is successful, write it back to the database
-      // WRITE RESPONSE BACK
-      var data = {
-          response: 'response', 
-      };
-      return admin.firestore().collection('users').doc(`${event.params.userId}`).collection('charges').doc(`${event.params.id}`).set(data, {merge: true});
-      
+      // WRITE RESPONSE BACK      
+
     }).catch((error) => {
       
-      var data = {
-          customer_id: customer, 
-      };
-      return admin.firestore().collection('users').doc(`${event.params.userId}`).set(data, {merge: true});
+//      var data = {
+//          customer_id: customer, 
+//      };
+//      return admin.firestore().collection('users').doc(`${event.params.userId}`).set(data, {merge: true});
           //return event.data.ref.doc('errors').set(userFacingMessage(error));
       }).then(() => {
        return;

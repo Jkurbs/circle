@@ -98,6 +98,7 @@ class LoginVC: UIViewController {
                 self.nextButton.hideLoading()
                 let circleVC = CircleVC()
                 circleVC.circleId = circleId
+                print("PUSH")
                 self.navigationController?.pushViewController(circleVC, animated: true)
             }
         }

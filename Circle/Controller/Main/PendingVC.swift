@@ -1,5 +1,5 @@
 //
-//  PendingVC.swift
+//  CircleVC.swift
 //  Circle
 //
 //  Created by Kerby Jean on 2/10/18.
@@ -15,8 +15,10 @@ class CircleVC: UIViewController {
     let contentView = ContentView()
     var settingsView: SettingsView!
     var welcomeView: IntroView!
-    var insightView = InsightView()
-    let dashboardView: DashboardView = UIView.fromNib()
+    let circleInsightView: CircleInsightView = UIView.fromNib()
+    let currentUserView: CurrentUserView = UIView.fromNib()
+    let userViews: UserDashboardView = UIView.fromNib()
+
 
     var loadingView = LoadingView()
     var circleView = CircleView()
@@ -39,16 +41,6 @@ class CircleVC: UIViewController {
         return view
     }()
     
-    lazy var tableView: UITableView = {
-        let view = UITableView(frame: .zero)
-        view.separatorStyle = .none
-        view.contentInset = UIEdgeInsets(top: 10 , left: 0, bottom: 0, right: 0)
-        view.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
-        view.alwaysBounceHorizontal = false
-        view.allowsSelection = false
-        return view
-    }()
-    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -56,16 +48,8 @@ class CircleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor(red: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-        //UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-
-        view.addSubview(tableView)
-
-        tableView.delegate = self
-        tableView.dataSource  = self
-        tableView.register(InsightCell.self, forCellReuseIdentifier: "InsightCell")
-
         
         collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")
         
@@ -97,46 +81,39 @@ class CircleVC: UIViewController {
         welcomeView.headline.text = "Welcome to your Circle dashboard"
         welcomeView.subhead.text = "You'll receive an notification when an invitation has been accepted"
         
-        // insight View
-        self.insightView.frame = CGRect(x: 0, y: 45, width: contentView.frame.width, height:  height)
-        tableView.frame = CGRect(x: 0, y: 60 , width: insightView.frame.width - 50, height:  insightView.frame.height - 60)
-        tableView.center.x = insightView.center.x
-        insightView.addSubview(tableView)
         
-        // add userView
-        dashboardView.frame = CGRect(x: 0, y: 60, width: dashboardView.frame.width, height:  dashboardView.frame.height)
-        dashboardView.isHidden = false
-        self.view.addSubview(dashboardView)
+        circleInsightView.frame = CGRect(x: 0, y: view.bounds.height - (self.circleInsightView.frame.height + 20), width: view.frame.width, height: self.circleInsightView.frame.height)
+        self.contentView.addSubview(circleInsightView)
         
-        collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 20, width: welcomeView.frame.width, height: 300)
-
-        circleView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 20, width: welcomeView.frame.width - 130, height: 300)
+        // Add userView
+        userViews.frame = CGRect(x: 0, y: 45, width: userViews.frame.width, height:  userViews.frame.height)
+        userViews.alpha = 0.0
+        self.contentView.addSubview(userViews)
+        
+        currentUserView.frame = CGRect(x: 0, y: 45, width: currentUserView.frame.width, height: currentUserView.frame.height)
+        currentUserView.alpha = 1.0
+        self.contentView.addSubview(currentUserView)
+        
+        collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 5, width: welcomeView.frame.width, height: 290)
+        
+        circleView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 5, width: welcomeView.frame.width - 130, height: 290)
         circleView.center.x = collectionView.center.x
         contentView.insertSubview(circleView, at: 0)
         
         loadingView.frame = collectionView.frame
 
-        circleButton.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
-        circleButton.layer.position = CGPoint(x: collectionView.frame.width / 2, y: collectionView.frame.height / 2)
-        circleButton.cornerRadius = circleButton.frame.width / 2
-        circleButton.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
-        collectionView.addSubview(circleButton)
-        circleButton.addTarget(self, action: #selector(circleButtonTapped), for: .touchUpInside)
+//        circleButton.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+//        circleButton.layer.position = CGPoint(x: collectionView.frame.width / 2, y: collectionView.frame.height / 2)
+//        circleButton.cornerRadius = circleButton.frame.width / 2
+//        circleButton.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
+//        collectionView.addSubview(circleButton)
     }
     
     
-    @objc func circleButtonTapped() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.circleButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            self.contentView.addSubview(self.insightView)
-        }, completion: { (completion) in
-            self.circleButton.transform = CGAffineTransform.identity
-        })
-    }
+   
     
     
     func retrieveUser() {
-        print("RETRIEVE")
         users = []
         self.view.addSubview(loadingView)
         let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as! String
@@ -144,78 +121,47 @@ class CircleVC: UIViewController {
             if !success {
                     print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
-                print("SUCCESS")
+                
+                self.circleInsightView.totalAmountSlider.setValue(Float(circle?.maxAmount ?? 0), animated: true)
+                self.circleInsightView.amountLabel.text = "\(circle?.maxAmount ?? 0)"
                 self.users.append(insider)
                 self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
-                self.tableView.reloadData()
 
+                self.circleInsightView.circle = circle 
                 if circle?.activated == true {
+                self.circleInsightView.setupButton.isEnabled = true
                     dispatch.async {
-                           self.contentView.addSubview(self.dashboardView)
+                        //self.circleInsightView
+                           // self.contentView.addSubview(self.currentUserView)
                         }
                     } else {
+                self.circleInsightView.setupButton.isEnabled = false
                         dispatch.async {
-                            self.contentView.addSubview(self.dashboardView)
+                           // self.contentView.addSubview(self.welcomeView)
                         }
                     }
                 self.loadingView.removeFromSuperview()
             }
         }
     }
-}
-
-
-
-
-
-// MARK: TABLEVIEW DELEGATE, DATASOURCE
-
-extension CircleVC: UITableViewDelegate, UITableViewDataSource {
-    
-
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InsightCell", for: indexPath) as! InsightCell
-        let user = users[indexPath.row]
-        cell.configure(user!)
-        return cell
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40.0
-    }
     
     
     @objc func logOut() {
-        
         UserDefaults.standard.removeObject(forKey: "userId")
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             DispatchQueue.main.async {
-                let controller = ContactInfoVC()
-                self.present(controller, animated: true, completion: nil)
+                let controller = LoginVC()
+                let nav = UINavigationController(rootViewController: controller)
+                self.present(nav, animated: true, completion: nil)
             }
         } catch let signOutError as NSError {
             print("SIGNOUT ERROR:\(signOutError)")
         }
     }
 }
+
 
 // MARK: COLLECTIONVIEW DELEGATE, DATASOURCE
 
@@ -238,16 +184,14 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if (userViewIsShow) {
-            userViewIsShow = false
-        } else {
-            //First Tap
-            userViewIsShow = true
-            contentView.addSubview(dashboardView)
-            dashboardView.isHidden = false
-        }
-        
         let user = self.users[indexPath.row]
+//
+//        if (self.userViewIsShow) {
+//            //self.contentView.addSubview(self.currentUserView)
+//
+//        } else {
+//
+//        }
         
         if(selectedIndex != indexPath) {
             var indicesArray = [IndexPath]()
@@ -264,20 +208,45 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             selectedIndex = indexPath
             let cell = collectionView.cellForItem(at: indexPath) as! PendingInviteCell
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                cell.layer.borderColor = UIColor.blueColor.cgColor
-                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-                
-            }, completion: { (completion) in
-                dispatch.async {
-                    self.dashboardView.configure(user)
-                }
-            })
+
+                UIView.animate(withDuration: 0.3, animations: {
+                    cell.layer.borderColor = UIColor.blueColor.cgColor
+                    cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                    
+                }, completion: { (completion) in
+                    switch user!.userId {
+                    case Auth.auth().currentUser!.uid?:
+                        self.userViews.alpha = 0.0
+                        self.userViews.isHidden = true
+                        self.currentUserView.alpha = 1.0
+                        self.currentUserView.isHidden = false
+                        self.settingsView.configure("Your dashboard")
+                        //self.hideViews(hideViews: [ self.userViews], showView: self.currentUserView)
+                    default:
+                        self.currentUserView.alpha = 0.0
+                        self.currentUserView.isHidden = true
+                         self.userViews.alpha = 1.0
+                        self.userViews.isHidden = false
+                       // self.hideViews(hideViews: [self.currentUserView], showView: self.userViews)
+                        //self.userViews.user = user
+                        self.userViews.configure(user)
+                        self.settingsView.configure(user!.firstName!)
+                    }
+                })
             indicesArray.append(indexPath)
         }
     }
+    
+    func hideViews(hideViews: [UIView], showView: UIView) {
+        for view in hideViews {
+            view.alpha = 0.0
+            view.isHidden = true
+        }
+        showView.alpha = 1.0
+        showView.isHidden = false
+    }
 }
+
 
 
 

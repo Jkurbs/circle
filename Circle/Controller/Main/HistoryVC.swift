@@ -94,9 +94,9 @@ class HistoryVC: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InsightCell", for: indexPath) as! InsightCell
-        cell.configure(user!)
-        return cell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "InsightCell", for: indexPath) as! InsightCell
+//        cell.configure(user!)
+        return UITableViewCell()
     }
 
     /*
