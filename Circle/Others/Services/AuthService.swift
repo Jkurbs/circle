@@ -40,6 +40,10 @@ class AuthService {
                         }
                     }
                 }, completion: nil)
+                
+                if let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") {
+                    DataService.instance.REF_USERS.document(user!.uid).updateData(["device_token": deviceToken])
+                }
             }
         })
     }

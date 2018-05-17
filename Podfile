@@ -23,7 +23,7 @@ target 'Circle' do
     pod 'IQKeyboardManager'
     pod 'CountryList'
     pod 'SDWebImage', '~> 4.0'
-    pod 'TableViewHelper', :path => 'TableViewHelper'
+    pod 'TableViewHelper'
 
 
   target 'CircleTests' do

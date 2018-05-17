@@ -13,9 +13,17 @@ import IGListKit
 
 class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelegate {
     
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var pendingLabel: UILabel!
     @IBOutlet weak var availableLabel: UILabel!
     @IBOutlet weak var nextPayoutLabel: UILabel!
+    
+    let separator: CALayer = {
+        let layer = CALayer()
+        layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
+        return layer
+    }()
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 4)
@@ -52,7 +60,20 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
         collectionView.frame =  CGRect(x: 0, y: 55, width: displayWidth, height: 100)
         collectionViewFrame = collectionView.frame
         self.contentView.addSubview(collectionView)
-        self.moreLabel.translatesAutoresizingMaskIntoConstraints = false
+       self.moreLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let height: CGFloat = 0.5
+        separator.frame = CGRect(x: 0, y:  stackView.bounds.height - height, width: bounds.width, height: height)
+        
+        
+        self.stackView.layer.addSublayer(separator)
+        
+       
+        
+        
+        
+        
+        
     }
     
     

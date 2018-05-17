@@ -15,30 +15,39 @@ import FirebaseFirestore
 final class Circle {
     
     var id: String?
+    var productId: String?
     var activated: Bool?
+    var adminId: String?
     var users: User?
-    
     var maxAmount: Int?
     var weeklyAmount: Int?
     var weeks: Int?
     var insiders: [String]?
-    var postDate: NSDate?
-    var startDate: NSDate?
-    var endDate: NSDate?
+    var postDate: Date?
+    var startDate: Date?
+    var endDate: Date?
+    var daysTotal: Int? 
+    var daysLeft: Int?
+    
 
     
-    init(key: String, data: [String: Any], users: User) {
+    init(key: String, data: [String: Any], users: User?) {
         
         self.id = key
         
         self.users = users
         
-        if let id = data["id"] as? String {
-            self.id = id
+        
+        if let productId = data["product_id"] as? String {
+            self.productId = productId
         }
         
         if let activated = data["activated"] as? Bool {
             self.activated = activated
+        }
+        
+        if let adminId = data["admin"] as? String {
+            self.adminId = adminId
         }
         
         if let maxAmount = data["max_amount"] as? Int {
@@ -49,24 +58,28 @@ final class Circle {
             self.weeklyAmount = weeklyAmount
         }
         
-        if let weeks = data["weeks"] as? Int {
-            self.weeks = weeks
+        if let daysTotal = data["days_total"] as? Int {
+            self.daysTotal = daysTotal
         }
 
         if let insiders = data["insiders"] as? [String] {
             self.insiders = insiders
         }
         
-        if let postDate = data["postDate"] as? NSDate {
+        if let postDate = data["postDate"] as? Date {
             self.postDate = postDate
         }
         
-        if let startDate = data["startDate"] as? NSDate {
+        if let startDate = data["start_date"] as? Date {
             self.startDate = startDate
         }
         
-        if let endDate = data["endDate"] as? NSDate {
+        if let endDate = data["end_date"] as? Date {
             self.endDate = endDate
+        }
+        
+        if let daysLeft = data["days_left"] as? Int {
+            self.daysLeft = daysLeft
         }
     }
 }

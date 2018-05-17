@@ -13,7 +13,6 @@ class PageViewController: UIPageViewController {
     lazy var pages: [UIViewController] = {
         return [
             PageOneVC(),
-            PageTwoVC(),
             PageThreeVC()
         ]
     }()

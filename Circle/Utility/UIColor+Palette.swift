@@ -10,17 +10,29 @@
 import UIKit
 
 extension UIColor {
-    
-    
-    
+  
     static let textFieldBackgroundColor = UIColor(red: 232.0/255.0, green:  232.0/255.0, blue:  232.0/255.0, alpha: 0.5)
-    static let textFieldOpaqueBackgroundColor = UIColor(red: 232.0/255.0, green:  232.0/255.0, blue:  232.0/255.0, alpha: 1.0)
-
+        
+    static let textFieldOpaqueBackgroundColor =  UIColor(white: 0.9, alpha: 1.0)
     
     static let subheaderColor = UIColor(red: 55.0/255.0, green: 62.0/255.0, blue: 66.0/255.0, alpha: 1.0)
     
     static let blueColor = UIColor(red: 0.0/255.0, green: 153.0/255.0, blue: 229.0/255.0, alpha: 1.0)
     
+    static let california = UIColor(red: 248.0/255.0, green: 148.0/255.0, blue: 6.0/255.0, alpha: 1.0)
+    
+    static let fireBush = UIColor(red: 235.0/255.0, green: 149.0/255.0, blue: 50.0/255.0, alpha: 1.0)
+
+    static let thunderBird = UIColor(red: 217.0/255.0, green: 30.0/255.0, blue: 24.0/255.0, alpha: 1.0)
+    
+    static let sherpa = UIColor(red: 1.0/255.0, green: 50.0/255.0, blue: 67.0/255.0, alpha: 1.0)
+
+    static let royalBlue = UIColor(red: 41.0/255.0, green: 128.0/255.0, blue: 185.0/255.0, alpha: 1.0)
+    
+    static let ebonyClay = UIColor(red: 34.0/255.0, green: 49.0/255.0, blue: 63.0/255.0, alpha: 1.0)
+    
+    static let madison = UIColor(red: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+
     
     
 //    // Blue

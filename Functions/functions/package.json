@@ -15,6 +15,7 @@
     "google-cloud": "^0.57.0",
     "google-datastore": "0.0.2",
     "google-speech": "0.0.5",
+    "node-cron": "^1.2.1",
     "node-mailer": "^0.1.1",
     "plaid": "^2.3.0",
     "stripe": "^5.4.0"

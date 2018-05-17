@@ -8,6 +8,7 @@
 
 
 import Stripe
+import FirebaseAuth
 
 // <!-- SMARTDOWN_IMPORT_LINKKIT -->
 import LinkKit
@@ -162,8 +163,9 @@ extension ChooseBankVC : PLKPlaidLinkViewDelegate
                     alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
                 }
             } else {
+                DataService.instance.addNewInsider(Auth.auth().currentUser!.uid)
                 dispatch.async {
-                    let vc = InviteRequestVC()
+                    let vc = CircleVC()
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }

@@ -19,7 +19,6 @@ class CircleVC: UIViewController {
     let currentUserView: CurrentUserView = UIView.fromNib()
     let userViews: UserDashboardView = UIView.fromNib()
 
-
     var loadingView = LoadingView()
     var circleView = CircleView()
     var circleButton = UIButton()
@@ -49,7 +48,7 @@ class CircleVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.madison
         
         collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")
         
@@ -75,6 +74,7 @@ class CircleVC: UIViewController {
         // add settingsView
         settingsView = SettingsView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 45))
         settingsView.settingbutton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+
         contentView.addSubview(settingsView)
 
         welcomeView = IntroView(frame: CGRect(x: 0, y: 45, width: contentView.frame.width, height: height))
@@ -94,24 +94,15 @@ class CircleVC: UIViewController {
         currentUserView.alpha = 1.0
         self.contentView.addSubview(currentUserView)
         
-        collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 5, width: welcomeView.frame.width, height: 290)
+        collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height, width: welcomeView.frame.width, height: 290)
         
-        circleView.frame = CGRect(x: 0, y: welcomeView.bounds.height + 5, width: welcomeView.frame.width - 130, height: 290)
+        circleView.frame = CGRect(x: 0, y: welcomeView.bounds.height, width: welcomeView.frame.width - 130, height: 290)
         circleView.center.x = collectionView.center.x
         contentView.insertSubview(circleView, at: 0)
         
         loadingView.frame = collectionView.frame
-
-//        circleButton.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
-//        circleButton.layer.position = CGPoint(x: collectionView.frame.width / 2, y: collectionView.frame.height / 2)
-//        circleButton.cornerRadius = circleButton.frame.width / 2
-//        circleButton.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
-//        collectionView.addSubview(circleButton)
+        loadingView.center.y = collectionView.center.y
     }
-    
-    
-   
-    
     
     func retrieveUser() {
         users = []
@@ -121,25 +112,14 @@ class CircleVC: UIViewController {
             if !success {
                     print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
-                
-                self.circleInsightView.totalAmountSlider.setValue(Float(circle?.maxAmount ?? 0), animated: true)
-                self.circleInsightView.amountLabel.text = "\(circle?.maxAmount ?? 0)"
                 self.users.append(insider)
                 self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
+                let daysPassed = (circle?.daysTotal)! - (circle?.daysLeft)!
+                let daysTotal = (circle?.daysTotal)
+                print(daysPassed)
+                self.circleView.maximumValue = CGFloat(daysTotal!)
+                self.circleView.endPointValue = CGFloat(daysPassed)
 
-                self.circleInsightView.circle = circle 
-                if circle?.activated == true {
-                self.circleInsightView.setupButton.isEnabled = true
-                    dispatch.async {
-                        //self.circleInsightView
-                           // self.contentView.addSubview(self.currentUserView)
-                        }
-                    } else {
-                self.circleInsightView.setupButton.isEnabled = false
-                        dispatch.async {
-                           // self.contentView.addSubview(self.welcomeView)
-                        }
-                    }
                 self.loadingView.removeFromSuperview()
             }
         }
@@ -160,7 +140,15 @@ class CircleVC: UIViewController {
             print("SIGNOUT ERROR:\(signOutError)")
         }
     }
+    
+    @objc func addUsers() {
+        let controller = InviteVC()
+        let nav = UINavigationController(rootViewController: controller)
+        self.present(nav, animated: true, completion: nil)
+    }
 }
+
+
 
 
 // MARK: COLLECTIONVIEW DELEGATE, DATASOURCE
@@ -185,18 +173,10 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let user = self.users[indexPath.row]
-//
-//        if (self.userViewIsShow) {
-//            //self.contentView.addSubview(self.currentUserView)
-//
-//        } else {
-//
-//        }
         
         if(selectedIndex != indexPath) {
             var indicesArray = [IndexPath]()
             if(selectedIndex != nil) {
-                
                 let cell = collectionView.cellForItem(at: selectedIndex!) as! PendingInviteCell
                 UIView.animate(withDuration: 0.3, animations: {
                     cell.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
@@ -205,30 +185,18 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 })
                 indicesArray.append(selectedIndex!)
             }
-            
             selectedIndex = indexPath
             let cell = collectionView.cellForItem(at: indexPath) as! PendingInviteCell
-
                 UIView.animate(withDuration: 0.3, animations: {
-                    cell.layer.borderColor = UIColor.blueColor.cgColor
+                    cell.layer.borderColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0).cgColor
                     cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-                    
                 }, completion: { (completion) in
                     switch user!.userId {
                     case Auth.auth().currentUser!.uid?:
-                        self.userViews.alpha = 0.0
-                        self.userViews.isHidden = true
-                        self.currentUserView.alpha = 1.0
-                        self.currentUserView.isHidden = false
-                        self.settingsView.configure("Your dashboard")
-                        //self.hideViews(hideViews: [ self.userViews], showView: self.currentUserView)
+                        self.settingsView.configure("My dashboard")
+                        self.hideViews(hideView: self.userViews, showView: self.currentUserView)
                     default:
-                        self.currentUserView.alpha = 0.0
-                        self.currentUserView.isHidden = true
-                         self.userViews.alpha = 1.0
-                        self.userViews.isHidden = false
-                       // self.hideViews(hideViews: [self.currentUserView], showView: self.userViews)
-                        //self.userViews.user = user
+                        self.hideViews(hideView: self.currentUserView, showView: self.userViews)
                         self.userViews.configure(user)
                         self.settingsView.configure(user!.firstName!)
                     }
@@ -237,11 +205,9 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
-    func hideViews(hideViews: [UIView], showView: UIView) {
-        for view in hideViews {
-            view.alpha = 0.0
-            view.isHidden = true
-        }
+    func hideViews(hideView: UIView, showView: UIView) {
+        hideView.alpha = 0.0
+        hideView.isHidden = true
         showView.alpha = 1.0
         showView.isHidden = false
     }

@@ -56,7 +56,7 @@ class SettingsView: UIView {
         label.textAlignment = .center
         self.addSubview(label)
         
-        self.backgroundColor = UIColor.textFieldBackgroundColor
+        self.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
         settingbutton.frame = CGRect(x: 3, y: 3, width: 45, height: 45)
         settingbutton.setImage(#imageLiteral(resourceName: "Settings-20"), for: .normal)
         self.addSubview(settingbutton)
@@ -71,14 +71,5 @@ class SettingsView: UIView {
         label.text = ""
         label.text = userName
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }

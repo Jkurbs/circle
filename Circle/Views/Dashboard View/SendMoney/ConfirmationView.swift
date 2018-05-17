@@ -41,7 +41,7 @@ class ConfirmationView: UIView, UITableViewDelegate, UITableViewDataSource {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = UIColor.textFieldBackgroundColor
-        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 150))
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 130))
         tableView.backgroundColor = UIColor.textFieldBackgroundColor
         tableView.register(ConfirmationCell.self, forCellReuseIdentifier: "ConfirmationCell")
         tableView.dataSource = self

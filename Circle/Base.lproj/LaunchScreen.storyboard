@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,18 +17,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCi-ZJ-AT0">
-                                <rect key="frame" x="16" y="196" width="343" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CIRCLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBa-Vm-ex4">
+                                <rect key="frame" x="128" y="363" width="118" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="118" id="Wr5-IV-4sd"/>
+                                    <constraint firstAttribute="height" constant="21" id="gtg-7N-e43"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="t4l-3M-vhb">
+                                <rect key="frame" x="111" y="188" width="153" height="153"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="153" id="NMC-Y9-PvO"/>
+                                    <constraint firstAttribute="width" constant="153" id="Yz2-wQ-4Ya"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="VCi-ZJ-AT0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="EII-Ma-HL8"/>
-                            <constraint firstItem="VCi-ZJ-AT0" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="TWc-zR-s0a"/>
-                            <constraint firstItem="VCi-ZJ-AT0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="176" id="jKN-4b-0Vf"/>
+                            <constraint firstItem="wBa-Vm-ex4" firstAttribute="top" secondItem="t4l-3M-vhb" secondAttribute="bottom" constant="22" id="YbS-0z-zhT"/>
+                            <constraint firstItem="wBa-Vm-ex4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="axT-W3-3MR"/>
+                            <constraint firstItem="t4l-3M-vhb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="g1W-W0-gXE"/>
+                            <constraint firstItem="t4l-3M-vhb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="168" id="qUx-2A-YI8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -39,4 +50,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon" width="1024" height="1024"/>
+    </resources>
 </document>

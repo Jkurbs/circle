@@ -53,7 +53,7 @@ class PageThreeVC: UIViewController {
         //AuthService.instance.appDel.userNotification()
         
         DispatchQueue.main.async {
-            let vc = ContactInfoVC()
+            let vc = LoginVC()
             let navigationController = UINavigationController(rootViewController: vc)
             self.present(navigationController, animated: true, completion: nil)
         }

@@ -139,6 +139,27 @@ class DataService {
                     if document.exists {
                         let data = document.data()
                         let key = document.documentID
+                        
+                        
+                        
+                        
+                        
+                        //let endDate = data["end_date"] as! Date
+                        
+//                        let date = Date()
+//                        let formatter = DateFormatter()
+//                        formatter.dateFormat = "dd.MM.yyyy"
+//                        let result = formatter.string(from: date)
+//                        let todaysDate = formatter.date(from: result)
+//
+//                        let daysLeft = self.daysBetween(start: todaysDate!, end: endDate)
+//                        ref.updateData(["days_left": daysLeft], completion: { (error) in
+//                            if let error = error {
+//                                print("error updating days")
+//                            } else {
+//                                print("success")
+//                            }
+//                        })
                         self.getInsiders(key, { (success, error, insider) in
                             if !success {
                                 print("ERROR GETTING INSIDERS", error!.localizedDescription)
@@ -154,11 +175,25 @@ class DataService {
     }
     
     
+    func daysBetween(start: Date, end: Date) -> Int {
+        return Calendar.current.dateComponents([.day], from: start, to: end).day!
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private var insider: String?
 
     func getInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ insiders: User?) -> ()) {
        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders")
-            ref.getDocuments { (documents, error) in
+            ref.order(by: "position", descending: false).getDocuments { (documents, error) in
             if let error = error {
                 print("ERROR:::", error.localizedDescription)
                 completion(false, error, nil)
@@ -179,7 +214,7 @@ class DataService {
                                         let bank = Bank(bankKey, bankData)
                                         let insiders = User(key: key, data: data, bank: bank, event: nil, balance: nil)
                                         completion(true, nil, insiders)
-                                }
+                                } 
                             }
                         }
                     })
@@ -292,6 +327,7 @@ class DataService {
     }
     
     
+
     
     func saveDeviceInfo(_ phoneNumber: String, _ ipAddress: String) {
     let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") ?? ""
@@ -325,6 +361,27 @@ class DataService {
     
     var childRef: String?
     var imageUrl: String?
+    
+    
+    
+    
+    func addNewInsider(_ userId: String) {
+        self.REF_USERS.document(userId).getDocument { (document, error) in
+            if let error = error {
+                print("Error::", error.localizedDescription)
+        }
+            let data = document!.data()
+            if let circleId = UserDefaults.standard.string(forKey: "circleId") {
+                self.REF_CIRCLES.document(circleId).setData(data)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     func createCircle(id: String, _ link: String?, _ insiders: [Contact], _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
             self.REF_CIRCLES.document(id).setData(["admin": Auth.auth().currentUser!.uid, "activated": false, "link": link ?? ""], options: SetOptions.merge()) { (error) in
@@ -526,9 +583,8 @@ class DataService {
     
     
     func lookForPendingUser(_ circleId: String, _ phoneNumber: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?) -> ()) {
-        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").whereField("phone_number", isEqualTo: phoneNumber)
         
-            print("LOOKING FOR:::", phoneNumber)
+        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").whereField("phone_number", isEqualTo: phoneNumber)
         
             ref.getDocuments { (documents, error) in
             if let error = error {
@@ -536,23 +592,29 @@ class DataService {
                 completion(false, error, nil)
                 return
             }
-
             for document in (documents?.documents)! {
                 if document.exists {
                     let data = document.data()
                     let key = document.documentID
                     let user = User(key: key, data: data, bank: nil, event: nil, balance: nil)
-                    print("GOT YOU::", user.firstName)
                     completion(true, error, user)
                 }
             }
         }
     }
     
-    func setupCircle(_ circleId: String) {
-//        let data = ["max_amount": maxAmount, "weeks": weeks, "weekly_amount": weeklyAmount, "activated": true] as [String : Any]
-//        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
+    func setupCircle(circleId: String, maxAmount: Int, weeklyAmount: Int) {
+        let data = ["max_amount": maxAmount, "weekly_amount": weeklyAmount, "activated": true] as [String : Any]
+        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
     }
+    
+    
+    func updateCircle(_ circleId: String, _ maxAmount: Int) {
+        let data = ["max_amount": maxAmount, "activated": true] as [String : Any]
+        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
+    }
+    
+    
 }
 
 

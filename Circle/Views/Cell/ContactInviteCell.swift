@@ -22,23 +22,31 @@ class PendingInviteCell: UICollectionViewCell {
     
     var view = CALayer()
     
+    var spinningView = SpinningView()
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
+       
+        layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    
+            //updateAnimation()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+
         layer.cornerRadius = self.bounds.width / 2
         layer.masksToBounds = true
         layer.borderWidth = 2.5
-        layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
+        
+       //layer. UIColor(red: 0.8078, green: 0.2549, blue: 0.2392, alpha: 1.0).cgColor
+
         
         imageView.frame = CGRect(x: 2, y: 2, width: contentView.frame.width - 8, height: contentView.frame.height - 8)
         imageView.center = contentView.center
@@ -56,11 +64,12 @@ class PendingInviteCell: UICollectionViewCell {
         view.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
     }
     
-    
-    
+
     
     func isSelected() {
-         self.layer.borderColor = UIColor.blueColor.cgColor
+        self.backgroundColor = UIColor.red
+        self.layer.borderColor = UIColor(white: 0.6, alpha: 1.0).cgColor
+        self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
     }
     
     
@@ -72,11 +81,10 @@ class PendingInviteCell: UICollectionViewCell {
     
     
     func configure(_ user: User?) {
-    
         
-        if user!.userId == Auth.auth().currentUser!.uid {
-            isSelected()
-        }
+//        if user!.userId == Auth.auth().currentUser!.uid {
+//            isSelected()
+//        }
         
         if user?.activated != true {
             imageView.layer.addSublayer(view)

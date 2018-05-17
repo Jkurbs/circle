@@ -15,11 +15,9 @@
 //
 
 import UIKit
-
 import HGCircularSlider
 
 class CircleView: CircularSlider  {
-    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -32,14 +30,16 @@ class CircleView: CircularSlider  {
     }
     
     func setup() {
+        
+
+        
         self.thumbRadius = 0.0
-        self.trackFillColor = UIColor.blueColor
+        self.trackFillColor = UIColor(red: 243.0/255.0, green:  156.0/255.0, blue:  18.0/255.0, alpha: 1.0)
         self.endThumbStrokeColor = UIColor(white: 0.7, alpha: 1.0)
         self.lineWidth = 4.0
-        self.endPointValue = 0.4
         self.trackColor = UIColor(white: 0.8, alpha: 1.0)
         self.backtrackLineWidth = 4.0
-        self.diskFillColor = UIColor.white
+        self.diskFillColor = .white
         self.diskColor = .white
         self.backgroundColor = .white
     }

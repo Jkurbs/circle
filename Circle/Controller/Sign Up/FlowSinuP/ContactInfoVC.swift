@@ -92,7 +92,7 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
         nextButton.alpha = 1.0
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         
-        view.addSubview(loginButton)
+        //view.addSubview(loginButton)
         loginButton.setTitle("Log In", for: .normal)
         loginButton.setTitleColor(UIColor.blueColor, for: .normal)
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)

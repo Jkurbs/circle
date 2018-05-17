@@ -79,8 +79,8 @@ class LoginVC: UIViewController {
         forgetPasswordButton.setTitleColor(UIColor.blueColor, for: .normal)
         forgetPasswordButton.addTarget(self, action: #selector(login), for: .touchUpInside)
         
-        view.addSubview(registerButton)
-        registerButton.setTitle("Register", for: .normal)
+//        view.addSubview(registerButton)
+        registerButton.setTitle("I have a code!", for: .normal)
         registerButton.setTitleColor(UIColor.blueColor, for: .normal)
         registerButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
@@ -94,11 +94,9 @@ class LoginVC: UIViewController {
             if !success {
                 self.nextButton.hideLoading()
             } else {
-                print("CIRCLE_ID", circleId)
                 self.nextButton.hideLoading()
                 let circleVC = CircleVC()
                 circleVC.circleId = circleId
-                print("PUSH")
                 self.navigationController?.pushViewController(circleVC, animated: true)
             }
         }
@@ -114,7 +112,7 @@ class LoginVC: UIViewController {
     
     @objc func register() {
         
-        let nav = UINavigationController(rootViewController: ContactInfoVC())
+        let nav = UINavigationController(rootViewController: CodeVC())
         self.present(nav, animated: true, completion: nil)
     }
     

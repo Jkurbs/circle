@@ -19,6 +19,37 @@ class WelcomeVC: UIViewController {
     
     var users = [User]()
     
+    
+    var headline = Headline()
+    var button = UIButton()
+    
+
+    
+    @objc func notificationAccess() {
+        //AuthService.instance.appDel.userNotification()
+        
+        DispatchQueue.main.async {
+            let vc = ContactInfoVC()
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true, completion: nil)
+        }
+        if let circleId = UserDefaults.standard.string(forKey: "circleId") as? String {
+            //            if circleId != nil {
+            //                DispatchQueue.main.async {
+            //                    let vc = PhoneVCTwo()
+            //                    let navigationController = UINavigationController(rootViewController: vc)
+            //                    self.present(navigationController, animated: true, completion: nil)
+            //                }
+            //            } else {
+            //            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     lazy var collectionView: UICollectionView = {
         let layout = CircleLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -53,6 +84,15 @@ class WelcomeVC: UIViewController {
         collectionView.frame = CGRect(x: 0, y: subhead.layer.position.y + 110, width: view.frame.width, height: 300)
         
         loadingView.frame = collectionView.frame
+        
+        
+        button = UIButton(frame: CGRect(x: 0, y: collectionView.layer.position.y + 200, width: 200, height: 50))
+        button.center.x = centerX
+        button.setTitleColor(view.tintColor, for: .normal)
+        
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitle("Let's go!", for: .normal)
+        button.addTarget(self, action: #selector(notificationAccess), for: .touchUpInside)
 
     }
     
@@ -69,13 +109,14 @@ class WelcomeVC: UIViewController {
                self.loadingView.removeFromSuperview()
             } else {
                 if let admin = admin {
-                    self.subhead.text = "Start earning and saving money with \(admin.firstName ?? "") \(admin.lastName ?? "") and others on circle"
+                    self.subhead.text = "Start earning and saving money with \(admin.firstName ?? "") \(admin.lastName ?? "") and others on Circle"
                     self.loadingView.removeFromSuperview()
                 }
                 self.users.append(insider!)
                 self.collectionView.performBatchUpdates({
                     self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
                     UserDefaults.standard.set(self.circleId, forKey: "circleId")
+                    self.view.addSubview(self.button)
                 })
             }
         }

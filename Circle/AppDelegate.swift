@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 pageViewController.pages.insert(initialViewController, at: 0)
                 initialViewController.circleId = hlsvp.value
                             
-                self.window?.rootViewController = pageViewController
+                self.window?.rootViewController = initialViewController
                 self.window?.makeKeyAndVisible()
             }
             
@@ -190,6 +190,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         if let refreshedToken = InstanceID.instanceID().token() {
             print("InstanceID token: \(refreshedToken)")
+             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
         }
     }
     
@@ -220,9 +221,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initialize(_ application: UIApplication) {
     
          let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = UIColor.blueColor        
+        navigationBarAppearance.tintColor = UIColor.fireBush
+        //(red: 241, green: 196, blue: 15, alpha: 1.0)
         
-        let initialViewController =  PageViewController()
+        let initialViewController =  LoginVC()
         let navigationController = UINavigationController(rootViewController: initialViewController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
@@ -269,6 +271,7 @@ extension AppDelegate : MessagingDelegate {
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         print("DEVICE TOKEN : \(fcmToken)")
         NSLog("[RemoteNotification] didRefreshRegistrationToken: \(fcmToken)")
+        UserDefaults.standard.setValue(fcmToken, forKey: "deviceToken")
     }
     
     // iOS9, called when presenting notification in foreground

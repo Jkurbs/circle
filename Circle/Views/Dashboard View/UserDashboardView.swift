@@ -118,7 +118,10 @@ extension UserDashboardView: UITextFieldDelegate {
                 self.layoutIfNeeded()
                 self.userView.layoutIfNeeded()
                 self.userView.collectionView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 150)
-                self.userView.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                
+//                if self.userView.collectionView.numberOfItems(inSection: 0) > 0 {
+//                    self.userView.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+//                }
                 sender.transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
                 // self.moreLabel.text = "Show more"
             }
