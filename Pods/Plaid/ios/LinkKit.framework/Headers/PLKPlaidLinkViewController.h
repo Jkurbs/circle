@@ -11,32 +11,47 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// The corresponding value contains the identifier for the account
+/// The corresponding value contains the identifier for the account.
 PLK_EXTERN NSString* const kPLKMetadataIdKey;
 
 /// The corresponding value contains the name of the account or institution.
 PLK_EXTERN NSString* const kPLKMetadataNameKey;
 
-/// The corresponding value contains the name of the account or institution.
+/// The corresponding value contains the masked account number.
+PLK_EXTERN NSString* const kPLKMetadataMaskKey;
+
+/// The corresponding value contains the type of the account or institution.
+PLK_EXTERN NSString* const kPLKMetadataTypeKey;
+
+/// The corresponding value contains the subtype of the account.
+PLK_EXTERN NSString* const kPLKMetadataSubtypeKey;
+
+/// The corresponding value contains a NSDictionary with an account's name, identifier, mask, type, and subtype.
 PLK_EXTERN NSString* const kPLKMetadataAccountKey;
 
-/// The corresponding value contains a NSDictionary with the accounts name and identifier.
+/// The corresponding value contains an NSArray with multiple NSDictionary for the selected accounts; the keys in the NSDictionary are the same as with the kPLKMetadataAccountKey.
+PLK_EXTERN NSString* const kPLKMetadataAccountsKey;
+
+/// The corresponding value contains the identifier for the account.
 PLK_EXTERN NSString* const kPLKMetadataAccountIdKey;
 
-/// The corresponding value contains a NSDictionary with institution type and identifier.
+/// The corresponding value contains a NSDictionary with the name and identifier of the institution.
 PLK_EXTERN NSString* const kPLKMetadataInstitutionKey;
 
-/// The corresponding value contains the institution identifier
+/// The corresponding value contains the identifier for the institution.
 PLK_EXTERN NSString* const kPLKMetadataInstitutionIdKey;
 
-/// The corresponding value contains the institution name
+/// The corresponding value contains the name of the institution.
 PLK_EXTERN NSString* const kPLKMetadataInstitutionNameKey;
 
-/// The corresponding value contains the institution type
-PLK_EXTERN NSString* const kPLKMetadataInstitutionTypeKey;
+/// The corresponding value contains the institution type when using the legacy API.
+PLK_EXTERN NSString* const kPLKAPIv1MetadataInstitutionTypeKey;
 
-/// The corresponding value contains the institution type
-PLK_EXTERN NSString* const kPLKMetadataInstitution_TypeKey;
+/// The corresponding value contains the institution type.
+PLK_EXTERN NSString* const kPLKMetadataInstitution_TypeKey DEPRECATED_MSG_ATTRIBUTE("use kPLKAPIv1MetadataInstitutionTypeKey instead.");
+
+/// The corresponding value contains the institution type.
+PLK_EXTERN NSString* const kPLKMetadataInstitutionTypeKey DEPRECATED_MSG_ATTRIBUTE("use kPLKMetadataTypeKey instead.");
 
 /// The corresponding value indicates the point at which the user exited the Link flow.
 PLK_EXTERN NSString* const kPLKMetadataStatusKey;
@@ -209,11 +224,15 @@ PLK_EMPTY_INIT_UNAVAILABLE;
 /**
  The delegate of a PLKPlaidLinkViewController object must adopt the PLKPlaidLinkViewDelegate
  protocol.
+
+ Note: The methods of this protocol are dispatched to the main queue.
  */
 @protocol PLKPlaidLinkViewDelegate <NSObject>
 
 /**
  The method is called when a user has successfully onboarded their account.
+
+ Note: The method is dispatched to the main queue.
 
  @param linkViewController A Plaid Link view controller object informing the delegate about the
                            successful authentication.
@@ -228,6 +247,8 @@ PLK_EMPTY_INIT_UNAVAILABLE;
 /**
  The delegate method is called when a user has specifically exited the Link flow
  or an error occurred.
+
+ Note: The method is dispatched to the main queue.
 
  @param linkViewController A Plaid Link view controller object informing the delegate that the
                            Link flow was exited
@@ -246,6 +267,8 @@ PLK_EMPTY_INIT_UNAVAILABLE;
  The delegate method is called when certain events in the Link flow have occurred.
  For details about the events see the onEvent documentation:
  https://plaid.com/docs/api/#onevent-callback
+
+ Note: The method is dispatched to the main queue.
 
  @param linkViewController A Plaid Link view controller object informing the delegate a certain
                            event in the Link flow has occurred.

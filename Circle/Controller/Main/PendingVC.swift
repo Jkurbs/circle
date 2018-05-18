@@ -48,6 +48,13 @@ class CircleVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        var bundle = Bundle.main
+        var info = bundle.infoDictionary
+        var prodName = info?["CFBundleName"] as? String
+        
+        print("PRODUCT NAME::", prodName)
+        
         view.backgroundColor = UIColor.madison
         
         collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")

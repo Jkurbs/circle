@@ -4,8 +4,9 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>Circle</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -40,6 +41,14 @@
 			<array/>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Circle would like to access your camera.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Circle would like to access your contacts.</string>
 	<key>PLKPlaidLinkConfiguration</key>
 	<dict>
 		<key>clientName</key>
@@ -51,16 +60,8 @@
 		<key>product</key>
 		<string>auth</string>
 		<key>selectAccount</key>
-		<true/>
+		<false/>
 	</dict>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Circle would like to access your camera.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Circle would like to access your contacts.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
