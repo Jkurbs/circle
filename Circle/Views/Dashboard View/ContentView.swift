@@ -22,7 +22,7 @@ class ContentView: UIView {
     
     
     func setup() {
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         self.cornerRadius = 10
         self.clipsToBounds = true

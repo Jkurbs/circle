@@ -19,7 +19,7 @@ final class Circle {
     var activated: Bool?
     var adminId: String?
     var users: User?
-    var maxAmount: Int?
+    var totalAmount: Int?
     var weeklyAmount: Int?
     var weeks: Int?
     var insiders: [String]?
@@ -50,8 +50,8 @@ final class Circle {
             self.adminId = adminId
         }
         
-        if let maxAmount = data["max_amount"] as? Int {
-            self.maxAmount = maxAmount
+        if let totalAmount = data["total_amount"] as? Int {
+            self.totalAmount = totalAmount
         }
         
         if let weeklyAmount = data["weekly_amount"] as? Int {
@@ -83,6 +83,7 @@ final class Circle {
         }
     }
 }
+
 
 
 extension Circle: Equatable {

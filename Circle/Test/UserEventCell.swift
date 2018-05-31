@@ -13,6 +13,8 @@ class UserEventCell: UICollectionViewCell {
     
     var dateLabel = UILabel()
     var label = UILabel()
+    var imageView = UIImageView()
+    var moreButton = UIButton()
     
     let separator: CALayer = {
         let layer = CALayer()
@@ -23,19 +25,28 @@ class UserEventCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = .textFieldBackgroundColor
+        contentView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         contentView.addSubview(dateLabel)
         contentView.addSubview(label)
-        contentView.layer.addSublayer(separator)
-    
-        dateLabel.textColor = .darkText
-        dateLabel.numberOfLines = 3
-        dateLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-        dateLabel.textAlignment = .center
+        contentView.addSubview(moreButton)
+
+        //contentView.addSubview(imageView)
+
         
-        label.textColor = .darkText
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textAlignment = .left
+        
+        
+        dateLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+        dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        dateLabel.textAlignment = .left
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = #imageLiteral(resourceName: "Right-2-filled-20")
+        
+        moreButton.frame = CGRect(x: contentView.frame.maxX - 40, y: 10 , width: 40, height: 40)
+        moreButton.setImage(#imageLiteral(resourceName: "More-filled-15"), for: .normal)
         
     }
     
@@ -46,13 +57,19 @@ class UserEventCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        dateLabel.frame = CGRect(x: 10, y: 10, width: 60, height: 40)
-        
         let width = self.frame.width - 60
-        label.frame = CGRect(x: dateLabel.frame.maxX + 20, y: 10, width: width, height: 40)
+        
+        imageView.frame = CGRect(x: 40, y: 10, width: 20, height: self.contentView.frame.height)
+        
+        
+        label.frame = CGRect(x: 45, y: 10, width: width, height: 40)
+        
+        dateLabel.frame = CGRect(x: 45, y: 45, width: 60, height: 20)
+        dateLabel.sizeToFit()
         
         let height: CGFloat = 0.5
         separator.frame = CGRect(x: 0, y: bounds.height - height, width: bounds.width, height: height)
+        
     }
     
     func configure(_ event: Event) {
@@ -67,7 +84,7 @@ class UserEventCell: UICollectionViewCell {
         dateFormatter.dateFormat = "LLLL"
         let nameOfMonth = dateFormatter.string(from: date!)
         let components = userCalendar.dateComponents(requestedComponents, from: date!)
-        dateLabel.text = "\(components.day!) \n \(nameOfMonth) \n \(components.hour!):\(components.minute!)"
+        dateLabel.text = "\(components.day!) \(nameOfMonth) \(components.hour!):\(components.minute!)"
 
         switch event.type {
             case "received":

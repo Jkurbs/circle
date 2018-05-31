@@ -9,6 +9,13 @@
 import UIKit
 import FirebaseAuth
 
+
+enum State {
+    case collapsed
+    case expanded
+}
+
+
 class CircleVC: UIViewController {
     
     // Views
@@ -32,37 +39,44 @@ class CircleVC: UIViewController {
     
     var circleId: String?
     
+    // Constant
+    let commentViewHeight: CGFloat = 64.0
+    let animatorDuration: TimeInterval = 1
+    
+    // Tracks all running aninmators
+    var progressWhenInterrupted: CGFloat = 0
+    var runningAnimators = [UIViewPropertyAnimator]()
+    var state: State = .collapsed
+    
+    var index: IndexPath!
+    var insightCell: CircleInsightCell!
+    
     lazy var collectionView: UICollectionView = {
         let layout = CircleLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor.clear
         contentView.addSubview(view)
         return view
     }()
-    
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        var bundle = Bundle.main
-        var info = bundle.infoDictionary
-        var prodName = info?["CFBundleName"] as? String
-        
-        print("PRODUCT NAME::", prodName)
-        
-        view.backgroundColor = UIColor.madison
+        view.backgroundColor = .white
+            
+            //UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         
         collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")
+        
+        
+        
         
         view.addSubview(contentView)
         collectionView.delegate = self
         collectionView.dataSource = self
         retrieveUser()
+        addGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +87,8 @@ class CircleVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+
         
         let height: CGFloat = 280
         
@@ -89,7 +105,9 @@ class CircleVC: UIViewController {
         welcomeView.subhead.text = "You'll receive an notification when an invitation has been accepted"
         
         
-        circleInsightView.frame = CGRect(x: 0, y: view.bounds.height - (self.circleInsightView.frame.height + 20), width: view.frame.width, height: self.circleInsightView.frame.height)
+        circleInsightView.frame = CGRect(x: 0, y: view.bounds.height - (self.circleInsightView.frame.height + 5), width: view.frame.width, height: self.circleInsightView.frame.height)
+        circleInsightView.circleId = self.circleId
+        circleInsightView.vc = self
         self.contentView.addSubview(circleInsightView)
         
         // Add userView
@@ -99,6 +117,7 @@ class CircleVC: UIViewController {
         
         currentUserView.frame = CGRect(x: 0, y: 45, width: currentUserView.frame.width, height: currentUserView.frame.height)
         currentUserView.alpha = 1.0
+        currentUserView.vc = self 
         self.contentView.addSubview(currentUserView)
         
         collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height, width: welcomeView.frame.width, height: 290)
@@ -112,21 +131,25 @@ class CircleVC: UIViewController {
     }
     
     func retrieveUser() {
-        users = []
+        self.users = []
         self.view.addSubview(loadingView)
         let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as! String
-        DataService.instance.retrieveCircle(circleId){ (success, error, circle, insider) in
+        
+        DataService.instance.getInsiders(circleId, { (success, error, users) in
+            self.users.append(users)
+            self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
+        })
+        
+        
+        DataService.instance.retrieveCircle(circleId){ (success, error, circle) in
             if !success {
                     print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
-                self.users.append(insider)
-                self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
+                
                 let daysPassed = (circle?.daysTotal)! - (circle?.daysLeft)!
                 let daysTotal = (circle?.daysTotal)
-                print(daysPassed)
                 self.circleView.maximumValue = CGFloat(daysTotal!)
                 self.circleView.endPointValue = CGFloat(daysPassed)
-
                 self.loadingView.removeFromSuperview()
             }
         }
@@ -200,7 +223,7 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 }, completion: { (completion) in
                     switch user!.userId {
                     case Auth.auth().currentUser!.uid?:
-                        self.settingsView.configure("My dashboard")
+                        self.settingsView.configure("Dashboard")
                         self.hideViews(hideView: self.userViews, showView: self.currentUserView)
                     default:
                         self.hideViews(hideView: self.currentUserView, showView: self.userViews)
@@ -218,6 +241,245 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
         showView.alpha = 1.0
         showView.isHidden = false
     }
+}
+
+
+extension CircleVC {
+    private func addGestures() {
+        // Tap gesture
+        circleInsightView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:))))
+        
+        // Pan gesutre
+        circleInsightView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:))))
+    }
+    
+    // MARK: Util
+    private func expandedFrame() -> CGRect {
+        return CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.frame.width,
+            height: self.view.frame.height - 0
+        )
+    }
+    
+    private func collapsedFrame() -> CGRect {
+        return CGRect(
+            x: 0,
+            y: self.circleInsightView.frame.height - 90,
+            width: self.view.frame.width,
+            height: self.circleInsightView.frame.height)
+    }
+    
+    private func fractionComplete(state: State, translation: CGPoint) -> CGFloat {
+        let translationY = state == .expanded ? -translation.y : translation.y
+        return translationY / (self.view.frame.height - commentViewHeight - 0) + progressWhenInterrupted
+    }
+    
+    private func nextState() -> State {
+        switch self.state {
+        case .collapsed:
+            return .expanded
+        case .expanded:
+            return .collapsed
+        }
+    }
+    
+    // MARK: Gesture
+    @objc private func handleTapGesture(_ recognizer: UITapGestureRecognizer) {
+        self.animateOrReverseRunningTransition(state: self.nextState(), duration: animatorDuration)
+    }
+    
+    @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: self.view)
+        
+        switch recognizer.state {
+        case .began:
+            self.startInteractiveTransition(state: self.nextState(), duration: animatorDuration)
+        case .changed:
+            self.updateInteractiveTransition(fractionComplete: self.fractionComplete(state: self.nextState(), translation: translation))
+        case .ended:
+            self.continueInteractiveTransition(fractionComplete: self.fractionComplete(state: self.nextState(), translation: translation))
+        default:
+            break
+        }
+    }
+    
+    @IBAction func didTapCloseButton(_ sender: UIButton) {
+        if self.state == .expanded {
+            self.animateOrReverseRunningTransition(state: self.nextState(), duration: animatorDuration)
+        }
+    }
+    // MARK: Animation
+    // Frame Animation
+    private func addFrameAnimator(state: State, duration: TimeInterval) {
+        // Frame Animation
+        let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+            switch state {
+            case .expanded:
+                self.circleInsightView.frame = self.expandedFrame()
+            case .collapsed:
+                self.circleInsightView.frame = self.collapsedFrame()
+            }
+        }
+        frameAnimator.addCompletion({ (position) in
+            switch position {
+            case .start:
+                // Fix blur animator bug don't know why
+                switch self.state {
+                case .expanded:
+                    print("Expanded")
+                 //self.blurEffectView.effect = UIBlurEffect(style: .dark)
+                case .collapsed:
+                    print("Collapse")
+                 //self.blurEffectView.effect = nil
+                }
+            case .end:
+                self.state = self.nextState()
+            default:
+                break
+            }
+            self.runningAnimators.removeAll()
+        })
+        runningAnimators.append(frameAnimator)
+    }
+    
+    // Blur Animation
+    private func addBlurAnimator(state: State, duration: TimeInterval) {
+        var timing: UITimingCurveProvider
+        switch state {
+        case .expanded:
+            timing = UICubicTimingParameters(controlPoint1: CGPoint(x: 0.75, y: 0.1), controlPoint2: CGPoint(x: 0.9, y: 0.25))
+        case .collapsed:
+            timing = UICubicTimingParameters(controlPoint1: CGPoint(x: 0.1, y: 0.75), controlPoint2: CGPoint(x: 0.25, y: 0.9))
+        }
+        let blurAnimator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        if #available(iOS 11, *) {
+            blurAnimator.scrubsLinearly = false
+        }
+        blurAnimator.addAnimations {
+            switch state {
+            case .expanded:
+                print("Expanded")
+            // self.blurEffectView.effect = UIBlurEffect(style: .dark)
+            case .collapsed:
+                print("Collapse")
+                // self.blurEffectView.effect = nil
+            }
+        }
+        runningAnimators.append(blurAnimator)
+    }
+    
+    // Label Scale Animation
+    private func addLabelScaleAnimator(state: State, duration: TimeInterval) {
+        
+        let scaleAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+            switch state {
+            case .expanded:
+                self.currentUserView.alpha = 0.0
+                self.userViews.alpha = 0.0
+                //self.insightCell.endTimeLabel.enlarge()
+                //self.insightCell.nextPayoutLabel.enlarge()
+            case .collapsed:
+                self.currentUserView.alpha = 1.0
+                self.userViews.alpha = 1.0
+//                self.insightCell.endTimeLabel.shrink()
+//                self.insightCell.nextPayoutLabel.shrink()
+            }
+        }
+        runningAnimators.append(scaleAnimator)
+    }
+    
+    // CornerRadius Animation
+    //    private func addCornerRadiusAnimator(state: State, duration: TimeInterval) {
+    //        commentView.clipsToBounds = true
+    //        // Corner mask
+    //        if #available(iOS 11, *) {
+    //            commentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    //        }
+    //        let cornerRadiusAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+    //            switch state {
+    //            case .expanded:
+    //                self.commentView.layer.cornerRadius = 12
+    //            case .collapsed:
+    //                self.commentView.layer.cornerRadius = 0
+    //            }
+    //        }
+    //        runningAnimators.append(cornerRadiusAnimator)
+    //    }
+    
+    // KeyFrame Animation
+    private func addKeyFrameAnimator(state: State, duration: TimeInterval) {
+        let keyFrameAnimator = UIViewPropertyAnimator(duration: duration, curve: .linear) {
+            UIView.animateKeyframes(withDuration: 0, delay: 0, options: [], animations: {
+                switch state {
+                case .expanded:
+                    UIView.addKeyframe(withRelativeStartTime: duration / 2, relativeDuration: duration / 2, animations: {
+                        //self.commentHeaderView.alpha = 1
+                        //self.backButton.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
+                        //self.closeButton.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
+                    })
+                case .collapsed:
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: duration / 2, animations: {
+                        // self.commentHeaderView.alpha = 0
+                        // self.backButton.transform = CGAffineTransform.identity
+                        // self.closeButton.transform = CGAffineTransform.identity
+                    })
+                }
+            }, completion: nil)
+        }
+        runningAnimators.append(keyFrameAnimator)
+    }
+    
+    // Perform all animations with animators if not already running
+    func animateTransitionIfNeeded(state: State, duration: TimeInterval) {
+        if runningAnimators.isEmpty {
+            self.addFrameAnimator(state: state, duration: duration)
+            self.addBlurAnimator(state: state, duration: duration)
+            self.addLabelScaleAnimator(state: state, duration: duration)
+            // self.addCornerRadiusAnimator(state: state, duration: duration)
+            self.addKeyFrameAnimator(state: state, duration: duration)
+        }
+    }
+    
+    // Starts transition if necessary or reverse it on tap
+    func animateOrReverseRunningTransition(state: State, duration: TimeInterval) {
+        if runningAnimators.isEmpty {
+            animateTransitionIfNeeded(state: state, duration: duration)
+            runningAnimators.forEach({ $0.startAnimation() })
+        } else {
+            runningAnimators.forEach({ $0.isReversed = !$0.isReversed })
+        }
+    }
+    
+    // Starts transition if necessary and pauses on pan .began
+    func startInteractiveTransition(state: State, duration: TimeInterval) {
+        self.animateTransitionIfNeeded(state: state, duration: duration)
+        runningAnimators.forEach({ $0.pauseAnimation() })
+        progressWhenInterrupted = runningAnimators.first?.fractionComplete ?? 0
+    }
+    
+    // Scrubs transition on pan .changed
+    func updateInteractiveTransition(fractionComplete: CGFloat) {
+        runningAnimators.forEach({ $0.fractionComplete = fractionComplete })
+    }
+    
+    // Continues or reverse transition on pan .ended
+    func continueInteractiveTransition(fractionComplete: CGFloat) {
+        let cancel: Bool = fractionComplete < 0.2
+        
+        if cancel {
+            runningAnimators.forEach({
+                $0.isReversed = !$0.isReversed
+                $0.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            })
+            return
+        }
+        let timing = UICubicTimingParameters(animationCurve: .easeOut)
+        runningAnimators.forEach({ $0.continueAnimation(withTimingParameters: timing, durationFactor: 0) })
+    }
+
+
 }
 
 

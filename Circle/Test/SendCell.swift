@@ -24,20 +24,20 @@ class SendCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
+        //contentView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         contentView.addSubview(dateLabel)
         contentView.addSubview(label)
         contentView.addSubview(moreButton)
-        contentView.layer.addSublayer(separator)
+        //contentView.layer.addSublayer(separator)
         
-        dateLabel.textColor = .darkText
-        dateLabel.numberOfLines = 3
-        dateLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-        dateLabel.textAlignment = .center
-        
-        label.textColor = .darkText
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textAlignment = .left
+        
+        
+        dateLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+        dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        dateLabel.textAlignment = .left
         
     }
     
@@ -48,12 +48,12 @@ class SendCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        dateLabel.frame = CGRect(x: 10, y: 10, width: 60, height: 40)
+        label.frame = CGRect(x: 45, y: 10, width: width, height: 40)
         
-        let width = self.frame.width - 60
-        label.frame = CGRect(x: dateLabel.frame.maxX + 20, y: 10, width: width, height: 40)
+        dateLabel.frame = CGRect(x: 45, y: 45, width: 60, height: 20)
+        dateLabel.sizeToFit()
 
-        moreButton.frame = CGRect(x: contentView.frame.maxX - 40, y: 10 , width: 40, height: 40)
+        moreButton.frame = CGRect(x: label.frame.maxX + 60, y: 10 , width: 40, height: 40)
         moreButton.setImage(#imageLiteral(resourceName: "More-filled-15"), for: .normal)
         
         let height: CGFloat = 0.5
@@ -72,7 +72,7 @@ class SendCell: UICollectionViewCell {
         dateFormatter.dateFormat = "LLLL"
         let nameOfMonth = dateFormatter.string(from: date!)
         let components = userCalendar.dateComponents(requestedComponents, from: date!)
-        dateLabel.text = "\(components.day!) \n \(nameOfMonth) \n \(components.hour!):\(components.minute!)"
+        dateLabel.text = "\(components.day!) \(nameOfMonth) \(components.hour!):\(components.minute!)"
 
         if event.type == "received" {
             label.text = "You Received \(event.amount ?? "undefined")$ from \(event.firstName ?? "")"

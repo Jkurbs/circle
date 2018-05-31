@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="u90-mO-9v6">
-                    <rect key="frame" x="57" y="6" width="261" height="35"/>
+                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="u90-mO-9v6">
+                    <rect key="frame" x="57" y="28" width="261" height="35"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="sQd-q7-X1C">
                             <rect key="frame" x="0.0" y="0.0" width="261" height="35"/>
@@ -61,13 +61,18 @@
                     </subviews>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="u90-mO-9v6" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="6" id="PAf-s7-j67"/>
                 <constraint firstItem="u90-mO-9v6" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="aIw-p3-yVW"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="15"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="-273.5" y="1345"/>
         </view>
     </objects>

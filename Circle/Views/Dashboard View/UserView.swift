@@ -7,10 +7,26 @@
 //
 
 import UIKit
-import Firebase
 import IGListKit
+import FirebaseAuth
+import FirebaseFirestore
+
 
 class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelegate {
+    
+    var viewController: CircleVC!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 4)
@@ -24,10 +40,9 @@ class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelega
     var expanded: Bool = false
     var collectionViewFrame: CGRect!
     
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        collectionView.backgroundColor = UIColor.textFieldBackgroundColor
+        collectionView.backgroundColor = UIColor(red: 239.0/255.0, green:239.0/255.0 , blue: 239.0/255.0, alpha: 1.0)
         collectionView.autoresizingMask = [.flexibleHeight]
         collectionViewFrame = collectionView.frame
         adapter.collectionView = collectionView

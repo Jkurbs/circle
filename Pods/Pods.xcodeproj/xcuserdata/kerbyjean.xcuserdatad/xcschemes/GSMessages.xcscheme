@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '80A1AAD476BC6D0D87976DE91984E49D'
-               BlueprintName = 'GSMessages'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'GSMessages.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "80A1AAD476BC6D0D87976DE91984E49D"
+               BlueprintName = "GSMessages"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "GSMessages.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

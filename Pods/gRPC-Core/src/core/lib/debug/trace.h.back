@@ -19,28 +19,19 @@
 #ifndef GRPC_CORE_LIB_DEBUG_TRACE_H
 #define GRPC_CORE_LIB_DEBUG_TRACE_H
 
-#include <grpc/support/atm.h>
 #include <grpc/support/port_platform.h>
-#include <stdbool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <grpc/support/atm.h>
+#include <stdbool.h>
 
 void grpc_tracer_init(const char* env_var_name);
 void grpc_tracer_shutdown(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #if defined(__has_feature)
 #if __has_feature(thread_sanitizer)
 #define GRPC_THREADSAFE_TRACER
 #endif
 #endif
-
-#ifdef __cplusplus
 
 namespace grpc_core {
 
@@ -66,13 +57,22 @@ class TraceFlag {
 
   const char* name() const { return name_; }
 
+// This following define may be commented out to ensure that the compiler
+// deletes any "if (tracer.enabled()) {...}" codeblocks. This is useful to
+// test the performance impact tracers have on the system.
+//
+// #define COMPILE_OUT_ALL_TRACERS_IN_OPT_BUILD
+#ifdef COMPILE_OUT_ALL_TRACERS_IN_OPT_BUILD
+  bool enabled() { return false; }
+#else
   bool enabled() {
 #ifdef GRPC_THREADSAFE_TRACER
     return gpr_atm_no_barrier_load(&value_) != 0;
 #else
     return value_;
-#endif
+#endif  // GRPC_THREADSAFE_TRACER
   }
+#endif  // COMPILE_OUT_ALL_TRACERS_IN_OPT_BUILD
 
  private:
   friend void grpc_core::testing::grpc_tracer_enable_flag(TraceFlag* flag);
@@ -109,7 +109,5 @@ class DebugOnlyTraceFlag {
 #endif
 
 }  // namespace grpc_core
-
-#endif  // __cplusplus
 
 #endif /* GRPC_CORE_LIB_DEBUG_TRACE_H */

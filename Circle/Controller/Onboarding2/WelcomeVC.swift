@@ -33,7 +33,7 @@ class WelcomeVC: UIViewController {
             let navigationController = UINavigationController(rootViewController: vc)
             self.present(navigationController, animated: true, completion: nil)
         }
-        if let circleId = UserDefaults.standard.string(forKey: "circleId") as? String {
+        if let circleId = UserDefaults.standard.string(forKey: "circleId") {
             //            if circleId != nil {
             //                DispatchQueue.main.async {
             //                    let vc = PhoneVCTwo()

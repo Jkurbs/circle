@@ -38,8 +38,6 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
         setupView()
         nextButton.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(textChanged(sender:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
-        
-        print("CIRCLE ID NamePasswordVC", circleId)
     }
     
     

@@ -67,3 +67,17 @@ extension UIView {
         return Bundle.main.loadNibNamed(String(describing: T.self), owner: nil, options: nil)![0] as! T
     }
 }
+
+extension UIView {
+    //Get Parent View Controller from any view
+    func parentViewController() -> UIViewController {
+        var responder: UIResponder? = self
+        while !(responder is UIViewController) {
+            responder = responder?.next
+            if nil == responder {
+                break
+            }
+        }
+        return (responder as? CircleVC)!
+    }
+}

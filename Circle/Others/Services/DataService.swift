@@ -8,7 +8,8 @@
 
 import UIKit
 import Firebase
-import FirebaseDatabase
+import FirebaseFirestore
+
 import FirebaseDynamicLinks
 
 class DataService {
@@ -61,14 +62,29 @@ class DataService {
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpg"
         
+        
+        
+        REF_STORAGE.child(filePath).putData(data, metadata: metaData) { (metadata, error) in
+            if let err = error {
+                print("ERROR SAVE PROFILE IMAGE: \(err.localizedDescription)")
+            }
+
+        }
+        
+        
+        
+        
         REF_STORAGE.child(filePath).putData(data, metadata: metaData) { (metadata, error) in
             if let err = error {
                 print("ERROR SAVE PROFILE IMAGE: \(err.localizedDescription)")
             }
             
-            if !metadata!.downloadURLs![0].absoluteString.isEmpty {
-                self.fileUrl = metadata!.downloadURLs![0].absoluteString
-            }
+            
+
+            
+//            if !metadata!.downloadURLs![0].absoluteString.isEmpty {
+//                self.fileUrl = metadata!.downloadURLs![0].absoluteString
+//            }
             
             let changeRequestProfile = user.createProfileChangeRequest()
             changeRequestProfile.photoURL = URL(string: self.fileUrl!)
@@ -113,7 +129,7 @@ class DataService {
                                     let bankData = document.data()
                                     let bankKey = document.documentID
                                     let bank = Bank(bankKey, bankData)
-                                    let user = User(key: key, data: data, bank: bank, event: nil, balance: nil)
+                                    let user = User(key: key, data: data!, bank: bank, event: nil, balance: nil)
                                     completion(true, nil, user, data, bank, bankData)
                                 }
                             }
@@ -127,48 +143,21 @@ class DataService {
 }
     
     
+    var listener: ListenerRegistration!
     
-    func retrieveCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?, _ insider: User?) -> ()) {
+    
+    func retrieveCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?) -> ()) {
     
         guard let circleId = circleId else {
             return
           }
-            let ref = DataService.instance.REF_CIRCLES.document(circleId)
-        ref.getDocument { (document, error) in
+        listener = DataService.instance.REF_CIRCLES.document(circleId).addSnapshotListener { (document, error) in
                 if let document = document {
                     if document.exists {
                         let data = document.data()
                         let key = document.documentID
-                        
-                        
-                        
-                        
-                        
-                        //let endDate = data["end_date"] as! Date
-                        
-//                        let date = Date()
-//                        let formatter = DateFormatter()
-//                        formatter.dateFormat = "dd.MM.yyyy"
-//                        let result = formatter.string(from: date)
-//                        let todaysDate = formatter.date(from: result)
-//
-//                        let daysLeft = self.daysBetween(start: todaysDate!, end: endDate)
-//                        ref.updateData(["days_left": daysLeft], completion: { (error) in
-//                            if let error = error {
-//                                print("error updating days")
-//                            } else {
-//                                print("success")
-//                            }
-//                        })
-                        self.getInsiders(key, { (success, error, insider) in
-                            if !success {
-                                print("ERROR GETTING INSIDERS", error!.localizedDescription)
-                            } else {
-                            print("GET INSIDERS")
-                            let circle = Circle(key: key, data: data, users: insider!)
-                            completion(true, nil, circle, insider)
-                        }
-                    })
+                        let circle = Circle(key: key, data: data!, users: nil)
+                        completion(true, nil, circle)
                 }
             }
         }
@@ -333,7 +322,7 @@ class DataService {
     let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") ?? ""
     let data: [String: Any] = ["ip_address": ipAddress, "device_token": deviceToken, "phone_number": phoneNumber]
 
-    REF_USERS.document(Auth.auth().currentUser!.uid).setData(data, options: SetOptions.merge(), completion: { (error) in
+    REF_USERS.document(Auth.auth().currentUser!.uid).setData(data, merge: true, completion: { (error) in
         if let error = error {
             print("ERROR IP", error.localizedDescription)
         } else {
@@ -372,7 +361,7 @@ class DataService {
         }
             let data = document!.data()
             if let circleId = UserDefaults.standard.string(forKey: "circleId") {
-                self.REF_CIRCLES.document(circleId).setData(data)
+                self.REF_CIRCLES.document(circleId).setData(data!)
             }
         }
     }
@@ -384,12 +373,12 @@ class DataService {
     
     
     func createCircle(id: String, _ link: String?, _ insiders: [Contact], _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
-            self.REF_CIRCLES.document(id).setData(["admin": Auth.auth().currentUser!.uid, "activated": false, "link": link ?? ""], options: SetOptions.merge()) { (error) in
+            self.REF_CIRCLES.document(id).setData(["admin": Auth.auth().currentUser!.uid, "activated": false, "link": link ?? ""], merge: true) { (error) in
                 if let error = error {
                     print("ERROR:", error.localizedDescription)
                     completion(false, error)
                 } else {
-                    self.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["circle": id], options: SetOptions.merge())
+                    self.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["circle": id], merge: true)
                     for insider in insiders {
                         
                         if insider.imageData != nil {
@@ -428,7 +417,7 @@ class DataService {
     
     
     func addInsidersToCircle(id: String, _ insiders: [Contact], _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
-        self.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["circle": id], options: SetOptions.merge())
+        self.REF_USERS.document(Auth.auth().currentUser!.uid).setData(["circle": id], merge: true)
 
         for insider in insiders {
             
@@ -473,15 +462,22 @@ class DataService {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
-        REF_STORAGE.child("Users").child(imgUID).putData(data, metadata: metadata) { (metaData, error) in
-            if let error = error {
-                completion(nil, false, error)
-                return
+        let storageItem = Storage.storage().reference().child(imgUID)
+        
+        storageItem.putData(data, metadata: metadata) { (metadata, error) in
+            if error != nil {
+                print("Couldn't Upload Image")
             } else {
-                let downloadURL = metaData?.downloadURL()!.absoluteString
-                if let url = downloadURL {
-                    completion(url, true, nil)
-                }
+                print("Uploaded")
+                storageItem.downloadURL(completion: { (url, error) in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    if url != nil {
+                         completion(url!.absoluteString, true, nil)
+                    }
+                })
             }
         }
     }
@@ -540,12 +536,12 @@ class DataService {
                                 if let document = document {
                                     if document.exists {
                                         let data = document.data()
-                                        print("DATA:::: =>>>", data)
                                         let key = document.documentID
                                         print("KEY:::: =>>>", key)
-                                        let admin = User(key: key, data: data, bank: nil, event: nil, balance: nil)
+                                        let admin = User(key: key, data: data!, bank: nil, event: nil, balance: nil)
                                         DataService.instance.REF_CIRCLES.document(id).collection("insiders").getDocuments(completion: { (documents, error) in
                                             if let error = error {
+                                                print(error)
                                                 return
                                             }
                                             
@@ -605,13 +601,13 @@ class DataService {
     
     func setupCircle(circleId: String, maxAmount: Int, weeklyAmount: Int) {
         let data = ["max_amount": maxAmount, "weekly_amount": weeklyAmount, "activated": true] as [String : Any]
-        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
+        DataService.instance.REF_CIRCLES.document(circleId).setData(data, merge: true)
     }
     
     
     func updateCircle(_ circleId: String, _ maxAmount: Int) {
         let data = ["max_amount": maxAmount, "activated": true] as [String : Any]
-        DataService.instance.REF_CIRCLES.document(circleId).setData(data, options: SetOptions.merge())
+        DataService.instance.REF_CIRCLES.document(circleId).setData(data, merge: true)
     }
     
     

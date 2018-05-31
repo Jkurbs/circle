@@ -25,14 +25,12 @@ class UserDashboardView: UIView {
     let errorView = Bundle.main.loadNibNamed("ErrorView", owner: self, options: nil)![0] as! ErrorView
     var user: User?
  
- 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.textFieldBackgroundColor
     }
     
  
@@ -99,7 +97,8 @@ extension UserDashboardView: UITextFieldDelegate {
     
  
     func expand(_ sender: UIButton) {
-         let height = (self.viewController?.view.frame.height)! - 65
+        
+        let height =  self.parentViewController().view.frame.height - 65
         self.expanded = !self.expanded
         if expanded {
             UIView.animate(withDuration: 0.3) {

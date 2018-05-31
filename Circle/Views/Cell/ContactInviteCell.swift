@@ -43,10 +43,7 @@ class PendingInviteCell: UICollectionViewCell {
 
         layer.cornerRadius = self.bounds.width / 2
         layer.masksToBounds = true
-        layer.borderWidth = 2.5
-        
-       //layer. UIColor(red: 0.8078, green: 0.2549, blue: 0.2392, alpha: 1.0).cgColor
-
+        layer.borderWidth = 3
         
         imageView.frame = CGRect(x: 2, y: 2, width: contentView.frame.width - 8, height: contentView.frame.height - 8)
         imageView.center = contentView.center

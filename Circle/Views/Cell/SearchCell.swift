@@ -9,17 +9,3 @@
 
 import UIKit
 
-final class SearchCell: UICollectionViewCell {
-    
-    lazy var searchBar: UISearchBar = {
-        let view = UISearchBar()
-        self.contentView.addSubview(view)
-        return view
-    }()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        searchBar.frame = contentView.bounds
-    }
-    
-}

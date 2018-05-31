@@ -21,9 +21,7 @@ class ThirdList: ListSectionController {
     
     override init() {
         super.init()
-        
-        print("USER FIRST NAME;:", user?.firstName)
-        
+                
         self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     

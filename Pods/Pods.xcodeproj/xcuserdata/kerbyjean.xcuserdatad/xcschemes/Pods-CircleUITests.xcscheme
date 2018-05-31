@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D00596ADAF419EB785BB439337EF842B"
+               BlueprintIdentifier = "FF8995F3F2E5FFEC696F00F60E1BB527"
                BuildableName = "Pods_CircleUITests.framework"
                BlueprintName = "Pods-CircleUITests"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D00596ADAF419EB785BB439337EF842B"
+            BlueprintIdentifier = "FF8995F3F2E5FFEC696F00F60E1BB527"
             BuildableName = "Pods_CircleUITests.framework"
             BlueprintName = "Pods-CircleUITests"
             ReferencedContainer = "container:Pods.xcodeproj">

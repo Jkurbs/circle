@@ -24,9 +24,9 @@ class AuthService {
             if error != nil {
                 completion(false, error, nil)
             } else {
-                UserDefaults.standard.set(user!.uid, forKey: "userId")
+                UserDefaults.standard.set(user!.user.uid, forKey: "userId")
                 DispatchQueue.background(delay: 0.0, background: {
-                    DataService.instance.REF_USERS.document(user!.uid).getDocument { (document, error) in
+                    DataService.instance.REF_USERS.document(user!.user.uid).getDocument { (document, error) in
                         if let error = error {
                             print("ERROR:::", error.localizedDescription)
                             return
@@ -42,7 +42,7 @@ class AuthService {
                 }, completion: nil)
                 
                 if let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") {
-                    DataService.instance.REF_USERS.document(user!.uid).updateData(["device_token": deviceToken])
+                    DataService.instance.REF_USERS.document(user!.user.uid).updateData(["device_token": deviceToken])
                 }
             }
         })
@@ -89,8 +89,8 @@ class AuthService {
                 print("ERROR:\(String(describing: error?.localizedDescription))")
                 completion(false, error)
             } else {
-                let userInfo = ["name": name, "email": email, "uid": user!.uid]
-                self.completeSignIn(id: user!.uid, userData: userInfo)
+                let userInfo = ["name": name, "email": email, "uid": user!.user.uid]
+                self.completeSignIn(id: user!.user.uid, userData: userInfo)
                 completion(true, nil)
             }
         })

@@ -10,6 +10,7 @@ import UIKit
 import Stripe
 import LinkKit
 import Firebase
+import FirebaseFirestore
 import UserNotifications
 import IQKeyboardManager
 
@@ -91,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if let incomingUrl = userActivity.webpageURL {
-            let linkHandled = DynamicLinks.dynamicLinks()!.handleUniversalLink(incomingUrl, completion: { (dynamicLink, error) in
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingUrl, completion: { (dynamicLink, error) in
                 
                 if let dynamicLink = dynamicLink, let _ = dynamicLink.url {
                     self.handleDynamicLink(dynamicLink)
@@ -221,7 +222,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initialize(_ application: UIApplication) {
     
          let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = UIColor.fireBush
+        navigationBarAppearance.tintColor = UIColor.white
         //(red: 241, green: 196, blue: 15, alpha: 1.0)
         
         let initialViewController =  LoginVC()

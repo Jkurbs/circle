@@ -51,12 +51,13 @@ class SettingsView: UIView {
         //        self.layer.addSublayer(gradientLayer)
         
         label.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 50)
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .darkText
         label.textAlignment = .center
         self.addSubview(label)
         
-        self.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
+        self.backgroundColor = .white
+            //UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         settingbutton.frame = CGRect(x: 3, y: 3, width: 45, height: 45)
         settingbutton.setImage(#imageLiteral(resourceName: "Settings-20"), for: .normal)
         self.addSubview(settingbutton)

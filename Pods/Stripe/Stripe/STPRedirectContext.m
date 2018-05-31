@@ -16,8 +16,6 @@
 
 #import <SafariServices/SafariServices.h>
 
-#define FAUXPAS_IGNORED_IN_METHOD(...)
-
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^STPBoolCompletionBlock)(BOOL success);
@@ -27,6 +25,8 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
 @property (nonatomic, strong) STPSource *source;
 @property (nonatomic, strong, nullable) SFSafariViewController *safariVC;
 @property (nonatomic, assign, readwrite) STPRedirectContextState state;
+/// If we're on iOS 11+ and in the SafariVC flow, this tracks the latest URL loaded/redirected to during the initial load
+@property (nonatomic, strong, readwrite, nullable) NSURL *lastKnownSafariVCUrl;
 
 @property (nonatomic, assign) BOOL subscribedToURLNotifications;
 @property (nonatomic, assign) BOOL subscribedToForegroundNotifications;
@@ -38,7 +38,8 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
                              completion:(STPRedirectContextCompletionBlock)completion {
 
     if (source.flow != STPSourceFlowRedirect
-        || source.status != STPSourceStatusPending
+        || !(source.status == STPSourceStatusPending ||
+             source.status == STPSourceStatusChargeable)
         || source.redirect.returnURL == nil
         || (source.redirect.url == nil
             && [self nativeRedirectURLForSource:source] == nil)) {
@@ -60,7 +61,6 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
 }
 
 - (void)performAppRedirectIfPossibleWithCompletion:(STPBoolCompletionBlock)onCompletion {
-    FAUXPAS_IGNORED_IN_METHOD(APIAvailability)
 
     if (self.state == STPRedirectContextStateNotStarted) {
         NSURL *nativeUrl = [self nativeRedirectURLForSource:self.source];
@@ -75,7 +75,7 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
         [self subscribeToUrlAndForegroundNotifications];
 
         UIApplication *application = [UIApplication sharedApplication];
-        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+        if (@available(iOS 10, *)) {
 
             WEAK(self);
             [application openURL:nativeUrl options:@{} completionHandler:^(BOOL success) {
@@ -103,10 +103,11 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
 }
 
 - (void)startRedirectFlowFromViewController:(UIViewController *)presentingViewController {
-    FAUXPAS_IGNORED_IN_METHOD(APIAvailability)
 
+    WEAK(self)
     [self performAppRedirectIfPossibleWithCompletion:^(BOOL success) {
         if (!success) {
+            STRONG(self)
             if ([SFSafariViewController class] != nil) {
                 [self startSafariViewControllerRedirectFlowFromViewController:presentingViewController];
             }
@@ -118,11 +119,12 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
 }
 
 - (void)startSafariViewControllerRedirectFlowFromViewController:(UIViewController *)presentingViewController {
-    FAUXPAS_IGNORED_IN_METHOD(APIAvailability)
+
     if (self.state == STPRedirectContextStateNotStarted) {
         _state = STPRedirectContextStateInProgress;
         [self subscribeToUrlNotifications];
-        self.safariVC = [[SFSafariViewController alloc] initWithURL:self.source.redirect.url];
+        self.lastKnownSafariVCUrl = self.source.redirect.url;
+        self.safariVC = [[SFSafariViewController alloc] initWithURL:self.lastKnownSafariVCUrl];
         self.safariVC.delegate = self;
         [presentingViewController presentViewController:self.safariVC
                                                animated:YES
@@ -147,20 +149,45 @@ typedef void (^STPBoolCompletionBlock)(BOOL success);
 
 #pragma mark - SFSafariViewControllerDelegate -
 
-- (void)safariViewControllerDidFinish:(__unused SFSafariViewController *)controller { FAUXPAS_IGNORED_ON_LINE(APIAvailability)
+- (void)safariViewControllerDidFinish:(__unused SFSafariViewController *)controller {
     stpDispatchToMainThreadIfNecessary(^{
         [self handleRedirectCompletionWithError:nil
                     shouldDismissViewController:NO];
     });
 }
 
-- (void)safariViewController:(__unused SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully { FAUXPAS_IGNORED_ON_LINE(APIAvailability)
+- (void)safariViewController:(__unused SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    /*
+     SafariVC is, imo, over-eager to report errors. The way that (for example) girogate.de redirects
+     can cause SafariVC to report that the initial load failed, even though it completes successfully.
+
+     So, only report failures to complete the initial load if the host was a Stripe domain.
+     Stripe uses 302 redirects, and this should catch local connection problems as well as
+     server-side failures from Stripe.
+     */
     if (didLoadSuccessfully == NO) {
-        stpDispatchToMainThreadIfNecessary(^{
-            [self handleRedirectCompletionWithError:[NSError stp_genericConnectionError]
-                        shouldDismissViewController:YES];
-        });
+        if (@available(iOS 11, *)) {
+            stpDispatchToMainThreadIfNecessary(^{
+                if ([self.lastKnownSafariVCUrl.host containsString:@"stripe.com"]) {
+                    [self handleRedirectCompletionWithError:[NSError stp_genericConnectionError]
+                                shouldDismissViewController:YES];
+                }
+            });
+        } else {
+            /*
+             We can only track the latest URL loaded on iOS 11, because `safariViewController:initialLoadDidRedirectToURL:`
+             didn't exist prior to that. This might be a spurious error, so we need to ignore it.
+             */
+        }
     }
+}
+
+- (void)safariViewController:(__unused SFSafariViewController *)controller initialLoadDidRedirectToURL:(NSURL *)URL {
+    stpDispatchToMainThreadIfNecessary(^{
+        // This is only kept up to date during the "initial load", but we only need the value in
+        // `safariViewController:didCompleteInitialLoad:`, so that's fine.
+        self.lastKnownSafariVCUrl = URL;
+    });
 }
 
 #pragma mark - Private methods -

@@ -8,31 +8,26 @@
 
 import UIKit
 
-class CircleInsightCell: UITableViewCell {
+class CircleInsightCell: UICollectionViewCell {
     
-    var endTimeLabel = UILabel()
-    var endDescLabel = UILabel()
+    var endTimeLabel = transformLabel()
+    var endDescLabel = transformLabel()
     
-    var nextPayoutLabel =  UILabel()
-    var nextDescLabel = UILabel()
-    
-    let separator: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
-        return layer
-    }()
+    var nextPayoutLabel =  transformLabel()
+    var nextDescLabel = transformLabel()
     
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.textFieldOpaqueBackgroundColor
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        contentView.layer.addSublayer(separator)
+        
         contentView.addSubview(endTimeLabel)
         contentView.addSubview(endDescLabel)
         contentView.addSubview(nextPayoutLabel)
         contentView.addSubview(nextDescLabel)
     }
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -44,22 +39,30 @@ class CircleInsightCell: UITableViewCell {
         
         let width = self.frame.width
         
-        let height: CGFloat = 0.5
-        separator.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
         
-        let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        let descColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+
+        nextPayoutLabel.textColor = color
+        endTimeLabel.textColor = color
         
-        endTimeLabel.frame = CGRect(x: 20, y: 0, width: width / 3, height: 20)
+        nextPayoutLabel.font = font
+        endTimeLabel.font = font
+        
+        endTimeLabel.frame = CGRect(x: 20, y: 5, width: width / 3, height: 40)
         endDescLabel.frame = CGRect(x: 20, y: endTimeLabel.frame.maxY, width: width / 3 , height: 20)
         endDescLabel.font = font
+        endDescLabel.textColor = descColor
 
-        endDescLabel.text = "Left"
+        endDescLabel.text = "Total"
   
-        nextPayoutLabel.frame = CGRect(x: self.frame.maxX - 150, y: 0, width: width / 3, height: 20)
+        nextPayoutLabel.frame = CGRect(x: self.frame.maxX - 150, y: 5, width: width / 3, height: 40)
         nextDescLabel.frame = CGRect(x: self.frame.maxX - 150, y: nextPayoutLabel.frame.maxY, width: width / 3 , height: 20)
         nextDescLabel.font = font
-        nextDescLabel.text = "For Payout"
-        
+        nextDescLabel.text = "Left"
+        nextDescLabel.textColor = descColor
+
         endTimeLabel.textAlignment = .center
         endDescLabel.textAlignment = .center
         nextPayoutLabel.textAlignment = .center
@@ -68,7 +71,7 @@ class CircleInsightCell: UITableViewCell {
     
     
     func configure(_ circle: Circle) {
-        let daysTotalLeft = circle.daysLeft! * 6
+        let daysTotalLeft = circle.daysTotal ?? 0
         let daysBeforeNextPayout = circle.daysLeft ?? 0
         self.endTimeLabel.text = "\(daysTotalLeft) days"
         self.nextPayoutLabel.text = "\(daysBeforeNextPayout) days"
@@ -79,7 +82,7 @@ class CircleInsightCell: UITableViewCell {
 
 
 
-class TotalAmountCell: UITableViewCell {
+class OrderCell: UITableViewCell {
     
     var descAmountLabel = UILabel()
     var  amountLabel = UILabel()
@@ -106,7 +109,7 @@ class TotalAmountCell: UITableViewCell {
         slider.frame = CGRect(x: descAmountLabel.frame.maxX + 5, y: 0, width: self.frame.width - 180, height: height)
         amountLabel.frame = CGRect(x: slider.frame.maxX + 10, y: 0, width: 80, height: height)
 
-        let font =  UIFont.systemFont(ofSize: 12, weight: .regular)
+        let font =  UIFont.systemFont(ofSize: 14, weight: .semibold)
         
         descAmountLabel.font = font
         amountLabel.font = font
@@ -291,4 +294,4 @@ class CircleSettings: UITableViewCell {
         alertImageView.frame = CGRect(x: label.frame.maxX + 5, y: 20, width: 10, height: 10)
     }
 }
-
+ 

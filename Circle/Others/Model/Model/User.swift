@@ -21,11 +21,15 @@ final class User {
     var lastName: String?
     var phoneNumber: String?
     var status: String?
+    var signupDate: Date?
     var activated: Bool?
+    var payed: Bool?
+    var position: Int?
+    var daysLeft: Int?
+
     var bank: Bank?
     var event: Event?
     var balance: Balance?
-
     
     
     init(key: String, data: [String: Any], bank: Bank?, event: Event?, balance: Balance?) {
@@ -62,6 +66,18 @@ final class User {
         
         if let activated = data["activated"] as? Bool {
             self.activated = activated
+        }
+        
+        if let payed = data["payed"] as? Bool {
+            self.payed = payed
+        }
+        
+        if let position = data["position"] as? Int {
+            self.position = position
+        }
+        
+        if let daysLeft = data["days_left"] as? Int {
+            self.daysLeft = daysLeft
         }
         
         if let bank = bank {

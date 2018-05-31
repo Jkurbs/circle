@@ -36,12 +36,12 @@ class CircleView: CircularSlider  {
         self.thumbRadius = 0.0
         self.trackFillColor = UIColor(red: 243.0/255.0, green:  156.0/255.0, blue:  18.0/255.0, alpha: 1.0)
         self.endThumbStrokeColor = UIColor(white: 0.7, alpha: 1.0)
-        self.lineWidth = 4.0
+        self.lineWidth = 6.0
         self.trackColor = UIColor(white: 0.8, alpha: 1.0)
         self.backtrackLineWidth = 4.0
-        self.diskFillColor = .white
-        self.diskColor = .white
-        self.backgroundColor = .white
+        self.diskFillColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        self.diskColor =  UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+        self.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
     }
 }
 

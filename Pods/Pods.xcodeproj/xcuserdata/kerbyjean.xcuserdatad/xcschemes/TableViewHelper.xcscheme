@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F468A319E248899F5564C9CEC8697C62'
-               BlueprintName = 'TableViewHelper'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'TableViewHelper.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CD97C397EAE3CD9511D8ECF244175324"
+               BlueprintName = "TableViewHelper"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "TableViewHelper.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -9,6 +9,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 import IGListKit
 
 class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelegate {
@@ -18,6 +19,12 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
     @IBOutlet weak var pendingLabel: UILabel!
     @IBOutlet weak var availableLabel: UILabel!
     @IBOutlet weak var nextPayoutLabel: UILabel!
+    @IBOutlet weak var customViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var moreLabel: UILabel!
+    @IBOutlet weak var contentView: UIView!
+    
+    var vc: CircleVC!
     
     let separator: CALayer = {
         let layer = CALayer()
@@ -26,16 +33,15 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
     }()
     
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 4)
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: vc, workingRangeSize: 4)
     }()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     var controller: CircleVC!
     
-    
-    @IBOutlet weak var moreLabel: UILabel!
-    @IBOutlet weak var contentView: UIView!
+    var startPosition: CGPoint?
+    var originalHeight: CGFloat = 0
     
     var events = [Event]()
     var insight = [Balance]()
@@ -46,13 +52,15 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        collectionView.backgroundColor = UIColor.textFieldBackgroundColor
+        collectionView.backgroundColor = UIColor.white
+        //(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         collectionView.autoresizingMask = [.flexibleHeight]
         adapter.collectionView = collectionView
         adapter.dataSource = self
         getBalance()
-        get()        
+        get()
     }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -60,25 +68,22 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
         collectionView.frame =  CGRect(x: 0, y: 55, width: displayWidth, height: 100)
         collectionViewFrame = collectionView.frame
         self.contentView.addSubview(collectionView)
-       self.moreLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.moreLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let height: CGFloat = 0.5
         separator.frame = CGRect(x: 0, y:  stackView.bounds.height - height, width: bounds.width, height: height)
         
-        
         self.stackView.layer.addSublayer(separator)
-        
-       
-        
-        
-        
-        
-        
     }
     
+
     
-    @IBAction func moreButton(_ sender: OptionButton) {
-        let height = (self.viewController?.view.frame.height)! - 65
+  
+
+    
+    @IBAction func moreButton(_ sender: UIButton) {
+        
+        let height =  self.parentViewController().view.frame.height - 65
         expanded = !expanded
         if expanded {
             UIView.animate(withDuration: 0.3, animations: {
@@ -126,7 +131,7 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
         listener = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("insight").document("balance").addSnapshotListener { (document, error) in
             if (document?.exists)! {
                 let data = document!.data()
-                let balance = Balance(data: data)
+                let balance = Balance(data: data!)
                 self.pendingLabel.text = "\(balance.pendingAmount ?? 0)$"
                 self.availableLabel.text = "\(balance.availableAmount ?? 0)$"
             }
