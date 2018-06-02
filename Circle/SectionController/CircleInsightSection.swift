@@ -15,7 +15,9 @@ class CircleInsightSection: ListSectionController {
     
     override func sizeForItem(at index: Int) -> CGSize {
 
-        if index == 2 {
+        if index == 0 {
+            return CGSize(width: collectionContext!.containerSize.width, height: 8)
+        } else if index == 3 {
             return CGSize(width: collectionContext!.containerSize.width, height: 60)
         }
         
@@ -29,17 +31,24 @@ class CircleInsightSection: ListSectionController {
     }
     
     override func numberOfItems() -> Int {
-        return 3
+        return 4
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
+        
+        
         if index == 0 {
+            guard let cell = collectionContext?.dequeueReusableCell(of: DragCell.self , for: self, at: index) as? DragCell else {
+                fatalError()
+            }
+            return cell
+        } else if index == 1 {
             guard let cell = collectionContext?.dequeueReusableCell(of: CircleInsightCell.self , for: self, at: index) as? CircleInsightCell else {
                 fatalError()
             }
             cell.configure(circle!)
             return cell
-        } else if index == 1 {
+        } else if index == 2 {
             let cell = collectionContext!.dequeueReusableCell(of: AmountsCell.self , for: self, at: index)
             if let cell = cell as? AmountsCell {
                 cell.configure(circle!)
@@ -49,6 +58,7 @@ class CircleInsightSection: ListSectionController {
             guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutHeaderCell.self, for: self, at: index) as? NextPayoutHeaderCell else {
                 fatalError()
             }
+            cell.configure("Next Payouts")
             return cell
         }
     }

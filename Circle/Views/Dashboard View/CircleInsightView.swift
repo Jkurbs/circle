@@ -23,9 +23,11 @@ class CircleInsightView: UIView, ListAdapterDataSource {
     var helper: TableViewHelper!
     var circles = [Circle]()
     var users = [User]()
+    var events = [Event]()
+    var header = ["Recent"]
     
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: vc, workingRangeSize: 1)
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: vc, workingRangeSize: 3)
     }()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -34,7 +36,7 @@ class CircleInsightView: UIView, ListAdapterDataSource {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        collectionView.backgroundColor = .white 
+        collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         self.addSubview(collectionView)
         adapter.collectionView = collectionView
@@ -53,6 +55,7 @@ class CircleInsightView: UIView, ListAdapterDataSource {
     func setup() {
         observeCircle()
         getInsidersByOrder()
+        getCircleActivities()
         self.backgroundColor = UIColor.white
     }
     
@@ -69,7 +72,7 @@ class CircleInsightView: UIView, ListAdapterDataSource {
                     let key = document?.documentID
                     let circle = Circle(key: key!, data: data!, users: nil)
                     self.circles.append(circle)
-                    self.adapter.performUpdates(animated: true, completion: nil)
+                    self.adapter.performUpdates(animated: false)
                 }
             }
         }
@@ -89,9 +92,29 @@ class CircleInsightView: UIView, ListAdapterDataSource {
                         let data = document.data()
                         let key = document.documentID
                         let user = User(key: key, data: data, bank: nil, event: nil, balance: nil)
-                        print("USER POS::", user.position)
                         self.users.append(user)
-                        self.adapter.performUpdates(animated: true, completion: nil)
+                        self.adapter.performUpdates(animated: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getCircleActivities() {
+        self.events = []
+        let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as! String
+        Firestore.firestore().collection("circles").document(circleId).collection("events").addSnapshotListener { (document, error) in
+            if let error = error {
+                print("ERROR", error.localizedDescription)
+            } else {
+                
+                for document in (document?.documents)! {
+                    if document.exists {
+                        let data = document.data()
+                        let key = document.documentID
+                        let event = Event(key: key, data: data)
+                        self.events.append(event)
+                        self.adapter.performUpdates(animated: false)
                     }
                 }
             }
@@ -104,6 +127,8 @@ extension CircleInsightView {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         var data = circles as [ListDiffable]
         data += users as [ListDiffable]
+        data += header as [ListDiffable]
+        data += events as [ListDiffable]
         return data
     }
     
@@ -111,8 +136,12 @@ extension CircleInsightView {
         
         if object is Circle {
            return CircleInsightSection()
-        } else {
+        } else if object is User {
             return NextPayoutSection()
+        } else if object is String {
+            return HeaderSection()
+        } else {
+            return CircleEventsSection()
         }
     }
     

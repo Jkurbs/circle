@@ -25,7 +25,6 @@ class UserEventCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         contentView.addSubview(dateLabel)
         contentView.addSubview(label)
         contentView.addSubview(moreButton)

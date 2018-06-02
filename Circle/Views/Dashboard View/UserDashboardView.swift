@@ -51,6 +51,14 @@ class UserDashboardView: UIView {
             view.alpha = 0.0
             self.addSubview(view)
         }
+        
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.frame
+        rectShape.position = self.center
+        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        
+        self.layer.backgroundColor = UIColor.green.cgColor
+        self.layer.mask = rectShape
     }
 
 

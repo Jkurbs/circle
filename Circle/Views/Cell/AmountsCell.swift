@@ -108,7 +108,10 @@ class NextPayoutHeaderCell: UICollectionViewCell {
         label.textColor = color
         label.font = font
         label.frame = CGRect(x: 25, y: 5, width: width / 3, height: 40)
-        label.text = "Next Payouts"
+    }
+    
+    func configure(_ text: String) {
+        label.text = text
     }
 }
 

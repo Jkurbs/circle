@@ -66,6 +66,10 @@
 		D153C96C20BDB7E90007C3F5 /* NextPayoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */; };
 		D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96D20BF90050007C3F5 /* AmountsSection.swift */; };
 		D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96F20BF903F0007C3F5 /* AmountsCell.swift */; };
+		D153C97320C06DFB0007C3F5 /* CircleEventsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */; };
+		D153C97520C06FBC0007C3F5 /* CircleEventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */; };
+		D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97620C088950007C3F5 /* HeaderSection.swift */; };
+		D153C97920C0F60B0007C3F5 /* DragCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97820C0F60B0007C3F5 /* DragCell.swift */; };
 		D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15586D02015885D00E4984B /* UIColor+Palette.swift */; };
 		D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */; };
 		D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* WelcomeVC.swift */; };
@@ -221,6 +225,10 @@
 		D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPayoutCell.swift; sourceTree = "<group>"; };
 		D153C96D20BF90050007C3F5 /* AmountsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsSection.swift; sourceTree = "<group>"; };
 		D153C96F20BF903F0007C3F5 /* AmountsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsCell.swift; sourceTree = "<group>"; };
+		D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleEventsSection.swift; sourceTree = "<group>"; };
+		D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleEventsCell.swift; sourceTree = "<group>"; };
+		D153C97620C088950007C3F5 /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
+		D153C97820C0F60B0007C3F5 /* DragCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCell.swift; sourceTree = "<group>"; };
 		D15586D02015885D00E4984B /* UIColor+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Palette.swift"; sourceTree = "<group>"; };
 		D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBankVC.swift; sourceTree = "<group>"; };
 		D1619200202814AD0073C8B8 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -585,6 +593,8 @@
 				D153C96720BB15040007C3F5 /* CircleInsightSection.swift */,
 				D153C96920BDB7C00007C3F5 /* NextPayoutSection.swift */,
 				D153C96D20BF90050007C3F5 /* AmountsSection.swift */,
+				D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */,
+				D153C97620C088950007C3F5 /* HeaderSection.swift */,
 			);
 			path = SectionController;
 			sourceTree = "<group>";
@@ -613,6 +623,8 @@
 				D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */,
 				D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */,
 				D153C96F20BF903F0007C3F5 /* AmountsCell.swift */,
+				D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */,
+				D153C97820C0F60B0007C3F5 /* DragCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1049,7 +1061,9 @@
 				D1D7C5772036850E00842B4C /* SettingsView.swift in Sources */,
 				D1C7C76D205F688900518245 /* ConfirmationView.swift in Sources */,
 				D16BCA55205B637D0053DF0A /* SendCell.swift in Sources */,
+				D153C97520C06FBC0007C3F5 /* CircleEventsCell.swift in Sources */,
 				D10E76552054CB5E003F418B /* UserView.swift in Sources */,
+				D153C97320C06DFB0007C3F5 /* CircleEventsSection.swift in Sources */,
 				D1181F71206BF8CB00277345 /* InsightSection.swift in Sources */,
 				D1D66D652071492E0087D41C /* CircleInsightView.swift in Sources */,
 				D171982B200F927B009BC920 /* CardField.swift in Sources */,
@@ -1090,6 +1104,7 @@
 				D1719817200E725A009BC920 /* AKMaskFieldPatternCharacter.swift in Sources */,
 				D171981A200E725A009BC920 /* AKMaskFieldBlock.swift in Sources */,
 				D16BCA59205DAF650053DF0A /* TransactionView.swift in Sources */,
+				D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */,
 				D10A6DAC2039BB9300E7AEB5 /* InviteVCTwo.swift in Sources */,
 				D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */,
 				D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */,
@@ -1101,6 +1116,7 @@
 				D1719825200F8F17009BC920 /* Headline.swift in Sources */,
 				D10FC6332040B54100BCBFCA /* UserDashboardView.swift in Sources */,
 				D171981B200E725A009BC920 /* AKMaskFieldUtility.swift in Sources */,
+				D153C97920C0F60B0007C3F5 /* DragCell.swift in Sources */,
 				D1E306762008210B000A5845 /* InviteVC.swift in Sources */,
 				D1F25EC12056F0F400611259 /* SecListC.swift in Sources */,
 				D16BCA53205B62E40053DF0A /* CurrentUserListController.swift in Sources */,

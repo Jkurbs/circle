@@ -68,11 +68,7 @@ class CircleVC: UIViewController {
             //UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         
         collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")
-        
-        
-        
-        
-        view.addSubview(contentView)
+
         collectionView.delegate = self
         collectionView.dataSource = self
         retrieveUser()
@@ -120,9 +116,9 @@ class CircleVC: UIViewController {
         currentUserView.vc = self 
         self.contentView.addSubview(currentUserView)
         
-        collectionView.frame = CGRect(x: 0, y: welcomeView.bounds.height, width: welcomeView.frame.width, height: 290)
+        collectionView.frame = CGRect(x: 0, y: currentUserView.bounds.height + 100, width: view.frame.width, height: 350)
         
-        circleView.frame = CGRect(x: 0, y: welcomeView.bounds.height, width: welcomeView.frame.width - 130, height: 290)
+        circleView.frame = CGRect(x: 0, y: currentUserView.bounds.height + 100, width: view.frame.width - 80, height: 350)
         circleView.center.x = collectionView.center.x
         contentView.insertSubview(circleView, at: 0)
         
@@ -145,16 +141,22 @@ class CircleVC: UIViewController {
             if !success {
                     print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
-                
+                self.setup()
                 let daysPassed = (circle?.daysTotal)! - (circle?.daysLeft)!
                 let daysTotal = (circle?.daysTotal)
                 self.circleView.maximumValue = CGFloat(daysTotal!)
                 self.circleView.endPointValue = CGFloat(daysPassed)
                 self.loadingView.removeFromSuperview()
+                self.setup()
             }
         }
     }
     
+    
+    func setup() {
+        view.addSubview(contentView)
+    }
+
     
     @objc func logOut() {
         UserDefaults.standard.removeObject(forKey: "userId")
@@ -378,11 +380,13 @@ extension CircleVC {
             case .expanded:
                 self.currentUserView.alpha = 0.0
                 self.userViews.alpha = 0.0
+                self.circleInsightView.collectionView.isScrollEnabled = true
                 //self.insightCell.endTimeLabel.enlarge()
                 //self.insightCell.nextPayoutLabel.enlarge()
             case .collapsed:
                 self.currentUserView.alpha = 1.0
                 self.userViews.alpha = 1.0
+                self.circleInsightView.collectionView.isScrollEnabled = false
 //                self.insightCell.endTimeLabel.shrink()
 //                self.insightCell.nextPayoutLabel.shrink()
             }

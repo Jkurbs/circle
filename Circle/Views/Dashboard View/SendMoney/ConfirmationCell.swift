@@ -18,7 +18,6 @@ class ConfirmationCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .textFieldBackgroundColor
         titleLabel.textColor = UIColor.lightGray
         titleLabel.font = UIFont.systemFont(ofSize: 15)
         iconImageView.contentMode = .scaleAspectFit

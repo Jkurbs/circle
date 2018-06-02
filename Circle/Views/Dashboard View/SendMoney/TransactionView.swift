@@ -20,10 +20,6 @@ class TransactionView: UIView, UITextFieldDelegate {
     
     var mode = ""
     
-    
-    
-    
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -46,6 +42,13 @@ class TransactionView: UIView, UITextFieldDelegate {
         amountTextField.isEnabled = true
         button.frame =  CGRect(x: 0, y: 0, width: 50, height: 50)
         self.addSubview(amountTextField)
+        
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.frame
+        rectShape.position = self.center
+        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        
+        self.layer.mask = rectShape
     }
     
     @IBAction func actions(_ sender: OptionButton) {

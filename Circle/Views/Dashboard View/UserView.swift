@@ -16,23 +16,13 @@ class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelega
     
     var viewController: CircleVC!
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 4)
     }()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    var view = UIView()
     
     var parentView: UserDashboardView!
     var events = [Event]()
@@ -42,7 +32,7 @@ class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelega
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        collectionView.backgroundColor = UIColor(red: 239.0/255.0, green:239.0/255.0 , blue: 239.0/255.0, alpha: 1.0)
+        collectionView.backgroundColor = UIColor.white
         collectionView.autoresizingMask = [.flexibleHeight]
         collectionViewFrame = collectionView.frame
         adapter.collectionView = collectionView
@@ -55,6 +45,13 @@ class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelega
         let displayWidth: CGFloat = self.frame.width
         collectionView.frame =  CGRect(x: 0, y: 0, width: displayWidth, height: 150)
         self.addSubview(collectionView)
+        
+        self.addSubview(view)
+
+        view.frame = CGRect(x: 0 , y: self.bounds.height - 15, width: 60, height: 5)
+        view.center.x = self.center.x
+        view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+        view.cornerRadius = 2.5
     }
     
     
@@ -75,6 +72,7 @@ class UserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelega
                     self.reload()
                 }
             }
+            self.listener.remove()
         }
     }
     

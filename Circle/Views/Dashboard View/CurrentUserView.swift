@@ -14,11 +14,6 @@ import IGListKit
 
 class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControllerDelegate {
     
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var pendingLabel: UILabel!
-    @IBOutlet weak var availableLabel: UILabel!
-    @IBOutlet weak var nextPayoutLabel: UILabel!
     @IBOutlet weak var customViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var moreLabel: UILabel!
@@ -38,6 +33,8 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
+    var view = UIView()
+    
     var controller: CircleVC!
     
     var startPosition: CGPoint?
@@ -53,27 +50,39 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         collectionView.backgroundColor = UIColor.white
-        //(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         collectionView.autoresizingMask = [.flexibleHeight]
+
         adapter.collectionView = collectionView
         adapter.dataSource = self
-        getBalance()
+
+        //getBalance()
         get()
+    
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         let displayWidth: CGFloat = self.frame.width
-        collectionView.frame =  CGRect(x: 0, y: 55, width: displayWidth, height: 100)
+        collectionView.frame =  CGRect(x: 0, y: 0, width: displayWidth, height: 100)
         collectionViewFrame = collectionView.frame
         self.contentView.addSubview(collectionView)
         self.moreLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let height: CGFloat = 0.5
-        separator.frame = CGRect(x: 0, y:  stackView.bounds.height - height, width: bounds.width, height: height)
+        contentView.addSubview(view)
+
+        view.frame = CGRect(x: 0 , y: self.bounds.height - 15, width: 60, height: 5)
+        view.center.x = self.center.x
+        view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+        view.cornerRadius = 2.5
         
-        self.stackView.layer.addSublayer(separator)
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.frame
+        rectShape.position = self.center
+        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        
+        self.layer.backgroundColor = UIColor.green.cgColor
+        self.layer.mask = rectShape
     }
     
 
@@ -124,19 +133,20 @@ class CurrentUserView: UIView, ListAdapterDataSource, ListSingleSectionControlle
                     self.reload()
                 }
             }
+            self.listener.remove()
         }
     }
     
-    func getBalance() {
-        listener = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("insight").document("balance").addSnapshotListener { (document, error) in
-            if (document?.exists)! {
-                let data = document!.data()
-                let balance = Balance(data: data!)
-                self.pendingLabel.text = "\(balance.pendingAmount ?? 0)$"
-                self.availableLabel.text = "\(balance.availableAmount ?? 0)$"
-            }
-        }
-    }
+//    func getBalance() {
+//        listener = DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("insight").document("balance").addSnapshotListener { (document, error) in
+//            if (document?.exists)! {
+//                let data = document!.data()
+//                let balance = Balance(data: data!)
+//                self.pendingLabel.text = "\(balance.pendingAmount ?? 0)$"
+//                self.availableLabel.text = "\(balance.availableAmount ?? 0)$"
+//            }
+//        }
+//    }
     
     
     func reload() {
