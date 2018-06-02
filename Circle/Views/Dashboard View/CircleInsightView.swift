@@ -29,7 +29,7 @@ class CircleInsightView: UIView, ListAdapterDataSource {
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: vc, workingRangeSize: 3)
     }()
-    
+     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     
