@@ -6,10 +6,6 @@ const functions = require('firebase-functions');
 
 const schedule = require('node-schedule');
 
-//https://us-central1-circle-528ca.cloudfunctions.net/updateCircle
-
-
-
 
 
 exports = module.exports =  functions.https.onRequest((req, res) => {
