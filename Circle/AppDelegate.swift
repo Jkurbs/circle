@@ -34,11 +34,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = self.customURLScheme
         FirebaseApp.configure()
         
-        let settings = FirestoreSettings()
-        settings.isPersistenceEnabled = true
-
+        let bgQueue = DispatchQueue.global(qos: .background)
+        
         let db = Firestore.firestore()
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
+        settings.dispatchQueue = bgQueue
+        
+
+
 
         // Stripe payment configuration
         STPPaymentConfiguration.shared().companyName = "Circle"

@@ -32,7 +32,7 @@ class DragCell: UICollectionViewCell {
         super.layoutSubviews()
 
         
-        view.frame = CGRect(x: 0 , y: 5, width: 60, height: 5)
+        view.frame = CGRect(x: 0 , y: 5, width: 30, height: 5)
         view.center.x = self.center.x
         view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         view.cornerRadius = 2.5

@@ -11,10 +11,13 @@ import IGListKit
 
 class HeaderSection: ListSectionController {
     
-    private var header: String?
+    private var link: String?
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 40)
+        if index == 0 {
+            return CGSize(width: collectionContext!.containerSize.width, height: 40)
+        }
+        return CGSize(width: collectionContext!.containerSize.width, height: 150)
     }
 
     override init() {
@@ -23,16 +26,31 @@ class HeaderSection: ListSectionController {
     }
     
     
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutHeaderCell.self, for: self, at: index) as? NextPayoutHeaderCell else {
-            fatalError()
-        }
-        cell.configure("Recents")
-        return cell
+    override func didUpdate(to object: Any) {
+        link = object as? String
     }
     
-    override func didUpdate(to object: Any) {
-        header = object as? String
+    
+    override func numberOfItems() -> Int {
+        return 2
+    }
+    
+    
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        
+        if index == 0 {
+            guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutHeaderCell.self, for: self, at: index) as? NextPayoutHeaderCell else {
+                fatalError()
+            }
+            cell.configure("Invite trusted ones")
+            return cell
+        } else {
+            guard let cell = collectionContext?.dequeueReusableCell(of: InviteCell.self, for: self, at: index) as? InviteCell else {
+                fatalError()
+            }            
+            cell.codeLabel.text = link
+            return cell
+        }
     }
 }
 

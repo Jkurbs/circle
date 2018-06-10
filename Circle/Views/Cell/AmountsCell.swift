@@ -71,9 +71,9 @@ class AmountsCell: UICollectionViewCell {
     }
     
     
-    func configure(_ circle: Circle) {
-        let weeklyAmount = circle.weeklyAmount ?? 0
-        let totalAmount = circle.totalAmount ?? 0
+    func configure(_ insight: Insight) {
+        let weeklyAmount = insight.weeklyAmount ?? 0
+        let totalAmount = insight.totalAmount ?? 0
         self.weeklyAmountLabel.text = "\(weeklyAmount) $"
         self.totalAmountLabel.text = "\(totalAmount) $"
     }
@@ -103,11 +103,10 @@ class NextPayoutHeaderCell: UICollectionViewCell {
         
         let font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-        let descColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
         
         label.textColor = color
         label.font = font
-        label.frame = CGRect(x: 25, y: 5, width: width / 3, height: 40)
+        label.frame = CGRect(x: 25, y: 5, width: width , height: 40)
     }
     
     func configure(_ text: String) {

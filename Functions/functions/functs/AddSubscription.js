@@ -10,13 +10,11 @@ const stripe = require('stripe')("sk_test_QfBDc4JT7E6iz8EwrsuJcR58");
 //Charge the Stripe customer whenever an amount is written to the Realtime database
 
 exports = module.exports = functions.firestore.document('/circles/{id}/insiders/{userId}').onCreate(event => { 
-    
         
    const val = event.data.data();
    const id = event.params.id; 
    const userId = event.params.userId;  
    const customer_id = val.customer_id;
-    console.log('SIZEEE::', event.size);
     
    const circleRef= admin.firestore().collection('users').doc(userId);
     var unsubscribe = circleRef.onSnapshot(function(snapshot) {

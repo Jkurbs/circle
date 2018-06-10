@@ -18,7 +18,6 @@ final class Circle {
     var productId: String?
     var activated: Bool?
     var adminId: String?
-    var users: User?
     var totalAmount: Int?
     var weeklyAmount: Int?
     var weeks: Int?
@@ -28,14 +27,14 @@ final class Circle {
     var endDate: Date?
     var daysTotal: Int? 
     var daysLeft: Int?
+    var link: String?
     
 
     
-    init(key: String, data: [String: Any], users: User?) {
+    init(key: String, data: [String: Any]) {
         
         self.id = key
         
-        self.users = users
         
         
         if let productId = data["product_id"] as? String {
@@ -81,6 +80,10 @@ final class Circle {
         if let daysLeft = data["days_left"] as? Int {
             self.daysLeft = daysLeft
         }
+        
+        if let link = data["link"] as? String {
+            self.link = link
+        }
     }
 }
 
@@ -100,7 +103,7 @@ extension Circle: ListDiffable {
     }
     
     public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
+        guard self !== object else { return true }
         guard let object = object as? Circle else { return false }
         return self.id == object.id
     }

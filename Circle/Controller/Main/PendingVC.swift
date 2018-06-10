@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseAuth
 
 
@@ -21,10 +22,9 @@ class CircleVC: UIViewController {
     // Views
     let contentView = ContentView()
     var settingsView: SettingsView!
+    var selectedUserView: SelectedUserView!
     var welcomeView: IntroView!
     let circleInsightView: CircleInsightView = UIView.fromNib()
-    let currentUserView: CurrentUserView = UIView.fromNib()
-    let userViews: UserDashboardView = UIView.fromNib()
 
     var loadingView = LoadingView()
     var circleView = CircleView()
@@ -51,6 +51,12 @@ class CircleVC: UIViewController {
     var index: IndexPath!
     var insightCell: CircleInsightCell!
     
+    
+    let impact = UIImpactFeedbackGenerator()
+    let selection = UISelectionFeedbackGenerator()
+    let notification = UINotificationFeedbackGenerator()
+    
+    
     lazy var collectionView: UICollectionView = {
         let layout = CircleLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -59,6 +65,11 @@ class CircleVC: UIViewController {
         return view
     }()
 
+    private var listener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,27 +82,42 @@ class CircleVC: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        retrieveUser()
         addGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
 
+    }
+    
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        retrieveCircle()
+        retrieveUser()
+    }
+    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        DataService.instance.listener = nil 
+    }
+    
+    
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-
-        
+                
         let height: CGFloat = 280
         
         contentView.frame = CGRect(x: 0, y: 20, width: view.frame.width, height: view.frame.height)
         
         // add settingsView
-        settingsView = SettingsView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 45))
+        settingsView = SettingsView(frame: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 60))
         settingsView.settingbutton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
 
         contentView.addSubview(settingsView)
@@ -107,18 +133,14 @@ class CircleVC: UIViewController {
         self.contentView.addSubview(circleInsightView)
         
         // Add userView
-        userViews.frame = CGRect(x: 0, y: 45, width: userViews.frame.width, height:  userViews.frame.height)
-        userViews.alpha = 0.0
-        self.contentView.addSubview(userViews)
         
-        currentUserView.frame = CGRect(x: 0, y: 45, width: currentUserView.frame.width, height: currentUserView.frame.height)
-        currentUserView.alpha = 1.0
-        currentUserView.vc = self 
-        self.contentView.addSubview(currentUserView)
+        selectedUserView = SelectedUserView(frame: CGRect(x: 0, y: 60, width: contentView.frame.width, height: 200))
+        contentView.addSubview(selectedUserView)
         
-        collectionView.frame = CGRect(x: 0, y: currentUserView.bounds.height + 100, width: view.frame.width, height: 350)
         
-        circleView.frame = CGRect(x: 0, y: currentUserView.bounds.height + 100, width: view.frame.width - 80, height: 350)
+        collectionView.frame = CGRect(x: 0, y: selectedUserView.bounds.height + 100, width: view.frame.width, height: 350)
+        
+        circleView.frame = CGRect(x: 0, y: selectedUserView.bounds.height + 100, width: view.frame.width - 80, height: 350)
         circleView.center.x = collectionView.center.x
         contentView.insertSubview(circleView, at: 0)
         
@@ -127,19 +149,21 @@ class CircleVC: UIViewController {
     }
     
     func retrieveUser() {
-        self.users = []
+        self.circleId = nil
         self.view.addSubview(loadingView)
-        let circleId  = self.circleId ?? UserDefaults.standard.value(forKey: "circleId") as! String
-        
-        DataService.instance.getInsiders(circleId, { (success, error, users) in
-            self.users.append(users)
+        let circleId  = self.circleId ?? UserDefaults.standard.string(forKey: "circleId") ?? ""
+                
+        DataService.instance.getInsiders(circleId, { (success, error, user) in
+            self.users.append(user)
             self.collectionView.insertItems(at: [IndexPath(row: self.users.count - 1, section: 0 )])
         })
-        
-        
+    }
+    
+    func retrieveCircle() {
+        let circleId  = self.circleId ?? UserDefaults.standard.string(forKey: "circleId") ?? ""
         DataService.instance.retrieveCircle(circleId){ (success, error, circle) in
             if !success {
-                    print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
+                print("ERRROR RETRIVING CIRCLE", error!.localizedDescription)
             } else {
                 self.setup()
                 let daysPassed = (circle?.daysTotal)! - (circle?.daysLeft)!
@@ -217,21 +241,18 @@ extension CircleVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 })
                 indicesArray.append(selectedIndex!)
             }
+            
+            impact.impactOccurred()
+            
             selectedIndex = indexPath
             let cell = collectionView.cellForItem(at: indexPath) as! PendingInviteCell
+            let image = cell.imageView.image
                 UIView.animate(withDuration: 0.3, animations: {
                     cell.layer.borderColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0).cgColor
                     cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 }, completion: { (completion) in
-                    switch user!.userId {
-                    case Auth.auth().currentUser!.uid?:
-                        self.settingsView.configure("Dashboard")
-                        self.hideViews(hideView: self.userViews, showView: self.currentUserView)
-                    default:
-                        self.hideViews(hideView: self.currentUserView, showView: self.userViews)
-                        self.userViews.configure(user)
-                        self.settingsView.configure(user!.firstName!)
-                    }
+                    self.selectedUserView.configure(image: image, user: user!)
+                    self.settingsView.configure(user!.firstName!)
                 })
             indicesArray.append(indexPath)
         }
@@ -378,14 +399,12 @@ extension CircleVC {
         let scaleAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
             switch state {
             case .expanded:
-                self.currentUserView.alpha = 0.0
-                self.userViews.alpha = 0.0
+                self.selectedUserView.alpha = 0.0
                 self.circleInsightView.collectionView.isScrollEnabled = true
                 //self.insightCell.endTimeLabel.enlarge()
                 //self.insightCell.nextPayoutLabel.enlarge()
             case .collapsed:
-                self.currentUserView.alpha = 1.0
-                self.userViews.alpha = 1.0
+                self.selectedUserView.alpha = 1.0
                 self.circleInsightView.collectionView.isScrollEnabled = false
 //                self.insightCell.endTimeLabel.shrink()
 //                self.insightCell.nextPayoutLabel.shrink()

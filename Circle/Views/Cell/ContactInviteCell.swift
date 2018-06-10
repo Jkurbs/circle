@@ -82,10 +82,7 @@ class PendingInviteCell: UICollectionViewCell {
 //        if user!.userId == Auth.auth().currentUser!.uid {
 //            isSelected()
 //        }
-        
-        if user?.activated != true {
-            imageView.layer.addSublayer(view)
-        }
+    
         
 
         if user?.photoUrl != nil {

@@ -70,9 +70,9 @@ class CircleInsightCell: UICollectionViewCell {
     }
     
     
-    func configure(_ circle: Circle) {
-        let daysTotalLeft = circle.daysTotal ?? 0
-        let daysBeforeNextPayout = circle.daysLeft ?? 0
+    func configure(_ insight: Insight) {
+        let daysTotalLeft = insight.daysTotal ?? 0
+        let daysBeforeNextPayout = insight.daysLeft ?? 0
         self.endTimeLabel.text = "\(daysTotalLeft) days"
         self.nextPayoutLabel.text = "\(daysBeforeNextPayout) days"
     }

@@ -57,6 +57,9 @@
 		D1181F6D206967A800277345 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F6C206967A800277345 /* Balance.swift */; };
 		D1181F6F206BF51C00277345 /* CurrentUserInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */; };
 		D1181F71206BF8CB00277345 /* InsightSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F70206BF8CB00277345 /* InsightSection.swift */; };
+		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
+		D11F284320CA242B00F47474 /* SelectedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F284220CA242B00F47474 /* SelectedUserView.swift */; };
+		D11F284520CAFED400F47474 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F284420CAFED400F47474 /* FirestoreModel.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
 		D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */; };
@@ -75,6 +78,7 @@
 		D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* WelcomeVC.swift */; };
 		D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407A202EB79F00B2A1F5 /* PendingVC.swift */; };
 		D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407F2030990700B2A1F5 /* ChooseImageView.swift */; };
+		D1669CEA20CD4F840006FC9B /* Insight.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CE920CD4F840006FC9B /* Insight.swift */; };
 		D16938391FB386830095F5A7 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16938381FB386830095F5A7 /* Circle.swift */; };
 		D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */; };
 		D16BCA53205B62E40053DF0A /* CurrentUserListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16BCA52205B62E40053DF0A /* CurrentUserListController.swift */; };
@@ -216,6 +220,9 @@
 		D1181F6C206967A800277345 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInsightCell.swift; sourceTree = "<group>"; };
 		D1181F70206BF8CB00277345 /* InsightSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSection.swift; sourceTree = "<group>"; };
+		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		D11F284220CA242B00F47474 /* SelectedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUserView.swift; sourceTree = "<group>"; };
+		D11F284420CAFED400F47474 /* FirestoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreModel.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRect.swift; sourceTree = "<group>"; };
@@ -234,6 +241,7 @@
 		D1619200202814AD0073C8B8 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		D165407A202EB79F00B2A1F5 /* PendingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingVC.swift; sourceTree = "<group>"; };
 		D165407F2030990700B2A1F5 /* ChooseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseImageView.swift; sourceTree = "<group>"; };
+		D1669CE920CD4F840006FC9B /* Insight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insight.swift; sourceTree = "<group>"; };
 		D166AB43201250690080F5A8 /* Circle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Circle.entitlements; sourceTree = "<group>"; };
 		D16938381FB386830095F5A7 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInfoCell.swift; sourceTree = "<group>"; };
@@ -535,6 +543,7 @@
 				D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */,
 				D1D66D642071492E0087D41C /* CircleInsightView.swift */,
 				D1D66D682071C0500087D41C /* CircleInsightView.xib */,
+				D11F284220CA242B00F47474 /* SelectedUserView.swift */,
 			);
 			path = "Dashboard View";
 			sourceTree = "<group>";
@@ -625,6 +634,7 @@
 				D153C96F20BF903F0007C3F5 /* AmountsCell.swift */,
 				D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */,
 				D153C97820C0F60B0007C3F5 /* DragCell.swift */,
+				D11F27ED20C61C0F00F47474 /* InviteCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -647,6 +657,8 @@
 				D10BDC202045CC7600D22860 /* Bank.swift */,
 				D1F25EB720559C2F00611259 /* Event.swift */,
 				D1181F6C206967A800277345 /* Balance.swift */,
+				D11F284420CAFED400F47474 /* FirestoreModel.swift */,
+				D1669CE920CD4F840006FC9B /* Insight.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1077,6 +1089,7 @@
 				D1B19785205B419000E19EB0 /* CurrentUserView.swift in Sources */,
 				D10A57B2202B70ED00D93405 /* ContactService.swift in Sources */,
 				D1181F6D206967A800277345 /* Balance.swift in Sources */,
+				D1669CEA20CD4F840006FC9B /* Insight.swift in Sources */,
 				D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */,
 				D10FA25D2033625C00BBB671 /* ContentView.swift in Sources */,
 				D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */,
@@ -1109,6 +1122,7 @@
 				D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */,
 				D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */,
 				D1FDA77A20326C5A006D2CBF /* ForgotPasswordVC.swift in Sources */,
+				D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */,
 				D10BDC1D20451C6000D22860 /* MoneyService.swift in Sources */,
 				6D0CCE461FAE11E100DF5F13 /* AuthService.swift in Sources */,
 				D100D9B8200B981400CAEB83 /* Alert.swift in Sources */,
@@ -1124,6 +1138,7 @@
 				D1181F6F206BF51C00277345 /* CurrentUserInsightCell.swift in Sources */,
 				D153C96520BAFD050007C3F5 /* Transform.swift in Sources */,
 				D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */,
+				D11F284320CA242B00F47474 /* SelectedUserView.swift in Sources */,
 				D1F25EBB2056E38300611259 /* TestVC.swift in Sources */,
 				D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */,
 				D16938391FB386830095F5A7 /* Circle.swift in Sources */,
@@ -1133,6 +1148,7 @@
 				D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */,
 				D1F25EC32056F43100611259 /* LabelCell.swift in Sources */,
 				D100D9AE200A0C2900CAEB83 /* SegmentedControl.swift in Sources */,
+				D11F284520CAFED400F47474 /* FirestoreModel.swift in Sources */,
 				D10820282033C9C5000BF41D /* LoadingView.swift in Sources */,
 				D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */,
 				D1B076632022A4BD00229F45 /* InfoCell.swift in Sources */,

@@ -11,7 +11,7 @@
  
  class CircleEventsSection: ListSectionController {
     
-    private var event: Event?
+    private var link: URL?
     
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(width: collectionContext!.containerSize.width, height: 60)
@@ -23,21 +23,18 @@
         super.init()
         
     }
-    
-//    override func numberOfItems() -> Int {
-//        
-//    }
+
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: CircleEventsCell.self, for: self, at: index) as? CircleEventsCell else {
             fatalError()
         }
-        cell.configure(event!)
+        //cell.configure(event!)
         return cell
     }
     
     override func didUpdate(to object: Any) {
-        event = object as? Event
+        link = object as? URL
     }
  }
  

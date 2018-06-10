@@ -9,10 +9,9 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
-
 import FirebaseDynamicLinks
 
-class DataService {
+final class DataService {
     
     private static let _instance = DataService()
     
@@ -45,6 +44,16 @@ class DataService {
         return Storage.storage().reference()
     }
 
+    
+     var listener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
+    
+    
+    
+    
    let DYNAMIC_LINK_DOMAIN = "fk4hq.app.goo.gl"
    var shortLink: URL?
 
@@ -143,24 +152,25 @@ class DataService {
 }
     
     
-    var listener: ListenerRegistration!
-    
-    
     func retrieveCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?) -> ()) {
-    
+        
         guard let circleId = circleId else {
             return
           }
-        listener = DataService.instance.REF_CIRCLES.document(circleId).addSnapshotListener { (document, error) in
+        listener = DataService.instance.REF_CIRCLES.document(circleId).addSnapshotListener {( document, error) in
                 if let document = document {
                     if document.exists {
                         let data = document.data()
                         let key = document.documentID
-                        let circle = Circle(key: key, data: data!, users: nil)
+                        let circle = Circle(key: key, data: data!)
                         completion(true, nil, circle)
                 }
             }
         }
+    }
+    
+    deinit {
+        listener = nil
     }
     
     
@@ -184,7 +194,6 @@ class DataService {
        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders")
             ref.order(by: "position", descending: false).getDocuments { (documents, error) in
             if let error = error {
-                print("ERROR:::", error.localizedDescription)
                 completion(false, error, nil)
                 return
             }
@@ -192,21 +201,23 @@ class DataService {
                 if document.exists {
                     let data = document.data()
                     let key = document.documentID
-                        DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("sources").getDocuments(completion: { (documents, error) in
-                            if let error = error {
-                                print("Error getting source", error.localizedDescription)
-                            } else {
-                                for document in (documents?.documents)! {
-                                    if document.exists {
-                                        let bankData = document.data()
-                                        let bankKey = document.documentID
-                                        let bank = Bank(bankKey, bankData)
-                                        let insiders = User(key: key, data: data, bank: bank, event: nil, balance: nil)
-                                        completion(true, nil, insiders)
-                                } 
-                            }
-                        }
-                    })
+                    let insiders = User(key: key, data: data, bank: nil, event: nil, balance: nil)
+                    completion(true, nil, insiders)
+//                    DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("sources").getDocuments(completion: { (documents, error) in
+//                            if let error = error {
+//                                print("Error getting source", error.localizedDescription)
+//                            } else {
+//                                for document in (documents?.documents)! {
+//                                    if document.exists {
+//                                        let bankData = document.data()
+//                                        let bankKey = document.documentID
+//                                        let bank = Bank(bankKey, bankData)
+//                                        let insiders = User(key: key, data: data, bank: bank, event: nil, balance: nil)
+//                                        completion(true, nil, insiders)
+//                                }
+//                            }
+//                        }
+//                    })
                 }
             }
         }

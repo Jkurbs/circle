@@ -12,33 +12,46 @@ exports = module.exports =  functions.https.onRequest((req, res) => {
     const circleRef= admin.firestore().collection('circles');
     var unsubscribe = circleRef.onSnapshot(function(snapshot) {
        snapshot.forEach(doc => {
-            return admin.firestore().runTransaction(function(transaction) {
-                const ref = circleRef.doc(doc.id);
-                return transaction.get(ref).then(function(sfDoc) {
-                    if (!sfDoc.exists) {
-                        throw "Document does not exist!";
-                    }
+            const ref = circleRef.doc(doc.id);
+            var batch = admin.firestore().batch();
 
-                    const data = sfDoc.data();
-                    console.log('CIRCLE DATA::', data);
-                    var days_left = data.days_left
-                    if (days_left > 0) {
-                        days_left = data.days_left - 1
-                    }
-                    transaction.update(ref, { days_left: days_left});
-                    unsubscribe();
-                });
-            }).then(function() {
-                console.log("Transaction successfully committed!");
-            }).catch(function(error) {
-                console.log("Transaction failed: ", error);
-            });
-        });
-    }, function(error) {
-       console.log("Transaction failed: ", error);
-
+            batch.update(ref, {'days_left': 5});
+            unsubscribe();
+           
+           
+           
+//            return admin.firestore().runTransaction(function(transaction) {
+//                const ref = circleRef.doc(doc.id);
+//                return transaction.get(ref).then(function(sfDoc) {
+//                    if (!sfDoc.exists) {
+//                        throw "Document does not exist!";
+//                    }
+//
+//                    const data = sfDoc.data();
+//                    var activated = data.activated
+//                    if (activated === true) {
+//                    var days_left = data.days_left
+//                        if (days_left > 0) {
+//                            days_left = data.days_left - 1
+//                        }
+//                    transaction.update(ref, { days_left: days_left});
+//                    unsubscribe();
+//                    } else {
+//                         return Promise.reject("Sorry! Circle not activated");
+//                    }
+//                });
+//            }).then(function(days_left) {
+//                console.log("Transaction successfully committed!", days_left);
+//            }).catch(function(error) {
+//                console.log("Transaction failed: ", error);
+//            });
+//        });
+//    }, function(error) {
+//       console.log("Transaction failed: ", error);
+         });
     });
 });
+    
 
     
 
