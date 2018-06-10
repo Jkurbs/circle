@@ -1,15 +1,16 @@
 //
-//  SelectedUserView.swift
+//  SelectedUserCell.swift
 //  Circle
 //
-//  Created by Kerby Jean on 6/7/18.
+//  Created by Kerby Jean on 6/10/18.
 //  Copyright © 2018 Kerby Jean. All rights reserved.
 //
 
 import UIKit
 import IGListKit
+import SDWebImage
 
-class SelectedUserView: UIView {
+class SelectedUserCell: UICollectionViewCell {
     
     var statusDesc = UILabel()
     var statusLabel = UILabel()
@@ -37,7 +38,7 @@ class SelectedUserView: UIView {
         let font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         let descColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         let color = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
-
+        
         
         let centerX = self.center.x
         
@@ -46,14 +47,14 @@ class SelectedUserView: UIView {
         //layerView.layer.masksToBounds = true
         layerView.borderWidth = 3
         
-
+        
         imageView.frame = CGRect(x: 0, y: 50, width: 60, height: 60)
         imageView.center.x = self.center.x
         imageView.cornerRadius = imageView.frame.width / 2
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         
-
+        
         nameLabel.frame = CGRect(x: 20, y: imageView.frame.maxY + 10, width: 70, height: 20)
         nameLabel.center.x = centerX
         nameLabel.textAlignment = .center
@@ -72,7 +73,7 @@ class SelectedUserView: UIView {
         statusLabel.frame = CGRect(x: 20, y: statusDesc.layer.position.y + 10, width: 70, height: 20)
         statusLabel.textAlignment = .center
         statusLabel.font = font
-        statusLabel.textColor = color 
+        statusLabel.textColor = color
         
         daysDesc.frame = CGRect(x: self.frame.maxX - 100, y: 15, width: 90, height: 20)
         daysDesc.center.y = imageViewCenterY
@@ -93,14 +94,15 @@ class SelectedUserView: UIView {
         self.addSubview(statusLabel)
         self.addSubview(statusDesc)
         self.addSubview(imageView)
-        //self.addSubview(nameLabel)
         self.addSubview(daysDesc)
         self.addSubview(daysLabel)
     }
     
-    func configure(image: UIImage?, user: User) {
-
-        imageView.image = image
+    func configure(user: User) {
+        
+        if let url = user.photoUrl {
+            imageView.sd_setImage(with: URL(string: url))
+        }
 
         
         nameLabel.text = user.firstName
@@ -112,10 +114,11 @@ class SelectedUserView: UIView {
         } else {
             statusLabel.text = "Waiting"
             statusLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
-
+            
         }
     }
 }
+
 
 
 

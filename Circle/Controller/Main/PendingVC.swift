@@ -520,12 +520,11 @@ class CircleVC: UIViewController, ListAdapterDataSource {
     }()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         collectionView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
@@ -546,29 +545,24 @@ class CircleVC: UIViewController, ListAdapterDataSource {
                 print("error", error.debugDescription)
             } else {
                 self.users.append(user!)
+                self.adapter.performUpdates(animated: true, completion: nil)
             }
         }
-        
-        
-        
-        
     }
-
-    
 }
 
 extension CircleVC {
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        <#code#>
+        return users as [ListDiffable]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        <#code#>
+        return SelectedUserSection()
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        <#code#>
+        return nil 
     }
     
 }
