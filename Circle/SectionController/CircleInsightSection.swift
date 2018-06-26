@@ -8,26 +8,23 @@
 
 import UIKit
 import IGListKit
+import Lottie
 
 class CircleInsightSection: ListSectionController {
     
     private var insight: Insight?
+    private var animation: LOTAnimationView!
     
     override func sizeForItem(at index: Int) -> CGSize {
-
-        if index == 0 {
-            return CGSize(width: collectionContext!.containerSize.width, height: 8)
-        } else if index == 3 {
-            return CGSize(width: collectionContext!.containerSize.width, height: 60)
-        }
-        
+       if index == 0 || index == 3 {
+          return CGSize(width: collectionContext!.containerSize.width, height: 50)
+       }
         return CGSize(width: collectionContext!.containerSize.width, height: 90)
     }
     
-    
     override init() {
         super.init()
-        
+
     }
     
     override func numberOfItems() -> Int {
@@ -36,13 +33,15 @@ class CircleInsightSection: ListSectionController {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         
-        
         if index == 0 {
-            guard let cell = collectionContext?.dequeueReusableCell(of: DragCell.self , for: self, at: index) as? DragCell else {
+            guard let cell = collectionContext?.dequeueReusableCell(of: HeaderCell.self, for: self, at: index) as? HeaderCell else {
                 fatalError()
             }
+            cell.configure("Circle")
             return cell
-        } else if index == 1 {
+        }
+        
+        if index == 1 {
             guard let cell = collectionContext?.dequeueReusableCell(of: CircleInsightCell.self , for: self, at: index) as? CircleInsightCell else {
                 fatalError()
             }
@@ -64,6 +63,6 @@ class CircleInsightSection: ListSectionController {
     }
     
     override func didUpdate(to object: Any) {
-        insight = object as? Insight
+        self.insight = object as? Insight
     }
 }

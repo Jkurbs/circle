@@ -60,19 +60,12 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
-		<key>GSMessages.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>14</integer>
-		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>15</integer>
+			<integer>14</integer>
 		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
@@ -86,21 +79,21 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>16</integer>
+			<integer>15</integer>
 		</dict>
 		<key>IGListKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>17</integer>
+			<integer>16</integer>
 		</dict>
 		<key>IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>17</integer>
 		</dict>
 		<key>Pods-Circle.xcscheme</key>
 		<dict>
@@ -151,13 +144,6 @@
 			<key>orderHint</key>
 			<integer>26</integer>
 		</dict>
-		<key>TableViewHelper.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>28</integer>
-		</dict>
 		<key>gRPC-Core.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -194,6 +180,13 @@
 			<integer>9</integer>
 		</dict>
 		<key>leveldb-library.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>lottie-ios.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

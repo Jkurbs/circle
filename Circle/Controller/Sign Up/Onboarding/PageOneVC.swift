@@ -21,7 +21,7 @@ class PageOneVC: UIViewController {
         label.textAlignment = .center
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 20, weight: .light)
-        label.text = "Save money with your loved ones"
+        label.text = "Set a Circle Goal"
         label.autoresizingMask = [.flexibleTopMargin, .flexibleWidth]
 
         view.addSubview(label)

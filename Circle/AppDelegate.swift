@@ -116,14 +116,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let queryItems = components.queryItems,
             let hlsvp = queryItems.first(where: { $0.name == "id" }) {
             
-            let matchConfidence: String
+            //var matchConfidence: String
             if dynamicLink.matchType == .weak {
-                matchConfidence = "Weak"
+                //matchConfidence = "Weak"
             } else {
-                matchConfidence = "Strong"
+                //matchConfidence = "Strong"
                 let initialViewController = WelcomeVC()
-                let pageViewController =  PageViewController()
-                pageViewController.pages.insert(initialViewController, at: 0)
+                //let pageViewController =  PageViewController()
+                //pageViewController.pages.insert(initialViewController, at: 0)
                 initialViewController.circleId = hlsvp.value
                             
                 self.window?.rootViewController = initialViewController
@@ -226,9 +226,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initialize(_ application: UIApplication) {
     
-         let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = UIColor.white
-        //(red: 241, green: 196, blue: 15, alpha: 1.0)
+        let color = UIColor(white: 0.6, alpha: 1.0)
+
+        UINavigationBar.appearance().tintColor = color
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
         
         let initialViewController =  LoginVC()
         let navigationController = UINavigationController(rootViewController: initialViewController)

@@ -130,20 +130,9 @@ final class DataService {
                     if document.exists {
                         let data = document.data()
                         let key = document.documentID
-                        ref.collection("sources").getDocuments(completion: { (documents, error) in
-                            if let error = error {
-                                print("Error getting source", error.localizedDescription)
-                            } else {
-                                for document in (documents?.documents)! {
-                                    let bankData = document.data()
-                                    let bankKey = document.documentID
-                                    let bank = Bank(bankKey, bankData)
-                                    let user = User(key: key, data: data!, bank: bank, event: nil, balance: nil)
-                                    completion(true, nil, user, data, bank, bankData)
-                                }
-                            }
-                       })
-                   }
+                        let user = User(key: key, data: data!, bank: nil, event: nil, balance: nil)
+                        completion(true, nil, user, data, nil, nil)
+                     }
             } else {
                 print("Document does not exist")
             }
@@ -282,10 +271,9 @@ final class DataService {
     
     
     func saveBankInformation(email: String, plaid: [String: Any], completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
-        
         let ref =  REF_USERS.document(Auth.auth().currentUser!.uid)
-        
-        ref.updateData(["email_address": email]) { (error) in
+        let circleId = UserDefaults.standard.string(forKey: "circleId") ?? ""
+        ref.updateData(["email_address": email, "circle": circleId]) { (error) in
             if let error = error {
                 completion(false, error)
             } else {
@@ -369,10 +357,25 @@ final class DataService {
         self.REF_USERS.document(userId).getDocument { (document, error) in
             if let error = error {
                 print("Error::", error.localizedDescription)
-        }
+            }
+            let key = document!.documentID
             let data = document!.data()
             if let circleId = UserDefaults.standard.string(forKey: "circleId") {
-                self.REF_CIRCLES.document(circleId).setData(data!)
+                let ref = self.REF_CIRCLES.document(circleId).collection("insiders")
+                ref.getDocuments(completion: { (snapshot, error) in
+                    if let error = error {
+                        print("Error::", error.localizedDescription)
+                        return
+                    } else {
+                        guard let count = snapshot?.count else {
+                            return
+                        }
+                        let position = count + 1
+                        let countData = ["position": position]
+                        ref.document(key).setData(countData)
+                        ref.document(key).setData(data!, merge: true)
+                    }
+                })
             }
         }
     }

@@ -18,22 +18,16 @@ class NextPayoutSection: ListSectionController {
         return CGSize(width: collectionContext!.containerSize.width, height: 60)
     }
     
-    
     override init() {
         super.init()
-        
-        
     }
-    
-    
-    
+
     override func numberOfItems() -> Int {
         return 1
     }
     
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-
         guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutCell.self, for: self, at: index) as? NextPayoutCell else {
             fatalError()
         }

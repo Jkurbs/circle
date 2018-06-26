@@ -15,7 +15,7 @@ class WelcomeVC: UIViewController {
     let subhead                 = Subhead()
     let footnote                = Footnote()
     
-    var loadingView = LoadingView()
+    //var loadingView = LoadingView()
     
     var users = [User]()
     
@@ -80,10 +80,11 @@ class WelcomeVC: UIViewController {
 
         subhead.frame = CGRect(x: 0, y: y + 30 , width: width, height: 60)
         subhead.center.x = centerX
+        subhead.font = UIFont.systemFont(ofSize: 17, weight: .medium)
 
         collectionView.frame = CGRect(x: 0, y: subhead.layer.position.y + 110, width: view.frame.width, height: 300)
         
-        loadingView.frame = collectionView.frame
+        //loadingView.frame = collectionView.frame
         
         
         button = UIButton(frame: CGRect(x: 0, y: collectionView.layer.position.y + 200, width: 200, height: 50))
@@ -103,14 +104,18 @@ class WelcomeVC: UIViewController {
     
     
     func retrieve() {
-        view.addSubview(loadingView)
+        //view.addSubview(loadingView)
+        
+        print("CIRCLE ID::", circleId)
+        
+        
         DataService.instance.retrieveDynamicLinkCircle(circleId!){ (success, error, admin, insider)  in
             if !success {
-               self.loadingView.removeFromSuperview()
+               //self.loadingView.removeFromSuperview()
             } else {
                 if let admin = admin {
-                    self.subhead.text = "Start earning and saving money with \(admin.firstName ?? "") \(admin.lastName ?? "") and others on Circle"
-                    self.loadingView.removeFromSuperview()
+                    self.subhead.text = " Join \(admin.firstName ?? "") and others on a mission to save some Money"
+                    //self.loadingView.removeFromSuperview()
                 }
                 self.users.append(insider!)
                 self.collectionView.performBatchUpdates({

@@ -28,6 +28,7 @@ final class Circle {
     var daysTotal: Int? 
     var daysLeft: Int?
     var link: String?
+    var status: String?
     
 
     
@@ -83,6 +84,10 @@ final class Circle {
         
         if let link = data["link"] as? String {
             self.link = link
+        }
+        
+        if let status = data["status"] as? String {
+            self.status = status
         }
     }
 }

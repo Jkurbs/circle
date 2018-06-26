@@ -18,7 +18,7 @@ class LoginVC: UIViewController {
     let phoneEmailField = BackgroundTextField()
     let passwordField = BackgroundTextField()
     
-    let registerButton             = UIButton()
+    let registerButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +27,11 @@ class LoginVC: UIViewController {
         setupView()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -92,12 +97,14 @@ class LoginVC: UIViewController {
         nextButton.showLoading()
         AuthService.instance.signIn(email: phoneEmailField.text!, password: passwordField.text!) { (success, error, circleId)  in
             if !success {
+                print("ERROR LOGIN", error!.localizedDescription)
                 self.nextButton.hideLoading()
             } else {
                 self.nextButton.hideLoading()
                 let circleVC = CircleVC()
                 circleVC.circleId = circleId
-                self.navigationController?.pushViewController(circleVC, animated: true)
+                let navigation = UINavigationController(rootViewController: circleVC)
+                self.present(navigation, animated: false, completion: nil)
             }
         }
     }

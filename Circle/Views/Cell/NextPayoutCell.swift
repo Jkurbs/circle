@@ -20,7 +20,9 @@ class NextPayoutCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
+        
+        contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(daysLeftLabel)
@@ -45,8 +47,7 @@ class NextPayoutCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.cornerRadius = imageView.frame.height / 2
     
-        nameLabel.frame = CGRect(x: imageView.layer.position.x + 40, y: 10, width: 40, height: 30)
-        nameLabel.sizeToFit()
+        nameLabel.frame = CGRect(x: imageView.layer.position.x + 40, y: 10, width: 60, height: 30)
         nameLabel.font = font
         nameLabel.textColor = color
         
@@ -60,9 +61,12 @@ class NextPayoutCell: UICollectionViewCell {
     func configure(_ user: User) {
         imageView.sd_setImage(with: URL(string: user.photoUrl!))
         nameLabel.text = user.firstName
-        daysLeftLabel.text =  "\(user.daysLeft ?? 0) days"
-        if user.userId == Auth.auth().currentUser!.uid {
-            nameLabel.text = "You"
+        daysLeftLabel.text =  "\(user.daysLeft ?? 0) days left"
+        
+        if let uid = Auth.auth().currentUser!.uid as? String {
+            if user.userId == uid {
+                nameLabel.text = "You"
+            }
         }
     }
 }

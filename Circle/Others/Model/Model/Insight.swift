@@ -11,16 +11,13 @@ import Firebase
 import IGListKit
 import FirebaseFirestore
 
-class Insight {
-    
+final class Insight {
 
     var id: String?
     var totalAmount: Int?
     var weeklyAmount: Int?
     var daysTotal: Int?
-    var daysLeft: Int?
-    
-    
+    var daysLeft: Int?    
     
     init(key: String, data: [String: Any]) {
         

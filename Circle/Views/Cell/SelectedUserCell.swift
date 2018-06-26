@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import SDWebImage
+import Lottie
 
 class SelectedUserCell: UICollectionViewCell {
     
@@ -20,15 +21,20 @@ class SelectedUserCell: UICollectionViewCell {
     var imageView = UIImageView()
     var nameLabel = UILabel()
     
+    private var animation: LOTAnimationView?
+
+    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        setup()
+        //setup()
+        
     }
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        //self.contentView.backgroundColor = UIColor.white
+        setup()        
     }
     
     
@@ -39,20 +45,15 @@ class SelectedUserCell: UICollectionViewCell {
         let descColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         let color = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
         
-        
         let centerX = self.center.x
         
-        layerView.frame = CGRect(x: 0, y: 10, width: 70, height: 70)
-        layerView.layer.cornerRadius = self.bounds.width / 2
-        //layerView.layer.masksToBounds = true
-        layerView.borderWidth = 3
         
-        
-        imageView.frame = CGRect(x: 0, y: 50, width: 60, height: 60)
+        imageView.frame = CGRect(x: 0, y: 25, width: 60, height: 60)
         imageView.center.x = self.center.x
         imageView.cornerRadius = imageView.frame.width / 2
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
         
         
         nameLabel.frame = CGRect(x: 20, y: imageView.frame.maxY + 10, width: 70, height: 20)
@@ -87,10 +88,16 @@ class SelectedUserCell: UICollectionViewCell {
         daysLabel.font = font
         daysLabel.textColor = color
         
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.frame
+        rectShape.position = self.center
+        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        
+        self.layer.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0).cgColor
+        self.layer.mask = rectShape
     }
     
     func setup() {
-        self.backgroundColor = .white
         self.addSubview(statusLabel)
         self.addSubview(statusDesc)
         self.addSubview(imageView)
@@ -98,19 +105,20 @@ class SelectedUserCell: UICollectionViewCell {
         self.addSubview(daysLabel)
     }
     
-    func configure(user: User) {
+    func configure(_ user: User) {
         
+        imageView.image = nil
+
         if let url = user.photoUrl {
             imageView.sd_setImage(with: URL(string: url))
         }
-
         
         nameLabel.text = user.firstName
         daysLabel.text = "\(user.daysLeft ?? 0)"
         
         if user.daysLeft == 0 {
             statusLabel.text = "Paid"
-            statusLabel.textColor = UIColor(red: 76.0/255.0, green: 217.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+            //statusLabel.textColor = UIColor(red: 76.0/255.0, green: 217.0/255.0, blue: 100.0/255.0, alpha: 1.0)
         } else {
             statusLabel.text = "Waiting"
             statusLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
@@ -118,16 +126,4 @@ class SelectedUserCell: UICollectionViewCell {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

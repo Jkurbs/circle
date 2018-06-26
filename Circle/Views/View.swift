@@ -78,6 +78,6 @@ extension UIView {
                 break
             }
         }
-        return (responder as? CircleVC)!
+        return (responder as? UIViewController)!
     }
 }

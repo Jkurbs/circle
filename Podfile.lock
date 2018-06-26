@@ -91,7 +91,6 @@ PODS:
   - gRPC/Main (1.12.0):
     - gRPC-Core (= 1.12.0)
     - gRPC-RxLibrary (= 1.12.0)
-  - GSMessages (1.5.1)
   - GTMSessionFetcher/Core (1.1.15)
   - HGCircularSlider (2.0.0)
   - IGListKit (3.4.0):
@@ -101,6 +100,7 @@ PODS:
   - IGListKit/Diffing (3.4.0)
   - IQKeyboardManager (6.0.3)
   - leveldb-library (1.20)
+  - lottie-ios (2.5.0)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -112,7 +112,6 @@ PODS:
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
   - Stripe (13.0.1)
-  - TableViewHelper (2.1.1)
 
 DEPENDENCIES:
   - CountryList
@@ -124,14 +123,13 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
-  - GSMessages
   - HGCircularSlider (~> 2.0.0)
   - IGListKit (~> 3.0)
   - IQKeyboardManager
+  - lottie-ios
   - Plaid
   - SDWebImage (~> 4.0)
   - Stripe
-  - TableViewHelper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -152,18 +150,17 @@ SPEC REPOS:
     - gRPC-Core
     - gRPC-ProtoRPC
     - gRPC-RxLibrary
-    - GSMessages
     - GTMSessionFetcher
     - HGCircularSlider
     - IGListKit
     - IQKeyboardManager
     - leveldb-library
+    - lottie-ios
     - nanopb
     - Plaid
     - Protobuf
     - SDWebImage
     - Stripe
-    - TableViewHelper
 
 SPEC CHECKSUMS:
   BoringSSL: 60dd24df4af296bf41d78e5841dbb95d75f88c0d
@@ -183,19 +180,18 @@ SPEC CHECKSUMS:
   gRPC-Core: 9696b220565b283e021cf2722d473a4a74b7622a
   gRPC-ProtoRPC: a1bd56fb1991a8dae4581250d7259eddabb66779
   gRPC-RxLibrary: 1ed5314e8b38cd6e55c9bfa048387136ae925ce9
-  GSMessages: 2e6893301ae99f59d72a6d8c920ad41be407216c
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   HGCircularSlider: 92e2ee098c814709f455b8f46cd9008147f6a869
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   IQKeyboardManager: c390e612f4b98c8fd748016470138537dc163ead
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Plaid: 661a3efeaa70a3f7879e29512adfb025824a8470
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Stripe: b3c69e4a269d5ae707916a090ee54b1f6011ccd9
-  TableViewHelper: 2a77d6b6d13016130bee5436de025683e591a8d3
 
-PODFILE CHECKSUM: c1e3ec8270ad49a3edb3c7499620d09347288dea
+PODFILE CHECKSUM: fa8adc75aae363f9afe2fb8463c5eb377fa5ef25
 
 COCOAPODS: 1.5.2

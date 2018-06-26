@@ -9,7 +9,6 @@
 import UIKit
 import IGListKit
 
-
 class AmountsCell: UICollectionViewCell {
     
     var weeklyAmountLabel = transformLabel()
@@ -21,7 +20,8 @@ class AmountsCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
+        
+        contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
         contentView.addSubview(weeklyAmountLabel)
         contentView.addSubview(totalAmountLabel)
         contentView.addSubview(weeklyDescLabel)
@@ -79,6 +79,51 @@ class AmountsCell: UICollectionViewCell {
     }
 }
 
+class HeaderCell: UICollectionViewCell {
+    
+    var label = UILabel()    
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(label)
+
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let width = self.frame.width
+        
+        let font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+        
+        label.textColor = color
+        label.font = font
+        label.frame = CGRect(x: 25, y: 5, width: width , height: 40)
+        
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.frame
+        rectShape.position = self.center
+        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        
+        self.layer.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0).cgColor
+        self.layer.mask = rectShape
+    }
+    
+    
+    func configure(_ text: String) {
+        label.text = text
+    }
+    
+}
 
 class NextPayoutHeaderCell: UICollectionViewCell {
     
@@ -86,6 +131,8 @@ class NextPayoutHeaderCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
         contentView.addSubview(label)
     }
     

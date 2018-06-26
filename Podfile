@@ -19,12 +19,13 @@ target 'Circle' do
   pod 'Stripe'
   pod 'Plaid'
   pod 'IGListKit', '~> 3.0'
-  pod 'GSMessages'
+  #pod 'GSMessages'
   pod 'HGCircularSlider', '~> 2.0.0'
   pod 'IQKeyboardManager'
   pod 'CountryList'
   pod 'SDWebImage', '~> 4.0'
-  pod 'TableViewHelper'
+  #pod 'TableViewHelper'
+  pod 'lottie-ios'
 
   target 'CircleTests' do
     inherit! :search_paths

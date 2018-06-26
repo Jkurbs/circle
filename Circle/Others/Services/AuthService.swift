@@ -24,6 +24,7 @@ class AuthService {
             if error != nil {
                 completion(false, error, nil)
             } else {
+                print("USER ID::", user!.user.uid)
                 UserDefaults.standard.set(user!.user.uid, forKey: "userId")
                 DispatchQueue.background(delay: 0.0, background: {
                     DataService.instance.REF_USERS.document(user!.user.uid).getDocument { (document, error) in

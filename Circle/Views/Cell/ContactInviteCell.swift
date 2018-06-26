@@ -20,7 +20,11 @@ class PendingInviteCell: UICollectionViewCell {
         return view
     }()
     
-    var view = CALayer()
+    var gradientLayer: CAGradientLayer!
+    
+    var view = UIView()
+    
+    var paidImageView: UIImageView!
     
     var spinningView = SpinningView()
 
@@ -28,67 +32,78 @@ class PendingInviteCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
-       
-        layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
+        
+        
+        contentView.addSubview(view)
+        view.addSubview(imageView)
+        
+        paidImageView = UIImageView(frame:CGRect(x: 0, y: contentView.frame.maxY - 15, width: 17, height: 17))
+        paidImageView.center.x = contentView.center.x
+        paidImageView.cornerRadius = paidImageView.frame.width/2
+        
+        paidImageView.borderWidth = 2
+        paidImageView.layer.borderColor = UIColor.white.cgColor
+        paidImageView.clipsToBounds = true
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-            //updateAnimation()
+
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-
         layer.cornerRadius = self.bounds.width / 2
         layer.masksToBounds = true
-        layer.borderWidth = 3
         
-        imageView.frame = CGRect(x: 2, y: 2, width: contentView.frame.width - 8, height: contentView.frame.height - 8)
-        imageView.center = contentView.center
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 0.5
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
-        imageView.backgroundColor = UIColor.textFieldBackgroundColor
-        
-        contentView.addSubview(imageView)
-        
-        view.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height)
+        view.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 5 , height: contentView.frame.height - 5)
+        view.center = contentView.center
         view.cornerRadius = view.frame.width / 2
-        view.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
-    }
-    
+        
+        view.layer.cornerRadius = view.bounds.width / 2
+        view.borderWidth = 3.0
+        view.borderColor = UIColor(white: 0.8, alpha: 1.0)
+        view.backgroundColor = .white
 
-    
-    func isSelected() {
-        self.backgroundColor = UIColor.red
-        self.layer.borderColor = UIColor(white: 0.6, alpha: 1.0).cgColor
-        self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        imageView.frame = CGRect(x: 5, y: 5, width: view.frame.width - 10, height: view.frame.height - 10)
+        imageView.layer.cornerRadius = imageView.frame.width / 2
     }
-    
-    
-    
+
     
     func image(_ img: UIImage) {
         imageView.image = img 
     }
     
     
-    func configure(_ user: User?) {
-        
-//        if user!.userId == Auth.auth().currentUser!.uid {
-//            isSelected()
-//        }
-    
-        
+    func configure(_ user: User) {
 
-        if user?.photoUrl != nil {
-            view.position = imageView.center
-            imageView.sd_setImage(with: URL(string: user!.photoUrl!))
+        if user.photoUrl != nil {
+            imageView.sd_setImage(with: URL(string: user.photoUrl!))
         }
+        
+        if user.daysLeft == 0 {
+            contentView.addSubview(paidImageView)
+            createGradientLayer()
+            
+            paidImageView.alpha = 1.0
+            layer.borderColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0).cgColor
+        }
+    }
+    
+
+    func createGradientLayer() {
+        gradientLayer = CAGradientLayer()
+        
+        gradientLayer.frame = self.paidImageView.bounds
+        
+        gradientLayer.colors = [ UIColor.yellow.cgColor, UIColor.red.cgColor]
+        
+        self.paidImageView.layer.addSublayer(gradientLayer)
+
+        let myImage = UIImage(named: "Dollar-10")?.cgImage
+        gradientLayer.contents = myImage
     }
 }
 

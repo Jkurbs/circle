@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TableViewHelper
 import FirebaseFirestore
 import FirebaseAuth
 import IGListKit
@@ -20,7 +19,6 @@ class CircleInsightView: UIView, ListAdapterDataSource {
     var vc: CircleVC!
     
     var tableView = UITableView()
-    var helper: TableViewHelper!
     var insights = [Insight]()
     var users = [User]()
     var events = [Event]()

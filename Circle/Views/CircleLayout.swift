@@ -46,7 +46,7 @@ class CircleLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return (0 ..< collectionView!.numberOfItems(inSection: 0)).flatMap { item -> UICollectionViewLayoutAttributes? in
+        return (0 ..< collectionView!.numberOfItems(inSection: 0)).compactMap { item -> UICollectionViewLayoutAttributes? in
             self.layoutAttributesForItem(at: IndexPath(item: item, section: 0))
         }
     }
@@ -61,10 +61,10 @@ class CircleLayout: UICollectionViewLayout {
         
         inserted = updateItems
             .filter { $0.updateAction == .insert }
-            .flatMap { $0.indexPathAfterUpdate }
+            .compactMap { $0.indexPathAfterUpdate }
         deleted = updateItems
             .filter { $0.updateAction == .delete }
-            .flatMap { $0.indexPathBeforeUpdate }
+            .compactMap { $0.indexPathBeforeUpdate }
     }
     
     override func finalizeCollectionViewUpdates() {

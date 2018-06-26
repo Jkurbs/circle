@@ -12,8 +12,7 @@ class PageViewController: UIPageViewController {
     
     lazy var pages: [UIViewController] = {
         return [
-            PageOneVC(),
-            PageThreeVC()
+            
         ]
     }()
     
@@ -24,6 +23,8 @@ class PageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .red 
         
         self.dataSource = self
         self.delegate   = self
