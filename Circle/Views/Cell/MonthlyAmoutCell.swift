@@ -8,6 +8,7 @@
 
 import UIKit
 import Lottie
+import Firebase
 import FirebaseFirestore
 
 
@@ -67,13 +68,34 @@ class MonthlyAmoutCell: UICollectionViewCell {
         descLabel.textColor = UIColor.gray
         descLabel.text = "Set the goal you and each member of your circle would like to reach"
         
-        button.frame = CGRect(x: 0, y: descLabel.frame.maxY + 25, width: width - 50, height: 50)
-        button.center.x = self.center.x
+        //button.frame = CGRect(x: 0, y: descLabel.frame.maxY + 25, width: width - 50, height: 50)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        button.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
+        button.leftAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive = true
+        button.topAnchor.constraint(equalTo: descLabel.bottomAnchor, constant: 3).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //button.center.x = self.center.x
         button.cornerRadius = 10
         button.setTitle("Activate Circle", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0)
-        button.setTitleColor(UIColor.white, for: .normal)
+        //button.backgroundColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0)
+        button.setTitleColor(UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0), for: .normal)
         button.addTarget(self, action: #selector(activateCircle), for: .touchUpInside)
         
         let rectShape = CAShapeLayer()

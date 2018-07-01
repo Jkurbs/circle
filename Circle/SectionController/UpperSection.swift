@@ -86,7 +86,7 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
             guard let cell = collectionContext?.dequeueReusableCell(of: SettingsCell.self, for: self, at: index) as? SettingsCell else {
                 fatalError()
             }
-            cell.configure(user!, user!.firstName!)
+            cell.configure(user!, user!.firstName ?? user!.userName!)
             self.settingsCell = cell
             return cell
         } else if index == 1 {
@@ -131,7 +131,7 @@ extension UpperSection {
                 if (diff.type == .added) {
                     let data = diff.document.data()
                     let id = diff.document.documentID
-                    let user = User(key: id, data: data, bank: nil, event: nil, balance: nil)
+                    let user = User(key: id, data: data)
                     self.users.append(user)
                     self.cell.users.append(user)
                     self.cell.collectionView.reloadData()
@@ -143,10 +143,12 @@ extension UpperSection {
                         self.users = []
                         let data = diff.document.data()
                         let id = diff.document.documentID
-                        let user = User(key: id, data: data, bank: nil, event: nil, balance: nil)
+                        let user = User(key: id, data: data)
                         self.users.append(user)
+                        self.cell.collectionView.performBatchUpdates({
+                            self.cell.collectionView.reloadData()
+                        }, completion: nil)
                         self.adapter.reloadData(completion: nil)
-                        print("NEWS USES::", diff.document.data())
                     }
                 }
 
@@ -170,7 +172,7 @@ extension UpperSection {
                     if snapshot.exists {
                         let key = snapshot.documentID
                         let data = snapshot.data()
-                        let user = User(key: key, data: data, bank: nil, event: nil, balance: nil)
+                        let user = User(key: key, data: data)
                         self.nextPayoutUsers.append(user)
                         print("NEXT PAYOUT USERS::", self.nextPayoutUsers.count)
                         self.adapter.reloadData(completion: nil)
@@ -193,6 +195,11 @@ extension UpperSection {
                 let data = snapshot.data()
                 let circle = Circle(key: key, data: data!)
                 self.settingsCell.circleLink = circle.link!
+                if self.user!.userId == circle.adminId && !circle.activated! {
+                    self.settingsCell.addSubview(self.settingsCell.inviteButton)
+                } else if circle.activated == true {
+                    self.settingsCell.inviteButton.removeFromSuperview()
+                }
                 self.circle.append(circle)
                 self.adapter.performUpdates(animated: true)
             }

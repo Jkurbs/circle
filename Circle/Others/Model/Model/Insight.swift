@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import IGListKit
-import FirebaseFirestore
 
 final class Insight {
 

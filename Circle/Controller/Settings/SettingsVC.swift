@@ -14,15 +14,16 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView!
     
-    var user: User!
-
-    
-    var settings = ["Edit Account", "Log Out"]
+    var settings = ["Edit account", "Log Out"]
     
     let textCellIdentifier = "MyCell"
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+         super.viewDidLoad()
+        
+         self.title = "Settings"
+
+        view.backgroundColor = .white
         
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
@@ -32,6 +33,8 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: textCellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         self.view.addSubview(tableView)
 
     }
@@ -39,7 +42,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.title = "Settings"
         navigationController?.setNavigationBarHidden(false, animated: false)
 
     }
@@ -57,13 +59,23 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        cell.textLabel?.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         cell.textLabel?.text = settings[indexPath.row]
+        
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.row == 0 {
+            let vc = EditAccountVC()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        
         if indexPath.row == 1 {
             UserDefaults.standard.removeObject(forKey: "circleId")
             UserDefaults.standard.removeObject(forKey: "userId")
@@ -79,5 +91,9 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 print("SIGNOUT ERROR:\(signOutError)")
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
     }
 }

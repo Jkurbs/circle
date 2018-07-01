@@ -60,11 +60,18 @@ class CircleVC: UIViewController, ListAdapterDataSource {
     
     private func retrieve() {
         if let uid = Auth.auth().currentUser?.uid ?? UserDefaults.standard.value(forKey: "userId") as? String {
-            DataService.instance.retrieveUser(uid) { (success, error, user, data, bank, bankData) in
-                if !success {
-                    print("error:", error!.localizedDescription)
+            DataService.instance.REF_USERS.document(uid).getDocument { (snapshot, error) in
+                if let error = error {
+                    return
                 } else {
-                    self.user.append(user!)
+                    
+                    guard let snap = snapshot else {
+                        return
+                    }                    
+                    let key = snap.documentID
+                    let data = snap.data()
+                    let user = User(key: key, data: data!)
+                    self.user.append(user)
                     self.adapter.performUpdates(animated: true, completion: nil)
                 }
             }

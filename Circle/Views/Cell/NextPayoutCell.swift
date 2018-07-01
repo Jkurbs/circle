@@ -47,7 +47,7 @@ class NextPayoutCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.cornerRadius = imageView.frame.height / 2
     
-        nameLabel.frame = CGRect(x: imageView.layer.position.x + 40, y: 10, width: 60, height: 30)
+        nameLabel.frame = CGRect(x: imageView.layer.position.x + 40, y: 10, width: 100, height: 30)
         nameLabel.font = font
         nameLabel.textColor = color
         

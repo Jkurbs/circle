@@ -7,25 +7,25 @@ target 'Circle' do
 
   # Pods for Circle
 
+    pod 'Firebase'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
+    pod 'Firebase/Storage'
+    pod 'Firebase/Database'
+    pod 'Firebase/Firestore'
+    pod 'Firebase/DynamicLinks'
+    pod 'Stripe'
+    pod 'Plaid'
+    pod 'IGListKit', '~> 3.0'
+    #pod 'GSMessages'
+    pod 'HGCircularSlider', '~> 2.0.0'
+    pod 'IQKeyboardManager'
+    pod 'CountryList'
+    pod 'SDWebImage', '~> 4.0'
+    #pod 'TableViewHelper'
+    pod 'lottie-ios'
 
-  pod 'Firebase'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
-  pod 'Firebase/Storage'
-  pod 'Firebase/Database'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/DynamicLinks'
-  pod 'Stripe'
-  pod 'Plaid'
-  pod 'IGListKit', '~> 3.0'
-  #pod 'GSMessages'
-  pod 'HGCircularSlider', '~> 2.0.0'
-  pod 'IQKeyboardManager'
-  pod 'CountryList'
-  pod 'SDWebImage', '~> 4.0'
-  #pod 'TableViewHelper'
-  pod 'lottie-ios'
 
   target 'CircleTests' do
     inherit! :search_paths

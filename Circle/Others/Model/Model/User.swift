@@ -17,6 +17,7 @@ final class User {
     var circle: String?
     var photoUrl: String?
     var email: String?
+    var userName: String?
     var firstName: String?
     var lastName: String?
     var phoneNumber: String?
@@ -26,13 +27,9 @@ final class User {
     var payed: Bool?
     var position: Int?
     var daysLeft: Int?
-
-    var bank: Bank?
-    var event: Event?
-    var balance: Balance?
     
     
-    init(key: String, data: [String: Any], bank: Bank?, event: Event?, balance: Balance?) {
+    init(key: String, data: [String: Any]) {
         
         self.userId = key
         
@@ -42,6 +39,10 @@ final class User {
         
         if let circle = data["circle"] as? String {
             self.circle = circle
+        }
+        
+        if let userName = data["user_name"] as? String {
+            self.userName = userName
         }
         
         if let firstName = data["first_name"] as? String {
@@ -78,18 +79,6 @@ final class User {
         
         if let daysLeft = data["days_left"] as? Int {
             self.daysLeft = daysLeft
-        }
-        
-        if let bank = bank {
-            self.bank = bank
-        }
-        
-        if let event = event {
-            self.event = event
-        }
-        
-        if let balance = balance {
-            self.balance = balance
         }
     }
 }

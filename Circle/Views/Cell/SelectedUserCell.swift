@@ -110,7 +110,8 @@ class SelectedUserCell: UICollectionViewCell {
         imageView.image = nil
 
         if let url = user.photoUrl {
-            imageView.sd_setImage(with: URL(string: url))
+            imageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Profile-20"), options: .highPriority, completed: nil)
+            //sd_setImage(with: URL(string: url))
         }
         
         nameLabel.text = user.firstName
@@ -122,7 +123,6 @@ class SelectedUserCell: UICollectionViewCell {
         } else {
             statusLabel.text = "Waiting"
             statusLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
-            
         }
     }
 }

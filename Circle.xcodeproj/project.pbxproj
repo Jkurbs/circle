@@ -18,41 +18,33 @@
 		6D0CCE461FAE11E100DF5F13 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE451FAE11E100DF5F13 /* AuthService.swift */; };
 		6D0CCE491FAE134700DF5F13 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE481FAE134700DF5F13 /* DataService.swift */; };
 		6D0CCE4C1FAE2B9F00DF5F13 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE4B1FAE2B9F00DF5F13 /* Constant.swift */; };
-		6D0CCE501FAE7D8E00DF5F13 /* ChoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE4F1FAE7D8E00DF5F13 /* ChoiceCell.swift */; };
 		6D0CCE531FAE7FCC00DF5F13 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE521FAE7FCC00DF5F13 /* View.swift */; };
 		6D0CCE5C1FAFD0AF00DF5F13 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */; };
 		7FD70FBC855DC7C6D164D171 /* Pods_CircleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9870F315D21109C1FAC6C75 /* Pods_CircleUITests.framework */; };
 		B4C0021651784CAA4AFCEFD6 /* Pods_Circle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE2EE066E32930CF15C1720 /* Pods_Circle.framework */; };
-		D100D9AC2009F9B700CAEB83 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AB2009F9B700CAEB83 /* Contact.swift */; };
-		D100D9AE200A0C2900CAEB83 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AD200A0C2900CAEB83 /* SegmentedControl.swift */; };
+		D100D9AC2009F9B700CAEB83 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AB2009F9B700CAEB83 /* UserContact.swift */; };
 		D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AF200A13E500CAEB83 /* ContactCell.swift */; };
-		D100D9B6200AD9BB00CAEB83 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9B5200AD9BB00CAEB83 /* SearchCell.swift */; };
 		D100D9B8200B981400CAEB83 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9B7200B981400CAEB83 /* Alert.swift */; };
 		D10880B620DC5803007727B2 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880B520DC5802007727B2 /* IntroView.swift */; };
 		D10880B820DC5986007727B2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880B720DC5986007727B2 /* SettingsCell.swift */; };
 		D10880BA20DC6413007727B2 /* FinishCircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880B920DC6413007727B2 /* FinishCircleSection.swift */; };
 		D10880BC20DC646C007727B2 /* FinishMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880BB20DC646C007727B2 /* FinishMessageCell.swift */; };
+		D10880BE20E420A9007727B2 /* EditAccountSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880BD20E420A8007727B2 /* EditAccountSection.swift */; };
+		D10880C120E421C0007727B2 /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880C020E421C0007727B2 /* ProfileImageCell.swift */; };
 		D108D21C2027A82A00679ACE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D108D21B2027A82A00679ACE /* CircleView.swift */; };
-		D108D21E2027AE5B00679ACE /* ContactInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D108D21D2027AE5B00679ACE /* ContactInviteCell.swift */; };
-		D10A57AA2029FA7B00D93405 /* InsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A57A92029FA7B00D93405 /* InsightCell.swift */; };
-		D10A57B2202B70ED00D93405 /* ContactService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A57B1202B70ED00D93405 /* ContactService.swift */; };
 		D10A6DAC2039BB9300E7AEB5 /* InviteVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DAB2039BB9300E7AEB5 /* InviteVCTwo.swift */; };
 		D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */; };
-		D10A6DB9203F365800E7AEB5 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DB8203F365800E7AEB5 /* HistoryVC.swift */; };
 		D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */; };
-		D10BB2AA20196735004F5262 /* FacebookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BB2A920196735004F5262 /* FacebookCell.swift */; };
 		D10BB2AC201975A1004F5262 /* InviteRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */; };
 		D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */; };
-		D10BDC1D20451C6000D22860 /* MoneyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1C20451C5F00D22860 /* MoneyService.swift */; };
-		D10BDC212045CC7600D22860 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC202045CC7600D22860 /* Bank.swift */; };
+		D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855020E59D1000006176 /* ViewModelItem.swift */; };
+		D10D855320E5AB8700006176 /* DragCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855220E5AB8600006176 /* DragCell.swift */; };
+		D10D855520E5B00300006176 /* CircleUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855420E5B00300006176 /* CircleUserCell.swift */; };
 		D11775E7200CE23800B1953C /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775E6200CE23800B1953C /* PageViewController.swift */; };
 		D11775E9200CE68500B1953C /* PageOneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775E8200CE68500B1953C /* PageOneVC.swift */; };
 		D11775EB200CE69200B1953C /* PageTwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EA200CE69200B1953C /* PageTwoVC.swift */; };
 		D11775ED200CFB9E00B1953C /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */; };
 		D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EE200D03AB00B1953C /* PageThreeVC.swift */; };
-		D1181F6D206967A800277345 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F6C206967A800277345 /* Balance.swift */; };
-		D1181F6F206BF51C00277345 /* CurrentUserInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */; };
-		D1181F71206BF8CB00277345 /* InsightSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1181F70206BF8CB00277345 /* InsightSection.swift */; };
 		D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */; };
 		D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */; };
 		D11B9AA620D42E4900543538 /* atm.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AA520D42E4800543538 /* atm.json */; };
@@ -60,8 +52,6 @@
 		D11B9AAA20D4815D00543538 /* fireworks.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AA920D4815C00543538 /* fireworks.json */; };
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
 		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
-		D11F284320CA242B00F47474 /* SelectedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F284220CA242B00F47474 /* SelectedUserView.swift */; };
-		D11F284520CAFED400F47474 /* FirestoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F284420CAFED400F47474 /* FirestoreModel.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
 		D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */; };
@@ -71,10 +61,7 @@
 		D153C96C20BDB7E90007C3F5 /* NextPayoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */; };
 		D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96D20BF90050007C3F5 /* AmountsSection.swift */; };
 		D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96F20BF903F0007C3F5 /* AmountsCell.swift */; };
-		D153C97320C06DFB0007C3F5 /* CircleEventsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */; };
-		D153C97520C06FBC0007C3F5 /* CircleEventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */; };
 		D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97620C088950007C3F5 /* HeaderSection.swift */; };
-		D153C97920C0F60B0007C3F5 /* DragCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97820C0F60B0007C3F5 /* DragCell.swift */; };
 		D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15586D02015885D00E4984B /* UIColor+Palette.swift */; };
 		D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */; };
 		D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* WelcomeVC.swift */; };
@@ -85,8 +72,6 @@
 		D1669CEE20CDA0240006FC9B /* SelectedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CED20CDA0240006FC9B /* SelectedUserCell.swift */; };
 		D1669CF020CE7BCA0006FC9B /* SelectedUsersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */; };
 		D16938391FB386830095F5A7 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16938381FB386830095F5A7 /* Circle.swift */; };
-		D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */; };
-		D16BCA57205C22CC0053DF0A /* CurrentUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D16BCA56205C22CC0053DF0A /* CurrentUserView.xib */; };
 		D16D05031FB0A27A00153D99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D05021FB0A27A00153D99 /* User.swift */; };
 		D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */; };
 		D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17197EF200E51A5009BC920 /* LoadingButton.swift */; };
@@ -109,18 +94,10 @@
 		D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF21FB1543F00267B35 /* SettingsVC.swift */; };
 		D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */; };
 		D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */; };
-		D1B076632022A4BD00229F45 /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B076622022A4BD00229F45 /* InfoCell.swift */; };
-		D1B19785205B419000E19EB0 /* CurrentUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B19784205B419000E19EB0 /* CurrentUserView.swift */; };
-		D1D66D652071492E0087D41C /* CircleInsightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D642071492E0087D41C /* CircleInsightView.swift */; };
 		D1D66D672071B8860087D41C /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D662071B8860087D41C /* ImageButton.swift */; };
-		D1D66D692071C0500087D41C /* CircleInsightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D66D682071C0500087D41C /* CircleInsightView.xib */; };
 		D1E306762008210B000A5845 /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E306752008210B000A5845 /* InviteVC.swift */; };
-		D1E3067A20082256000A5845 /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E3067920082256000A5845 /* SegmentCell.swift */; };
-		D1F25EB820559C2F00611259 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F25EB720559C2F00611259 /* Event.swift */; };
 		D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */; };
-		D1F8AB28209BED060050AA05 /* SpinningCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F8AB27209BED060050AA05 /* SpinningCircle.swift */; };
 		D1F8AB2A20A3E9220050AA05 /* CodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F8AB2920A3E9220050AA05 /* CodeVC.swift */; };
-		D1FD5E95207BBECC0098D648 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD5E94207BBECC0098D648 /* DatePickerCell.swift */; };
 		D1FDA77A20326C5A006D2CBF /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */; };
 		DE369BB4B61B2E04EDEE0E41 /* Pods_CircleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43396F483DDA5442400DF8EE /* Pods_CircleTests.framework */; };
 /* End PBXBuildFile section */
@@ -162,44 +139,36 @@
 		6D0CCE451FAE11E100DF5F13 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		6D0CCE481FAE134700DF5F13 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		6D0CCE4B1FAE2B9F00DF5F13 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		6D0CCE4F1FAE7D8E00DF5F13 /* ChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCell.swift; sourceTree = "<group>"; };
 		6D0CCE521FAE7FCC00DF5F13 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6D357EA4F153FE91AF0694DB /* Pods-Circle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Circle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Circle/Pods-Circle.debug.xcconfig"; sourceTree = "<group>"; };
 		6F00E77C4D52027AB101F38F /* Pods-CircleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CircleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CircleTests/Pods-CircleTests.release.xcconfig"; sourceTree = "<group>"; };
 		98CCCB556F69769FC8E609FA /* Pods-CircleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CircleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CircleTests/Pods-CircleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B392AF3FA4B45EC15D13B3E4 /* Pods-Circle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Circle.release.xcconfig"; path = "Pods/Target Support Files/Pods-Circle/Pods-Circle.release.xcconfig"; sourceTree = "<group>"; };
-		D100D9AB2009F9B700CAEB83 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		D100D9AD200A0C2900CAEB83 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		D100D9AB2009F9B700CAEB83 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
 		D100D9AF200A13E500CAEB83 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		D100D9B5200AD9BB00CAEB83 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		D100D9B7200B981400CAEB83 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		D106B6971FCDEAF2002CCEBC /* Circle-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Circle-Bridging-Header.h"; sourceTree = "<group>"; };
 		D10880B520DC5802007727B2 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		D10880B720DC5986007727B2 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		D10880B920DC6413007727B2 /* FinishCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCircleSection.swift; sourceTree = "<group>"; };
 		D10880BB20DC646C007727B2 /* FinishMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishMessageCell.swift; sourceTree = "<group>"; };
+		D10880BD20E420A8007727B2 /* EditAccountSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountSection.swift; sourceTree = "<group>"; };
+		D10880C020E421C0007727B2 /* ProfileImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
 		D108D21B2027A82A00679ACE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
-		D108D21D2027AE5B00679ACE /* ContactInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInviteCell.swift; sourceTree = "<group>"; };
-		D10A57A92029FA7B00D93405 /* InsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightCell.swift; sourceTree = "<group>"; };
-		D10A57B1202B70ED00D93405 /* ContactService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactService.swift; sourceTree = "<group>"; };
 		D10A6DAB2039BB9300E7AEB5 /* InviteVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVCTwo.swift; sourceTree = "<group>"; };
 		D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
-		D10A6DB8203F365800E7AEB5 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInsightCell.swift; sourceTree = "<group>"; };
-		D10BB2A920196735004F5262 /* FacebookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookCell.swift; sourceTree = "<group>"; };
 		D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRequestVC.swift; sourceTree = "<group>"; };
 		D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVCTwo.swift; sourceTree = "<group>"; };
-		D10BDC1C20451C5F00D22860 /* MoneyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyService.swift; sourceTree = "<group>"; };
-		D10BDC202045CC7600D22860 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
+		D10D855020E59D1000006176 /* ViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelItem.swift; sourceTree = "<group>"; };
+		D10D855220E5AB8600006176 /* DragCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragCell.swift; sourceTree = "<group>"; };
+		D10D855420E5B00300006176 /* CircleUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleUserCell.swift; sourceTree = "<group>"; };
 		D11775E6200CE23800B1953C /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		D11775E8200CE68500B1953C /* PageOneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageOneVC.swift; sourceTree = "<group>"; };
 		D11775EA200CE69200B1953C /* PageTwoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTwoVC.swift; sourceTree = "<group>"; };
 		D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D11775EE200D03AB00B1953C /* PageThreeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageThreeVC.swift; sourceTree = "<group>"; };
-		D1181F6C206967A800277345 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
-		D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInsightCell.swift; sourceTree = "<group>"; };
-		D1181F70206BF8CB00277345 /* InsightSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSection.swift; sourceTree = "<group>"; };
 		D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCircleSection.swift; sourceTree = "<group>"; };
 		D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyAmoutCell.swift; sourceTree = "<group>"; };
 		D11B9AA520D42E4800543538 /* atm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atm.json; sourceTree = "<group>"; };
@@ -207,8 +176,6 @@
 		D11B9AA920D4815C00543538 /* fireworks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fireworks.json; sourceTree = "<group>"; };
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
 		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
-		D11F284220CA242B00F47474 /* SelectedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUserView.swift; sourceTree = "<group>"; };
-		D11F284420CAFED400F47474 /* FirestoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreModel.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRect.swift; sourceTree = "<group>"; };
@@ -218,10 +185,7 @@
 		D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPayoutCell.swift; sourceTree = "<group>"; };
 		D153C96D20BF90050007C3F5 /* AmountsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsSection.swift; sourceTree = "<group>"; };
 		D153C96F20BF903F0007C3F5 /* AmountsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsCell.swift; sourceTree = "<group>"; };
-		D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleEventsSection.swift; sourceTree = "<group>"; };
-		D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleEventsCell.swift; sourceTree = "<group>"; };
 		D153C97620C088950007C3F5 /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
-		D153C97820C0F60B0007C3F5 /* DragCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCell.swift; sourceTree = "<group>"; };
 		D15586D02015885D00E4984B /* UIColor+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Palette.swift"; sourceTree = "<group>"; };
 		D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBankVC.swift; sourceTree = "<group>"; };
 		D1619200202814AD0073C8B8 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -233,8 +197,6 @@
 		D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUsersSection.swift; sourceTree = "<group>"; };
 		D166AB43201250690080F5A8 /* Circle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Circle.entitlements; sourceTree = "<group>"; };
 		D16938381FB386830095F5A7 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
-		D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInfoCell.swift; sourceTree = "<group>"; };
-		D16BCA56205C22CC0053DF0A /* CurrentUserView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentUserView.xib; sourceTree = "<group>"; };
 		D16D05021FB0A27A00153D99 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VericationPhoneVC.swift; sourceTree = "<group>"; };
 		D17197EF200E51A5009BC920 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
@@ -260,18 +222,10 @@
 		D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1B076622022A4BD00229F45 /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
-		D1B19784205B419000E19EB0 /* CurrentUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserView.swift; sourceTree = "<group>"; };
-		D1D66D642071492E0087D41C /* CircleInsightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInsightView.swift; sourceTree = "<group>"; };
 		D1D66D662071B8860087D41C /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
-		D1D66D682071C0500087D41C /* CircleInsightView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleInsightView.xib; sourceTree = "<group>"; };
 		D1E306752008210B000A5845 /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
-		D1E3067920082256000A5845 /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
-		D1F25EB720559C2F00611259 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectionViewCell.swift; sourceTree = "<group>"; };
-		D1F8AB27209BED060050AA05 /* SpinningCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningCircle.swift; sourceTree = "<group>"; };
 		D1F8AB2920A3E9220050AA05 /* CodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeVC.swift; sourceTree = "<group>"; };
-		D1FD5E94207BBECC0098D648 /* DatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		D9870F315D21109C1FAC6C75 /* Pods_CircleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CircleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA14497C880C662584B6A021 /* Pods-CircleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CircleUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CircleUITests/Pods-CircleUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -401,7 +355,6 @@
 			children = (
 				D165407A202EB79F00B2A1F5 /* PendingVC.swift */,
 				D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */,
-				D10A6DB8203F365800E7AEB5 /* HistoryVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -411,8 +364,6 @@
 			children = (
 				6D0CCE451FAE11E100DF5F13 /* AuthService.swift */,
 				6D0CCE481FAE134700DF5F13 /* DataService.swift */,
-				D10A57B1202B70ED00D93405 /* ContactService.swift */,
-				D10BDC1C20451C5F00D22860 /* MoneyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -430,19 +381,15 @@
 		6D0CCE511FAE7F2200DF5F13 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D10880BF20E421AE007727B2 /* SettingsCell */,
 				D10880B520DC5802007727B2 /* IntroView.swift */,
-				D10FA259203340DC00BBB671 /* Dashboard View */,
 				D17197F7200E63AF009BC920 /* UI */,
 				D17197FA200E7159009BC920 /* AKMaskField */,
 				D169383C1FB38CDC0095F5A7 /* Cell */,
 				6D0CCE351FAD715C00DF5F13 /* CircleLayout.swift */,
 				6D0CCE521FAE7FCC00DF5F13 /* View.swift */,
-				D100D9AD200A0C2900CAEB83 /* SegmentedControl.swift */,
 				D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */,
 				D17197EF200E51A5009BC920 /* LoadingButton.swift */,
-				D1181F70206BF8CB00277345 /* InsightSection.swift */,
-				D1FD5E94207BBECC0098D648 /* DatePickerCell.swift */,
-				D1F8AB27209BED060050AA05 /* SpinningCircle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -451,17 +398,16 @@
 			isa = PBXGroup;
 			children = (
 				D16D05011FB0A26800153D99 /* Model */,
-				6D0CCE5A1FAFD09C00DF5F13 /* Controller */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		6D0CCE5A1FAFD09C00DF5F13 /* Controller */ = {
+		D10880BF20E421AE007727B2 /* SettingsCell */ = {
 			isa = PBXGroup;
 			children = (
-				6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */,
+				D10880C020E421C0007727B2 /* ProfileImageCell.swift */,
 			);
-			path = Controller;
+			path = SettingsCell;
 			sourceTree = "<group>";
 		};
 		D10A6DB3203B521800E7AEB5 /* Settings */ = {
@@ -496,20 +442,6 @@
 				D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */,
 			);
 			path = Onboarding2;
-			sourceTree = "<group>";
-		};
-		D10FA259203340DC00BBB671 /* Dashboard View */ = {
-			isa = PBXGroup;
-			children = (
-				D10880B720DC5986007727B2 /* SettingsCell.swift */,
-				D1B19784205B419000E19EB0 /* CurrentUserView.swift */,
-				D16BCA56205C22CC0053DF0A /* CurrentUserView.xib */,
-				D1181F6E206BF51C00277345 /* CurrentUserInsightCell.swift */,
-				D1D66D642071492E0087D41C /* CircleInsightView.swift */,
-				D1D66D682071C0500087D41C /* CircleInsightView.xib */,
-				D11F284220CA242B00F47474 /* SelectedUserView.swift */,
-			);
-			path = "Dashboard View";
 			sourceTree = "<group>";
 		};
 		D142F1CB200D186700DBA881 /* Onboarding */ = {
@@ -548,12 +480,12 @@
 				D153C96720BB15040007C3F5 /* CircleInsightSection.swift */,
 				D153C96920BDB7C00007C3F5 /* NextPayoutSection.swift */,
 				D153C96D20BF90050007C3F5 /* AmountsSection.swift */,
-				D153C97220C06DFB0007C3F5 /* CircleEventsSection.swift */,
 				D153C97620C088950007C3F5 /* HeaderSection.swift */,
 				D1669CEB20CD9FE40006FC9B /* UpperSection.swift */,
 				D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */,
 				D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */,
 				D10880B920DC6413007727B2 /* FinishCircleSection.swift */,
+				D10880BD20E420A8007727B2 /* EditAccountSection.swift */,
 			);
 			path = SectionController;
 			sourceTree = "<group>";
@@ -569,25 +501,18 @@
 		D169383C1FB38CDC0095F5A7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				6D0CCE4F1FAE7D8E00DF5F13 /* ChoiceCell.swift */,
-				D169383E1FB38D320095F5A7 /* CircleInfoCell.swift */,
+				D10880B720DC5986007727B2 /* SettingsCell.swift */,
+				D10D855220E5AB8600006176 /* DragCell.swift */,
 				D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */,
-				D1E3067920082256000A5845 /* SegmentCell.swift */,
 				D100D9AF200A13E500CAEB83 /* ContactCell.swift */,
-				D100D9B5200AD9BB00CAEB83 /* SearchCell.swift */,
-				D10BB2A920196735004F5262 /* FacebookCell.swift */,
-				D1B076622022A4BD00229F45 /* InfoCell.swift */,
-				D108D21D2027AE5B00679ACE /* ContactInviteCell.swift */,
-				D10A57A92029FA7B00D93405 /* InsightCell.swift */,
 				D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */,
 				D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */,
 				D153C96F20BF903F0007C3F5 /* AmountsCell.swift */,
-				D153C97420C06FBC0007C3F5 /* CircleEventsCell.swift */,
-				D153C97820C0F60B0007C3F5 /* DragCell.swift */,
 				D11F27ED20C61C0F00F47474 /* InviteCell.swift */,
 				D1669CED20CDA0240006FC9B /* SelectedUserCell.swift */,
 				D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */,
 				D10880BB20DC646C007727B2 /* FinishMessageCell.swift */,
+				D10D855420E5B00300006176 /* CircleUserCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -605,13 +530,10 @@
 			isa = PBXGroup;
 			children = (
 				D16D05021FB0A27A00153D99 /* User.swift */,
-				D100D9AB2009F9B700CAEB83 /* Contact.swift */,
+				D100D9AB2009F9B700CAEB83 /* UserContact.swift */,
 				D16938381FB386830095F5A7 /* Circle.swift */,
-				D10BDC202045CC7600D22860 /* Bank.swift */,
-				D1F25EB720559C2F00611259 /* Event.swift */,
-				D1181F6C206967A800277345 /* Balance.swift */,
-				D11F284420CAFED400F47474 /* FirestoreModel.swift */,
 				D1669CE920CD4F840006FC9B /* Insight.swift */,
+				D10D855020E59D1000006176 /* ViewModelItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -657,6 +579,7 @@
 		D171981E200E849D009BC920 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
+				6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */,
 				D10BB2A820196554004F5262 /* FlowSinUp */,
 				D142F1CC200D189000DBA881 /* Inivite */,
 				D142F1CB200D186700DBA881 /* Onboarding */,
@@ -697,9 +620,9 @@
 				6D0CCE001FAD70E900DF5F13 /* Sources */,
 				6D0CCE011FAD70E900DF5F13 /* Frameworks */,
 				6D0CCE021FAD70E900DF5F13 /* Resources */,
-				79284736FDFD2AE506014783 /* [CP] Embed Pods Frameworks */,
 				D192E4DA204A43E9004519D9 /* Prepare for Distribution */,
 				D18DA37C20B19AF10079F2A4 /* ShellScript */,
+				D5D88D0296516A7662E48DE7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -821,10 +744,8 @@
 				D11B9AA820D465E000543538 /* greenCheck.json in Resources */,
 				6D0CCE121FAD70E900DF5F13 /* LaunchScreen.storyboard in Resources */,
 				6D0CCE0F1FAD70E900DF5F13 /* Assets.xcassets in Resources */,
-				D1D66D692071C0500087D41C /* CircleInsightView.xib in Resources */,
 				6D0CCE0D1FAD70E900DF5F13 /* Main.storyboard in Resources */,
 				6D0CCE3A1FADF29A00DF5F13 /* Log.storyboard in Resources */,
-				D16BCA57205C22CC0053DF0A /* CurrentUserView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,7 +802,52 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		79284736FDFD2AE506014783 /* [CP] Embed Pods Frameworks */ = {
+		C6A33030FAEB77F224F5AE3F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Circle-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D18DA37C20B19AF10079F2A4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		D192E4DA204A43E9004519D9 /* Prepare for Distribution */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare for Distribution";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LINK_ROOT=${PODS_ROOT:+$PODS_ROOT/Plaid/ios}\nrm -f \"${LINK_ROOT:-$PROJECT_DIR}\"/LinkKit.framework/prepare_for_distribution.sh \"${CODESIGNING_FOLDER_PATH}\"/Frameworks/LinkKit.framework/prepare_for_distribution.sh";
+		};
+		D5D88D0296516A7662E48DE7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -933,51 +899,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Circle/Pods-Circle-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C6A33030FAEB77F224F5AE3F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Circle-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D18DA37C20B19AF10079F2A4 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
-		D192E4DA204A43E9004519D9 /* Prepare for Distribution */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Prepare for Distribution";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "LINK_ROOT=${PODS_ROOT:+$PODS_ROOT/Plaid/ios}\nrm -f \"${LINK_ROOT:-$PROJECT_DIR}\"/LinkKit.framework/prepare_for_distribution.sh \"${CODESIGNING_FOLDER_PATH}\"/Frameworks/LinkKit.framework/prepare_for_distribution.sh";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -986,37 +907,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1719818200E725A009BC920 /* AKMaskFieldBrackets.swift in Sources */,
-				D1E3067A20082256000A5845 /* SegmentCell.swift in Sources */,
 				D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */,
 				D11775E9200CE68500B1953C /* PageOneVC.swift in Sources */,
-				D100D9AC2009F9B700CAEB83 /* Contact.swift in Sources */,
+				D100D9AC2009F9B700CAEB83 /* UserContact.swift in Sources */,
 				D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */,
 				D1719829200F91FB009BC920 /* Subhead.swift in Sources */,
 				D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */,
 				D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */,
 				D17197F3200E6052009BC920 /* LogButton.swift in Sources */,
 				D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */,
-				D1FD5E95207BBECC0098D648 /* DatePickerCell.swift in Sources */,
 				D10880BA20DC6413007727B2 /* FinishCircleSection.swift in Sources */,
 				D11775E7200CE23800B1953C /* PageViewController.swift in Sources */,
-				D153C97520C06FBC0007C3F5 /* CircleEventsCell.swift in Sources */,
 				D1669CEE20CDA0240006FC9B /* SelectedUserCell.swift in Sources */,
-				D153C97320C06DFB0007C3F5 /* CircleEventsSection.swift in Sources */,
-				D1181F71206BF8CB00277345 /* InsightSection.swift in Sources */,
-				D1D66D652071492E0087D41C /* CircleInsightView.swift in Sources */,
 				D171982B200F927B009BC920 /* CardField.swift in Sources */,
 				D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */,
 				D11775EB200CE69200B1953C /* PageTwoVC.swift in Sources */,
 				D17197F5200E632C009BC920 /* BankAccountVC.swift in Sources */,
 				D1719820200E852B009BC920 /* NamePasswordVC.swift in Sources */,
-				D1B19785205B419000E19EB0 /* CurrentUserView.swift in Sources */,
-				D10A57B2202B70ED00D93405 /* ContactService.swift in Sources */,
-				D1181F6D206967A800277345 /* Balance.swift in Sources */,
 				D1669CEA20CD4F840006FC9B /* Insight.swift in Sources */,
 				D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */,
 				D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */,
 				D108D21C2027A82A00679ACE /* CircleView.swift in Sources */,
-				D108D21E2027AE5B00679ACE /* ContactInviteCell.swift in Sources */,
+				D10D855320E5AB8700006176 /* DragCell.swift in Sources */,
 				D1F8AB2A20A3E9220050AA05 /* CodeVC.swift in Sources */,
 				D1669CEC20CD9FE40006FC9B /* UpperSection.swift in Sources */,
 				6D0CCE5C1FAFD0AF00DF5F13 /* LoginViewController.swift in Sources */,
@@ -1026,55 +938,43 @@
 				D1D66D672071B8860087D41C /* ImageButton.swift in Sources */,
 				6D0CCE361FAD715C00DF5F13 /* CircleLayout.swift in Sources */,
 				D1669CF020CE7BCA0006FC9B /* SelectedUsersSection.swift in Sources */,
+				D10D855520E5B00300006176 /* CircleUserCell.swift in Sources */,
 				D1719815200E725A009BC920 /* AKMaskField.swift in Sources */,
 				D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */,
 				6D0CCE491FAE134700DF5F13 /* DataService.swift in Sources */,
 				D10BB2AC201975A1004F5262 /* InviteRequestVC.swift in Sources */,
 				D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */,
-				D10A57AA2029FA7B00D93405 /* InsightCell.swift in Sources */,
+				D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */,
 				D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */,
 				D153C96C20BDB7E90007C3F5 /* NextPayoutCell.swift in Sources */,
-				D100D9B6200AD9BB00CAEB83 /* SearchCell.swift in Sources */,
 				D1719817200E725A009BC920 /* AKMaskFieldPatternCharacter.swift in Sources */,
 				D171981A200E725A009BC920 /* AKMaskFieldBlock.swift in Sources */,
 				D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */,
 				D10A6DAC2039BB9300E7AEB5 /* InviteVCTwo.swift in Sources */,
 				D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */,
-				D169383F1FB38D320095F5A7 /* CircleInfoCell.swift in Sources */,
 				D1FDA77A20326C5A006D2CBF /* ForgotPasswordVC.swift in Sources */,
+				D10880C120E421C0007727B2 /* ProfileImageCell.swift in Sources */,
 				D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */,
-				D10BDC1D20451C6000D22860 /* MoneyService.swift in Sources */,
 				6D0CCE461FAE11E100DF5F13 /* AuthService.swift in Sources */,
 				D100D9B8200B981400CAEB83 /* Alert.swift in Sources */,
 				D1719814200E725A009BC920 /* AKMaskFieldStatus.swift in Sources */,
 				D1719825200F8F17009BC920 /* Headline.swift in Sources */,
 				D171981B200E725A009BC920 /* AKMaskFieldUtility.swift in Sources */,
 				D10880B820DC5986007727B2 /* SettingsCell.swift in Sources */,
-				D153C97920C0F60B0007C3F5 /* DragCell.swift in Sources */,
 				D1E306762008210B000A5845 /* InviteVC.swift in Sources */,
 				6D0CCE531FAE7FCC00DF5F13 /* View.swift in Sources */,
-				D1181F6F206BF51C00277345 /* CurrentUserInsightCell.swift in Sources */,
 				D153C96520BAFD050007C3F5 /* Transform.swift in Sources */,
 				D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */,
-				D11F284320CA242B00F47474 /* SelectedUserView.swift in Sources */,
 				D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */,
 				D16938391FB386830095F5A7 /* Circle.swift in Sources */,
-				D10BDC212045CC7600D22860 /* Bank.swift in Sources */,
 				D153C96A20BDB7C00007C3F5 /* NextPayoutSection.swift in Sources */,
 				D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */,
-				D100D9AE200A0C2900CAEB83 /* SegmentedControl.swift in Sources */,
-				D11F284520CAFED400F47474 /* FirestoreModel.swift in Sources */,
 				D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */,
-				D1B076632022A4BD00229F45 /* InfoCell.swift in Sources */,
 				D1719816200E725A009BC920 /* AKMaskFieldBlockCharacter.swift in Sources */,
-				D10A6DB9203F365800E7AEB5 /* HistoryVC.swift in Sources */,
-				6D0CCE501FAE7D8E00DF5F13 /* ChoiceCell.swift in Sources */,
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
-				D1F8AB28209BED060050AA05 /* SpinningCircle.swift in Sources */,
 				D12B97452030D313001B44FB /* LoginVC.swift in Sources */,
 				D171982D200F95CC009BC920 /* Footnote.swift in Sources */,
 				D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */,
-				D10BB2AA20196735004F5262 /* FacebookCell.swift in Sources */,
 				D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */,
 				D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */,
 				D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */,
@@ -1082,7 +982,7 @@
 				D1719822200F8AC7009BC920 /* BackgroundTextField.swift in Sources */,
 				D153C96820BB15040007C3F5 /* CircleInsightSection.swift in Sources */,
 				D10880BC20DC646C007727B2 /* FinishMessageCell.swift in Sources */,
-				D1F25EB820559C2F00611259 /* Event.swift in Sources */,
+				D10880BE20E420A9007727B2 /* EditAccountSection.swift in Sources */,
 				D1719819200E725A009BC920 /* AKMaskFieldEvent.swift in Sources */,
 				6D0CCE081FAD70E900DF5F13 /* AppDelegate.swift in Sources */,
 			);
@@ -1256,6 +1156,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1279,6 +1180,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
 				CODE_SIGN_STYLE = Automatic;

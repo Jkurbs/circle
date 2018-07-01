@@ -77,7 +77,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = UIColor.white
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")        
+        collectionView.register(CircleUserCell.self, forCellWithReuseIdentifier: "CircleUserCell")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -87,7 +87,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = contentView.frame        
-        circleView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 80, height: contentView.frame.height)
+        circleView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 85, height: contentView.frame.height)
         circleView.center.x = collectionView.center.x
     }
 }
@@ -103,7 +103,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PendingInviteCell", for: indexPath) as! PendingInviteCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
             let user = self.users[indexPath.row]
             cell.configure(user)
             return cell
@@ -116,16 +116,15 @@ final class CircleCollectionViewCell: UICollectionViewCell {
             if(selectedIndex != indexPath) {
                 var indicesArray = [IndexPath]()
                 if(selectedIndex != nil) {
-                    let cell = collectionView.cellForItem(at: selectedIndex!) as! PendingInviteCell
+                    let cell = collectionView.cellForItem(at: selectedIndex!) as! CircleUserCell
                     UIView.animate(withDuration: 0.3, animations: {
-                        cell.layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
                         cell.transform = CGAffineTransform.identity
                     }, completion: { (completion) in
                     })
                     indicesArray.append(selectedIndex!)
                 }
                 selectedIndex = indexPath
-                let cell = collectionView.cellForItem(at: indexPath) as! PendingInviteCell
+                let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
                  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: userData)
                 UIView.animate(withDuration: 0.3, animations: {
                     cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)

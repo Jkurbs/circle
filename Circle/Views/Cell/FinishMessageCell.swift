@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 import MessageUI
-import FirebaseFirestore
+import Firebase
 
 
 class  FinishMessageCell: UICollectionViewCell, MFMailComposeViewControllerDelegate {

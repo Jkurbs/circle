@@ -66,7 +66,7 @@ class WelcomeVC: UIViewController {
         view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PendingInviteCell.self, forCellWithReuseIdentifier: "PendingInviteCell")
+        collectionView.register(CircleUserCell.self, forCellWithReuseIdentifier: "CircleUserCell")
         setup()
     }
     
@@ -140,7 +140,7 @@ extension WelcomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PendingInviteCell", for: indexPath) as! PendingInviteCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
         let user = self.users[indexPath.row]
         cell.configure(user)
         return cell

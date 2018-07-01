@@ -65,7 +65,7 @@ class InviteRequestVC: UIViewController {
     
     @objc func nextStep() {
         let vc = InviteVC()
-        vc.circleId = circleId ?? ""
+        //vc.circleId = circleId ?? ""
     
         let store = CNContactStore()
         let authorizationStatus = CNContactStore.authorizationStatus(for: .contacts)
