@@ -27,7 +27,7 @@ class AuthService {
                 print("USER ID::", user!.user.uid)
                 UserDefaults.standard.set(user!.user.uid, forKey: "userId")
                 DispatchQueue.background(delay: 0.0, background: {
-                    DataService.instance.REF_USERS.document(user!.user.uid).getDocument { (document, error) in
+                    DataService.call.REF_USERS.document(user!.user.uid).getDocument { (document, error) in
                         if let error = error {
                             print("ERROR:::", error.localizedDescription)
                             return
@@ -43,7 +43,7 @@ class AuthService {
                 }, completion: nil)
                 
                 if let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") {
-                    DataService.instance.REF_USERS.document(user!.user.uid).updateData(["device_token": deviceToken])
+                    DataService.call.REF_USERS.document(user!.user.uid).updateData(["device_token": deviceToken])
                 }
             }
         })
@@ -71,8 +71,8 @@ class AuthService {
                 print("ERROR:", error.localizedDescription)
                 completion(false, error)
             } else {
-                let ip = DataService.instance.getIP()[1]
-                DataService.instance.saveDeviceInfo(phoneNumber, ip)
+                let ip = DataService.call.getIP()[1]
+                DataService.call.saveDeviceInfo(phoneNumber, ip)
                     completion(true, nil)
             }
         }
@@ -99,7 +99,7 @@ class AuthService {
     
     
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
-        DataService.instance.createFirebaseDBUser(id, userData: userData)
+        
     }
 }
 

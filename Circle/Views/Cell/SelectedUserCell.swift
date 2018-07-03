@@ -109,7 +109,7 @@ class SelectedUserCell: UICollectionViewCell {
         
         imageView.image = nil
 
-        if let url = user.photoUrl {
+        if let url = user.imageUrl {
             imageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "Profile-20"), options: .highPriority, completed: nil)
             //sd_setImage(with: URL(string: url))
         }

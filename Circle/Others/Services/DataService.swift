@@ -10,13 +10,19 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import FirebaseDynamicLinks
+import Foundation
 
-final class DataService {
+protocol DataServiceProtocol {
+    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ users: [User], _ error: Error? )->() )
+}
+
+
+class DataService: DataServiceProtocol {
     
-    private static let _instance = DataService()
+    private static let _call = DataService()
     
-    static var instance: DataService {
-        return _instance
+    static var call: DataService {
+        return _call
     }
     
     var REF_BASE: Firestore {
@@ -50,20 +56,90 @@ final class DataService {
             oldValue?.remove()
         }
     }
-    
-    
-    
+
     
    let DYNAMIC_LINK_DOMAIN = "fk4hq.app.goo.gl"
    var shortLink: URL?
 
     
-    func createFirebaseDBUser(_ uid: String, userData: Dictionary<String, Any>) {
-        // DataService.instance.REF_USERS.document(uid).setData(userData)
+    
+    var fileUrl: String?
+    
+    
+    
+    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ user: [User], _ error: Error? )->()) {
+        DispatchQueue.global().async {
+            if let uid = Auth.auth().currentUser?.uid ?? UserDefaults.standard.value(forKey: "userId") as? String {
+                self.REF_USERS.document(uid).getDocument { (snapshot, error) in
+                    if let error = error {
+                        print("ERROR:", error.localizedDescription)
+                        return
+                    } else {
+                        guard let snap = snapshot else {
+                            return
+                        }
+                        let key = snap.documentID
+                        let data = snap.data()
+                        let user = User(key: key, data: data!)
+                        complete(true, [user], nil)
+                    }
+                }
+            }
+        }
+    }
+
+    
+    var users = [User]()
+
+    
+    func fetchUsers( complete: @escaping ( _ success: Bool, _ users: [User], _ error: Error? )->()) {
+        //self.users = []
+        let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
+        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { querySnapshot, error in
+            guard let snapshot = querySnapshot else {
+                print("Error fetching snapshots: \(error!)")
+                return
+            }
+            
+            
+            snapshot.documentChanges.forEach { diff in
+
+                if (diff.type == .added) {
+                    let data = diff.document.data()
+                    let id = diff.document.documentID
+                    let user = User(key: id, data: data)
+                    self.users.append(user)
+                    complete(true, self.users, nil)
+                }
+                
+                if (diff.type == .modified) {
+                    if !self.users.isEmpty {
+                    let data = diff.document.data()
+                    let id = diff.document.documentID
+                    let user = User(key: id, data: data)
+                    self.users.append(user)
+                    complete(true, self.users, nil)
+                    }
+                }
+                
+                if (diff.type == .removed) {
+                    print("Removed user: \(diff.document.data())")
+                }
+            }
+        }
     }
     
     
-    var fileUrl: String?
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func saveCurrentUserInfo(name: String, email: String, data: Data) {
         let user = Auth.auth().currentUser!
@@ -125,7 +201,7 @@ final class DataService {
         guard let circleId = circleId else {
             return
           }
-        listener = DataService.instance.REF_CIRCLES.document(circleId).addSnapshotListener {( document, error) in
+        listener = DataService.call.REF_CIRCLES.document(circleId).addSnapshotListener {( document, error) in
                 if let document = document {
                     if document.exists {
                         let data = document.data()
@@ -159,7 +235,7 @@ final class DataService {
     private var insider: String?
 
     func getInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ insiders: User?) -> ()) {
-       let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders")
+       let ref = DataService.call.REF_CIRCLES.document(circleId).collection("insiders")
             ref.order(by: "position", descending: false).getDocuments { (documents, error) in
             if let error = error {
                 completion(false, error, nil)
@@ -171,21 +247,6 @@ final class DataService {
                     let key = document.documentID
                     let insiders = User(key: key, data: data)
                     completion(true, nil, insiders)
-//                    DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).collection("sources").getDocuments(completion: { (documents, error) in
-//                            if let error = error {
-//                                print("Error getting source", error.localizedDescription)
-//                            } else {
-//                                for document in (documents?.documents)! {
-//                                    if document.exists {
-//                                        let bankData = document.data()
-//                                        let bankKey = document.documentID
-//                                        let bank = Bank(bankKey, bankData)
-//                                        let insiders = User(key: key, data: data, bank: bank, event: nil, balance: nil)
-//                                        completion(true, nil, insiders)
-//                                }
-//                            }
-//                        }
-//                    })
                 }
             }
         }
@@ -194,7 +255,7 @@ final class DataService {
     
     func getPendingInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ pendingnUsers: User?) -> ()) {
         
-        DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").getDocuments { (documents, error) in
+        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").getDocuments { (documents, error) in
             if let error = error {
                 print("ERROR:::", error.localizedDescription)
                 completion(false, error, nil)
@@ -309,23 +370,7 @@ final class DataService {
        })
     }
     
-    
-//    func saveContacts(contacts: [UserContact]) {
-//        print("SAVE CONTACTS")
-//        for contact in contacts {
-//            let data: [String: Any] = ["phone_number": contact.phoneNumber ?? "", "first_name": contact.givenName ?? "", "last_name": contact.familyName ?? "", "email_address": contact.emailAddress ?? ""]
-//
-//            REF_USERS.document(Auth.auth().currentUser!.uid).collection("contacts").addDocument(data: data) { (error) in
-//                if let error = error {
-//                    print("ERROR IP", error.localizedDescription)
-//                } else {
-//                    print("SUCCESSFULLY SAVED IP ADDRESS")
-//                }
-//            }
-//            break
-//        }
-//    }
-    
+ 
     var childRef: String?
     var imageUrl: String?
     
@@ -422,7 +467,7 @@ final class DataService {
     
     func retrieveDynamicLinkCircle(_ id: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ admin: User?, _ insider: User?) -> ()) {
         print("IDDD:: \(id)")
-        DataService.instance.REF_CIRCLES.document(id).getDocument { (document, error) in
+        DataService.call.REF_CIRCLES.document(id).getDocument { (document, error) in
             if let error = error {
                 print("ERROR", error.localizedDescription)
             } else {
@@ -431,7 +476,7 @@ final class DataService {
                     if let admin = data!["admin"] as? String {
                         let url = data!["link"] as? String
                         UserDefaults.standard.set(url, forKey: "circleUrl")
-                        let ref = DataService.instance.REF_USERS.document(admin)
+                        let ref = DataService.call.REF_USERS.document(admin)
                         ref.getDocument { (document, error) in
                             if let error = error {
                                 completion(false, error, nil, nil)
@@ -442,7 +487,7 @@ final class DataService {
                                         let key = document.documentID
                                         print("KEY:::: =>>>", key)
                                         let admin = User(key: key, data: data!)
-                                        DataService.instance.REF_CIRCLES.document(id).collection("insiders").getDocuments(completion: { (documents, error) in
+                                        DataService.call.REF_CIRCLES.document(id).collection("insiders").getDocuments(completion: { (documents, error) in
                                             if let error = error {
                                                 print(error)
                                                 return
@@ -483,7 +528,7 @@ final class DataService {
     
     func lookForPendingUser(_ circleId: String, _ phoneNumber: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?) -> ()) {
         
-        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").whereField("phone_number", isEqualTo: phoneNumber)
+        let ref = DataService.call.REF_CIRCLES.document(circleId).collection("insiders").whereField("phone_number", isEqualTo: phoneNumber)
         
             ref.getDocuments { (documents, error) in
             if let error = error {
@@ -504,13 +549,13 @@ final class DataService {
     
     func setupCircle(circleId: String, maxAmount: Int, weeklyAmount: Int) {
         let data = ["max_amount": maxAmount, "weekly_amount": weeklyAmount, "activated": true] as [String : Any]
-        DataService.instance.REF_CIRCLES.document(circleId).setData(data, merge: true)
+        DataService.call.REF_CIRCLES.document(circleId).setData(data, merge: true)
     }
     
     
     func updateCircle(_ circleId: String, _ maxAmount: Int) {
         let data = ["max_amount": maxAmount, "activated": true] as [String : Any]
-        DataService.instance.REF_CIRCLES.document(circleId).setData(data, merge: true)
+        DataService.call.REF_CIRCLES.document(circleId).setData(data, merge: true)
     }
     
     

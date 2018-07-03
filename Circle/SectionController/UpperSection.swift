@@ -24,11 +24,17 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
     private var circleLink: String!
     private var cell: CircleCollectionViewCell!
     private var settingsCell: SettingsCell!
+    
 
     lazy var adapter: ListAdapter = {
         let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 0)
         adapter.dataSource = self
         return adapter
+    }()
+    
+    
+    lazy var viewModel: UserListViewModel = {
+        return UserListViewModel()
     }()
     
 
@@ -53,6 +59,7 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
         }
     }
     
+    
     override init() {
         super.init()
         finish = []
@@ -62,6 +69,7 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
         retrieveInsight()
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateUser(_:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
     }
+    
     
     @objc func updateUser(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
@@ -118,53 +126,15 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
 extension UpperSection {
     
     func retrieveUsers() {
-        self.users = []
-        self.nextPayoutUsers = []
-        let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error fetching snapshots: \(error!)")
-                return
-            }
-
-            snapshot.documentChanges.forEach { diff in
-                if (diff.type == .added) {
-                    let data = diff.document.data()
-                    let id = diff.document.documentID
-                    let user = User(key: id, data: data)
-                    self.users.append(user)
-                    self.cell.users.append(user)
-                    self.cell.collectionView.reloadData()
-                    self.adapter.performUpdates(animated: true)
-                }
-
-                if (diff.type == .modified) {
-                    if !self.users.isEmpty {
-                        self.users = []
-                        let data = diff.document.data()
-                        let id = diff.document.documentID
-                        let user = User(key: id, data: data)
-                        self.users.append(user)
-                        self.cell.collectionView.performBatchUpdates({
-                            self.cell.collectionView.reloadData()
-                        }, completion: nil)
-                        self.adapter.reloadData(completion: nil)
-                    }
-                }
-
-                if (diff.type == .removed) {
-                    self.adapter.reloadData(completion: nil)
-                    print("Removed user: \(diff.document.data())")
-                }
-            }
-        }
+        viewModel.initFetch()
     }
+    
 
     
     
     func retrievePayoutUsers() {
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.instance.REF_CIRCLES.document(circleId).collection("insiders").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
+        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
             if let error = error {
                 print("error:", error.localizedDescription)
             } else {
@@ -185,7 +155,7 @@ extension UpperSection {
     private func retrieveCircle() {
         self.circle = []
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.instance.REF_CIRCLES.document(circleId).addSnapshotListener { querySnapshot, error in
+        DataService.call.REF_CIRCLES.document(circleId).addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error fetching snapshots: \(error!)")
                 return
@@ -208,7 +178,7 @@ extension UpperSection {
     
     private func retrieveInsight() {
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        let ref = DataService.instance.REF_CIRCLES.document(circleId).collection("insight")
+        let ref = DataService.call.REF_CIRCLES.document(circleId).collection("insight")
         ref.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error fetching snapshots: \(error!)")

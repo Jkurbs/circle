@@ -41,7 +41,7 @@ class EditAccountSection: ListSectionController {
                 fatalError()
             }
             
-            if let url = user?.photoUrl {
+            if let url = user?.imageUrl {
                 cell.imageView.sd_setImage(with: URL(string: url))
             }
             return cell
@@ -77,7 +77,7 @@ class EditAccountSection: ListSectionController {
     @objc func updateUserProfile() {
         if let imageCell = collectionContext?.cellForItem(at: 0, sectionController: self) as? ProfileImageCell, let userNameCell = collectionContext?.cellForItem(at: 1, sectionController: self) as? UserNameCell, let displayNameCell = collectionContext?.cellForItem(at: 2, sectionController: self) as? DisplayNameCell, let emailCell = collectionContext?.cellForItem(at: 3, sectionController: self) as? EmailCell {
             if let userId = Auth.auth().currentUser?.uid {
-                let storageItem = DataService.instance.REF_STORAGE.child("profile_images").child(userId)
+                let storageItem = DataService.call.REF_STORAGE.child("profile_images").child(userId)
                 guard let image = imageCell.imageView.image else {return}
                 if let newImage = UIImagePNGRepresentation(image) {
                     storageItem.putData(newImage, metadata: nil) { (metadata, error) in
@@ -106,9 +106,9 @@ class EditAccountSection: ListSectionController {
                                                      "last_name": lastName,
                                                      "email_address": newEmail] as [String : Any]                                
                                     
-                                    DataService.instance.REF_CIRCLES.document((self.user?.circle)!).collection("insiders").document(userId).updateData(data)
+                                    DataService.call.REF_CIRCLES.document((self.user?.circle)!).collection("insiders").document(userId).updateData(data)
                                     
-                                    DataService.instance.REF_USERS.document(userId).updateData(data, completion: { (error) in
+                                    DataService.call.REF_USERS.document(userId).updateData(data, completion: { (error) in
                                         if let error = error {
                                             print("error", error.localizedDescription)
                                         } else {

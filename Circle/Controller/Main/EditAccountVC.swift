@@ -46,7 +46,7 @@ final class EditAccountVC: UIViewController, ListAdapterDataSource {
     
     func retrieveCurrentUser() {
         
-        DataService.instance.REF_USERS.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
+        DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
             if let error = error {
                 print("error", error.localizedDescription)
             } else {

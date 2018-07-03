@@ -10,6 +10,7 @@ import UIKit
 import Stripe
 import LinkKit
 import Firebase
+import FirebaseDynamicLinks
 import FirebaseFirestore
 import UserNotifications
 import IQKeyboardManager
@@ -194,10 +195,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        if let refreshedToken = InstanceID.instanceID().token() {
-            print("InstanceID token: \(refreshedToken)")
-             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
-        }
+        if let refreshedToken = 
+            
+//
+//            InstanceID.instanceID().token() {
+//            print("InstanceID token: \(refreshedToken)")
+//             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
+//        }
     }
     
     

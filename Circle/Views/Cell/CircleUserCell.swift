@@ -54,27 +54,16 @@ class CircleUserCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.cornerRadius = imageView.frame.width/2
-        
-        
-        //createGradientLayer()
-
     }
     
-    func configure(_ user: User) {
+    func configure(_ viewModel: UserCellViewModel) {
         
-        if user.userId == Auth.auth().currentUser?.uid {
-            
-        }
-        
-        if user.daysLeft == 0 {
-            print("zero")
+        if viewModel.payed == true {
             contentView.addSubview(paidView)
             createGradientLayer()
             view.borderColor = UIColor.red
-
         }
-        
-        imageView.sd_setImage(with: URL(string: user.photoUrl!))
+        imageView.sd_setImage(with: URL(string: viewModel.imageUrl))
     }
     
     func createGradientLayer() {
@@ -84,7 +73,6 @@ class CircleUserCell: UICollectionViewCell {
         paidView.borderColor = .white
         contentView.addSubview(paidView)
         
-        
         gradientLayer = CAGradientLayer()
         gradientLayer.contents = UIImage(named: "Dollar-10")?.cgImage
         gradientLayer.frame = self.paidView.bounds
@@ -93,6 +81,24 @@ class CircleUserCell: UICollectionViewCell {
         gradientLayer.borderColor = UIColor.white.cgColor
         gradientLayer.colors = [ UIColor.yellow.cgColor, UIColor(red: 243.0/255.0, green:  156.0/255.0, blue:  18.0/255.0, alpha: 1.0).cgColor, UIColor.orange.cgColor]
         self.paidView.layer.addSublayer(gradientLayer)
+    }
+    
+    
+    func animate(_ isSelected: Bool) {
+        
+        if isSelected == false {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.transform = CGAffineTransform.identity
+            }, completion: { (completion) in
+                
+            })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }, completion: { (completion) in
+                
+            })
+        }
     }
 }
 
@@ -118,6 +124,6 @@ class CircleIntroUserCell: UICollectionViewCell {
     }
     
     func configure(_ user: User) {
-        imageView.sd_setImage(with: URL(string: user.photoUrl!))
+        imageView.sd_setImage(with: URL(string: user.imageUrl!))
     }
 }

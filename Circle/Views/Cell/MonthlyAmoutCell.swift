@@ -112,7 +112,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
     
     @objc func activateCircle() {
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        let ref =  DataService.instance.REF_CIRCLES.document(circleId)
+        let ref =  DataService.call.REF_CIRCLES.document(circleId)
 
         let insidersRef = ref.collection("insiders")
         insidersRef.getDocuments(completion: { (snapshot, error) in

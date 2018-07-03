@@ -52,8 +52,6 @@ import IGListKit
 
 final class CircleCollectionViewCell: UICollectionViewCell {
     
-    var users = [User]()
-    
     var circleView = CircleView()
     
     lazy var collectionView: UICollectionView = {
@@ -63,15 +61,22 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let impact = UIImpactFeedbackGenerator()
-    let selection = UISelectionFeedbackGenerator()
-    let notification = UINotificationFeedbackGenerator()
+    lazy var viewModel: UserListViewModel = {
+        return UserListViewModel()
+    }()
+    
 
     var selectedIndex: IndexPath?
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        initView()
+        initFetch()
+    }
+    
+    
+    func initView() {
         contentView.addSubview(circleView)
         contentView.addSubview(collectionView)
         contentView.backgroundColor = UIColor.white
@@ -80,60 +85,81 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         collectionView.register(CircleUserCell.self, forCellWithReuseIdentifier: "CircleUserCell")
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func initLayout() {
+        collectionView.frame = contentView.frame
+        circleView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 85, height: contentView.frame.height)
+        circleView.center.x = collectionView.center.x
     }
+    
+    
+    func initFetch() {
+        viewModel.reloadCollectionViewClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        viewModel.initFetch()
+    }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = contentView.frame        
-        circleView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 85, height: contentView.frame.height)
-        circleView.center.x = collectionView.center.x
+        initLayout()
+    }
+
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
     
     extension CircleCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return users.count
+            return viewModel.numberOfCells
         }
         
         func numberOfSections(in collectionView: UICollectionView) -> Int {
             return 1
         }
         
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
-            let user = self.users[indexPath.row]
-            cell.configure(user)
-            return cell
-        }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
         
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            impact.impactOccurred()
-            let user = self.users[indexPath.row]
-            let userData = ["user": user]
-            if(selectedIndex != indexPath) {
-                var indicesArray = [IndexPath]()
-                if(selectedIndex != nil) {
-                    let cell = collectionView.cellForItem(at: selectedIndex!) as! CircleUserCell
-                    UIView.animate(withDuration: 0.3, animations: {
-                        cell.transform = CGAffineTransform.identity
-                    }, completion: { (completion) in
-                    })
-                    indicesArray.append(selectedIndex!)
-                }
-                selectedIndex = indexPath
-                let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
-                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: userData)
+        let cellVM = viewModel.getCellViewModel( at: indexPath )
+        cell.configure(cellVM)
+        return cell
+    }
+        
+        
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
+        
+        self.viewModel.userPressed(at: indexPath)
+        cell.animate(viewModel.isSelected)
+        
+        if(selectedIndex != indexPath) {
+            var indicesArray = [IndexPath]()
+            if(selectedIndex != nil) {
+                let cell = collectionView.cellForItem(at: selectedIndex!) as! CircleUserCell
                 UIView.animate(withDuration: 0.3, animations: {
-                    cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                    cell.transform = CGAffineTransform.identity
                 }, completion: { (completion) in
-
                 })
-                indicesArray.append(indexPath)
+                indicesArray.append(selectedIndex!)
+            }
+            selectedIndex = indexPath
+            let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }, completion: { (completion) in
+                
+            })
+            indicesArray.append(indexPath)
         }
     }
+
        
     func configure(_ insight: Insight) {
         let daysPassed = insight.daysTotal! - insight.daysLeft!

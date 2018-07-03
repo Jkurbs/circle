@@ -165,7 +165,7 @@ class PhoneVCTwo: UIViewController, UITextFieldDelegate, CountryListDelegate {
         vc.phoneNumber = phoneNumber
         
         if let circleId = UserDefaults.standard.value(forKey: "circleId") as? String {
-                DataService.instance.lookForPendingUser(circleId, phoneNumber, { (success, error, user) in
+                DataService.call.lookForPendingUser(circleId, phoneNumber, { (success, error, user) in
                     if !success {
                         print("ERROR", error!.localizedDescription)
                     } else {

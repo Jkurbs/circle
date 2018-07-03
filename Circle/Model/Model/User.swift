@@ -15,7 +15,7 @@ final class User {
     var userId: String?
     var accountId: String?
     var circle: String?
-    var photoUrl: String?
+    var imageUrl: String?
     var email: String?
     var userName: String?
     var firstName: String?
@@ -58,7 +58,7 @@ final class User {
         }
         
         if let photoUrl = data["image_url"] as? String {
-            self.photoUrl = photoUrl
+            self.imageUrl = photoUrl
         }
         
         if let status = data["status"] as? String {

@@ -47,9 +47,6 @@
 		D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EE200D03AB00B1953C /* PageThreeVC.swift */; };
 		D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */; };
 		D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */; };
-		D11B9AA620D42E4900543538 /* atm.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AA520D42E4800543538 /* atm.json */; };
-		D11B9AA820D465E000543538 /* greenCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AA720D465DF00543538 /* greenCheck.json */; };
-		D11B9AAA20D4815D00543538 /* fireworks.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AA920D4815C00543538 /* fireworks.json */; };
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
 		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
@@ -96,6 +93,8 @@
 		D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */; };
 		D1D66D672071B8860087D41C /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D662071B8860087D41C /* ImageButton.swift */; };
 		D1E306762008210B000A5845 /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E306752008210B000A5845 /* InviteVC.swift */; };
+		D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */; };
+		D1EAD2E920E9F301008A9135 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E820E9F301008A9135 /* Haptics.swift */; };
 		D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */; };
 		D1F8AB2A20A3E9220050AA05 /* CodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F8AB2920A3E9220050AA05 /* CodeVC.swift */; };
 		D1FDA77A20326C5A006D2CBF /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */; };
@@ -171,9 +170,6 @@
 		D11775EE200D03AB00B1953C /* PageThreeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageThreeVC.swift; sourceTree = "<group>"; };
 		D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCircleSection.swift; sourceTree = "<group>"; };
 		D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyAmoutCell.swift; sourceTree = "<group>"; };
-		D11B9AA520D42E4800543538 /* atm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atm.json; sourceTree = "<group>"; };
-		D11B9AA720D465DF00543538 /* greenCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = greenCheck.json; sourceTree = "<group>"; };
-		D11B9AA920D4815C00543538 /* fireworks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fireworks.json; sourceTree = "<group>"; };
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
 		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -219,11 +215,13 @@
 		D171982C200F95CC009BC920 /* Footnote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote.swift; sourceTree = "<group>"; };
 		D1753CF21FB1543F00267B35 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountVC.swift; sourceTree = "<group>"; };
-		D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Circle/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1D66D662071B8860087D41C /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		D1E306752008210B000A5845 /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
+		D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
+		D1EAD2E820E9F301008A9135 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1F8AB2920A3E9220050AA05 /* CodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeVC.swift; sourceTree = "<group>"; };
 		D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
@@ -310,22 +308,20 @@
 		6D0CCE061FAD70E900DF5F13 /* Circle */ = {
 			isa = PBXGroup;
 			children = (
-				D11B9AAB20D487BA00543538 /* firework.json */,
-				D11B9AA920D4815C00543538 /* fireworks.json */,
-				D11B9AA720D465DF00543538 /* greenCheck.json */,
-				D11B9AA520D42E4800543538 /* atm.json */,
-				6D0CCE0B1FAD70E900DF5F13 /* Main.storyboard */,
-				6D0CCE391FADF29A00DF5F13 /* Log.storyboard */,
-				6D0CCE101FAD70E900DF5F13 /* LaunchScreen.storyboard */,
-				6D0CCE0E1FAD70E900DF5F13 /* Assets.xcassets */,
-				6D0CCE131FAD70E900DF5F13 /* Info.plist */,
-				D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */,
+				D1EAD2E720E9F2EA008A9135 /* Haptics */,
 				D166AB43201250690080F5A8 /* Circle.entitlements */,
+				D11B9AAB20D487BA00543538 /* firework.json */,
+				6D0CCE0E1FAD70E900DF5F13 /* Assets.xcassets */,
+				D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */,
+				6D0CCE131FAD70E900DF5F13 /* Info.plist */,
+				D1EAD2E220E95051008A9135 /* Storyboards */,
 				6D0CCE071FAD70E900DF5F13 /* AppDelegate.swift */,
 				D106B6971FCDEAF2002CCEBC /* Circle-Bridging-Header.h */,
 				D153C96620BB14EC0007C3F5 /* SectionController */,
 				D1753CF71FB15E8500267B35 /* Controller */,
 				6D0CCE511FAE7F2200DF5F13 /* Views */,
+				D16D05011FB0A26800153D99 /* Model */,
+				D1EAD2E420E95083008A9135 /* View Model */,
 				D169383D1FB38D080095F5A7 /* Others */,
 				6D0CCE4A1FAE2B9300DF5F13 /* Utility */,
 			);
@@ -392,14 +388,6 @@
 				D17197EF200E51A5009BC920 /* LoadingButton.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		6D0CCE591FAFD06C00DF5F13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D16D05011FB0A26800153D99 /* Model */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		D10880BF20E421AE007727B2 /* SettingsCell */ = {
@@ -521,7 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				6D0CCE471FAE132800DF5F13 /* Services */,
-				6D0CCE591FAFD06C00DF5F13 /* Model */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -535,7 +522,8 @@
 				D1669CE920CD4F840006FC9B /* Insight.swift */,
 				D10D855020E59D1000006176 /* ViewModelItem.swift */,
 			);
-			path = Model;
+			name = Model;
+			path = Model/Model;
 			sourceTree = "<group>";
 		};
 		D17197F1200E6035009BC920 /* UIButton */ = {
@@ -607,6 +595,32 @@
 				6D0CCE3E1FAE05EB00DF5F13 /* Main */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		D1EAD2E220E95051008A9135 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				6D0CCE0B1FAD70E900DF5F13 /* Main.storyboard */,
+				6D0CCE391FADF29A00DF5F13 /* Log.storyboard */,
+				6D0CCE101FAD70E900DF5F13 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		D1EAD2E420E95083008A9135 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		D1EAD2E720E9F2EA008A9135 /* Haptics */ = {
+			isa = PBXGroup;
+			children = (
+				D1EAD2E820E9F301008A9135 /* Haptics.swift */,
+			);
+			path = Haptics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -737,11 +751,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D11B9AA620D42E4900543538 /* atm.json in Resources */,
 				D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */,
 				D11B9AAC20D487BB00543538 /* firework.json in Resources */,
-				D11B9AAA20D4815D00543538 /* fireworks.json in Resources */,
-				D11B9AA820D465E000543538 /* greenCheck.json in Resources */,
 				6D0CCE121FAD70E900DF5F13 /* LaunchScreen.storyboard in Resources */,
 				6D0CCE0F1FAD70E900DF5F13 /* Assets.xcassets in Resources */,
 				6D0CCE0D1FAD70E900DF5F13 /* Main.storyboard in Resources */,
@@ -969,6 +980,7 @@
 				D16938391FB386830095F5A7 /* Circle.swift in Sources */,
 				D153C96A20BDB7C00007C3F5 /* NextPayoutSection.swift in Sources */,
 				D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */,
+				D1EAD2E920E9F301008A9135 /* Haptics.swift in Sources */,
 				D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */,
 				D1719816200E725A009BC920 /* AKMaskFieldBlockCharacter.swift in Sources */,
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
@@ -979,6 +991,7 @@
 				D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */,
 				D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */,
 				D10880B620DC5803007727B2 /* IntroView.swift in Sources */,
+				D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */,
 				D1719822200F8AC7009BC920 /* BackgroundTextField.swift in Sources */,
 				D153C96820BB15040007C3F5 /* CircleInsightSection.swift in Sources */,
 				D10880BC20DC646C007727B2 /* FinishMessageCell.swift in Sources */,

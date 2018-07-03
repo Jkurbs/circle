@@ -126,7 +126,7 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
         let dobDay = dob[1]
         let dobYear = dob[2]
         
-        DataService.instance.saveNamePassword(firstName: firstName, lastName: lastName, email: emailAddress, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
+        DataService.call.saveNamePassword(firstName: firstName, lastName: lastName, email: emailAddress, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
             if !success {
                 let alert = Alert()
                 dispatch.async {

@@ -59,7 +59,7 @@ class NextPayoutCell: UICollectionViewCell {
     
     
     func configure(_ user: User) {
-        imageView.sd_setImage(with: URL(string: user.photoUrl!))
+        imageView.sd_setImage(with: URL(string: user.imageUrl!))
         nameLabel.text = user.firstName
         daysLeftLabel.text =  "\(user.daysLeft ?? 0) days left"
         

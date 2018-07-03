@@ -156,14 +156,14 @@ extension ChooseBankVC : PLKPlaidLinkViewDelegate
     
     func save(_ plaid: [String: Any]) {
         
-        DataService.instance.saveBankInformation(email: emailAddress!, plaid: plaid) { (success, error) in
+        DataService.call.saveBankInformation(email: emailAddress!, plaid: plaid) { (success, error) in
             if !success {
                 dispatch.async {
                     let alert = Alert()
                     alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
                 }
             } else {
-                DataService.instance.addNewInsider(Auth.auth().currentUser!.uid)
+                DataService.call.addNewInsider(Auth.auth().currentUser!.uid)
                 dispatch.async {
                     let vc = CircleVC()
                     self.navigationController?.pushViewController(vc, animated: true)

@@ -109,7 +109,7 @@ class WelcomeVC: UIViewController {
         print("CIRCLE ID::", circleId)
         
         
-        DataService.instance.retrieveDynamicLinkCircle(circleId!){ (success, error, admin, insider)  in
+        DataService.call.retrieveDynamicLinkCircle(circleId!){ (success, error, admin, insider)  in
             if !success {
                //self.loadingView.removeFromSuperview()
             } else {
@@ -142,7 +142,7 @@ extension WelcomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
         let user = self.users[indexPath.row]
-        cell.configure(user)
+        //cell.configure(user)
         return cell
     } 
 }
