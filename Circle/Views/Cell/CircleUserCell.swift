@@ -9,11 +9,12 @@
 import UIKit
 import SDWebImage
 import FirebaseAuth
+import Cartography
 
 
 class CircleUserCell: UICollectionViewCell {
     
-    var imageView = UIImageView()
+    var imageView: UIImageView!
     var view = UIView()
     
     
@@ -23,8 +24,19 @@ class CircleUserCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
+        view.clipsToBounds = true
+        view.borderWidth = 3.5
+        view.borderColor = UIColor(white: 0.8, alpha: 1.0)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.addSubview(view)
-        view.addSubview(imageView)
+        
+        imageView = UICreator.create.imageView(nil, contentView)
+
+
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,23 +49,22 @@ class CircleUserCell: UICollectionViewCell {
         self.backgroundColor = .white
         self.cornerRadius = self.frame.width/2
         
-        let height = contentView.frame.height
-        let width = contentView.frame.width
+        constrain(imageView, view, contentView) { imageView, view, cView in
+            view.width == cView.width - 3.5
+            view.height == cView.width - 3.5
+            view.center == cView.center
+            
+            imageView.width == view.width - 12
+            imageView.height == view.height - 12
+            imageView.center == view.center
+        }
         
-        view.frame = CGRect(x: 0, y: 0, width: width - 3.5, height: height - 3.5)
-        view.center = contentView.center
-        view.cornerRadius = view.frame.width/2
-        view.clipsToBounds = true
-        view.borderWidth = 3.5
-        view.borderColor = UIColor(white: 0.8, alpha: 1.0)
-        
-        imageView.frame = CGRect(x: 5.7, y: 5.7, width: 25, height: 25)
-        
-        imageView.center = CGPoint(x: view.bounds.size.width/2, y: view.bounds.size.height/2)
+        view.cornerRadius = view.frame.size.width/2
         
         imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
         imageView.cornerRadius = imageView.frame.width/2
+        imageView.clipsToBounds = true
+
     }
     
     func configure(_ viewModel: UserCellViewModel) {

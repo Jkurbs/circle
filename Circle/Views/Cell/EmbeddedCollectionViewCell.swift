@@ -9,6 +9,7 @@
 
 import UIKit
 import IGListKit
+import Cartography
 
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
         
@@ -65,9 +66,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         return UserListViewModel()
     }()
     
-
     var selectedIndex: IndexPath?
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,9 +85,14 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     }
     
     func initLayout() {
+        
         collectionView.frame = contentView.frame
-        circleView.frame = CGRect(x: 0, y: 0, width: contentView.frame.width - 85, height: contentView.frame.height)
-        circleView.center.x = collectionView.center.x
+        
+        constrain(circleView, collectionView) { circleView, collectionView in
+            circleView.width == collectionView.width - 80
+            circleView.height == collectionView.height
+            circleView.centerX == collectionView.centerX
+        }
     }
     
     

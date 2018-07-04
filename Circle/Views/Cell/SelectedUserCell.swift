@@ -10,20 +10,19 @@ import UIKit
 import IGListKit
 import SDWebImage
 import Lottie
+import Cartography
 
 class SelectedUserCell: UICollectionViewCell {
     
-    var statusDesc = UILabel()
-    var statusLabel = UILabel()
-    var daysDesc = UILabel()
-    var daysLabel = UILabel()
-    var layerView = UIView()
-    var imageView = UIImageView()
-    var nameLabel = UILabel()
+    var statusDesc: UILabel!
+    var statusLabel: UILabel!
+    var daysDesc: UILabel!
+    var daysLabel: UILabel!
+    var layerView: UIView!
+    var imageView: UIImageView!
+    var nameLabel: UILabel!
     
     private var animation: LOTAnimationView?
-
-    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -33,80 +32,45 @@ class SelectedUserCell: UICollectionViewCell {
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        //self.contentView.backgroundColor = UIColor.white
-        setup()        
+        
+        statusDesc = UICreator.create.label("Status" ,16, .darkerGray, .center, .semibold, contentView)
+        daysDesc = UICreator.create.label("Days left", 16, .darkerGray, .center, .semibold, contentView)
+        statusLabel = UICreator.create.label("", 16, .darkerGray, .center, .semibold, contentView)
+        daysLabel = UICreator.create.label("", 16, .lighterGray, .center, .semibold, contentView)
+        imageView = UICreator.create.imageView(nil, contentView)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        let descColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-        let color = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+        constrain(statusDesc, statusLabel, imageView, daysDesc, daysLabel, contentView) { statusDesc, statusLabel, imageView, daysDesc, daysLabel, view in
+            statusDesc.left  == view.left + 10
+            statusLabel.left == view.left + 10
+            statusDesc.width == 100
+            statusLabel.width == 100
+            statusDesc.top == view.top + 20
+            statusLabel.top == statusDesc.bottom + 10
+
+            imageView.centerX == view.centerX
+            imageView.width == 60
+            imageView.height == 60
+            imageView.top == statusDesc.top
+
+            daysDesc.right  == view.right - 10
+            daysLabel.right == view.right - 10
+            daysDesc.width  == 100
+            daysLabel.width == 100
+            daysDesc.top == statusDesc.top
+            daysLabel.top == statusLabel.top
+        }
         
-        let centerX = self.center.x
-        
-        
-        imageView.frame = CGRect(x: 0, y: 25, width: 60, height: 60)
-        imageView.center.x = self.center.x
         imageView.cornerRadius = imageView.frame.width / 2
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
-        
-        
-        nameLabel.frame = CGRect(x: 20, y: imageView.frame.maxY + 10, width: 70, height: 20)
-        nameLabel.center.x = centerX
-        nameLabel.textAlignment = .center
-        nameLabel.font = font
-        nameLabel.textColor = color
-        
-        let imageViewCenterY = imageView.center.y
-        
-        statusDesc.frame = CGRect(x: 20, y: 15, width: 70, height: 20)
-        statusDesc.center.y = imageViewCenterY
-        statusDesc.textAlignment = .center
-        statusDesc.text = "Status"
-        statusDesc.font = font
-        statusDesc.textColor = descColor
-        
-        statusLabel.frame = CGRect(x: 20, y: statusDesc.layer.position.y + 10, width: 70, height: 20)
-        statusLabel.textAlignment = .center
-        statusLabel.font = font
-        statusLabel.textColor = color
-        
-        daysDesc.frame = CGRect(x: self.frame.maxX - 100, y: 15, width: 90, height: 20)
-        daysDesc.center.y = imageViewCenterY
-        daysDesc.textAlignment = .center
-        daysDesc.text = "Days Left"
-        daysDesc.font = font
-        daysDesc.textColor = descColor
-        
-        daysLabel.frame = CGRect(x: self.frame.maxX - 100, y: statusDesc.layer.position.y + 10, width: 90, height: 20)
-        daysLabel.textAlignment = .center
-        daysLabel.font = font
-        daysLabel.textColor = color
-        
-        let rectShape = CAShapeLayer()
-        rectShape.bounds = self.frame
-        rectShape.position = self.center
-        rectShape.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
-        
-        self.layer.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0).cgColor
-        self.layer.mask = rectShape
     }
-    
-    func setup() {
-        self.addSubview(statusLabel)
-        self.addSubview(statusDesc)
-        self.addSubview(imageView)
-        self.addSubview(daysDesc)
-        self.addSubview(daysLabel)
-    }
+
     
     func configure(_ user: User) {
-        
+
         imageView.image = nil
 
         if let url = user.imageUrl {
@@ -114,13 +78,11 @@ class SelectedUserCell: UICollectionViewCell {
             //sd_setImage(with: URL(string: url))
         }
         
-        nameLabel.text = user.firstName
         daysLabel.text = "\(user.daysLeft ?? 0)"
-        
-        if user.daysLeft == 0 {
+        switch user.daysLeft {
+        case 0:
             statusLabel.text = "Paid"
-            //statusLabel.textColor = UIColor(red: 76.0/255.0, green: 217.0/255.0, blue: 100.0/255.0, alpha: 1.0)
-        } else {
+        default:
             statusLabel.text = "Waiting"
             statusLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
         }

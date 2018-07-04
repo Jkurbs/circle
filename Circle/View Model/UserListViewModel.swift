@@ -90,6 +90,7 @@ extension UserListViewModel {
 }
 
 
+
 struct UserCellViewModel {
     let imageUrl: String
     let userId: String

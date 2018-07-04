@@ -17,6 +17,7 @@ let width = UIScreen.main.bounds.width - (padding * 2)  - 20
 let centerX = UIScreen.main.bounds.size.width * 0.5
 
 
+
 let dispatch = DispatchQueue.main
 
 extension DispatchQueue {

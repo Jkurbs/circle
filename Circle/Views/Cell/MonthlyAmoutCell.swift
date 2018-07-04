@@ -43,19 +43,30 @@ class MonthlyAmoutCell: UICollectionViewCell {
         
         let width = self.frame.width
         
-        let font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         
         label.textColor = color
         label.font = font
-        label.frame = CGRect(x: 25, y: 5, width: width , height: 40)
+        label.numberOfLines = 4
         
-        slider.frame = CGRect(x: 25, y: label.layer.position.y + 30, width: width - 150, height: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive=true
+        label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive=true
+        label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive=true
+
+        
         slider.tintColor = UIColor(white: 0.5, alpha: 1.0)
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)) , for: .valueChanged)
         
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive=true
+        slider.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive=true
+        slider.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive=true
+        slider.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5)
+
         
-        sliderLabel.frame = CGRect(x: slider.frame.maxX + 20, y: 0, width: 90 , height: 40)
+        
         sliderLabel.center.y = slider.center.y
         sliderLabel.font = UIFont.systemFont(ofSize: 13)
         sliderLabel.adjustsFontSizeToFitWidth = true
@@ -79,17 +90,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         //button.center.x = self.center.x
         button.cornerRadius = 10
         button.setTitle("Activate Circle", for: .normal)
@@ -106,8 +107,6 @@ class MonthlyAmoutCell: UICollectionViewCell {
         self.layer.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0).cgColor
         self.layer.mask = rectShape
     }
-    
-    
     
     
     @objc func activateCircle() {
@@ -207,6 +206,8 @@ class MonthlyAmoutCell: UICollectionViewCell {
 
     
     func configure(_ text: String) {
-        label.text = text
+        if let firstName = UserDefaults.standard.string(forKey: "firstName") {
+            label.text = firstName + "" + ", how much money would you like to spare?"
+        }
     }
 }

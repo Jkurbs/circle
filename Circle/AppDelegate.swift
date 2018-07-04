@@ -6,10 +6,16 @@
 //  Copyright © 2017 Kerby Jean. All rights reserved.
 //
 
+
+
+
 import UIKit
+import Foundation
 import Stripe
 import LinkKit
 import Firebase
+import FirebaseMessaging
+import FirebaseInstanceID
 import FirebaseDynamicLinks
 import FirebaseFirestore
 import UserNotifications
@@ -195,13 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        if let refreshedToken = 
-            
-//
-//            InstanceID.instanceID().token() {
-//            print("InstanceID token: \(refreshedToken)")
-//             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
-//        }
+        if let refreshedToken = InstanceID.instanceID().token() {
+            print("InstanceID token: \(refreshedToken)")
+             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
+        }
     }
     
     
