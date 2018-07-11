@@ -19,7 +19,7 @@ class SelectedUserCell: UICollectionViewCell {
     var daysDesc: UILabel!
     var daysLabel: UILabel!
     var layerView: UIView!
-    var imageView: UIImageView!
+    var imageView =  UIImageView()
     var nameLabel: UILabel!
     
     private var animation: LOTAnimationView?
@@ -65,7 +65,10 @@ class SelectedUserCell: UICollectionViewCell {
             daysLabel.top == statusLabel.top
         }
         
-        imageView.cornerRadius = imageView.frame.width / 2
+        dispatch.async {
+            self.imageView.clipsToBounds = true
+            self.imageView.cornerRadius = self.imageView.frame.width / 2
+        }
     }
 
     

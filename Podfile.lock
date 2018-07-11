@@ -17,9 +17,6 @@ PODS:
     - FirebaseAnalytics (= 5.0.0)
   - Firebase/CoreOnly (5.0.1):
     - FirebaseCore (= 5.0.1)
-  - Firebase/Database (5.0.1):
-    - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.0.0)
   - Firebase/DynamicLinks (5.0.1):
     - Firebase/Core
     - FirebaseDynamicLinks (= 3.0.0)
@@ -42,9 +39,6 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (5.0.1):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (5.0.0):
-    - FirebaseCore (~> 5.0)
-    - leveldb-library (~> 1.18)
   - FirebaseDynamicLinks (3.0.0):
     - FirebaseAnalytics (~> 5.0)
   - FirebaseFirestore (0.12.1):
@@ -100,6 +94,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.4.0)
   - IQKeyboardManager (6.0.3)
+  - IQKeyboardManagerSwift (6.0.3)
   - leveldb-library (1.20)
   - lottie-ios (2.5.0)
   - nanopb (0.3.8):
@@ -120,15 +115,14 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Auth
   - Firebase/Core
-  - Firebase/Database
   - Firebase/DynamicLinks
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
-  - FirebaseInstanceID
   - HGCircularSlider (~> 2.0.0)
   - IGListKit (~> 3.0)
   - IQKeyboardManager
+  - IQKeyboardManagerSwift
   - lottie-ios
   - Plaid
   - SDWebImage (~> 4.0)
@@ -143,7 +137,6 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
-    - FirebaseDatabase
     - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstanceID
@@ -158,6 +151,7 @@ SPEC REPOS:
     - HGCircularSlider
     - IGListKit
     - IQKeyboardManager
+    - IQKeyboardManagerSwift
     - leveldb-library
     - lottie-ios
     - nanopb
@@ -174,7 +168,6 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
   FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
-  FirebaseDatabase: 697eb53e5b4fe7cd4fa8756c1f82a9fca011345f
   FirebaseDynamicLinks: c70e8ef2f267f13459db89b8816b13a06b2278d2
   FirebaseFirestore: f686b8e83f3cf8bbc37db6e98e01029a14f01f55
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
@@ -189,6 +182,7 @@ SPEC CHECKSUMS:
   HGCircularSlider: 92e2ee098c814709f455b8f46cd9008147f6a869
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   IQKeyboardManager: c390e612f4b98c8fd748016470138537dc163ead
+  IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -197,6 +191,6 @@ SPEC CHECKSUMS:
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Stripe: b3c69e4a269d5ae707916a090ee54b1f6011ccd9
 
-PODFILE CHECKSUM: 7fda907be0bf60797a2ad29b12efb9c200411227
+PODFILE CHECKSUM: d5790543cf21a3248e16f738ea9495472ca6955c
 
 COCOAPODS: 1.5.2

@@ -1,0 +1,6 @@
+framework module Pods_SparenTests {
+  umbrella header "Pods-SparenTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

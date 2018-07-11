@@ -42,6 +42,7 @@ class UICreator {
     func imageView(_ image: UIImage?, _ view: UIView) -> UIImageView {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true 
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
         view.addSubview(imageView)

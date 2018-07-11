@@ -13,7 +13,7 @@ import UIKit
 import Foundation
 import Stripe
 import LinkKit
-import Firebase
+import FirebaseCore
 import FirebaseMessaging
 import FirebaseInstanceID
 import FirebaseDynamicLinks

@@ -17,26 +17,33 @@ class CircleUserCell: UICollectionViewCell {
     var imageView: UIImageView!
     var view = UIView()
     
-    
     var paidView = UIView()
     
     var gradientLayer: CAGradientLayer!
     
-    override init(frame: CGRect) {
+    var userViewModel: UserCellViewModel! {
+        didSet {
+            imageView.sd_setImage(with: URL(string: userViewModel.imageUrl))
+            
+            if userViewModel.payed == true {
+                contentView.addSubview(paidView)
+                createGradientLayer()
+            } else {
+                paidView.removeFromSuperview()
+            }
+        }
+    }
+    
+    
+
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
-        view.clipsToBounds = true
-        view.borderWidth = 3.5
-        view.borderColor = UIColor(white: 0.8, alpha: 1.0)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
         contentView.addSubview(view)
-        
         imageView = UICreator.create.imageView(nil, contentView)
-
-
-
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,39 +52,43 @@ class CircleUserCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.backgroundColor = .white
-        self.cornerRadius = self.frame.width/2
-        
-        constrain(imageView, view, contentView) { imageView, view, cView in
-            view.width == cView.width - 3.5
-            view.height == cView.width - 3.5
-            view.center == cView.center
-            
-            imageView.width == view.width - 12
-            imageView.height == view.height - 12
-            imageView.center == view.center
-        }
-        
-        view.cornerRadius = view.frame.size.width/2
-        
-        imageView.contentMode = .scaleAspectFill
-        imageView.cornerRadius = imageView.frame.width/2
-        imageView.clipsToBounds = true
+        initLayout()
 
     }
     
-    func configure(_ viewModel: UserCellViewModel) {
-        
-        if viewModel.payed == true {
-            contentView.addSubview(paidView)
-            createGradientLayer()
-            view.borderColor = UIColor.red
+    func initLayout() {
+        dispatch.async {
+            self.imageView.cornerRadius = self.imageView.frame.width/2
+            
+            constrain(self.imageView, self.view, self.contentView) { imageView, view, cView in
+                view.width == cView.width - 3.5
+                view.height == cView.width - 3.5
+                view.center == cView.center
+                
+                imageView.width == view.width - 12
+                imageView.height == view.height - 12
+                imageView.center == view.center
+            }
+            
+            
+            self.backgroundColor = .white
+            self.cornerRadius = self.frame.size.width/2
+            
+            self.view.clipsToBounds = true
+            self.view.borderWidth = 3.5
+            self.view.borderColor = UIColor(white: 0.8, alpha: 1.0)
+            
+            self.view.cornerRadius = self.view.frame.size.width/2
+            
+            self.imageView.layer.masksToBounds = true
+            
+            self.imageView.clipsToBounds = true
+            self.imageView.cornerRadius = self.imageView.frame.width/2
         }
-        imageView.sd_setImage(with: URL(string: viewModel.imageUrl))
     }
+
     
-    func createGradientLayer() {
+    private func createGradientLayer() {
         
         paidView.frame = CGRect(x: contentView.frame.width - 15, y: 0, width: 20, height: 20)
 

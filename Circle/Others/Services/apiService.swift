@@ -96,38 +96,22 @@ class DataService: DataServiceProtocol {
 
     
     func fetchUsers( complete: @escaping ( _ success: Bool, _ users: [User], _ error: Error? )->()) {
-        //self.users = []
+
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
         DataService.call.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { querySnapshot, error in
+            self.users = []
+
             guard let snapshot = querySnapshot else {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
-            
-            
-            snapshot.documentChanges.forEach { diff in
 
-                if (diff.type == .added) {
-                    let data = diff.document.data()
-                    let id = diff.document.documentID
-                    let user = User(key: id, data: data)
-                    self.users.append(user)
-                    complete(true, self.users, nil)
-                }
-                
-                if (diff.type == .modified) {
-                    if !self.users.isEmpty {
-                    let data = diff.document.data()
-                    let id = diff.document.documentID
-                    let user = User(key: id, data: data)
-                    self.users.append(user)
-                    complete(true, self.users, nil)
-                    }
-                }
-                
-                if (diff.type == .removed) {
-                    print("Removed user: \(diff.document.data())")
-                }
+            snapshot.documents.forEach { diff in
+                let data = diff.data()
+                let id = diff.documentID
+                let user = User(key: id, data: data)
+                self.users.append(user)
+                complete(true, self.users, nil)
             }
         }
     }

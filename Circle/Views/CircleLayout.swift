@@ -27,7 +27,6 @@ class CircleLayout: UICollectionViewLayout {
         numberOfItems = collectionView.numberOfItems(inSection: 0)
         let base = 10
         itemSize = CGSize(width: Int(shortestAxisLength) * 2 / (base+numberOfItems!), height: Int(shortestAxisLength) *  2/(base+numberOfItems!))
-        print("ITEM SIZE: \(itemSize)")
     }
     
     override var collectionViewContentSize: CGSize {
@@ -92,6 +91,10 @@ class CircleLayout: UICollectionViewLayout {
         attributes?.center = CGPoint(x: collectionView!.bounds.midX, y: collectionView!.bounds.midY)
         attributes?.transform = CGAffineTransform.init(scaleX: 0.01, y: 0.01)
         return attributes
+    }
+    
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return false
     }
 }
 

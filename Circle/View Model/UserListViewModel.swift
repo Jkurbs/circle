@@ -43,7 +43,7 @@ class UserListViewModel {
 
 
     
-    init( apiService: DataServiceProtocol = DataService()) {
+    init (apiService: DataServiceProtocol = DataService()) {
         self.apiService = apiService as! DataService
     }
     
@@ -82,8 +82,10 @@ class UserListViewModel {
 extension UserListViewModel {
     
     func userPressed( at indexPath: IndexPath) {
+        print("INDEX::", indexPath.row)
         Haptic.tic.occured()
         let user  = self.users[indexPath.row]
+        print("SELECTED POSTION::", user.position!)
         let data = ["user": user]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: data)
     }

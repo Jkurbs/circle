@@ -36,16 +36,16 @@ final class EmbeddedCollectionViewCell: UICollectionViewCell {
         collectionView.frame = contentView.frame
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        // note: don't change the width
-        newFrame.size.height = ceil(size.height)
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        setNeedsLayout()
+//        layoutIfNeeded()
+//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+//        var newFrame = layoutAttributes.frame
+//        // note: don't change the width
+//        newFrame.size.height = ceil(size.height)
+//        layoutAttributes.frame = newFrame
+//        return layoutAttributes
+//    }
 }
 
 
@@ -75,6 +75,12 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     }
     
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        initLayout()
+    }
+    
+    
     func initView() {
         contentView.addSubview(circleView)
         contentView.addSubview(collectionView)
@@ -86,9 +92,8 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     
     func initLayout() {
         
-        collectionView.frame = contentView.frame
-        
-        constrain(circleView, collectionView) { circleView, collectionView in
+        constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
+            collectionView.edges == contentView.edges
             circleView.width == collectionView.width - 80
             circleView.height == collectionView.height
             circleView.centerX == collectionView.centerX
@@ -102,14 +107,9 @@ final class CircleCollectionViewCell: UICollectionViewCell {
                 self?.collectionView.reloadData()
             }
         }
-        viewModel.initFetch()
+        self.viewModel.initFetch()
     }
     
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        initLayout()
-    }
 
     
     
@@ -120,21 +120,21 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     
     extension CircleCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
         
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return viewModel.numberOfCells
-        }
-        
-        func numberOfSections(in collectionView: UICollectionView) -> Int {
-            return 1
-        }
-        
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
-        
-        let cellVM = viewModel.getCellViewModel( at: indexPath )
-        cell.configure(cellVM)
-        return cell
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.numberOfCells
     }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
+    
+    let cellVM = viewModel.getCellViewModel( at: indexPath )
+    cell.userViewModel = cellVM
+    return cell
+}
         
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

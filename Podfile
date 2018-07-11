@@ -1,43 +1,39 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+# platform :ios, '9.0'
 
-target 'Circle' do
+target 'Sparen' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for Circle
+  # Pods for Sparen
+
 
     pod 'Firebase'
-    pod 'Firebase/Auth'
     pod 'Firebase/Core'
-    pod 'Firebase/Messaging'
+    pod 'Firebase/Auth'
     pod 'Firebase/Storage'
-    pod 'Firebase/Database'
     pod 'Firebase/Firestore'
     pod 'Firebase/DynamicLinks'
-    pod 'FirebaseInstanceID'
-    pod 'Stripe'
-    pod 'Plaid'
+    pod 'Firebase/Messaging'
     pod 'IGListKit', '~> 3.0'
-    #pod 'GSMessages'
+    pod 'SDWebImage', '~> 4.0'
     pod 'HGCircularSlider', '~> 2.0.0'
     pod 'IQKeyboardManager'
-    pod 'CountryList'
-    pod 'SDWebImage', '~> 4.0'
-    #pod 'TableViewHelper'
-    pod 'lottie-ios'
     pod 'Cartography', '~> 3.0'
+    pod 'Stripe'
+    pod 'IQKeyboardManagerSwift'
+    pod 'Plaid'
+    pod 'CountryList'
+    pod 'lottie-ios'
 
-
-
-  target 'CircleTests' do
+  target 'SparenTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'CircleUITests' do
+  target 'SparenUITests' do
     inherit! :search_paths
     # Pods for testing
   end
+
 end
-

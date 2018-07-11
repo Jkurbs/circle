@@ -50,7 +50,6 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
     
     override func sizeForItem(at index: Int) -> CGSize {
         let width =  collectionContext!.containerSize.width
-        let height =  collectionContext!.containerSize.width
 
         if index == 0 {
              return CGSize(width: width, height: 40)
@@ -65,7 +64,7 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
     override init() {
         super.init()
         finish = []
-        self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         retrieveUsers()
         retrieveCircle()
         retrieveInsight()

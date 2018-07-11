@@ -10,6 +10,7 @@ import UIKit
 import Lottie
 import Firebase
 import FirebaseFirestore
+import Cartography
 
 
 class MonthlyAmoutCell: UICollectionViewCell {
@@ -31,7 +32,21 @@ class MonthlyAmoutCell: UICollectionViewCell {
         
         slider.maximumValue = 5000
         slider.minimumValue = 1000
+        
+        let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
+
+        let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
+        label.textColor = color
+        label.font = font
+        label.numberOfLines = 4
+        
+        sliderLabel.font = UIFont.systemFont(ofSize: 13)
+        sliderLabel.adjustsFontSizeToFitWidth = true
+        sliderLabel.textColor = color
+        sliderLabel.text = "1000 dollars"
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -40,62 +55,48 @@ class MonthlyAmoutCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        let width = self.frame.width
-        
-        let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-        
-        label.textColor = color
-        label.font = font
-        label.numberOfLines = 4
+    
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive=true
-        label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive=true
-        label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive=true
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        descLabel.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
 
-        
         slider.tintColor = UIColor(white: 0.5, alpha: 1.0)
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)) , for: .valueChanged)
         
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20).isActive=true
-        slider.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive=true
-        slider.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive=true
-        slider.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.5)
+        constrain(label, slider, sliderLabel, descLabel, button, contentView) { (label, slider, sliderLabel, descLabel, button, contentView) in
+            
+            label.top == contentView.top + 20
+            label.leading == contentView.leading + 30
+            label.trailing == contentView.trailing + 20
+            
+            slider.top == label.bottom + 10
+            slider.leading == label.leading
+            slider.trailing == contentView.trailing - 100
+            
+            sliderLabel.top == label.bottom + 10
+            sliderLabel.right == contentView.right - 20
+            sliderLabel.centerY == slider.centerY
+            
+            descLabel.top == slider.bottom + 10
+            descLabel.leading == contentView.leading + 30
+            descLabel.right == contentView.right - 20
+            
+            button.top == descLabel.bottom + 30
+            button.centerX == contentView.centerX
+            
+            
+        }
 
         
-        
-        sliderLabel.center.y = slider.center.y
-        sliderLabel.font = UIFont.systemFont(ofSize: 13)
-        sliderLabel.adjustsFontSizeToFitWidth = true
-        sliderLabel.textColor = color
-        sliderLabel.text = "1000 dollars"
-        
-        descLabel.frame = CGRect(x: 25, y: slider.frame.maxY + 10, width: width - 50, height: 35)
         descLabel.numberOfLines = 2
         descLabel.font = UIFont.systemFont(ofSize: 14)
         descLabel.textColor = UIColor.gray
         descLabel.text = "Set the goal you and each member of your circle would like to reach"
-        
-        //button.frame = CGRect(x: 0, y: descLabel.frame.maxY + 25, width: width - 50, height: 50)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        button.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        button.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        button.leftAnchor.constraint(equalTo: contentView.rightAnchor, constant: 20).isActive = true
-        button.topAnchor.constraint(equalTo: descLabel.bottomAnchor, constant: 3).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        
-
-        //button.center.x = self.center.x
-        button.cornerRadius = 10
         button.setTitle("Activate Circle", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        //button.backgroundColor = UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0)
         button.setTitleColor(UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0), for: .normal)
         button.addTarget(self, action: #selector(activateCircle), for: .touchUpInside)
         
@@ -201,7 +202,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
     
     
     @objc func sliderValueChanged(_ slider: UISlider) {
-        sliderLabel.text = "\(Int(slider.value)) dollars"
+        sliderLabel.text = "\(Int(slider.value)) dollard"
     }
 
     
