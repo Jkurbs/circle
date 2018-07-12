@@ -27,7 +27,7 @@ class LogButton: UIButton {
         self.isEnabled = false
         self.alpha = 0.5
         self.layer.cornerRadius = 5
-        self.backgroundColor =  UIColor.blueColor
+        self.backgroundColor =  UIColor.orange
 
         self.setTitleColor(UIColor.white, for: .normal)
         self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)

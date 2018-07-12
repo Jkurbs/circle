@@ -26,7 +26,6 @@ class CircleUserCell: UICollectionViewCell {
             imageView.sd_setImage(with: URL(string: userViewModel.imageUrl))
             
             if userViewModel.payed == true {
-                contentView.addSubview(paidView)
                 createGradientLayer()
             } else {
                 paidView.removeFromSuperview()
@@ -58,8 +57,6 @@ class CircleUserCell: UICollectionViewCell {
     
     func initLayout() {
         dispatch.async {
-            self.imageView.cornerRadius = self.imageView.frame.width/2
-            
             constrain(self.imageView, self.view, self.contentView) { imageView, view, cView in
                 view.width == cView.width - 3.5
                 view.height == cView.width - 3.5
@@ -69,7 +66,6 @@ class CircleUserCell: UICollectionViewCell {
                 imageView.height == view.height - 12
                 imageView.center == view.center
             }
-            
             
             self.backgroundColor = .white
             self.cornerRadius = self.frame.size.width/2
@@ -90,7 +86,7 @@ class CircleUserCell: UICollectionViewCell {
     
     private func createGradientLayer() {
         
-        paidView.frame = CGRect(x: contentView.frame.width - 15, y: 0, width: 20, height: 20)
+        paidView.frame = CGRect(x: contentView.frame.width - 15, y: 0, width: contentView.frame.width/2, height: contentView.frame.height/2)
 
         paidView.borderColor = .white
         contentView.addSubview(paidView)

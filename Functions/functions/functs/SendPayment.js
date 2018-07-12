@@ -60,6 +60,7 @@ exports = module.exports =  functions.https.onRequest((req, res) => {
 
 
 function sendPayment(amount, stripe_id) {
+    console.log('SEND PAYMENT::', amount, stripe_id);
    stripe.payouts.create({
       amount: amount,
       currency: "usd",

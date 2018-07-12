@@ -24,7 +24,6 @@ class CircleInsightSection: ListSectionController {
     
     override init() {
         super.init()
-
     }
     
     override func numberOfItems() -> Int {
@@ -37,7 +36,7 @@ class CircleInsightSection: ListSectionController {
             guard let cell = collectionContext?.dequeueReusableCell(of: HeaderCell.self, for: self, at: index) as? HeaderCell else {
                 fatalError()
             }
-            cell.configure("Circle")
+            cell.configure("Activity")
             return cell
         }
         

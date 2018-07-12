@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import IGListKit
 import SDWebImage
-import Lottie
 import Cartography
 
 class SelectedUserCell: UICollectionViewCell {
@@ -22,7 +20,6 @@ class SelectedUserCell: UICollectionViewCell {
     var imageView =  UIImageView()
     var nameLabel: UILabel!
     
-    private var animation: LOTAnimationView?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!

@@ -83,7 +83,6 @@ class HeaderCell: UICollectionViewCell {
     
     var label = UILabel()    
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(label)

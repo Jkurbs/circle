@@ -138,11 +138,12 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
+        //let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
         
         self.viewModel.userPressed(at: indexPath)
-        cell.animate(viewModel.isSelected)
         
+        //cell.animate(viewModel.isSelected)
+
         if(selectedIndex != indexPath) {
             var indicesArray = [IndexPath]()
             if(selectedIndex != nil) {
@@ -158,7 +159,7 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
             UIView.animate(withDuration: 0.3, animations: {
                 cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             }, completion: { (completion) in
-                
+
             })
             indicesArray.append(indexPath)
         }

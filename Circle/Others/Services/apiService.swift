@@ -93,19 +93,18 @@ class DataService: DataServiceProtocol {
 
     
     var users = [User]()
+    var nextPayoutUsers = [User]()
 
     
-    func fetchUsers( complete: @escaping ( _ success: Bool, _ users: [User], _ error: Error? )->()) {
-
+    func fetchUsers(complete: @escaping ( _ success: Bool, _ users: [User]?, _ error: Error? )->()) {
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { querySnapshot, error in
+        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { snapshot, error in
             self.users = []
-
-            guard let snapshot = querySnapshot else {
+            guard let snapshot = snapshot else {
+                complete(false, nil, error)
                 print("Error fetching snapshots: \(error!)")
                 return
             }
-
             snapshot.documents.forEach { diff in
                 let data = diff.data()
                 let id = diff.documentID
@@ -117,16 +116,26 @@ class DataService: DataServiceProtocol {
     }
     
     
+    func fetchPayoutUsers(complete: @escaping ( _ success: Bool, _ user: User?, _ error: Error? )->()) {
+        let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
+        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
+            guard let snapshot = snapshot else {
+                print("Error fetching snapshots: \(error!)")
+                complete(false, nil, error)
+                return
+            }
+            for snapshot in snapshot.documents {
+                    if snapshot.exists {
+                    let key = snapshot.documentID
+                    let data = snapshot.data()
+                    let user = User(key: key, data: data)
+                    complete(true, user, nil)
+                }
+            }
+        })
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     func saveCurrentUserInfo(name: String, email: String, data: Data) {
         let user = Auth.auth().currentUser!

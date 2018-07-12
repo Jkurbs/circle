@@ -131,26 +131,15 @@ extension UpperSection {
     }
     
 
-    
-    
     func retrievePayoutUsers() {
-        let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
-            if let error = error {
-                print("error:", error.localizedDescription)
+        DataService.call.fetchPayoutUsers { (success, user, error) in
+            if !success {
+                print("error:", error!.localizedDescription)
             } else {
-                for snapshot in snapshot!.documents {
-                    if snapshot.exists {
-                        let key = snapshot.documentID
-                        let data = snapshot.data()
-                        let user = User(key: key, data: data)
-                        self.nextPayoutUsers.append(user)
-                        print("NEXT PAYOUT USERS::", self.nextPayoutUsers.count)
-                        self.adapter.reloadData(completion: nil)
-                    }
-                }
+                self.nextPayoutUsers.append(user!)
+                self.adapter.performUpdates(animated: true)
             }
-        })
+        }
     }
     
     private func retrieveCircle() {

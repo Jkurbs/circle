@@ -36,7 +36,6 @@
 		D10A6DAC2039BB9300E7AEB5 /* InviteVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DAB2039BB9300E7AEB5 /* InviteVCTwo.swift */; };
 		D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */; };
 		D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */; };
-		D10BB2AC201975A1004F5262 /* InviteRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */; };
 		D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */; };
 		D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855020E59D1000006176 /* ViewModelItem.swift */; };
 		D10D855320E5AB8700006176 /* DragCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855220E5AB8600006176 /* DragCell.swift */; };
@@ -51,6 +50,7 @@
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
 		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
+		D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1420A6320F6964100E0C54E /* ErrorHandler.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
 		D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */; };
 		D153C96520BAFD050007C3F5 /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96420BAFD050007C3F5 /* Transform.swift */; };
@@ -161,7 +161,6 @@
 		D10A6DAB2039BB9300E7AEB5 /* InviteVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVCTwo.swift; sourceTree = "<group>"; };
 		D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInsightCell.swift; sourceTree = "<group>"; };
-		D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRequestVC.swift; sourceTree = "<group>"; };
 		D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVCTwo.swift; sourceTree = "<group>"; };
 		D10D855020E59D1000006176 /* ViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelItem.swift; sourceTree = "<group>"; };
 		D10D855220E5AB8600006176 /* DragCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragCell.swift; sourceTree = "<group>"; };
@@ -176,6 +175,7 @@
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
 		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		D1420A6320F6964100E0C54E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRect.swift; sourceTree = "<group>"; };
 		D153C96420BAFD050007C3F5 /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
@@ -373,6 +373,7 @@
 				D100D9B7200B981400CAEB83 /* Alert.swift */,
 				D15586D02015885D00E4984B /* UIColor+Palette.swift */,
 				D1EAD2EA20EBD476008A9135 /* UICreator.swift */,
+				D1420A6320F6964100E0C54E /* ErrorHandler.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -449,7 +450,6 @@
 		D142F1CC200D189000DBA881 /* Inivite */ = {
 			isa = PBXGroup;
 			children = (
-				D10BB2AB201975A1004F5262 /* InviteRequestVC.swift */,
 				D1E306752008210B000A5845 /* InviteVC.swift */,
 			);
 			path = Inivite;
@@ -852,6 +852,8 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${PODS_ROOT}/Plaid/ios/LinkKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
@@ -875,6 +877,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LinkKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
@@ -938,6 +942,7 @@
 				D11775E7200CE23800B1953C /* PageViewController.swift in Sources */,
 				D1669CEE20CDA0240006FC9B /* SelectedUserCell.swift in Sources */,
 				D171982B200F927B009BC920 /* CardField.swift in Sources */,
+				D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */,
 				D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */,
 				D11775EB200CE69200B1953C /* PageTwoVC.swift in Sources */,
 				D17197F5200E632C009BC920 /* BankAccountVC.swift in Sources */,
@@ -960,7 +965,6 @@
 				D1719815200E725A009BC920 /* AKMaskField.swift in Sources */,
 				D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */,
 				6D0CCE491FAE134700DF5F13 /* apiService.swift in Sources */,
-				D10BB2AC201975A1004F5262 /* InviteRequestVC.swift in Sources */,
 				D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */,
 				D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */,
 				D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */,

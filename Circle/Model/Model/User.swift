@@ -29,56 +29,59 @@ final class User {
     var daysLeft: Int?
     
     
-    init(key: String, data: [String: Any]) {
+    init(key: String? , data: [String: Any]?) {
         
-        self.userId = key
         
-        if let accountId = data["account_id"] as? String {
-            self.accountId = accountId
-        }
-        
-        if let circle = data["circle"] as? String {
-            self.circle = circle
-        }
-        
-        if let userName = data["user_name"] as? String {
-            self.userName = userName
-        }
-        
-        if let firstName = data["first_name"] as? String {
-            self.firstName = firstName
-        }
-        
-        if let lastName = data["last_name"] as? String {
-            self.lastName = lastName
-        }
-        
-        if let email = data["email_address"] as? String {
-            self.email = email
-        }
-        
-        if let photoUrl = data["image_url"] as? String {
-            self.imageUrl = photoUrl
-        }
-        
-        if let status = data["status"] as? String {
-            self.status = status
-        }
-        
-        if let activated = data["activated"] as? Bool {
-            self.activated = activated
-        }
-        
-        if let payed = data["payed"] as? Bool {
-            self.payed = payed
-        }
-        
-        if let position = data["position"] as? Int {
-            self.position = position
-        }
-        
-        if let daysLeft = data["days_left"] as? Int {
-            self.daysLeft = daysLeft
+        if let key = key, let data = data {
+            self.userId = key
+            
+            if let accountId = data["account_id"] as? String {
+                self.accountId = accountId
+            }
+            
+            if let circle = data["circle"] as? String {
+                self.circle = circle
+            }
+            
+            if let userName = data["user_name"] as? String {
+                self.userName = userName
+            }
+            
+            if let firstName = data["first_name"] as? String {
+                self.firstName = firstName
+            }
+            
+            if let lastName = data["last_name"] as? String {
+                self.lastName = lastName
+            }
+            
+            if let email = data["email_address"] as? String {
+                self.email = email
+            }
+            
+            if let photoUrl = data["image_url"] as? String {
+                self.imageUrl = photoUrl
+            }
+            
+            if let status = data["status"] as? String {
+                self.status = status
+            }
+            
+            if let activated = data["activated"] as? Bool {
+                self.activated = activated
+            }
+            
+            if let payed = data["payed"] as? Bool {
+                self.payed = payed
+            }
+            
+            if let position = data["position"] as? Int {
+                self.position = position
+            }
+            
+            if let daysLeft = data["days_left"] as? Int {
+                self.daysLeft = daysLeft
+            }
         }
     }
 }

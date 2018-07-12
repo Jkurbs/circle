@@ -10,12 +10,13 @@ import UIKit
 import IGListKit
 import SDWebImage
 import FirebaseAuth
+import Cartography
 
 class NextPayoutCell: UICollectionViewCell {
     
-    var imageView = UIImageView()
-    var nameLabel = UILabel()
-    var daysLeftLabel =  UILabel()
+    var imageView: UIImageView!
+    var nameLabel: UILabel!
+    var daysLeftLabel: UILabel!
     
     
     override init(frame: CGRect) {
@@ -23,9 +24,9 @@ class NextPayoutCell: UICollectionViewCell {
         
         contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
 
-        contentView.addSubview(imageView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(daysLeftLabel)
+        imageView = UICreator.create.imageView(nil, contentView)
+        nameLabel = UICreator.create.label("", 15, UIColor.darkerGray, .left, .semibold, contentView)
+        daysLeftLabel = UICreator.create.label("", 15, UIColor.lighterGray, .left, .semibold, contentView)
     }
     
     
@@ -38,35 +39,31 @@ class NextPayoutCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-        let descColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
-        
-        imageView.frame = CGRect(x: 25, y: 5, width: 40, height: 40)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.cornerRadius = imageView.frame.height / 2
-    
-        nameLabel.frame = CGRect(x: imageView.layer.position.x + 40, y: 10, width: 100, height: 30)
-        nameLabel.font = font
-        nameLabel.textColor = color
-        
-        daysLeftLabel.frame = CGRect(x: contentView.bounds.width - 90, y: 10, width: 40, height: 30)
-        daysLeftLabel.sizeToFit()
-        daysLeftLabel.font = font
-        daysLeftLabel.textColor = descColor
+            constrain(self.imageView, self.nameLabel, self.daysLeftLabel, self.contentView) { imageView, nameLabel, daysLeftLabel, contentView  in
+                imageView.height == 40
+                imageView.width == 40
+                imageView.left  == contentView.left + 20
+                imageView.centerY == contentView.centerY
+                nameLabel.left == imageView.right + 10
+                nameLabel.centerY == imageView.centerY
+                daysLeftLabel.right == contentView.right - 20
+                daysLeftLabel.centerY == imageView.centerY
+                dispatch.async {
+                    self.imageView.cornerRadius = self.imageView.frame.height / 2
+                }
+        }
     }
-    
+
     
     func configure(_ user: User) {
         imageView.sd_setImage(with: URL(string: user.imageUrl!))
         nameLabel.text = user.firstName
         daysLeftLabel.text =  "\(user.daysLeft ?? 0) days left"
-        
-        if let uid = Auth.auth().currentUser!.uid as? String {
-            if user.userId == uid {
-                nameLabel.text = "You"
-            }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        if user.userId == uid {
+            nameLabel.text = "You"
         }
     }
 }

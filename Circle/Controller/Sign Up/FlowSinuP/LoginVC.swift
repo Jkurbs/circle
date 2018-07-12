@@ -97,7 +97,7 @@ class LoginVC: UIViewController {
         nextButton.showLoading()
         AuthService.instance.signIn(email: phoneEmailField.text!, password: passwordField.text!) { (success, error, circleId)  in
             if !success {
-                print("ERROR LOGIN", error!.localizedDescription)
+                 ErrorHandler.show.authError(error)
                 self.nextButton.hideLoading()
             } else {
                 self.nextButton.hideLoading()
