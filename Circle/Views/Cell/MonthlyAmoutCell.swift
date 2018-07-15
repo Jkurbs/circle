@@ -85,17 +85,14 @@ class MonthlyAmoutCell: UICollectionViewCell {
             
             button.top == descLabel.bottom + 30
             button.centerX == contentView.centerX
-            
-            
         }
-
         
         descLabel.numberOfLines = 2
         descLabel.font = UIFont.systemFont(ofSize: 14)
         descLabel.textColor = UIColor.gray
-        descLabel.text = "Set the goal you and each member of your circle would like to reach"
+        descLabel.text = "Set the goal you and each member would like to spare"
 
-        button.setTitle("Activate Circle", for: .normal)
+        button.setTitle("Activate", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0), for: .normal)
         button.addTarget(self, action: #selector(activateCircle), for: .touchUpInside)
@@ -192,7 +189,6 @@ class MonthlyAmoutCell: UICollectionViewCell {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
         let action2 = UIAlertAction(title: "Invite", style: .default) { (action) in
-            print("INVITE")
         }
         alert.addAction(action)
         alert.addAction(action2)
