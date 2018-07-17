@@ -44,7 +44,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
         sliderLabel.font = UIFont.systemFont(ofSize: 13)
         sliderLabel.adjustsFontSizeToFitWidth = true
         sliderLabel.textColor = color
-        sliderLabel.text = "1000 dollars"
+        sliderLabel.text = "$1000"
     }
     
     
@@ -56,6 +56,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     
+        contentView.backgroundColor = UIColor.backgroundColor
         
         label.translatesAutoresizingMaskIntoConstraints = false
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -76,15 +77,17 @@ class MonthlyAmoutCell: UICollectionViewCell {
             slider.trailing == contentView.trailing - 100
             
             sliderLabel.top == label.bottom + 10
-            sliderLabel.right == contentView.right - 20
+            sliderLabel.right == slider.right + 60
             sliderLabel.centerY == slider.centerY
             
             descLabel.top == slider.bottom + 10
             descLabel.leading == contentView.leading + 30
             descLabel.right == contentView.right - 20
             
-            button.top == descLabel.bottom + 30
+            button.top == descLabel.bottom + 5
             button.centerX == contentView.centerX
+            button.width == contentView.width - 20
+            button.height == 45
         }
         
         descLabel.numberOfLines = 2
@@ -96,6 +99,7 @@ class MonthlyAmoutCell: UICollectionViewCell {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(UIColor(red: 232.0/255.0, green:  126.0/255.0, blue:  4.0/255.0, alpha: 1.0), for: .normal)
         button.addTarget(self, action: #selector(activateCircle), for: .touchUpInside)
+        
         
         let rectShape = CAShapeLayer()
         rectShape.bounds = self.frame
@@ -198,13 +202,49 @@ class MonthlyAmoutCell: UICollectionViewCell {
     
     
     @objc func sliderValueChanged(_ slider: UISlider) {
-        sliderLabel.text = "\(Int(slider.value)) dollard"
+        sliderLabel.text = "$\(Int(slider.value))"
     }
 
     
     func configure(_ text: String) {
         if let firstName = UserDefaults.standard.string(forKey: "firstName") {
             label.text = firstName + "" + ", how much money would you like to spare?"
+        }
+    }
+}
+
+
+class LearnMoreCell: UICollectionViewCell {
+    
+    var label = UILabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        contentView.backgroundColor = UIColor.backgroundColor
+
+        contentView.addSubview(label)
+        
+        let font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        
+        label.textColor = contentView.tintColor
+        label.font = font
+        label.numberOfLines = 4
+        label.textAlignment = .center
+        label.text = "Learn more"
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        constrain(label, contentView) { (label, contentView) in
+            label.edges == contentView.edges
         }
     }
 }

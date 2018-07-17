@@ -42,6 +42,9 @@ class CircleVC: UIViewController, ListAdapterDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("VIEW HEIGHT::", view.frame.height)
+
+        
         // Init the static view
         initView()
     }

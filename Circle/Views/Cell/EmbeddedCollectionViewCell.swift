@@ -92,12 +92,34 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     
     func initLayout() {
         
-        constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
-            collectionView.edges == contentView.edges
-            circleView.width == collectionView.width - 80
-            circleView.height == collectionView.height
-            circleView.centerX == collectionView.centerX
+        print("DEVICE NAME",UIDevice.modelName)
+
+        switch UIDevice.modelName {
+        case "Simulator iPhone 6":
+            constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
+                collectionView.edges == contentView.edges
+                circleView.height == collectionView.height
+                circleView.width == contentView.width * 0.7
+                circleView.centerX == collectionView.centerX
+            }
+        case "iPhone X":
+            print("VIEW WIDTH::", contentView.frame.width)
+            constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
+                collectionView.edges == contentView.edges
+                circleView.height == collectionView.height
+                circleView.width == contentView.width * 0.8
+                circleView.centerX == collectionView.centerX
+                
+            }
+        default:
+            print("unknown model")
         }
+        
+        
+        
+        
+        
+
     }
     
     

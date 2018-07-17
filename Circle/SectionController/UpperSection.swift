@@ -50,13 +50,23 @@ class UpperSection: ListSectionController, ListAdapterDataSource {
     
     override func sizeForItem(at index: Int) -> CGSize {
         let width =  collectionContext!.containerSize.width
+        let height = collectionContext!.containerSize.height
+        
+        let userHeight = height/8
+        let colHeight = (height/2) - (userHeight + 40)
+        print(colHeight)
 
-        if index == 0 {
-             return CGSize(width: width, height: 40)
-        } else if index == 1 {
+        switch index {
+        case 0:
+            return CGSize(width: width, height: 40)
+        case 1:
+            return CGSize(width: width, height: userHeight)
+        case 2:
+            return CGSize(width: width, height: colHeight + 100)
+        case 3:
+            return CGSize(width: width, height: colHeight)
+        default:
             return CGSize(width: width, height: 100)
-        } else {
-            return CGSize(width: width, height: width - 30)
         }
     }
     

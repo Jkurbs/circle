@@ -24,8 +24,6 @@ target 'Sparen' do
     pod 'Plaid'
     pod 'CountryList'
     pod 'lottie-ios'
-    pod 'RxSwift',    '~> 4.0'
-    pod 'RxCocoa',    '~> 4.0'
 
   target 'SparenTests' do
     inherit! :search_paths

@@ -104,9 +104,6 @@ PODS:
   - nanopb/encode (0.3.8)
   - Plaid (1.1.9)
   - Protobuf (3.5.0)
-  - RxCocoa (4.1.2):
-    - RxSwift (~> 4.0)
-  - RxSwift (4.1.2)
   - SDWebImage (4.3.3):
     - SDWebImage/Core (= 4.3.3)
   - SDWebImage/Core (4.3.3)
@@ -128,8 +125,6 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - lottie-ios
   - Plaid
-  - RxCocoa (~> 4.0)
-  - RxSwift (~> 4.0)
   - SDWebImage (~> 4.0)
   - Stripe
 
@@ -162,8 +157,6 @@ SPEC REPOS:
     - nanopb
     - Plaid
     - Protobuf
-    - RxCocoa
-    - RxSwift
     - SDWebImage
     - Stripe
 
@@ -195,11 +188,9 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Plaid: 661a3efeaa70a3f7879e29512adfb025824a8470
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
-  RxSwift: e49536837d9901277638493ea537394d4b55f570
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
   Stripe: b3c69e4a269d5ae707916a090ee54b1f6011ccd9
 
-PODFILE CHECKSUM: bff79d3b3d36298c747689cc420493933111dc5e
+PODFILE CHECKSUM: 781d5c1de74d079b5da2049d81ae67bf44fecfc1
 
 COCOAPODS: 1.5.2

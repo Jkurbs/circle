@@ -19,7 +19,7 @@ class SetupCircleSection: ListSectionController {
     
     override init() {
         super.init()
-        self.inset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        
     }
     
 
@@ -35,12 +35,14 @@ class SetupCircleSection: ListSectionController {
             }
             cell.configure("Activate your circle")
             return cell
-        
-        
     }
     
     override func didUpdate(to object: Any) {
         user = object as? User
+    }
+    
+    override func didSelectItem(at index: Int) {
+        
     }
 }
 
