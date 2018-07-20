@@ -1,34 +1,25 @@
 //
-//  CircleVC.swift
-//  Circle
+//  SetupViewController.swift
+//  Sparen
 //
-//  Created by Kerby Jean on 2/10/18.
+//  Created by Kerby Jean on 7/17/18.
 //  Copyright © 2018 Kerby Jean. All rights reserved.
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 import IGListKit
 
 
-enum State {
-    case collapsed
-    case expanded
-}
-
-
-class CircleVC: UIViewController, ListAdapterDataSource {
-
+class SetupViewController: UIViewController, ListAdapterDataSource {
+    
     
     var circleId: String?
+    
     var user = [User]()
-    var circle = [Circle]()
     
     lazy var viewModel: UserListViewModel = {
         return UserListViewModel()
     }()
-    
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 2)
@@ -41,8 +32,9 @@ class CircleVC: UIViewController, ListAdapterDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initView()
+        retrieve()
+
     }
     
     
@@ -56,7 +48,7 @@ class CircleVC: UIViewController, ListAdapterDataSource {
         retrieve()
     }
     
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -81,21 +73,22 @@ class CircleVC: UIViewController, ListAdapterDataSource {
     }
 }
 
-extension CircleVC {
+extension SetupViewController {
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return user as [ListDiffable]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return UpperSection()
+        return SetupSection()
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil 
+        return nil
     }
     
 }
+
 
 
 

@@ -170,6 +170,7 @@ extension UpperSection {
                 } else if circle.activated == true {
                     self.settingsCell.inviteButton.removeFromSuperview()
                 }
+                
                 self.circle.append(circle)
                 self.adapter.performUpdates(animated: true)
             }

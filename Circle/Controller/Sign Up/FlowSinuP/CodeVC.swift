@@ -74,7 +74,7 @@ class CodeVC: UIViewController {
     @objc func codeEntenred() {
 
         let circleId = codeField.text!
-        DataService.call.retrieveCircle(circleId) { (success, error, circle) in
+        DataService.call.fetchCircle(circleId) { (success, error, circle) in
             
         }
     }

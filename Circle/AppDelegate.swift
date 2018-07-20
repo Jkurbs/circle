@@ -48,10 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
         settings.dispatchQueue = bgQueue
+
         
-
-
-
         // Stripe payment configuration
         STPPaymentConfiguration.shared().companyName = "Circle"
         
@@ -245,7 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
             if !uid.isEmpty {
-                let initialViewController = CircleVC()
+                let initialViewController = SetupViewController()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 let vc = navigationController
                 self.window?.rootViewController = vc

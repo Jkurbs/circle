@@ -34,6 +34,7 @@ class UICreator {
         label.font = UIFont.systemFont(ofSize: fontSize!, weight: weight)
         label.textColor = textColor
         label.textAlignment = alignment
+        label.numberOfLines = 4
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label

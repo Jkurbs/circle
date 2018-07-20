@@ -92,6 +92,9 @@
 		D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF21FB1543F00267B35 /* SettingsVC.swift */; };
 		D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */; };
 		D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */; };
+		D1AA518520FDB64500AA6A55 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AA518420FDB64500AA6A55 /* SetupViewController.swift */; };
+		D1AA518720FDBBDC00AA6A55 /* SetupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AA518620FDBBDC00AA6A55 /* SetupSection.swift */; };
+		D1AA518920FE665400AA6A55 /* SpareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AA518820FE665400AA6A55 /* SpareCell.swift */; };
 		D1D66D672071B8860087D41C /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D662071B8860087D41C /* ImageButton.swift */; };
 		D1E306762008210B000A5845 /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E306752008210B000A5845 /* InviteVC.swift */; };
 		D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */; };
@@ -221,6 +224,9 @@
 		D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Circle/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1AA518420FDB64500AA6A55 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		D1AA518620FDBBDC00AA6A55 /* SetupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSection.swift; sourceTree = "<group>"; };
+		D1AA518820FE665400AA6A55 /* SpareCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpareCell.swift; sourceTree = "<group>"; };
 		D1D66D662071B8860087D41C /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		D1E306752008210B000A5845 /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
 		D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
@@ -471,6 +477,7 @@
 		D153C96620BB14EC0007C3F5 /* SectionController */ = {
 			isa = PBXGroup;
 			children = (
+				D1AA518620FDBBDC00AA6A55 /* SetupSection.swift */,
 				D153C96720BB15040007C3F5 /* CircleInsightSection.swift */,
 				D153C96920BDB7C00007C3F5 /* NextPayoutSection.swift */,
 				D153C96D20BF90050007C3F5 /* AmountsSection.swift */,
@@ -507,6 +514,7 @@
 				D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */,
 				D10880BB20DC646C007727B2 /* FinishMessageCell.swift */,
 				D10D855420E5B00300006176 /* CircleUserCell.swift */,
+				D1AA518820FE665400AA6A55 /* SpareCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -599,6 +607,7 @@
 				D10BE0A72037A80400B83560 /* Onboarding2 */,
 				D171981E200E849D009BC920 /* Sign Up */,
 				6D0CCE3E1FAE05EB00DF5F13 /* Main */,
+				D1AA518420FDB64500AA6A55 /* SetupViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -928,6 +937,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1719818200E725A009BC920 /* AKMaskFieldBrackets.swift in Sources */,
+				D1AA518920FE665400AA6A55 /* SpareCell.swift in Sources */,
 				D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */,
 				D11775E9200CE68500B1953C /* PageOneVC.swift in Sources */,
 				D100D9AC2009F9B700CAEB83 /* UserContact.swift in Sources */,
@@ -935,6 +945,7 @@
 				D1719829200F91FB009BC920 /* Subhead.swift in Sources */,
 				D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */,
 				D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */,
+				D1AA518720FDBBDC00AA6A55 /* SetupSection.swift in Sources */,
 				D17197F3200E6052009BC920 /* LogButton.swift in Sources */,
 				D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */,
 				D10880BA20DC6413007727B2 /* FinishCircleSection.swift in Sources */,
@@ -998,6 +1009,7 @@
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
 				D12B97452030D313001B44FB /* LoginVC.swift in Sources */,
 				D171982D200F95CC009BC920 /* Footnote.swift in Sources */,
+				D1AA518520FDB64500AA6A55 /* SetupViewController.swift in Sources */,
 				D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */,
 				D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */,
 				D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */,

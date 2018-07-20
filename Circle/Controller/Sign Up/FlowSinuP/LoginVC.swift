@@ -101,8 +101,8 @@ class LoginVC: UIViewController {
                 self.nextButton.hideLoading()
             } else {
                 self.nextButton.hideLoading()
-                let circleVC = CircleVC()
-                circleVC.circleId = circleId
+                let circleVC = SetupViewController()
+                //circleVC.circleId = circleId
                 let navigation = UINavigationController(rootViewController: circleVC)
                 self.present(navigation, animated: false, completion: nil)
             }

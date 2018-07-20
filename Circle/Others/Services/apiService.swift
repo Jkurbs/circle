@@ -83,7 +83,7 @@ class DataService: DataServiceProtocol {
                         let data = snap.data()
                         let user = User(key: key, data: data!)
                         let firstName = user.firstName
-                        UserDefaults.standard.set(firstName, forKey: "firstName") 
+                        UserDefaults.standard.set(firstName, forKey: "firstName")
                         complete(true, [user], nil)
                     }
                 }
@@ -192,8 +192,7 @@ class DataService: DataServiceProtocol {
     
     
     
-    func retrieveCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?) -> ()) {
-        
+    func fetchCircle(_ circleId: String?, _ completion: @escaping (_ success: Bool, _ error: Error?, _ circle: Circle?) -> ()) {
         guard let circleId = circleId else {
             return
           }
