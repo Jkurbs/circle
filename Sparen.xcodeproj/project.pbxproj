@@ -49,6 +49,11 @@
 		D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */; };
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
 		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
+		D12B5FFB21078D2E00B5636B /* MoneySuggestionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B5FFA21078D2E00B5636B /* MoneySuggestionSection.swift */; };
+		D12B5FFD210A1CDE00B5636B /* SetupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B5FFC210A1CDE00B5636B /* SetupPageViewController.swift */; };
+		D12B5FFF210A1E3A00B5636B /* AddUsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B5FFE210A1E3A00B5636B /* AddUsersVC.swift */; };
+		D12B6001210A256D00B5636B /* AddUsersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B6000210A256D00B5636B /* AddUsersSection.swift */; };
+		D12B6003210A2E9200B5636B /* AddUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B6002210A2E9200B5636B /* AddUsersCell.swift */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
 		D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1420A6320F6964100E0C54E /* ErrorHandler.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
@@ -177,6 +182,11 @@
 		D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyAmoutCell.swift; sourceTree = "<group>"; };
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
 		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		D12B5FFA21078D2E00B5636B /* MoneySuggestionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneySuggestionSection.swift; sourceTree = "<group>"; };
+		D12B5FFC210A1CDE00B5636B /* SetupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPageViewController.swift; sourceTree = "<group>"; };
+		D12B5FFE210A1E3A00B5636B /* AddUsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUsersVC.swift; sourceTree = "<group>"; };
+		D12B6000210A256D00B5636B /* AddUsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUsersSection.swift; sourceTree = "<group>"; };
+		D12B6002210A2E9200B5636B /* AddUsersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUsersCell.swift; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D1420A6320F6964100E0C54E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
@@ -361,6 +371,9 @@
 			children = (
 				D165407A202EB79F00B2A1F5 /* PendingVC.swift */,
 				D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */,
+				D12B5FFC210A1CDE00B5636B /* SetupPageViewController.swift */,
+				D1AA518420FDB64500AA6A55 /* SetupViewController.swift */,
+				D12B5FFE210A1E3A00B5636B /* AddUsersVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -487,6 +500,8 @@
 				D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */,
 				D10880B920DC6413007727B2 /* FinishCircleSection.swift */,
 				D10880BD20E420A8007727B2 /* EditAccountSection.swift */,
+				D12B5FFA21078D2E00B5636B /* MoneySuggestionSection.swift */,
+				D12B6000210A256D00B5636B /* AddUsersSection.swift */,
 			);
 			path = SectionController;
 			sourceTree = "<group>";
@@ -515,6 +530,7 @@
 				D10880BB20DC646C007727B2 /* FinishMessageCell.swift */,
 				D10D855420E5B00300006176 /* CircleUserCell.swift */,
 				D1AA518820FE665400AA6A55 /* SpareCell.swift */,
+				D12B6002210A2E9200B5636B /* AddUsersCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -607,7 +623,6 @@
 				D10BE0A72037A80400B83560 /* Onboarding2 */,
 				D171981E200E849D009BC920 /* Sign Up */,
 				6D0CCE3E1FAE05EB00DF5F13 /* Main */,
-				D1AA518420FDB64500AA6A55 /* SetupViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -944,6 +959,7 @@
 				D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */,
 				D1719829200F91FB009BC920 /* Subhead.swift in Sources */,
 				D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */,
+				D12B6001210A256D00B5636B /* AddUsersSection.swift in Sources */,
 				D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */,
 				D1AA518720FDBBDC00AA6A55 /* SetupSection.swift in Sources */,
 				D17197F3200E6052009BC920 /* LogButton.swift in Sources */,
@@ -954,6 +970,7 @@
 				D171982B200F927B009BC920 /* CardField.swift in Sources */,
 				D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */,
 				D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */,
+				D12B6003210A2E9200B5636B /* AddUsersCell.swift in Sources */,
 				D11775EB200CE69200B1953C /* PageTwoVC.swift in Sources */,
 				D17197F5200E632C009BC920 /* BankAccountVC.swift in Sources */,
 				D1719820200E852B009BC920 /* NamePasswordVC.swift in Sources */,
@@ -976,6 +993,7 @@
 				D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */,
 				6D0CCE491FAE134700DF5F13 /* apiService.swift in Sources */,
 				D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */,
+				D12B5FFB21078D2E00B5636B /* MoneySuggestionSection.swift in Sources */,
 				D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */,
 				D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */,
 				D1EAD2EB20EBD476008A9135 /* UICreator.swift in Sources */,
@@ -1006,6 +1024,7 @@
 				D1EAD2E920E9F301008A9135 /* Haptics.swift in Sources */,
 				D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */,
 				D1719816200E725A009BC920 /* AKMaskFieldBlockCharacter.swift in Sources */,
+				D12B5FFF210A1E3A00B5636B /* AddUsersVC.swift in Sources */,
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
 				D12B97452030D313001B44FB /* LoginVC.swift in Sources */,
 				D171982D200F95CC009BC920 /* Footnote.swift in Sources */,
@@ -1020,6 +1039,7 @@
 				D153C96820BB15040007C3F5 /* CircleInsightSection.swift in Sources */,
 				D10880BC20DC646C007727B2 /* FinishMessageCell.swift in Sources */,
 				D10880BE20E420A9007727B2 /* EditAccountSection.swift in Sources */,
+				D12B5FFD210A1CDE00B5636B /* SetupPageViewController.swift in Sources */,
 				D1719819200E725A009BC920 /* AKMaskFieldEvent.swift in Sources */,
 				6D0CCE081FAD70E900DF5F13 /* AppDelegate.swift in Sources */,
 			);

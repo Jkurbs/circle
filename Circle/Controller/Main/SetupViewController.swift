@@ -12,7 +12,6 @@ import IGListKit
 
 class SetupViewController: UIViewController, ListAdapterDataSource {
     
-    
     var circleId: String?
     
     var user = [User]()
@@ -34,7 +33,6 @@ class SetupViewController: UIViewController, ListAdapterDataSource {
         super.viewDidLoad()
         initView()
         retrieve()
-
     }
     
     

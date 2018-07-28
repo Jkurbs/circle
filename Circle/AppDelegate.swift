@@ -243,7 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
             if !uid.isEmpty {
-                let initialViewController = SetupViewController()
+                let initialViewController = SetupPageViewController()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 let vc = navigationController
                 self.window?.rootViewController = vc

@@ -14,11 +14,12 @@ class SetupSection: ListSectionController {
     private var user: User?
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 50)
+        return CGSize(width: collectionContext!.containerSize.width, height: 150)
     }
     
     override init() {
         super.init()
+        self.inset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
     }
     
     override func numberOfItems() -> Int {
@@ -37,3 +38,4 @@ class SetupSection: ListSectionController {
         self.user = object as? User
     }
 }
+

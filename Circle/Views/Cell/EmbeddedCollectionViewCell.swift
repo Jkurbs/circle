@@ -12,9 +12,9 @@ import IGListKit
 import Cartography
 
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
-        
+    let layout = UICollectionViewFlowLayout()
+
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         view.showsHorizontalScrollIndicator = false
@@ -114,12 +114,6 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         default:
             print("unknown model")
         }
-        
-        
-        
-        
-        
-
     }
     
     
