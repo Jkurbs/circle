@@ -246,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let initialViewController = SetupPageViewController()
                 let navigationController = UINavigationController(rootViewController: initialViewController)
                 let vc = navigationController
-                self.window?.rootViewController = vc
+                self.window?.rootViewController = initialViewController
                 self.window?.makeKeyAndVisible()
             } else {
                 let initialViewController =  LoginVC()

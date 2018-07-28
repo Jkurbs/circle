@@ -49,7 +49,7 @@ class SetupViewController: UIViewController, ListAdapterDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     
@@ -84,7 +84,6 @@ extension SetupViewController {
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
-    
 }
 
 

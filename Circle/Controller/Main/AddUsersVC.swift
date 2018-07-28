@@ -12,6 +12,7 @@ import IGListKit
 class AddUsersVC: UIViewController, ListAdapterDataSource {
     
     var circle = [Circle]()
+    var users = [User]()
     
     let collectionView = UICollectionView(
         frame: .zero,
@@ -45,6 +46,7 @@ class AddUsersVC: UIViewController, ListAdapterDataSource {
         adapter.collectionView = collectionView
         adapter.dataSource = self
         retrieveCircle()
+        retrieveInsiders()
     }
 
     
@@ -59,16 +61,33 @@ class AddUsersVC: UIViewController, ListAdapterDataSource {
             }
         }
     }
+    
+    func retrieveInsiders() {
+        DataService.call.fetchUsers { (success, users, error) in
+            if !success {
+                print("ERROR", error!.localizedDescription)
+            } else {
+                self.users = users!
+                self.adapter.performUpdates(animated: true)
+            }
+        }
+    }
 }
 
 extension AddUsersVC {
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-       return circle as [ListDiffable]
+       var data = circle as [ListDiffable]
+       data += users as [ListDiffable]
+       return data
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return AddUsersSection() 
+        if object is Circle {
+           return AddUsersSection()
+        } else {
+            return InsidersSection() 
+        }
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

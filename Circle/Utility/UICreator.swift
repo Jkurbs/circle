@@ -45,14 +45,13 @@ class UICreator {
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true 
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         return imageView
     }
     
     func sticker(_ imageName: String, _ contentView: UIView) -> UIView {
-        
         let view = UIView()
         view.frame = .zero
         view.borderColor = .white
