@@ -49,6 +49,7 @@
 		D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */; };
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
 		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
+		D12B604F211228B200B5636B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D12B604E211228B100B5636B /* GoogleService-Info.plist */; };
 		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
 		D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1420A6320F6964100E0C54E /* ErrorHandler.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
@@ -91,7 +92,6 @@
 		D171982D200F95CC009BC920 /* Footnote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D171982C200F95CC009BC920 /* Footnote.swift */; };
 		D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF21FB1543F00267B35 /* SettingsVC.swift */; };
 		D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */; };
-		D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */; };
 		D1D66D672071B8860087D41C /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D662071B8860087D41C /* ImageButton.swift */; };
 		D1E306762008210B000A5845 /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E306752008210B000A5845 /* InviteVC.swift */; };
 		D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */; };
@@ -149,7 +149,7 @@
 		D100D9AB2009F9B700CAEB83 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
 		D100D9AF200A13E500CAEB83 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		D100D9B7200B981400CAEB83 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		D106B6971FCDEAF2002CCEBC /* Circle-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Circle-Bridging-Header.h"; sourceTree = "<group>"; };
+		D106B6971FCDEAF2002CCEBC /* Sparen-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sparen-Bridging-Header.h"; sourceTree = "<group>"; };
 		D10880B520DC5802007727B2 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		D10880B720DC5986007727B2 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		D10880B920DC6413007727B2 /* FinishCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCircleSection.swift; sourceTree = "<group>"; };
@@ -174,6 +174,8 @@
 		D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyAmoutCell.swift; sourceTree = "<group>"; };
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
 		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		D12B604D211208D500B5636B /* Sparen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sparen.entitlements; sourceTree = "<group>"; };
+		D12B604E211228B100B5636B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D1420A6320F6964100E0C54E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
@@ -194,7 +196,6 @@
 		D1669CEB20CD9FE40006FC9B /* UpperSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperSection.swift; sourceTree = "<group>"; };
 		D1669CED20CDA0240006FC9B /* SelectedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUserCell.swift; sourceTree = "<group>"; };
 		D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUsersSection.swift; sourceTree = "<group>"; };
-		D166AB43201250690080F5A8 /* Circle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Circle.entitlements; sourceTree = "<group>"; };
 		D16938381FB386830095F5A7 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		D16D05021FB0A27A00153D99 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VericationPhoneVC.swift; sourceTree = "<group>"; };
@@ -218,7 +219,6 @@
 		D171982C200F95CC009BC920 /* Footnote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote.swift; sourceTree = "<group>"; };
 		D1753CF21FB1543F00267B35 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountVC.swift; sourceTree = "<group>"; };
-		D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Circle/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1D66D662071B8860087D41C /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 		6D0CCDFB1FAD70E900DF5F13 = {
 			isa = PBXGroup;
 			children = (
-				6D0CCE061FAD70E900DF5F13 /* Circle */,
+				6D0CCE061FAD70E900DF5F13 /* Sparen */,
 				6D0CCE1B1FAD70E900DF5F13 /* CircleTests */,
 				6D0CCE261FAD70E900DF5F13 /* CircleUITests */,
 				6D0CCE051FAD70E900DF5F13 /* Products */,
@@ -309,18 +309,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6D0CCE061FAD70E900DF5F13 /* Circle */ = {
+		6D0CCE061FAD70E900DF5F13 /* Sparen */ = {
 			isa = PBXGroup;
 			children = (
-				D1EAD2E720E9F2EA008A9135 /* Haptics */,
-				D166AB43201250690080F5A8 /* Circle.entitlements */,
-				D11B9AAB20D487BA00543538 /* firework.json */,
-				6D0CCE0E1FAD70E900DF5F13 /* Assets.xcassets */,
-				D18A4F8420AF47B500462F57 /* GoogleService-Info.plist */,
 				6D0CCE131FAD70E900DF5F13 /* Info.plist */,
+				D12B604E211228B100B5636B /* GoogleService-Info.plist */,
+				D12B604D211208D500B5636B /* Sparen.entitlements */,
+				D11B9AAB20D487BA00543538 /* firework.json */,
+				D1EAD2E720E9F2EA008A9135 /* Haptics */,
+				6D0CCE0E1FAD70E900DF5F13 /* Assets.xcassets */,
 				D1EAD2E220E95051008A9135 /* Storyboards */,
 				6D0CCE071FAD70E900DF5F13 /* AppDelegate.swift */,
-				D106B6971FCDEAF2002CCEBC /* Circle-Bridging-Header.h */,
+				D106B6971FCDEAF2002CCEBC /* Sparen-Bridging-Header.h */,
 				D153C96620BB14EC0007C3F5 /* SectionController */,
 				D1753CF71FB15E8500267B35 /* Controller */,
 				6D0CCE511FAE7F2200DF5F13 /* Views */,
@@ -329,7 +329,7 @@
 				D169383D1FB38D080095F5A7 /* Others */,
 				6D0CCE4A1FAE2B9300DF5F13 /* Utility */,
 			);
-			path = Circle;
+			path = Sparen;
 			sourceTree = "<group>";
 		};
 		6D0CCE1B1FAD70E900DF5F13 /* CircleTests */ = {
@@ -757,12 +757,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D18A4F8520AF47B600462F57 /* GoogleService-Info.plist in Resources */,
 				D11B9AAC20D487BB00543538 /* firework.json in Resources */,
 				6D0CCE121FAD70E900DF5F13 /* LaunchScreen.storyboard in Resources */,
 				6D0CCE0F1FAD70E900DF5F13 /* Assets.xcassets in Resources */,
 				6D0CCE0D1FAD70E900DF5F13 /* Main.storyboard in Resources */,
 				6D0CCE3A1FADF29A00DF5F13 /* Log.storyboard in Resources */,
+				D12B604F211228B200B5636B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,16 +1183,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Sparen/Sparen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Circle/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sparen/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Circle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Sparen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Circle/Circle-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sparen/Sparen-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				"SYSTEM_FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited)";
@@ -1208,17 +1208,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Circle/Circle.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Sparen/Sparen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = Circle/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sparen/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Circle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Sparen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Circle/Circle-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sparen/Sparen-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
