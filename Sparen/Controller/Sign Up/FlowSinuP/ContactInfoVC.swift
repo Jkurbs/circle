@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CountryList
 
 class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate {
 
@@ -160,33 +159,32 @@ class ContactInfoVC: UIViewController, UITextFieldDelegate, CountryListDelegate 
     
     @objc func nextStep() {
         
-        nextButton.showLoading()
-        let vc = VericationPhoneVC()
-        
-        vc.country = self.country
-        vc.phoneExtension = self.phoneExtension
-        let phoneNumber = "+\(self.phoneExtension)\(phoneTextField.text!)"
-        let emailAddress = emailTextField.text!
-        vc.emailAddress = emailAddress
-        vc.phoneNumber = phoneNumber
-        
-
-        AuthService.instance.phoneAuth(phoneNumber: phoneNumber, viewController: self) { (success, error) in
-            if !success! {
-                self.phoneTextField.errorDetected(superView: self.view, error: "Error with phone number", frame: CGRect(x: 0, y: 0, width: self.phoneTextField.frame.width, height: 20))
-                let alert = Alert()
-                dispatch.async {
-                    alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
-                }
-                self.nextButton.hideLoading()
-                return
-            } else {
-                dispatch.async {
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.nextButton.hideLoading()
-            }
-        }
-    }
+//        nextButton.showLoading()
+//        let vc = VericationPhoneVC()
+//        
+//        vc.country = self.country
+//        vc.phoneExtension = self.phoneExtension
+//        let phoneNumber = "+\(self.phoneExtension)\(phoneTextField.text!)"
+//        let emailAddress = emailTextField.text!
+//        vc.emailAddress = emailAddress
+//        vc.phoneNumber = phoneNumber
+//
+//        AuthService.instance.phoneAuth(phoneNumber: phoneNumber, viewController: self) { (success, error) in
+//            if !success! {
+//                self.phoneTextField.errorDetected(superView: self.view, error: "Error with phone number", frame: CGRect(x: 0, y: 0, width: self.phoneTextField.frame.width, height: 20))
+//                let alert = Alert()
+//                dispatch.async {
+//                    alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+//                }
+//                self.nextButton.hideLoading()
+//                return
+//            } else {
+//                dispatch.async {
+//                self.navigationController?.pushViewController(vc, animated: true)
+//                self.nextButton.hideLoading()
+//            }
+//        }
+//    }
 }
 
     

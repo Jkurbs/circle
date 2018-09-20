@@ -14,7 +14,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView!
     
-    var settings = ["Edit account", "Log Out"]
+    var settings = ["Edit account", "Password", "Push notification", "Payments", "Terms", "Log Out"]
     
     let textCellIdentifier = "MyCell"
     
@@ -31,6 +31,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: textCellIdentifier)
+        tableView.register(PushNotificationCell.self, forCellReuseIdentifier: "push")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -58,27 +59,48 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+       
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         cell.textLabel?.textColor = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         cell.textLabel?.text = settings[indexPath.row]
         
-        return cell
+        if indexPath.row != 5 {
+             cell.accessoryType = .disclosureIndicator
+        }
+        if indexPath.row == 2 {
+            let pushSwitch = UISwitch()
+            pushSwitch.isOn = UIApplication.shared.isRegisteredForRemoteNotifications
+            pushSwitch.addTarget(self, action: #selector(notificationChanged), for: .valueChanged)
+            cell.accessoryView = pushSwitch
+            return cell
+        } else {
+            return cell
+        }
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             let vc = EditAccountVC()
             navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        
-        if indexPath.row == 1 {
+        case 1:
+            let vc = ChangePasswordVC()
+            navigationController?.pushViewController(vc, animated: true)
+        case 4:
+            let vc = WebVC()
+            navigationController?.pushViewController(vc, animated: true)
+        case 3:
+            let vc = PaymentsVC()
+            navigationController?.pushViewController(vc, animated: true)
+        case 5:
             UserDefaults.standard.removeObject(forKey: "circleId")
             UserDefaults.standard.removeObject(forKey: "userId")
+            UserDefaults.standard.synchronize()
             let firebaseAuth = Auth.auth()
             do {
                 try firebaseAuth.signOut()
@@ -89,6 +111,32 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
             } catch let signOutError as NSError {
                 print("SIGNOUT ERROR:\(signOutError)")
+            }
+    
+        default:
+            print("something")
+        }
+    }
+    
+    
+    @objc func notificationChanged(_ sender: UISwitch) {
+        if sender.isOn {
+            UIApplication.shared.registerForRemoteNotifications()
+            let deviceToken = UserDefaults.standard.string(forKey: "deviceToken")
+            DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).updateData(["device_token": deviceToken ?? ""]) { (error) in
+                if let error = error {
+                    print("error", error.localizedDescription)
+                } else {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        } else {
+            DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).updateData(["device_token": ""]) { (error) in
+                if let error = error {
+                    print("error", error.localizedDescription)
+                } else {
+                    UIApplication.shared.unregisterForRemoteNotifications()
+                }
             }
         }
     }

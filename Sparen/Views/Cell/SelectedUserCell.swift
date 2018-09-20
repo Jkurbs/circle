@@ -19,52 +19,61 @@ class SelectedUserCell: UICollectionViewCell {
     var layerView: UIView!
     var imageView =  UIImageView()
     var nameLabel: UILabel!
+    var circleView = CircleView() 
     
-    
+    var view = UIView()
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        //setup()
         
     }
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
         
-        statusDesc = UICreator.create.label("Status" ,16, .darkerGray, .center, .semibold, contentView)
-        daysDesc = UICreator.create.label("Days left", 16, .darkerGray, .center, .semibold, contentView)
-        statusLabel = UICreator.create.label("", 16, .darkerGray, .center, .semibold, contentView)
-        daysLabel = UICreator.create.label("", 16, .lighterGray, .center, .semibold, contentView)
-        imageView = UICreator.create.imageView(nil, contentView)
+        contentView.backgroundColor = .backgroundColor
+        
+        view.backgroundColor = .white
+        view.shadowRadius = 5.0
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.shadowOpacity = 0.2
+        contentView.addSubview(view)
+        
+        circleView.endThumbStrokeColor = .sparenColor
+        circleView.lineWidth = 4.0
+        circleView.backtrackLineWidth = 3.5
+        view.addSubview(circleView)
+        
+//        statusDesc = UICreator.create.label("To start", 12, .lighterGray, .center, .regular, view)
+//        statusLabel = UICreator.create.label("Ready", 16, .darkerGray, .center, .semibold, view)
+//        daysDesc = UICreator.create.label("Days left", 12, .lighterGray, .center, .regular, view)
+//        daysLabel = UICreator.create.label(" 30", 16, .darkerGray, .center, .semibold, view)
+        imageView = UICreator.create.imageView(nil, circleView)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(statusDesc, statusLabel, imageView, daysDesc, daysLabel, contentView) { statusDesc, statusLabel, imageView, daysDesc, daysLabel, view in
-            statusDesc.left  == view.left + 10
-            statusLabel.left == view.left + 10
-            statusDesc.width == 100
-            statusLabel.width == 100
-            statusDesc.top == view.top + 20
-            statusLabel.top == statusDesc.bottom + 10
-
-            imageView.centerX == view.centerX
-            imageView.width == 60
-            imageView.height == 60
-            imageView.top == statusDesc.top
-
-            daysDesc.right  == view.right - 10
-            daysLabel.right == view.right - 10
-            daysDesc.width  == 100
-            daysLabel.width == 100
-            daysDesc.top == statusDesc.top
-            daysLabel.top == statusLabel.top
+        constrain(view, circleView, imageView, contentView) {view, circleView, imageView, contentView in
+            
+            view.width == contentView.width - 20
+            view.height == contentView.height
+            view.center == contentView.center
+            
+            circleView.width == 90
+            circleView.height == 90
+            circleView.center == view.center
+            
+            imageView.center == view.center
+            imageView.width == circleView.width - 20
+            imageView.height == circleView.height - 20
         }
-        
+
         dispatch.async {
             self.imageView.clipsToBounds = true
             self.imageView.cornerRadius = self.imageView.frame.width / 2
+            self.view.roundCorners(corners: [.topRight, .topLeft], radius: 10)
         }
     }
 
@@ -72,21 +81,85 @@ class SelectedUserCell: UICollectionViewCell {
     func configure(_ user: User) {
 
         imageView.image = nil
-
+        
         if let url = user.imageUrl {
             imageView.sd_setImage(with: URL(string: url), completed: nil)
         } else {
             imageView.image = #imageLiteral(resourceName: "Profile-40")
         }
-        
-        daysLabel.text = "\(user.daysLeft ?? 0)"
-        switch user.daysLeft {
-        case 0:
-            statusLabel.text = "Paid"
-        default:
-            statusLabel.text = "Waiting"
-            statusLabel.textColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
-        }
     }
 }
+
+class SelectedUserDataCell: UICollectionViewCell {
+    
+    
+    var statusView = UIView()
+    var daysView = UIView()
+    
+    var statusDesc: UILabel!
+    var statusLabel: UILabel!
+    var daysDesc: UILabel!
+    var daysLabel: UILabel!
+    
+    var view = UIView()
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        
+    }
+    
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        contentView.backgroundColor = .backgroundColor
+        view.backgroundColor = .white
+        view.shadowRadius = 5.0
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.shadowOpacity = 0.2
+        contentView.addSubview(view)
+        
+        statusDesc = UICreator.create.label("To start", 12, .lighterGray, .center, .regular, view)
+        statusLabel = UICreator.create.label("Ready", 16, .darkerGray, .center, .semibold, view)
+        daysDesc = UICreator.create.label("Days left", 12, .lighterGray, .center, .regular, view)
+        daysLabel = UICreator.create.label(" 30", 16, .darkerGray, .center, .semibold, view)
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        constrain(view, statusLabel, statusDesc, daysLabel, daysDesc, contentView) {view, statusLabel, statusDesc, daysLabel, daysDesc, contentView in
+            
+            view.width == contentView.width - 20
+            view.height == contentView.height
+            view.center == contentView.center
+            
+            statusLabel.top == view.top + 10
+            statusLabel.left == view.left + 80
+            
+            statusDesc.height == view.height/2
+            statusDesc.top == statusLabel.bottom
+            statusDesc.left == view.left + 80
+            statusDesc.centerX == statusLabel.centerX
+            
+            daysLabel.top == view.top + 10
+            daysLabel.right == view.right - 80
+            daysDesc.height == view.height/2
+            daysDesc.top == daysLabel.bottom
+            daysDesc.right == view.right - 80
+            daysDesc.centerX == daysLabel.centerX
+        }
+        
+        dispatch.async {
+            self.view.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 10)
+        }
+    }
+    
+    
+    func configure(_ activity: UserActivities) {
+        daysLabel.text =  "\(activity.daysLeft ?? 0)"
+    }
+}
+
+
 

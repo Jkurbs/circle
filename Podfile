@@ -16,14 +16,16 @@ target 'Sparen' do
     pod 'Firebase/Messaging'
     pod 'IGListKit', '~> 3.0'
     pod 'SDWebImage', '~> 4.0'
-    pod 'HGCircularSlider', '~> 2.0.0'
+    pod 'LTMorphingLabel'
+    pod 'Hero'
     pod 'IQKeyboardManager'
     pod 'Cartography', '~> 3.0'
     pod 'Stripe'
-    pod 'IQKeyboardManagerSwift'
-    pod 'Plaid'
-    pod 'CountryList'
+#    pod 'Plaid'
+    pod 'GSMessages'
     pod 'lottie-ios'
+
+
 
   target 'SparenTests' do
     inherit! :search_paths

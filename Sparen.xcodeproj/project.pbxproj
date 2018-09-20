@@ -22,8 +22,6 @@
 		6D0CCE5C1FAFD0AF00DF5F13 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */; };
 		7E04A24561F9065304C6E784 /* Pods_SparenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 205324F3E901E8629CFD0E12 /* Pods_SparenTests.framework */; };
 		A5BBE40F5DDEC45738CC7490 /* Pods_Sparen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB1BFDD25B40D6B111D7A4D /* Pods_Sparen.framework */; };
-		D100D9AC2009F9B700CAEB83 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AB2009F9B700CAEB83 /* UserContact.swift */; };
-		D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9AF200A13E500CAEB83 /* ContactCell.swift */; };
 		D100D9B8200B981400CAEB83 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100D9B7200B981400CAEB83 /* Alert.swift */; };
 		D10880B620DC5803007727B2 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880B520DC5802007727B2 /* IntroView.swift */; };
 		D10880B820DC5986007727B2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10880B720DC5986007727B2 /* SettingsCell.swift */; };
@@ -37,7 +35,6 @@
 		D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */; };
 		D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */; };
 		D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */; };
-		D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855020E59D1000006176 /* ViewModelItem.swift */; };
 		D10D855320E5AB8700006176 /* DragCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855220E5AB8600006176 /* DragCell.swift */; };
 		D10D855520E5B00300006176 /* CircleUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D855420E5B00300006176 /* CircleUserCell.swift */; };
 		D11775E7200CE23800B1953C /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775E6200CE23800B1953C /* PageViewController.swift */; };
@@ -46,11 +43,27 @@
 		D11775ED200CFB9E00B1953C /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */; };
 		D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11775EE200D03AB00B1953C /* PageThreeVC.swift */; };
 		D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */; };
-		D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */; };
+		D1185C1420D08C320007DDB8 /* CircleStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1185C1320D08C320007DDB8 /* CircleStateCell.swift */; };
 		D11B9AAC20D487BB00543538 /* firework.json in Resources */ = {isa = PBXBuildFile; fileRef = D11B9AAB20D487BA00543538 /* firework.json */; };
-		D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F27ED20C61C0F00F47474 /* InviteCell.swift */; };
-		D12B604F211228B200B5636B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D12B604E211228B100B5636B /* GoogleService-Info.plist */; };
-		D12B97452030D313001B44FB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC.swift */; };
+		D12393A2214202BE00DC9FA3 /* UserActivitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393A1214202BE00DC9FA3 /* UserActivitiesViewModel.swift */; };
+		D12393A4214203F800DC9FA3 /* UserActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393A3214203F800DC9FA3 /* UserActivities.swift */; };
+		D12393A62144724500DC9FA3 /* UserActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393A52144724500DC9FA3 /* UserActivitySection.swift */; };
+		D12393A82146D66800DC9FA3 /* CircleStateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393A72146D66800DC9FA3 /* CircleStateSection.swift */; };
+		D12393AE2148910300DC9FA3 /* RangeCircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393A9214890FD00DC9FA3 /* RangeCircularSlider.swift */; };
+		D12393AF2148910300DC9FA3 /* MidPointCircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393AA214890FE00DC9FA3 /* MidPointCircularSlider.swift */; };
+		D12393B02148910300DC9FA3 /* CircularSliderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393AB2148910000DC9FA3 /* CircularSliderHelper.swift */; };
+		D12393B12148910300DC9FA3 /* CircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393AC2148910100DC9FA3 /* CircularSlider.swift */; };
+		D12393B22148910300DC9FA3 /* CircularSlider+Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393AD2148910300DC9FA3 /* CircularSlider+Draw.swift */; };
+		D12393B42148927100DC9FA3 /* ready.json in Resources */ = {isa = PBXBuildFile; fileRef = D12393B32148927100DC9FA3 /* ready.json */; };
+		D12393B62148BCBF00DC9FA3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12393B52148BCBE00DC9FA3 /* String.swift */; };
+		D127D3D221209A040041A821 /* PushNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3D121209A040041A821 /* PushNotificationCell.swift */; };
+		D127D3D42120AD3D0041A821 /* ReadySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3D32120AD3D0041A821 /* ReadySectionController.swift */; };
+		D127D3D62120B8660041A821 /* ReadyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3D52120B8660041A821 /* ReadyCell.swift */; };
+		D127D3D9212329E30041A821 /* SetupCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3D8212329E30041A821 /* SetupCircleView.swift */; };
+		D127D3DB21232C900041A821 /* ReadyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D127D3DA21232C900041A821 /* ReadyView.swift */; };
+		D127D3DD21249E350041A821 /* pulse.json in Resources */ = {isa = PBXBuildFile; fileRef = D127D3DC21249E340041A821 /* pulse.json */; };
+		D12B97452030D313001B44FB /* LoginVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B97442030D313001B44FB /* LoginVC2.swift */; };
+		D136B4EB214DF6C700104E9B /* PaymentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D136B4EA214DF6C700104E9B /* PaymentsVC.swift */; };
 		D1420A6420F6964100E0C54E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1420A6320F6964100E0C54E /* ErrorHandler.swift */; };
 		D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */; };
 		D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */; };
@@ -60,11 +73,9 @@
 		D153C96C20BDB7E90007C3F5 /* NextPayoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */; };
 		D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96D20BF90050007C3F5 /* AmountsSection.swift */; };
 		D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C96F20BF903F0007C3F5 /* AmountsCell.swift */; };
-		D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153C97620C088950007C3F5 /* HeaderSection.swift */; };
 		D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15586D02015885D00E4984B /* UIColor+Palette.swift */; };
 		D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */; };
-		D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* WelcomeVC.swift */; };
-		D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407A202EB79F00B2A1F5 /* PendingVC.swift */; };
+		D1619201202814AD0073C8B8 /* Welcome2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1619200202814AD0073C8B8 /* Welcome2.swift */; };
 		D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165407F2030990700B2A1F5 /* ChooseImageView.swift */; };
 		D1669CEA20CD4F840006FC9B /* Insight.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CE920CD4F840006FC9B /* Insight.swift */; };
 		D1669CEC20CD9FE40006FC9B /* UpperSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CEB20CD9FE40006FC9B /* UpperSection.swift */; };
@@ -72,6 +83,7 @@
 		D1669CF020CE7BCA0006FC9B /* SelectedUsersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */; };
 		D16938391FB386830095F5A7 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16938381FB386830095F5A7 /* Circle.swift */; };
 		D16D05031FB0A27A00153D99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D05021FB0A27A00153D99 /* User.swift */; };
+		D170800E214A1E5700E6FF9D /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D170800D214A1E5700E6FF9D /* WebVC.swift */; };
 		D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */; };
 		D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17197EF200E51A5009BC920 /* LoadingButton.swift */; };
 		D17197F3200E6052009BC920 /* LogButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17197F2200E6052009BC920 /* LogButton.swift */; };
@@ -92,8 +104,37 @@
 		D171982D200F95CC009BC920 /* Footnote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D171982C200F95CC009BC920 /* Footnote.swift */; };
 		D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF21FB1543F00267B35 /* SettingsVC.swift */; };
 		D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */; };
+		D18948632134E9B5001C7CBE /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18948622134E9B5001C7CBE /* Pulsator.swift */; };
+		D189487E21378A25001C7CBE /* NameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189487D21378A25001C7CBE /* NameVC.swift */; };
+		D18948802137BCF5001C7CBE /* Typing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189487F2137BCF5001C7CBE /* Typing.swift */; };
+		D189488221384D9D001C7CBE /* EmailPhoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189488121384D9D001C7CBE /* EmailPhoneVC.swift */; };
+		D19D969F214E043A008078C7 /* PaymentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D969E214E043A008078C7 /* PaymentsCell.swift */; };
+		D19D96A1214E0DAD008078C7 /* AddPaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D96A0214E0DAD008078C7 /* AddPaymentVC.swift */; };
+		D1A8DEC9212B47B600D3F6B2 /* ActivatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A8DEC8212B47B600D3F6B2 /* ActivatedView.swift */; };
+		D1ACDE87211BE22000F92FEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1ACDE86211BE22000F92FEB /* GoogleService-Info.plist */; };
+		D1ACDE8C211F8F4800F92FEB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ACDE8B211F8F4800F92FEB /* ChangePasswordVC.swift */; };
+		D1ACDE8E211FDF3F00F92FEB /* CurrentPasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ACDE8D211FDF3F00F92FEB /* CurrentPasswordCell.swift */; };
+		D1C143A0213A0EA7008ADF1D /* PhoneVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C1439F213A0EA7008ADF1D /* PhoneVerification.swift */; };
+		D1C143A3213A2BA7008ADF1D /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143A2213A2BA7008ADF1D /* Countries.swift */; };
+		D1C143A5213A2BCD008ADF1D /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143A4213A2BCC008ADF1D /* Country.swift */; };
+		D1C143A7213A2BE7008ADF1D /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143A6213A2BE7008ADF1D /* CountryCell.swift */; };
+		D1C143A9213A2C09008ADF1D /* CountryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143A8213A2C09008ADF1D /* CountryList.swift */; };
+		D1C143AE213B27E1008ADF1D /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143AD213B27E1008ADF1D /* LoginVC.swift */; };
+		D1C143B2213B7793008ADF1D /* ResetPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143B1213B7793008ADF1D /* ResetPassVC.swift */; };
+		D1C143B4213C41CF008ADF1D /* FindCircleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143B3213C41CF008ADF1D /* FindCircleVC.swift */; };
+		D1C143B7213C6230008ADF1D /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143B6213C6230008ADF1D /* RangeSlider.swift */; };
+		D1C143BD213C693C008ADF1D /* GoalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143BC213C693C008ADF1D /* GoalVC.swift */; };
+		D1C143BF213C7657008ADF1D /* RangeSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143BE213C7657008ADF1D /* RangeSliderDelegate.swift */; };
+		D1C143C1213C7699008ADF1D /* TapticEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143C0213C7699008ADF1D /* TapticEngine.swift */; };
+		D1C143C3213C989B008ADF1D /* FindCircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143C2213C989B008ADF1D /* FindCircleSection.swift */; };
+		D1C143C5213C98DE008ADF1D /* FindCircleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143C4213C98DE008ADF1D /* FindCircleCell.swift */; };
+		D1C143C7213CA72D008ADF1D /* CreateCircleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143C6213CA72D008ADF1D /* CreateCircleVC.swift */; };
+		D1C143C9213DBEF7008ADF1D /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143C8213DBEF7008ADF1D /* DashboardVC.swift */; };
+		D1C143CB213F9B8D008ADF1D /* DashboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143CA213F9B8D008ADF1D /* DashboardSection.swift */; };
+		D1C143CD213FA1CE008ADF1D /* CircleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143CC213FA1CE008ADF1D /* CircleSection.swift */; };
+		D1C143CF213FA2F6008ADF1D /* UserCircleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143CE213FA2F6008ADF1D /* UserCircleCell.swift */; };
+		D1C143D1213FB0D6008ADF1D /* UserInsideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C143D0213FB0D6008ADF1D /* UserInsideCell.swift */; };
 		D1D66D672071B8860087D41C /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D66D662071B8860087D41C /* ImageButton.swift */; };
-		D1E306762008210B000A5845 /* InviteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E306752008210B000A5845 /* InviteVC.swift */; };
 		D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */; };
 		D1EAD2E920E9F301008A9135 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2E820E9F301008A9135 /* Haptics.swift */; };
 		D1EAD2EB20EBD476008A9135 /* UICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAD2EA20EBD476008A9135 /* UICreator.swift */; };
@@ -146,8 +187,6 @@
 		6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		87C2CC8784914F1C08639150 /* Pods-Sparen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sparen.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sparen/Pods-Sparen.debug.xcconfig"; sourceTree = "<group>"; };
 		BFB1BFDD25B40D6B111D7A4D /* Pods_Sparen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sparen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D100D9AB2009F9B700CAEB83 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
-		D100D9AF200A13E500CAEB83 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		D100D9B7200B981400CAEB83 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		D106B6971FCDEAF2002CCEBC /* Sparen-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sparen-Bridging-Header.h"; sourceTree = "<group>"; };
 		D10880B520DC5802007727B2 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
@@ -162,7 +201,6 @@
 		D10A6DB4203E2CAA00E7AEB5 /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInsightCell.swift; sourceTree = "<group>"; };
 		D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVCTwo.swift; sourceTree = "<group>"; };
-		D10D855020E59D1000006176 /* ViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelItem.swift; sourceTree = "<group>"; };
 		D10D855220E5AB8600006176 /* DragCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragCell.swift; sourceTree = "<group>"; };
 		D10D855420E5B00300006176 /* CircleUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleUserCell.swift; sourceTree = "<group>"; };
 		D11775E6200CE23800B1953C /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -171,12 +209,28 @@
 		D11775EC200CFB9E00B1953C /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D11775EE200D03AB00B1953C /* PageThreeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageThreeVC.swift; sourceTree = "<group>"; };
 		D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCircleSection.swift; sourceTree = "<group>"; };
-		D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyAmoutCell.swift; sourceTree = "<group>"; };
+		D1185C1320D08C320007DDB8 /* CircleStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleStateCell.swift; sourceTree = "<group>"; };
 		D11B9AAB20D487BA00543538 /* firework.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = firework.json; sourceTree = "<group>"; };
-		D11F27ED20C61C0F00F47474 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		D12393A1214202BE00DC9FA3 /* UserActivitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivitiesViewModel.swift; sourceTree = "<group>"; };
+		D12393A3214203F800DC9FA3 /* UserActivities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivities.swift; sourceTree = "<group>"; };
+		D12393A52144724500DC9FA3 /* UserActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivitySection.swift; sourceTree = "<group>"; };
+		D12393A72146D66800DC9FA3 /* CircleStateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleStateSection.swift; sourceTree = "<group>"; };
+		D12393A9214890FD00DC9FA3 /* RangeCircularSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeCircularSlider.swift; sourceTree = "<group>"; };
+		D12393AA214890FE00DC9FA3 /* MidPointCircularSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidPointCircularSlider.swift; sourceTree = "<group>"; };
+		D12393AB2148910000DC9FA3 /* CircularSliderHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSliderHelper.swift; sourceTree = "<group>"; };
+		D12393AC2148910100DC9FA3 /* CircularSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSlider.swift; sourceTree = "<group>"; };
+		D12393AD2148910300DC9FA3 /* CircularSlider+Draw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CircularSlider+Draw.swift"; sourceTree = "<group>"; };
+		D12393B32148927100DC9FA3 /* ready.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ready.json; sourceTree = "<group>"; };
+		D12393B52148BCBE00DC9FA3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		D127D3D121209A040041A821 /* PushNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationCell.swift; sourceTree = "<group>"; };
+		D127D3D32120AD3D0041A821 /* ReadySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadySectionController.swift; sourceTree = "<group>"; };
+		D127D3D52120B8660041A821 /* ReadyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyCell.swift; sourceTree = "<group>"; };
+		D127D3D8212329E30041A821 /* SetupCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCircleView.swift; sourceTree = "<group>"; };
+		D127D3DA21232C900041A821 /* ReadyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyView.swift; sourceTree = "<group>"; };
+		D127D3DC21249E340041A821 /* pulse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = pulse.json; path = ../../../Downloads/pulse.json; sourceTree = "<group>"; };
 		D12B604D211208D500B5636B /* Sparen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sparen.entitlements; sourceTree = "<group>"; };
-		D12B604E211228B100B5636B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D12B97442030D313001B44FB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		D12B97442030D313001B44FB /* LoginVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC2.swift; sourceTree = "<group>"; };
+		D136B4EA214DF6C700104E9B /* PaymentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsVC.swift; sourceTree = "<group>"; };
 		D1420A6320F6964100E0C54E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		D142F1CD200D18E500DBA881 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		D142F1D0200D1D1400DBA881 /* TextFieldRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRect.swift; sourceTree = "<group>"; };
@@ -186,11 +240,9 @@
 		D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPayoutCell.swift; sourceTree = "<group>"; };
 		D153C96D20BF90050007C3F5 /* AmountsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsSection.swift; sourceTree = "<group>"; };
 		D153C96F20BF903F0007C3F5 /* AmountsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountsCell.swift; sourceTree = "<group>"; };
-		D153C97620C088950007C3F5 /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
 		D15586D02015885D00E4984B /* UIColor+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Palette.swift"; sourceTree = "<group>"; };
 		D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBankVC.swift; sourceTree = "<group>"; };
-		D1619200202814AD0073C8B8 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
-		D165407A202EB79F00B2A1F5 /* PendingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingVC.swift; sourceTree = "<group>"; };
+		D1619200202814AD0073C8B8 /* Welcome2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome2.swift; sourceTree = "<group>"; };
 		D165407F2030990700B2A1F5 /* ChooseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseImageView.swift; sourceTree = "<group>"; };
 		D1669CE920CD4F840006FC9B /* Insight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insight.swift; sourceTree = "<group>"; };
 		D1669CEB20CD9FE40006FC9B /* UpperSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpperSection.swift; sourceTree = "<group>"; };
@@ -198,6 +250,7 @@
 		D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUsersSection.swift; sourceTree = "<group>"; };
 		D16938381FB386830095F5A7 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		D16D05021FB0A27A00153D99 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D170800D214A1E5700E6FF9D /* WebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVC.swift; sourceTree = "<group>"; };
 		D17197ED200E40AE009BC920 /* VericationPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VericationPhoneVC.swift; sourceTree = "<group>"; };
 		D17197EF200E51A5009BC920 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		D17197F2200E6052009BC920 /* LogButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogButton.swift; sourceTree = "<group>"; };
@@ -219,10 +272,39 @@
 		D171982C200F95CC009BC920 /* Footnote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Footnote.swift; sourceTree = "<group>"; };
 		D1753CF21FB1543F00267B35 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountVC.swift; sourceTree = "<group>"; };
+		D18948622134E9B5001C7CBE /* Pulsator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulsator.swift; sourceTree = "<group>"; };
+		D189487D21378A25001C7CBE /* NameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameVC.swift; sourceTree = "<group>"; };
+		D189487F2137BCF5001C7CBE /* Typing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typing.swift; sourceTree = "<group>"; };
+		D189488121384D9D001C7CBE /* EmailPhoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPhoneVC.swift; sourceTree = "<group>"; };
 		D192E4DC204A4C79004519D9 /* CountryList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D192E4DE204A4C90004519D9 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19D969E214E043A008078C7 /* PaymentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCell.swift; sourceTree = "<group>"; };
+		D19D96A0214E0DAD008078C7 /* AddPaymentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentVC.swift; sourceTree = "<group>"; };
+		D1A8DEC8212B47B600D3F6B2 /* ActivatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatedView.swift; sourceTree = "<group>"; };
+		D1ACDE86211BE22000F92FEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D1ACDE8B211F8F4800F92FEB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		D1ACDE8D211FDF3F00F92FEB /* CurrentPasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPasswordCell.swift; sourceTree = "<group>"; };
+		D1C1439F213A0EA7008ADF1D /* PhoneVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerification.swift; sourceTree = "<group>"; };
+		D1C143A2213A2BA7008ADF1D /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		D1C143A4213A2BCC008ADF1D /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		D1C143A6213A2BE7008ADF1D /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
+		D1C143A8213A2C09008ADF1D /* CountryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryList.swift; sourceTree = "<group>"; };
+		D1C143AD213B27E1008ADF1D /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		D1C143B1213B7793008ADF1D /* ResetPassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassVC.swift; sourceTree = "<group>"; };
+		D1C143B3213C41CF008ADF1D /* FindCircleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCircleVC.swift; sourceTree = "<group>"; };
+		D1C143B6213C6230008ADF1D /* RangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
+		D1C143BC213C693C008ADF1D /* GoalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalVC.swift; sourceTree = "<group>"; };
+		D1C143BE213C7657008ADF1D /* RangeSliderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSliderDelegate.swift; sourceTree = "<group>"; };
+		D1C143C0213C7699008ADF1D /* TapticEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapticEngine.swift; sourceTree = "<group>"; };
+		D1C143C2213C989B008ADF1D /* FindCircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCircleSection.swift; sourceTree = "<group>"; };
+		D1C143C4213C98DE008ADF1D /* FindCircleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCircleCell.swift; sourceTree = "<group>"; };
+		D1C143C6213CA72D008ADF1D /* CreateCircleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCircleVC.swift; sourceTree = "<group>"; };
+		D1C143C8213DBEF7008ADF1D /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
+		D1C143CA213F9B8D008ADF1D /* DashboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSection.swift; sourceTree = "<group>"; };
+		D1C143CC213FA1CE008ADF1D /* CircleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSection.swift; sourceTree = "<group>"; };
+		D1C143CE213FA2F6008ADF1D /* UserCircleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCircleCell.swift; sourceTree = "<group>"; };
+		D1C143D0213FB0D6008ADF1D /* UserInsideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsideCell.swift; sourceTree = "<group>"; };
 		D1D66D662071B8860087D41C /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
-		D1E306752008210B000A5845 /* InviteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteVC.swift; sourceTree = "<group>"; };
 		D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
 		D1EAD2E820E9F301008A9135 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		D1EAD2EA20EBD476008A9135 /* UICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICreator.swift; sourceTree = "<group>"; };
@@ -313,9 +395,11 @@
 			isa = PBXGroup;
 			children = (
 				6D0CCE131FAD70E900DF5F13 /* Info.plist */,
-				D12B604E211228B100B5636B /* GoogleService-Info.plist */,
+				D1ACDE86211BE22000F92FEB /* GoogleService-Info.plist */,
 				D12B604D211208D500B5636B /* Sparen.entitlements */,
+				D127D3DC21249E340041A821 /* pulse.json */,
 				D11B9AAB20D487BA00543538 /* firework.json */,
+				D12393B32148927100DC9FA3 /* ready.json */,
 				D1EAD2E720E9F2EA008A9135 /* Haptics */,
 				6D0CCE0E1FAD70E900DF5F13 /* Assets.xcassets */,
 				D1EAD2E220E95051008A9135 /* Storyboards */,
@@ -353,8 +437,9 @@
 		6D0CCE3E1FAE05EB00DF5F13 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				D165407A202EB79F00B2A1F5 /* PendingVC.swift */,
-				D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */,
+				D1C143C8213DBEF7008ADF1D /* DashboardVC.swift */,
+				D1C143B3213C41CF008ADF1D /* FindCircleVC.swift */,
+				D1C143C6213CA72D008ADF1D /* CreateCircleVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -371,12 +456,18 @@
 		6D0CCE4A1FAE2B9300DF5F13 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				D1C143B5213C6219008ADF1D /* RangeSlider */,
+				D1C143A1213A2B73008ADF1D /* Country */,
+				D189487121350523001C7CBE /* Circular */,
 				6D0CCE4B1FAE2B9F00DF5F13 /* Constant.swift */,
 				D100D9B7200B981400CAEB83 /* Alert.swift */,
 				D15586D02015885D00E4984B /* UIColor+Palette.swift */,
 				D1EAD2EA20EBD476008A9135 /* UICreator.swift */,
 				D1420A6320F6964100E0C54E /* ErrorHandler.swift */,
 				D109DE0120FD12F70076379F /* Device.swift */,
+				D18948622134E9B5001C7CBE /* Pulsator.swift */,
+				D189487F2137BCF5001C7CBE /* Typing.swift */,
+				D12393B52148BCBE00DC9FA3 /* String.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -384,6 +475,7 @@
 		6D0CCE511FAE7F2200DF5F13 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D127D3D7212329CF0041A821 /* CircleState */,
 				D10880BF20E421AE007727B2 /* SettingsCell */,
 				D10880B520DC5802007727B2 /* IntroView.swift */,
 				D17197F7200E63AF009BC920 /* UI */,
@@ -409,6 +501,11 @@
 			isa = PBXGroup;
 			children = (
 				D1753CF21FB1543F00267B35 /* SettingsVC.swift */,
+				D1753CF41FB15B5C00267B35 /* EditAccountVC.swift */,
+				D1ACDE8B211F8F4800F92FEB /* ChangePasswordVC.swift */,
+				D170800D214A1E5700E6FF9D /* WebVC.swift */,
+				D136B4EA214DF6C700104E9B /* PaymentsVC.swift */,
+				D19D96A0214E0DAD008078C7 /* AddPaymentVC.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -421,7 +518,7 @@
 				D171981F200E852B009BC920 /* NamePasswordVC.swift */,
 				D17197F4200E632C009BC920 /* BankAccountVC.swift */,
 				D15DA0BB2049E2E6008BA9DE /* ChooseBankVC.swift */,
-				D12B97442030D313001B44FB /* LoginVC.swift */,
+				D12B97442030D313001B44FB /* LoginVC2.swift */,
 				D1FDA77920326C5A006D2CBF /* ForgotPasswordVC.swift */,
 				D1F8AB2920A3E9220050AA05 /* CodeVC.swift */,
 			);
@@ -432,11 +529,29 @@
 		D10BE0A72037A80400B83560 /* Onboarding2 */ = {
 			isa = PBXGroup;
 			children = (
-				D1619200202814AD0073C8B8 /* WelcomeVC.swift */,
+				D1619200202814AD0073C8B8 /* Welcome2.swift */,
 				D10A6DAB2039BB9300E7AEB5 /* InviteVCTwo.swift */,
 				D10BDC1A20420E4300D22860 /* PhoneVCTwo.swift */,
 			);
 			path = Onboarding2;
+			sourceTree = "<group>";
+		};
+		D114F6462140A9A00018FC30 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				D10880B720DC5986007727B2 /* SettingsCell.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		D127D3D7212329CF0041A821 /* CircleState */ = {
+			isa = PBXGroup;
+			children = (
+				D127D3D8212329E30041A821 /* SetupCircleView.swift */,
+				D127D3DA21232C900041A821 /* ReadyView.swift */,
+				D1A8DEC8212B47B600D3F6B2 /* ActivatedView.swift */,
+			);
+			path = CircleState;
 			sourceTree = "<group>";
 		};
 		D142F1CB200D186700DBA881 /* Onboarding */ = {
@@ -448,14 +563,6 @@
 				D11775EE200D03AB00B1953C /* PageThreeVC.swift */,
 			);
 			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		D142F1CC200D189000DBA881 /* Inivite */ = {
-			isa = PBXGroup;
-			children = (
-				D1E306752008210B000A5845 /* InviteVC.swift */,
-			);
-			path = Inivite;
 			sourceTree = "<group>";
 		};
 		D142F1CF200D1D0100DBA881 /* UItextField */ = {
@@ -474,12 +581,17 @@
 				D153C96720BB15040007C3F5 /* CircleInsightSection.swift */,
 				D153C96920BDB7C00007C3F5 /* NextPayoutSection.swift */,
 				D153C96D20BF90050007C3F5 /* AmountsSection.swift */,
-				D153C97620C088950007C3F5 /* HeaderSection.swift */,
 				D1669CEB20CD9FE40006FC9B /* UpperSection.swift */,
 				D1669CEF20CE7BCA0006FC9B /* SelectedUsersSection.swift */,
 				D1185C1120D075FC0007DDB8 /* SetupCircleSection.swift */,
 				D10880B920DC6413007727B2 /* FinishCircleSection.swift */,
 				D10880BD20E420A8007727B2 /* EditAccountSection.swift */,
+				D127D3D32120AD3D0041A821 /* ReadySectionController.swift */,
+				D1C143C2213C989B008ADF1D /* FindCircleSection.swift */,
+				D1C143CA213F9B8D008ADF1D /* DashboardSection.swift */,
+				D1C143CC213FA1CE008ADF1D /* CircleSection.swift */,
+				D12393A52144724500DC9FA3 /* UserActivitySection.swift */,
+				D12393A72146D66800DC9FA3 /* CircleStateSection.swift */,
 			);
 			path = SectionController;
 			sourceTree = "<group>";
@@ -495,18 +607,23 @@
 		D169383C1FB38CDC0095F5A7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				D10880B720DC5986007727B2 /* SettingsCell.swift */,
+				D114F6462140A9A00018FC30 /* Dashboard */,
 				D10D855220E5AB8600006176 /* DragCell.swift */,
 				D1F7A7771FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift */,
-				D100D9AF200A13E500CAEB83 /* ContactCell.swift */,
 				D10AC8DA207BF50D0076F34E /* CircleInsightCell.swift */,
 				D153C96B20BDB7E90007C3F5 /* NextPayoutCell.swift */,
 				D153C96F20BF903F0007C3F5 /* AmountsCell.swift */,
-				D11F27ED20C61C0F00F47474 /* InviteCell.swift */,
 				D1669CED20CDA0240006FC9B /* SelectedUserCell.swift */,
-				D1185C1320D08C320007DDB8 /* MonthlyAmoutCell.swift */,
+				D1185C1320D08C320007DDB8 /* CircleStateCell.swift */,
 				D10880BB20DC646C007727B2 /* FinishMessageCell.swift */,
 				D10D855420E5B00300006176 /* CircleUserCell.swift */,
+				D1ACDE8D211FDF3F00F92FEB /* CurrentPasswordCell.swift */,
+				D127D3D121209A040041A821 /* PushNotificationCell.swift */,
+				D127D3D52120B8660041A821 /* ReadyCell.swift */,
+				D1C143C4213C98DE008ADF1D /* FindCircleCell.swift */,
+				D1C143CE213FA2F6008ADF1D /* UserCircleCell.swift */,
+				D1C143D0213FB0D6008ADF1D /* UserInsideCell.swift */,
+				D19D969E214E043A008078C7 /* PaymentsCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -523,10 +640,9 @@
 			isa = PBXGroup;
 			children = (
 				D16D05021FB0A27A00153D99 /* User.swift */,
-				D100D9AB2009F9B700CAEB83 /* UserContact.swift */,
 				D16938381FB386830095F5A7 /* Circle.swift */,
 				D1669CE920CD4F840006FC9B /* Insight.swift */,
-				D10D855020E59D1000006176 /* ViewModelItem.swift */,
+				D12393A3214203F800DC9FA3 /* UserActivities.swift */,
 			);
 			name = Model;
 			path = Model/Model;
@@ -575,7 +691,6 @@
 			children = (
 				6D0CCE5B1FAFD0AF00DF5F13 /* LoginViewController.swift */,
 				D10BB2A820196554004F5262 /* FlowSinUp */,
-				D142F1CC200D189000DBA881 /* Inivite */,
 				D142F1CB200D186700DBA881 /* Onboarding */,
 			);
 			path = "Sign Up";
@@ -595,12 +710,67 @@
 		D1753CF71FB15E8500267B35 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6D0CCE3E1FAE05EB00DF5F13 /* Main */,
+				D1C143AC213B27B6008ADF1D /* Login */,
+				D189487C21378A0A001C7CBE /* Register */,
 				D10A6DB3203B521800E7AEB5 /* Settings */,
 				D10BE0A72037A80400B83560 /* Onboarding2 */,
 				D171981E200E849D009BC920 /* Sign Up */,
-				6D0CCE3E1FAE05EB00DF5F13 /* Main */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		D189487121350523001C7CBE /* Circular */ = {
+			isa = PBXGroup;
+			children = (
+				D12393AC2148910100DC9FA3 /* CircularSlider.swift */,
+				D12393AD2148910300DC9FA3 /* CircularSlider+Draw.swift */,
+				D12393AB2148910000DC9FA3 /* CircularSliderHelper.swift */,
+				D12393AA214890FE00DC9FA3 /* MidPointCircularSlider.swift */,
+				D12393A9214890FD00DC9FA3 /* RangeCircularSlider.swift */,
+			);
+			path = Circular;
+			sourceTree = "<group>";
+		};
+		D189487C21378A0A001C7CBE /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				D189487D21378A25001C7CBE /* NameVC.swift */,
+				D189488121384D9D001C7CBE /* EmailPhoneVC.swift */,
+				D1C1439F213A0EA7008ADF1D /* PhoneVerification.swift */,
+				D1C143BC213C693C008ADF1D /* GoalVC.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		D1C143A1213A2B73008ADF1D /* Country */ = {
+			isa = PBXGroup;
+			children = (
+				D1C143A2213A2BA7008ADF1D /* Countries.swift */,
+				D1C143A4213A2BCC008ADF1D /* Country.swift */,
+				D1C143A6213A2BE7008ADF1D /* CountryCell.swift */,
+				D1C143A8213A2C09008ADF1D /* CountryList.swift */,
+			);
+			path = Country;
+			sourceTree = "<group>";
+		};
+		D1C143AC213B27B6008ADF1D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				D1C143AD213B27E1008ADF1D /* LoginVC.swift */,
+				D1C143B1213B7793008ADF1D /* ResetPassVC.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		D1C143B5213C6219008ADF1D /* RangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+				D1C143B6213C6230008ADF1D /* RangeSlider.swift */,
+				D1C143BE213C7657008ADF1D /* RangeSliderDelegate.swift */,
+				D1C143C0213C7699008ADF1D /* TapticEngine.swift */,
+			);
+			path = RangeSlider;
 			sourceTree = "<group>";
 		};
 		D1EAD2E220E95051008A9135 /* Storyboards */ = {
@@ -617,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				D1EAD2E520E950A3008A9135 /* UserListViewModel.swift */,
+				D12393A1214202BE00DC9FA3 /* UserActivitiesViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -761,8 +932,10 @@
 				6D0CCE121FAD70E900DF5F13 /* LaunchScreen.storyboard in Resources */,
 				6D0CCE0F1FAD70E900DF5F13 /* Assets.xcassets in Resources */,
 				6D0CCE0D1FAD70E900DF5F13 /* Main.storyboard in Resources */,
+				D127D3DD21249E350041A821 /* pulse.json in Resources */,
 				6D0CCE3A1FADF29A00DF5F13 /* Log.storyboard in Resources */,
-				D12B604F211228B200B5636B /* GoogleService-Info.plist in Resources */,
+				D1ACDE87211BE22000F92FEB /* GoogleService-Info.plist in Resources */,
+				D12393B42148927100DC9FA3 /* ready.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,14 +983,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Sparen/Pods-Sparen-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
-				"${BUILT_PRODUCTS_DIR}/CountryList/CountryList.framework",
+				"${BUILT_PRODUCTS_DIR}/GSMessages/GSMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/HGCircularSlider/HGCircularSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${PODS_ROOT}/Plaid/ios/LinkKit.framework",
+				"${BUILT_PRODUCTS_DIR}/LTMorphingLabel/LTMorphingLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
@@ -833,14 +1005,13 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CountryList.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GSMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HGCircularSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LinkKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LTMorphingLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
@@ -930,14 +1101,19 @@
 				D1719818200E725A009BC920 /* AKMaskFieldBrackets.swift in Sources */,
 				D10BDC1B20420E4300D22860 /* PhoneVCTwo.swift in Sources */,
 				D11775E9200CE68500B1953C /* PageOneVC.swift in Sources */,
-				D100D9AC2009F9B700CAEB83 /* UserContact.swift in Sources */,
+				D12393A4214203F800DC9FA3 /* UserActivities.swift in Sources */,
+				D18948632134E9B5001C7CBE /* Pulsator.swift in Sources */,
+				D1C143A0213A0EA7008ADF1D /* PhoneVerification.swift in Sources */,
+				D189487E21378A25001C7CBE /* NameVC.swift in Sources */,
 				D1753CF31FB1543F00267B35 /* SettingsVC.swift in Sources */,
+				D1C143B4213C41CF008ADF1D /* FindCircleVC.swift in Sources */,
 				D1719829200F91FB009BC920 /* Subhead.swift in Sources */,
 				D10A6DB5203E2CAA00E7AEB5 /* OptionButton.swift in Sources */,
 				D142F1D1200D1D1400DBA881 /* TextFieldRect.swift in Sources */,
 				D17197F3200E6052009BC920 /* LogButton.swift in Sources */,
-				D1619201202814AD0073C8B8 /* WelcomeVC.swift in Sources */,
+				D1619201202814AD0073C8B8 /* Welcome2.swift in Sources */,
 				D10880BA20DC6413007727B2 /* FinishCircleSection.swift in Sources */,
+				D12393B02148910300DC9FA3 /* CircularSliderHelper.swift in Sources */,
 				D11775E7200CE23800B1953C /* PageViewController.swift in Sources */,
 				D1669CEE20CDA0240006FC9B /* SelectedUserCell.swift in Sources */,
 				D171982B200F927B009BC920 /* CardField.swift in Sources */,
@@ -945,71 +1121,105 @@
 				D16540802030990700B2A1F5 /* ChooseImageView.swift in Sources */,
 				D11775EB200CE69200B1953C /* PageTwoVC.swift in Sources */,
 				D17197F5200E632C009BC920 /* BankAccountVC.swift in Sources */,
+				D1C143C3213C989B008ADF1D /* FindCircleSection.swift in Sources */,
 				D1719820200E852B009BC920 /* NamePasswordVC.swift in Sources */,
 				D1669CEA20CD4F840006FC9B /* Insight.swift in Sources */,
 				D142F1CE200D18E500DBA881 /* ContactInfoVC.swift in Sources */,
-				D100D9B1200A13E500CAEB83 /* ContactCell.swift in Sources */,
+				D1C143A7213A2BE7008ADF1D /* CountryCell.swift in Sources */,
+				D1C143A9213A2C09008ADF1D /* CountryList.swift in Sources */,
 				D108D21C2027A82A00679ACE /* CircleView.swift in Sources */,
 				D10D855320E5AB8700006176 /* DragCell.swift in Sources */,
 				D1F8AB2A20A3E9220050AA05 /* CodeVC.swift in Sources */,
+				D1C143A3213A2BA7008ADF1D /* Countries.swift in Sources */,
+				D12393A62144724500DC9FA3 /* UserActivitySection.swift in Sources */,
 				D1669CEC20CD9FE40006FC9B /* UpperSection.swift in Sources */,
+				D127D3D9212329E30041A821 /* SetupCircleView.swift in Sources */,
+				D170800E214A1E5700E6FF9D /* WebVC.swift in Sources */,
 				6D0CCE5C1FAFD0AF00DF5F13 /* LoginViewController.swift in Sources */,
+				D12393A2214202BE00DC9FA3 /* UserActivitiesViewModel.swift in Sources */,
 				D16D05031FB0A27A00153D99 /* User.swift in Sources */,
 				6D0CCE4C1FAE2B9F00DF5F13 /* Constant.swift in Sources */,
 				D11775ED200CFB9E00B1953C /* ActivityIndicator.swift in Sources */,
 				D1D66D672071B8860087D41C /* ImageButton.swift in Sources */,
+				D127D3D62120B8660041A821 /* ReadyCell.swift in Sources */,
 				6D0CCE361FAD715C00DF5F13 /* CircleLayout.swift in Sources */,
+				D12393B62148BCBF00DC9FA3 /* String.swift in Sources */,
+				D12393A82146D66800DC9FA3 /* CircleStateSection.swift in Sources */,
 				D1669CF020CE7BCA0006FC9B /* SelectedUsersSection.swift in Sources */,
+				D1A8DEC9212B47B600D3F6B2 /* ActivatedView.swift in Sources */,
 				D10D855520E5B00300006176 /* CircleUserCell.swift in Sources */,
+				D127D3DB21232C900041A821 /* ReadyView.swift in Sources */,
 				D1719815200E725A009BC920 /* AKMaskField.swift in Sources */,
+				D1ACDE8C211F8F4800F92FEB /* ChangePasswordVC.swift in Sources */,
+				D1C143AE213B27E1008ADF1D /* LoginVC.swift in Sources */,
+				D127D3D42120AD3D0041A821 /* ReadySectionController.swift in Sources */,
 				D15586D12015885D00E4984B /* UIColor+Palette.swift in Sources */,
 				6D0CCE491FAE134700DF5F13 /* apiService.swift in Sources */,
-				D165407B202EB79F00B2A1F5 /* PendingVC.swift in Sources */,
-				D10D855120E59D1000006176 /* ViewModelItem.swift in Sources */,
+				D1C143B2213B7793008ADF1D /* ResetPassVC.swift in Sources */,
 				D10AC8DB207BF50D0076F34E /* CircleInsightCell.swift in Sources */,
+				D1C143C1213C7699008ADF1D /* TapticEngine.swift in Sources */,
 				D1EAD2EB20EBD476008A9135 /* UICreator.swift in Sources */,
 				D153C96C20BDB7E90007C3F5 /* NextPayoutCell.swift in Sources */,
 				D1719817200E725A009BC920 /* AKMaskFieldPatternCharacter.swift in Sources */,
 				D171981A200E725A009BC920 /* AKMaskFieldBlock.swift in Sources */,
-				D153C97720C088950007C3F5 /* HeaderSection.swift in Sources */,
 				D10A6DAC2039BB9300E7AEB5 /* InviteVCTwo.swift in Sources */,
 				D17197F0200E51A5009BC920 /* LoadingButton.swift in Sources */,
+				D1C143CD213FA1CE008ADF1D /* CircleSection.swift in Sources */,
+				D1C143D1213FB0D6008ADF1D /* UserInsideCell.swift in Sources */,
+				D189488221384D9D001C7CBE /* EmailPhoneVC.swift in Sources */,
 				D1FDA77A20326C5A006D2CBF /* ForgotPasswordVC.swift in Sources */,
 				D109DE0220FD12F80076379F /* Device.swift in Sources */,
+				D127D3D221209A040041A821 /* PushNotificationCell.swift in Sources */,
 				D10880C120E421C0007727B2 /* ProfileImageCell.swift in Sources */,
-				D11F27EE20C61C0F00F47474 /* InviteCell.swift in Sources */,
+				D12393AF2148910300DC9FA3 /* MidPointCircularSlider.swift in Sources */,
+				D1C143CF213FA2F6008ADF1D /* UserCircleCell.swift in Sources */,
 				6D0CCE461FAE11E100DF5F13 /* AuthService.swift in Sources */,
+				D12393B22148910300DC9FA3 /* CircularSlider+Draw.swift in Sources */,
 				D100D9B8200B981400CAEB83 /* Alert.swift in Sources */,
 				D1719814200E725A009BC920 /* AKMaskFieldStatus.swift in Sources */,
 				D1719825200F8F17009BC920 /* Headline.swift in Sources */,
 				D171981B200E725A009BC920 /* AKMaskFieldUtility.swift in Sources */,
 				D10880B820DC5986007727B2 /* SettingsCell.swift in Sources */,
-				D1E306762008210B000A5845 /* InviteVC.swift in Sources */,
 				6D0CCE531FAE7FCC00DF5F13 /* View.swift in Sources */,
 				D153C96520BAFD050007C3F5 /* Transform.swift in Sources */,
 				D1F7A7781FCB49DE00D5C440 /* EmbeddedCollectionViewCell.swift in Sources */,
+				D18948802137BCF5001C7CBE /* Typing.swift in Sources */,
 				D17197EE200E40AE009BC920 /* VericationPhoneVC.swift in Sources */,
 				D16938391FB386830095F5A7 /* Circle.swift in Sources */,
+				D19D969F214E043A008078C7 /* PaymentsCell.swift in Sources */,
 				D153C96A20BDB7C00007C3F5 /* NextPayoutSection.swift in Sources */,
 				D153C96E20BF90050007C3F5 /* AmountsSection.swift in Sources */,
 				D1EAD2E920E9F301008A9135 /* Haptics.swift in Sources */,
+				D1C143C7213CA72D008ADF1D /* CreateCircleVC.swift in Sources */,
 				D153C97020BF903F0007C3F5 /* AmountsCell.swift in Sources */,
+				D1C143C5213C98DE008ADF1D /* FindCircleCell.swift in Sources */,
 				D1719816200E725A009BC920 /* AKMaskFieldBlockCharacter.swift in Sources */,
+				D1C143A5213A2BCD008ADF1D /* Country.swift in Sources */,
 				D1753CF51FB15B5C00267B35 /* EditAccountVC.swift in Sources */,
-				D12B97452030D313001B44FB /* LoginVC.swift in Sources */,
+				D1C143B7213C6230008ADF1D /* RangeSlider.swift in Sources */,
+				D12B97452030D313001B44FB /* LoginVC2.swift in Sources */,
+				D12393AE2148910300DC9FA3 /* RangeCircularSlider.swift in Sources */,
 				D171982D200F95CC009BC920 /* Footnote.swift in Sources */,
+				D136B4EB214DF6C700104E9B /* PaymentsVC.swift in Sources */,
 				D15DA0BC2049E2E6008BA9DE /* ChooseBankVC.swift in Sources */,
 				D1185C1220D075FC0007DDB8 /* SetupCircleSection.swift in Sources */,
-				D1185C1420D08C320007DDB8 /* MonthlyAmoutCell.swift in Sources */,
+				D1C143CB213F9B8D008ADF1D /* DashboardSection.swift in Sources */,
+				D1ACDE8E211FDF3F00F92FEB /* CurrentPasswordCell.swift in Sources */,
+				D1C143BD213C693C008ADF1D /* GoalVC.swift in Sources */,
+				D1185C1420D08C320007DDB8 /* CircleStateCell.swift in Sources */,
 				D11775EF200D03AB00B1953C /* PageThreeVC.swift in Sources */,
 				D10880B620DC5803007727B2 /* IntroView.swift in Sources */,
 				D1EAD2E620E950A3008A9135 /* UserListViewModel.swift in Sources */,
 				D1719822200F8AC7009BC920 /* BackgroundTextField.swift in Sources */,
+				D1C143BF213C7657008ADF1D /* RangeSliderDelegate.swift in Sources */,
 				D153C96820BB15040007C3F5 /* CircleInsightSection.swift in Sources */,
+				D1C143C9213DBEF7008ADF1D /* DashboardVC.swift in Sources */,
 				D10880BC20DC646C007727B2 /* FinishMessageCell.swift in Sources */,
 				D10880BE20E420A9007727B2 /* EditAccountSection.swift in Sources */,
 				D1719819200E725A009BC920 /* AKMaskFieldEvent.swift in Sources */,
+				D12393B12148910300DC9FA3 /* CircularSlider.swift in Sources */,
 				6D0CCE081FAD70E900DF5F13 /* AppDelegate.swift in Sources */,
+				D19D96A1214E0DAD008078C7 /* AddPaymentVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,6 +1394,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Sparen/Sparen.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1192,6 +1403,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Sparen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sparen/Sparen-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -1209,6 +1422,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Sparen/Sparen.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1218,6 +1432,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kurbs.Sparen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sparen/Sparen-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

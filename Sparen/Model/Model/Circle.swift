@@ -29,14 +29,13 @@ final class Circle {
     var daysLeft: Int?
     var link: String?
     var status: String?
+    var amount: String?
     
 
     
     init(key: String, data: [String: Any]) {
         
-        self.id = key
-        
-        
+        self.id = key        
         
         if let productId = data["product_id"] as? String {
             self.productId = productId
@@ -88,6 +87,10 @@ final class Circle {
         
         if let status = data["status"] as? String {
             self.status = status
+        }
+        
+        if let amount = data["amount"] as? String {
+            self.amount = amount
         }
     }
 }

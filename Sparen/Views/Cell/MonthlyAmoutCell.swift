@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Lottie
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 import Cartography
 
 
-class MonthlyAmoutCell: UICollectionViewCell {
+class CircleStateCell: UICollectionViewCell {
     
     var slider = UISlider()
     var label = UILabel()
@@ -205,7 +205,12 @@ class MonthlyAmoutCell: UICollectionViewCell {
     }
 
     
-    func configure(_ text: String) {
+    func configure(_ text: String, _ circle: Circle) {
+
+        if circle.activated! == false && circle.adminId! == Auth.auth().currentUser?.uid {
+            
+        }
+
         if let firstName = UserDefaults.standard.string(forKey: "firstName") {
             label.text = firstName + "" + ", how much money would you like\nto spare?"
         }

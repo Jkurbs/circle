@@ -6,7 +6,6 @@
 #ifndef FSCalendarSwiftExample_Objc_Bridge_Header_h
 #define FSCalendarSwiftExample_Objc_Bridge_Header_h
 
-//#import "FSCalendar.h"
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <ifaddrs.h>

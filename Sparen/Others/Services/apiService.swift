@@ -14,11 +14,12 @@ import FirebaseFirestore
 import FirebaseDynamicLinks
 
 protocol DataServiceProtocol {
-    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ users: [User], _ error: Error? )->() )
+    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ users: User, _ error: Error? )->() )
 }
 
 
 class DataService: DataServiceProtocol {
+    
     
     private static let _call = DataService()
     
@@ -57,17 +58,159 @@ class DataService: DataServiceProtocol {
             oldValue?.remove()
         }
     }
+    
+    var userListener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
+    
+    var userActivityListener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
+    
+    var circleListener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
+    
+    var circleActivityListener: ListenerRegistration? {
+        didSet {
+            oldValue?.remove()
+        }
+    }
 
     
    let DYNAMIC_LINK_DOMAIN = "fk4hq.app.goo.gl"
    var shortLink: URL?
-
-    var fileUrl: String?
+   var fileUrl: String?
     
-    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ user: [User], _ error: Error? )->()) {
+    
+    
+    
+    func fetchCurrentUser( complete: @escaping ( _ success: Bool, _ user: User, _ error: Error? )->()) {
+        if let uid = Auth.auth().currentUser?.uid ?? UserDefaults.standard.value(forKey: "userId") as? String {
+            self.userListener = self.REF_USERS.document(uid).addSnapshotListener({ (snapshot, error) in
+                guard let snap = snapshot, let data = snap.data() else {return}
+                let key = snap.documentID
+                let user = User(key: key, data: data)
+                let firstName = user.firstName
+                UserDefaults.standard.set(firstName, forKey: "firstName")
+                complete(true, user, nil)
+            })
+        }
+    }
+    
+    func fetchUserActivities(_ circleId: String, _ userId: String, _ complete: @escaping ( _ success: Bool, _ error: Error?, _ activities: [UserActivities]?)->()) {
+        userActivityListener =
+        REF_CIRCLES.document(circleId).collection("users").document(userId).collection("insights").document("activities").addSnapshotListener { (snapshot, error) in
+            guard let snap = snapshot, let data = snap.data() else {
+                print("An error occured")
+                complete(false, error, nil)
+                return
+            }
+            let key = snap.documentID
+
+            let activities = UserActivities(key: key, data: data)
+            complete(true, nil, [activities])
+        }
+    }
+    
+    func fetchCurrentUserCircle( circleId: String?, _ complete: @escaping ( _ success: Bool, _ error: Error?, _ circle: [Circle]?)->()) {
+        
+        guard let circleId = circleId else {return}
+
+        print("circle id:", circleId)
+        circleListener = DataService.call.REF_CIRCLES.document(circleId).addSnapshotListener { snapshot, error in
+            guard let snap = snapshot, let data = snap.data() else {
+                print("Error fetching snapshots: \(error!)")
+                complete(false, error, nil)
+                return
+            }
+            let key = snap.documentID
+            let circle = Circle(key: key, data: data)
+            UserDefaults.standard.set("admin", forKey: circle.adminId!)
+            complete(true, nil, [circle])
+        }
+    }
+    
+    func fetchCircleActivities(_ id: String, _ complete: @escaping ( _ success: Bool, _ error: Error?, _ insight: Insight?)->()) {
+        DataService.call.REF_CIRCLES.document(id).collection("insights").document("activities").addSnapshotListener { (snapshot, error) in
+            guard let snap = snapshot, let data = snap.data() else {
+                complete(false, nil, nil)
+                return
+            }
+            let key = snap.documentID
+            let insight = Insight(key: key, data: data)
+            complete(true, nil, insight)
+        }
+    }
+
+    
+    
+    func createCircle(userID: String, link: String, data: [String: Any], complete: @escaping ( _ success: Bool, _ error: Error?)->()) {
+        
+        let userRef = DataService.call.REF_USERS
+        userRef.document(userID).setData(data, completion: { (error) in
+            if let error = error {
+                complete(false, error)
+                return
+            } else {
+                complete(true, nil)
+//                userRef.document(userID).setData(["circle": ref.documentID], merge: true, completion: { (error) in
+//                    if let error = error {
+//                        complete(false, error)
+//                    } else {
+//                        ref.collection("users").document(userID).setData(["circle": ref.documentID], merge: true, completion: { (error) in
+//                            if let error = error {
+//                                complete(false, error)
+//                            } else {
+//                                complete(true, nil)
+//                            }
+//                        })
+//                    }
+//                })
+            }
+        })
+    }
+    
+    func createLink(circleID: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String)->() ) {
+        
+        guard let link = URL(string: "https://www.sparenapp.com/\(circleID)") else { return}
+        let dynamicLinksDomain = "sparen.page.link"
+        let linkBuilder = DynamicLinkComponents(link: link, domain: dynamicLinksDomain)
+        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Sparen")
+        linkBuilder.iOSParameters?.appStoreID = "389801252"
+        
+        linkBuilder.options = DynamicLinkComponentsOptions()
+        linkBuilder.options?.pathLength = .short
+        
+        linkBuilder.shorten { (url, warnings, error) in
+            if let error = error {
+                print("ERROR SHORTEN LINK:", error.localizedDescription)
+                return
+            }
+            guard let url = url else {return}
+            print("The short URL is: \(url)")
+            completion(true, nil, url.absoluteString)
+        }
+    }
+
+    
+    func addNewUserToCircle(circleID: String, userID: String, data: [String: Any]) {
+        
+    }
+    
+
+    
+    
+    
+    func fetchAdmin(adminID: String , complete: @escaping ( _ success: Bool, _ error: Error?, _ user: User )->()) {
         DispatchQueue.global().async {
-            if let uid = Auth.auth().currentUser?.uid ?? UserDefaults.standard.value(forKey: "userId") as? String {
-                self.REF_USERS.document(uid).getDocument { (snapshot, error) in
+                self.REF_USERS.document(adminID).getDocument { (snapshot, error) in
                     if let error = error {
                         print("ERROR:", error.localizedDescription)
                         return
@@ -78,10 +221,7 @@ class DataService: DataServiceProtocol {
                         let key = snap.documentID
                         let data = snap.data()
                         let user = User(key: key, data: data!)
-                        let firstName = user.firstName
-                        UserDefaults.standard.set(firstName, forKey: "firstName") 
-                        complete(true, [user], nil)
-                    }
+                        complete(true, nil, user)
                 }
             }
         }
@@ -93,9 +233,8 @@ class DataService: DataServiceProtocol {
 
     
     func fetchUsers(complete: @escaping ( _ success: Bool, _ users: [User]?, _ error: Error? )->()) {
-        let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        print("CIRCLE ID::", circleId)
-        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").order(by: "position", descending: false).addSnapshotListener { snapshot, error in
+        guard let circleId  = UserDefaults.standard.string(forKey: "circleId") else {return}
+        listener = DataService.call.REF_CIRCLES.document(circleId).collection("users").order(by: "position", descending: false).addSnapshotListener { snapshot, error in
             self.users = []
             guard let snapshot = snapshot else {
                 complete(false, nil, error)
@@ -115,21 +254,21 @@ class DataService: DataServiceProtocol {
     
     func fetchPayoutUsers(complete: @escaping ( _ success: Bool, _ user: User?, _ error: Error? )->()) {
         let circleId  = UserDefaults.standard.string(forKey: "circleId") ?? ""
-        DataService.call.REF_CIRCLES.document(circleId).collection("insiders").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error fetching snapshots: \(error!)")
-                complete(false, nil, error)
-                return
-            }
-            for snapshot in snapshot.documents {
-                    if snapshot.exists {
-                    let key = snapshot.documentID
-                    let data = snapshot.data()
-                    let user = User(key: key, data: data)
-                    complete(true, user, nil)
-                }
-            }
-        })
+//        DataService.call.REF_CIRCLES.document(circleId).collection("users").whereField("days_left", isGreaterThan: 0).limit(to: 3).getDocuments(completion: { (snapshot, error) in
+//            guard let snapshot = snapshot else {
+//                print("Error fetching snapshots: \(error!)")
+//                complete(false, nil, error)
+//                return
+//            }
+//            for snapshot in snapshot.documents {
+//                    if snapshot.exists {
+//                    let key = snapshot.documentID
+//                    let data = snapshot.data()
+//                    let user = User(key: key, data: data)
+//                    complete(true, user, nil)
+//                }
+//            }
+//        })
     }
     
 
@@ -156,10 +295,7 @@ class DataService: DataServiceProtocol {
             if let err = error {
                 print("ERROR SAVE PROFILE IMAGE: \(err.localizedDescription)")
             }
-            
-            
 
-            
 //            if !metadata!.downloadURLs![0].absoluteString.isEmpty {
 //                self.fileUrl = metadata!.downloadURLs![0].absoluteString
 //            }
@@ -208,6 +344,19 @@ class DataService: DataServiceProtocol {
     
     deinit {
         listener = nil
+        listener?.remove()
+        
+        userListener = nil
+        userListener?.remove()
+        
+        userActivityListener = nil
+        userActivityListener?.remove()
+        
+//        circleListener = nil
+//        circleListener?.remove()
+        
+        circleActivityListener = nil
+        circleActivityListener?.remove()
     }
     
     
@@ -218,17 +367,10 @@ class DataService: DataServiceProtocol {
     
     
     
-    
-    
-    
-    
-    
-    
-    
     private var insider: String?
 
-    func getInsiders(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ insiders: User?) -> ()) {
-       let ref = DataService.call.REF_CIRCLES.document(circleId).collection("insiders")
+    func getUsers(_ circleId: String, _ completion: @escaping (_ success: Bool, _ error: Error?, _ insiders: User?) -> ()) {
+       let ref = DataService.call.REF_CIRCLES.document(circleId).collection("users")
             ref.order(by: "position", descending: false).getDocuments { (documents, error) in
             if let error = error {
                 completion(false, error, nil)

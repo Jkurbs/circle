@@ -17,7 +17,7 @@ final class User {
     var circle: String?
     var imageUrl: String?
     var email: String?
-    var userName: String?
+    var username: String?
     var firstName: String?
     var lastName: String?
     var phoneNumber: String?
@@ -27,6 +27,7 @@ final class User {
     var payed: Bool?
     var position: Int?
     var daysLeft: Int?
+    var isAdmin: Bool?
     
     
     init(key: String? , data: [String: Any]?) {
@@ -43,7 +44,7 @@ final class User {
             }
             
             if let userName = data["user_name"] as? String {
-                self.userName = userName
+                self.username = userName
             }
             
             if let firstName = data["first_name"] as? String {
@@ -80,6 +81,10 @@ final class User {
             
             if let daysLeft = data["days_left"] as? Int {
                 self.daysLeft = daysLeft
+            }
+            
+            if let isAdmin = data["is_admin"] as? Bool {
+                self.isAdmin = isAdmin
             }
         }
     }

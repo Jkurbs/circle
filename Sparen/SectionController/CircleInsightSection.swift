@@ -8,12 +8,10 @@
 
 import UIKit
 import IGListKit
-import Lottie
 
 class CircleInsightSection: ListSectionController {
     
     private var insight: Insight?
-    private var animation: LOTAnimationView!
     
     override func sizeForItem(at index: Int) -> CGSize {
        if index == 0 || index == 3 {
@@ -24,6 +22,7 @@ class CircleInsightSection: ListSectionController {
     
     override init() {
         super.init()
+        print("INSIGHT::", insight?.id)
     }
     
     override func numberOfItems() -> Int {
@@ -31,12 +30,13 @@ class CircleInsightSection: ListSectionController {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
+
         
         if index == 0 {
             guard let cell = collectionContext?.dequeueReusableCell(of: HeaderCell.self, for: self, at: index) as? HeaderCell else {
                 fatalError()
             }
-            cell.configure("Activity")
+            cell.configure("Circle Activity")
             return cell
         }
         
@@ -56,7 +56,7 @@ class CircleInsightSection: ListSectionController {
             guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutHeaderCell.self, for: self, at: index) as? NextPayoutHeaderCell else {
                 fatalError()
             }
-            cell.configure("Next Payouts")
+            //cell.configure("Next Payouts")
             return cell
         }
     }

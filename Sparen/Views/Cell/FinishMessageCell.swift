@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Lottie
 import MessageUI
 import Firebase
 
@@ -18,19 +17,19 @@ class  FinishMessageCell: UICollectionViewCell, MFMailComposeViewControllerDeleg
     var button = UIButton()
     var restartButton = UIButton()
     
-    private var animation: LOTAnimationView?
+   // private var animation: LOTAnimationView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        animation = LOTAnimationView(name: "firework")
-        animation!.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        animation!.contentMode = .scaleAspectFill
-        animation!.frame = self.contentView.bounds
-        contentView.addSubview(animation!)
+//        animation = LOTAnimationView(name: "firework")
+//        animation!.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        animation!.contentMode = .scaleAspectFill
+//        animation!.frame = self.contentView.bounds
+//        contentView.addSubview(animation!)
         contentView.addSubview(label)
         
-        animation?.loopAnimation = true
-        animation?.play()
+       // animation?.loopAnimation = true
+       // animation?.play()
     }
     
     required init?(coder aDecoder: NSCoder) {

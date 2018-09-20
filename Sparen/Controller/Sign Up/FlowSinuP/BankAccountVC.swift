@@ -94,11 +94,7 @@
 //    
 //    
 //    @objc func selectBank() {
-////        let vc = ViewController()
-//        vc.email = self.emailTextField.text!
-//        vc.password = self.password
-//        let navController = UINavigationController(rootViewController: vc)
-//        self.present(navController, animated: true, completion: nil)
+//        
 //    }
 //
 //    
@@ -112,4 +108,4 @@
 //        }
 //    }
 //}
-
+//

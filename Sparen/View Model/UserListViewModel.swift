@@ -47,13 +47,12 @@ class UserListViewModel {
     }
     
     
-    func initFetch() {
-        apiService.fetchUsers { [weak self] (success, users, error) in
+    func fetchUser() {
+        apiService.fetchCurrentUser { (success, user, error) in
             if !success {
                 print("ERROR:", error!.localizedDescription)
             } else {
-                print("USER COUNT:::", users?.count)
-                self?.processFetchedUser(users: users!)
+                self.processFetchedUser(users: [user])
             }
         }
     }
@@ -84,10 +83,8 @@ class UserListViewModel {
 extension UserListViewModel {
     
     func userPressed( at indexPath: IndexPath) {
-        Haptic.tic.occured()
-        let user  = self.users[indexPath.row]
-        let data = ["user": user]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: data)
+
+        
     }
 }
 

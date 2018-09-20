@@ -22,7 +22,6 @@ class NextPayoutCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
 
         imageView = UICreator.create.imageView(nil, contentView)
         nameLabel = UICreator.create.label("", 15, UIColor.darkerGray, .left, .semibold, contentView)

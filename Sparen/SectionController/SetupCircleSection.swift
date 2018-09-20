@@ -11,7 +11,7 @@ import IGListKit
 
 class SetupCircleSection: ListSectionController {
     
-    private var user: User?
+    private var circle: Circle?
     
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(width: collectionContext!.containerSize.width, height: collectionContext!.containerSize.height)
@@ -29,15 +29,15 @@ class SetupCircleSection: ListSectionController {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         
-        guard let cell = collectionContext?.dequeueReusableCell(of: MonthlyAmoutCell.self, for: self, at: index) as? MonthlyAmoutCell else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: CircleStateCell.self, for: self, at: index) as? CircleStateCell else {
             fatalError()
         }
-        cell.configure("Activate your circle")
+        //cell.configure("Activate your circle:", circle!)
         return cell
     }
     
     override func didUpdate(to object: Any) {
-        user = object as? User
+        circle = object as? Circle
     }
     
     

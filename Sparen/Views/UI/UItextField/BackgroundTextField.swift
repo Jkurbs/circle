@@ -29,14 +29,9 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
     }
     
     func setup() {
-        self.clipsToBounds = true
-        let font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        let font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.font = font
         self.textColor = UIColor.darkGray
-        self.borderStyle                = .none
-        self.borderColor = UIColor.lightGray
-        self.cornerRadius = 5.0
-        self.backgroundColor = .textFieldBackgroundColor
     }
     
     
@@ -49,19 +44,19 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
     }
     
 
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        if self.leftView != nil {
-            return bounds.insetBy(dx: 50, dy: 0)
-        }
-        return bounds.insetBy(dx: 10, dy: 0)
-    }
+//    override func textRect(forBounds bounds: CGRect) -> CGRect {
+//        if self.leftView != nil {
+//            return bounds.insetBy(dx: 50, dy: 0)
+//        }
+//        return bounds.insetBy(dx: 10, dy: 0)
+//    }
     
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        if self.leftView != nil {
-            return bounds.insetBy(dx: 50, dy: 0)
-        }
-        return bounds.insetBy(dx: 10, dy: 0)
-    }
+//    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+//        if self.leftView != nil {
+//            return bounds.insetBy(dx: 50, dy: 0)
+//        }
+//        return bounds.insetBy(dx: 10, dy: 0)
+//    }
     
     func button(_ title: String? = nil, iconName: String? = nil) -> UIButton {
         self.leftView = nil
@@ -69,7 +64,7 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: self.frame.width * 0.70, height: self.frame.height * 0.70)
         if title != nil {
-            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
+            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.setTitle(title, for: UIControlState())

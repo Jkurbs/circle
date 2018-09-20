@@ -20,7 +20,7 @@ class CircleInsightCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        contentView.backgroundColor = UIColor.white
         
         contentView.addSubview(endTimeLabel)
         contentView.addSubview(endDescLabel)
@@ -201,7 +201,6 @@ class WeeklyPaymentCell: UITableViewCell {
 class SetupCircleCell: UICollectionViewCell {
     
     var label = UILabel()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

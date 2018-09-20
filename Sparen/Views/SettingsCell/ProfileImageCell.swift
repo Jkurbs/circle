@@ -95,7 +95,7 @@ class ProfileImageCell: UICollectionViewCell, UIImagePickerControllerDelegate, U
 
 // UserName Cell
 
-class UserNameCell: UICollectionViewCell {
+class UsernameCell: UICollectionViewCell {
     
     var label = UILabel()
     var textField = TextFieldRect()

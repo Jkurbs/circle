@@ -78,19 +78,19 @@ class VericationPhoneVC: UIViewController {
     
 
     @objc func resendCode() {
-        let phoneNumber = "+\(self.phoneExtension)\(self.phoneNumber)"
-        AuthService.instance.phoneAuth(phoneNumber: phoneNumber, viewController: self) { (success, error) in
-            if !success! {
-                dispatch.async {
-                    self.alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
-                }
-                return
-            } else {
-                dispatch.async {
-                    self.alert.showPromptMessage(self, title: "Error", message: "A verification code has been resend to \(self.phoneNumber)")
-                }
-            }
-        }
+//        let phoneNumber = "+\(self.phoneExtension)\(self.phoneNumber)"
+//        AuthService.instance.phoneAuth(phoneNumber: phoneNumber, viewController: self) { (success, error) in
+//            if !success! {
+//                dispatch.async {
+//                    self.alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+//                }
+//                return
+//            } else {
+//                dispatch.async {
+//                    self.alert.showPromptMessage(self, title: "Error", message: "A verification code has been resend to \(self.phoneNumber)")
+//                }
+//            }
+//        }
     }
     
     func verify() {
@@ -101,19 +101,19 @@ class VericationPhoneVC: UIViewController {
         vc.emailAddress = emailAddress
         nextButton.showLoading()
         
-        AuthService.instance.phoneVerification(phoneNumber: phoneNumber, verificationCode: verificationTextField.text!) { (success, error) in
-            if !success! {
-                dispatch.async {
-                    self.nextButton.hideLoading()
-                    self.alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
-                }
-            } else {
-                dispatch.async {
-                    self.nextButton.hideLoading()
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
+//        AuthService.instance.phoneVerification(phoneNumber: phoneNumber, verificationCode: verificationTextField.text!) { (success, error) in
+//            if !success! {
+//                dispatch.async {
+//                    self.nextButton.hideLoading()
+//                    self.alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+//                }
+//            } else {
+//                dispatch.async {
+//                    self.nextButton.hideLoading()
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                }
+//            }
+//        }
     }
     
     

@@ -120,28 +120,28 @@ class NamePasswordVC: UIViewController, UITextFieldDelegate {
             return
         }
        
-        let password = passwordTextField.text!
-        let vc = ChooseBankVC()
-        vc.emailAddress = emailAddress
-        let dob =  selectDobField.text!.components(separatedBy: "/")
-        let dobMonth = dob.first!
-        let dobDay = dob[1]
-        let dobYear = dob[2]
-        
-        DataService.call.saveNamePassword(firstName: firstName, lastName: lastName, email: emailAddress, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
-            if !success {
-                let alert = Alert()
-                dispatch.async {
-                    self.nextButton.hideLoading()
-                    alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
-                }
-            } else {
-                self.nextButton.hideLoading()
-                dispatch.async {
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
+//        let password = passwordTextField.text!
+//        let vc = ChooseBankVC()
+//        //vc.emailAddress = emailAddress
+//        let dob =  selectDobField.text!.components(separatedBy: "/")
+//        let dobMonth = dob.first!
+//        let dobDay = dob[1]
+//        let dobYear = dob[2]
+//        
+//        DataService.call.saveNamePassword(firstName: firstName, lastName: lastName, email: emailAddress, password: password, dobDay: dobDay, dobMonth: dobMonth, dobYear: dobYear) { (success, error) in
+//            if !success {
+//                let alert = Alert()
+//                dispatch.async {
+//                    self.nextButton.hideLoading()
+//                    alert.showPromptMessage(self, title: "Error", message: (error?.localizedDescription)!)
+//                }
+//            } else {
+//                self.nextButton.hideLoading()
+//                dispatch.async {
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                }
+//            }
+//        }
     }
 
     func ifPasswordValid(_ password: String) -> Bool {

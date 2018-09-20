@@ -21,14 +21,16 @@ class CircleUserCell: UICollectionViewCell {
     
     var gradientLayer: CAGradientLayer!
     
-    var userViewModel: UserCellViewModel! {
+
+
+    var user: User! {
         didSet {
-            if let url = URL(string: userViewModel.imageUrl) {
+            if let url = URL(string: user.imageUrl ?? "") {
                 imageView.sd_setImage(with: url)
             } else {
                 imageView.image = #imageLiteral(resourceName: "Profile-20")
             }
-            if userViewModel.payed == true {
+            if user.payed == true {
                 createGradientLayer()
             } else {
                 paidView.removeFromSuperview()
@@ -37,7 +39,8 @@ class CircleUserCell: UICollectionViewCell {
     }
     
     func configure(_ user: User) {
-        if let url = URL(string: user.imageUrl ?? "") {
+        imageView.hero.id = "\(user.position ?? 0)"
+        if let url = URL(string: user.imageUrl!) {
             imageView.sd_setImage(with: url)
         } else {
             imageView.image = #imageLiteral(resourceName: "Profile-20")
@@ -78,12 +81,12 @@ class CircleUserCell: UICollectionViewCell {
                 imageView.center == view.center
             }
             
-            self.backgroundColor = .white
+            self.backgroundColor = .backgroundColor
             self.cornerRadius = self.frame.size.width/2
             
             self.view.clipsToBounds = true
             self.view.borderWidth = 3.5
-            self.view.borderColor = UIColor(white: 0.8, alpha: 1.0)
+            self.view.borderColor = UIColor(white: 0.9, alpha: 1.0)
             
             self.view.cornerRadius = self.view.frame.size.width/2
             
