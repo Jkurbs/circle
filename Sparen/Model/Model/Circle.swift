@@ -15,31 +15,23 @@ import IGListKit
 final class Circle {
     
     var id: String?
-    var productId: String?
     var activated: Bool?
     var adminId: String?
     var totalAmount: Int?
     var weeklyAmount: Int?
-    var weeks: Int?
     var insiders: [String]?
-    var postDate: Date?
-    var startDate: Date?
-    var endDate: Date?
-    var daysTotal: Int? 
+    var daysTotal: Int?
     var daysLeft: Int?
     var link: String?
-    var status: String?
-    var amount: String?
+    var amount: Int?
+    var members: Int?
+    var created: TimeInterval?
     
 
     
     init(key: String, data: [String: Any]) {
         
-        self.id = key        
-        
-        if let productId = data["product_id"] as? String {
-            self.productId = productId
-        }
+        self.id = key
         
         if let activated = data["activated"] as? Bool {
             self.activated = activated
@@ -47,10 +39,6 @@ final class Circle {
         
         if let adminId = data["admin"] as? String {
             self.adminId = adminId
-        }
-        
-        if let totalAmount = data["total_amount"] as? Int {
-            self.totalAmount = totalAmount
         }
         
         if let weeklyAmount = data["weekly_amount"] as? Int {
@@ -65,18 +53,6 @@ final class Circle {
             self.insiders = insiders
         }
         
-        if let postDate = data["postDate"] as? Date {
-            self.postDate = postDate
-        }
-        
-        if let startDate = data["start_date"] as? Date {
-            self.startDate = startDate
-        }
-        
-        if let endDate = data["end_date"] as? Date {
-            self.endDate = endDate
-        }
-        
         if let daysLeft = data["days_left"] as? Int {
             self.daysLeft = daysLeft
         }
@@ -85,12 +61,16 @@ final class Circle {
             self.link = link
         }
         
-        if let status = data["status"] as? String {
-            self.status = status
+        if let amount = data["amount"] as? Int {
+            self.amount = amount
         }
         
-        if let amount = data["amount"] as? String {
-            self.amount = amount
+        if let members = data["members"] as? Int {
+            self.members = members
+        }
+        
+        if let created = data["created"] as? TimeInterval {
+            self.created = created
         }
     }
 }

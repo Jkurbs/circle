@@ -7,81 +7,123 @@
 //
 
 import UIKit
+import IGListKit
 import FirebaseAuth
 import Cartography
 import FirebaseFirestore
-import Lottie
 
-class ReadyView: UIView {
-    
-    var label: UILabel!
-    var imageView: UIImageView!
-    var button: UIButton!
-    var notifyLabel: UILabel!
-    
-    
-    private var pulseAnimation: LOTAnimationView?
 
+
+class ReadyView: UIView, ListAdapterDataSource {
     
+    var viewController: UIViewController?
+    
+    var members = [Int]()
+
+    var circle: Circle! {
+        didSet {
+            fetchMembersCount(circle)
+        }
+    }
+    
+    lazy var adapter: ListAdapter = {
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: viewController, workingRangeSize: 2)
+    }()
+    
+    let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: ListCollectionViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
+    )
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.backgroundColor = .white
 
+        initView()
         
-       label = UICreator.create.label("Let everyone know that you're ready.", 17, UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0), .center, .semibold, self)
-    
-        notifyLabel = UICreator.create.label("A notification will be sent to the admin.", 17, UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0), .center, .regular, self)
-        
-        button = UICreator.create.button("Ready to start", nil, .sparenColor, nil, self)
-        button.addTarget(self, action: #selector(ready), for: .touchUpInside)
     }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(label, notifyLabel, button, self) { (label, notifyLabel, button, view) in
-            
-            label.top == view.top + 20
-            label.width == view.width
-            
-            notifyLabel.top == label.bottom + 5
-            notifyLabel.width == view.width
-            
-            button.top == notifyLabel.bottom + 30
-            button.width == view.width
-            
+        constrain(collectionView, self) { (collectionView, self) in
+            collectionView.width == self.width  - 10
+            collectionView.height == self.height
+            collectionView.centerX == self.centerX
         }
         
-        if UserDefaults.standard.bool(forKey: "ready") {
-            self.label.text = ""
-            self.notifyLabel.text = "Notification sent"
-            self.button.setTitle("You're ready", for: .normal)
-            self.button.isEnabled = false
-            self.button.alpha = 0.5
+        collectionView.cornerRadius = 10
+//        collectionView.dropShadow(color: .lightGray, opacity: 0.5, offSet: CGSize(width: -2, height: 2), radius: 5, scale: true)
+
+    }
+    
+    func initView() {
+        
+        collectionView.backgroundColor = .white
+        collectionView.isScrollEnabled = true
+        self.addSubview(collectionView)
+        adapter.collectionView = collectionView
+        adapter.dataSource = self
+    }
+    
+    
+    func fetchMembersCount(_ circle: Circle) {
+        DataService.call.RefCircles.child(circle.id!).child("members").observeSingleEvent(of: .value) { (snapshot) in
+            self.members.removeAll()
+            guard let value = snapshot.value, let count = value as? Int else {return}
+            self.members.append(count)
+            self.adapter.performUpdates(animated: false)
         }
     }
-
     
-    @objc func ready() {
-        DataService.call.REF_USERS.document((Auth.auth().currentUser?.uid)!).updateData(["status": "ready"], completion: { (error) in
-            if let error = error {
-                print("error:", error.localizedDescription)
-            } else {
-                UserDefaults.standard.set(true, forKey: "ready")
-                self.label.text = ""
-                self.notifyLabel.text = "Notification sent"
-                self.button.setTitle("You're ready", for: .normal)
-                self.button.isEnabled = false
-                self.button.alpha = 0.5
-            }
-        })
+    
+    
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ReadyView {
+    
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        let data = members as [ListDiffable]
+        return data
+    }
+    
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+         return SetupSection()
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        return nil
+    }
+}
+
+extension UIView {
+    
+    // OUTPUT 1
+    func dropShadow(scale: Bool = true) {
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: -1, height: 1)
+        layer.shadowRadius = 1
+        
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+    
+    // OUTPUT 2
+    func dropShadow(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowOffset = offSet
+        layer.shadowRadius = radius
+        
+        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 }

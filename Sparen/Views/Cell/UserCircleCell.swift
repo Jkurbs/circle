@@ -99,56 +99,36 @@ class UserCircleCell: UICollectionViewCell {
             
             label.attributedText = attributedString1
         } else {
-            label.text = "You have created a Circle of \n $\(circle.amount ?? "Undefined")"
+            label.text = "You have created a Circle of \n $\(circle.amount ?? 0)"
         }
     }
     
     @objc func join() {
-        
-        let userID = Auth.auth().currentUser!.uid
-        let ref =  DataService.call.REF_USERS.document(userID)
-        let circleRef = DataService.call.REF_CIRCLES.document(circle.id!)
-        
-        let joined = UserDefaults.standard.string(forKey: "circleId")
-        if joined != nil {
-            print("leave")
-            ref.updateData(["circle": ""])
-            circleRef.collection("users").document(userID).delete { (error) in
-                if let error = error {
-                    print("Error:", error.localizedDescription)
+
+        let circleId = UserDefaults.standard.string(forKey: "circleId")
+        if circleId != nil {
+            
+            DataService.call.leaveCircle(circle) { (success, error) in
+                if !success {
+                    print("error:", error!.localizedDescription)
                 } else {
-                    self.parentViewController().showMessage("You successfully left the circle", type: .success)
+                    //self.parentViewController().showMessage("You successfully left the circle", type: .success)
                     self.joinButton.setTitle("Join", for: .normal)
                     self.joinButton.setTitleColor(.sparenColor, for: .normal)
                 }
             }
         } else {
-            UserDefaults.standard.set(circle.id, forKey: "circleId")
-            ref.setData(["circle": circle.id ?? ""], merge: true) { (error) in
-                if let error = error {
-                    print("error:", error.localizedDescription)
+
+            DataService.call.joinCircle(circle) { (success, error) in
+                if !success {
+                    print("error:", error!.localizedDescription)
                 } else {
-                    ref.getDocument(completion: { (snapshot, error) in
-                        if let error = error {
-                            print("error:", error.localizedDescription)
-                        } else {
-                            if let snap = snapshot {
-                                if let data = snap.data() {
-                                    circleRef.collection("users").document(userID).setData(data, merge: true, completion: { (error) in
-                                        if let error = error {
-                                            print("error:", error.localizedDescription)
-                                        } else {
-                                            self.joinButton.setTitle("Leave", for: .normal)
-                                            self.joinButton.setTitleColor(.darkGray, for: .normal)
-                                            //self.parentViewController().showMessage("Congradulation 🎉, You successfully joined this circle", type: .success)
-                                            self.parentViewController().present(DashboardVC(), animated: true, completion: nil)
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    })
+                    //self.parentViewController().showMessage("You successfully join the circle", type: .success)
+                    self.joinButton.setTitle("Joined", for: .normal)
+                    self.joinButton.setTitleColor(.darkGray, for: .normal)
+                    
                 }
+
             }
         }
     }
@@ -157,22 +137,35 @@ class UserCircleCell: UICollectionViewCell {
 extension UserCircleCell {
     
     func getInsiders() {
-       // let circleId = UserDefaults.standard.string(forKey: "circleId")
-        DataService.call.REF_CIRCLES.document("xQvn5eB1rbl2eRG53B7X").collection("insiders").limit(to: 3).getDocuments { (snapshot, error) in
-            guard let snapshot = snapshot else {
-                print("Error fetching snapshots: \(error!)")
-                return
-            }
+        guard let circleId = UserDefaults.standard.string(forKey: "circleId") else {return}
+        
+        DataService.call.RefCircleMembers.child(circleId).queryLimited(toFirst: 3).observe(.childAdded) { (snapshot) in
             
-            snapshot.documents.forEach { diff in
-                let data = diff.data()
-                let id = diff.documentID
-                let count = snapshot.documents.count
-                let user = User(key: id, data: data)
-                self.users.append(user)
-                self.addImages(user, count)
-            }
+            guard let value = snapshot.value else {return}
+            
+            let postDict = value as? [String : AnyObject] ?? [:]
+            let key = snapshot.key
+            let user = User(key: key, data: postDict)
+            
+            
         }
+        
+//        
+//        DataService.call.REF_CIRCLES.document("xQvn5eB1rbl2eRG53B7X").collection("insiders").limit(to: 3).getDocuments { (snapshot, error) in
+//            guard let snapshot = snapshot else {
+//                print("Error fetching snapshots: \(error!)")
+//                return
+//            }
+//            
+//            snapshot.documents.forEach { diff in
+//                let data = diff.data()
+//                let id = diff.documentID
+//                let count = snapshot.documents.count
+//                let user = User(key: id, data: data)
+//                self.users.append(user)
+//                self.addImages(user, count)
+//            }
+//        }
     }
     
     
@@ -191,7 +184,7 @@ extension UserCircleCell {
         imageView.frame = CGRect(x: Int(12 * (Double(currentTag) / 0.7)), y: 0, width: 30, height: 30)
         imageView.center.y = label.center.y
         imageView.cornerRadius = imageView.frame.height/2
-        self.label.text = "\(user.firstName ?? "") and \(count - 1) others would like\nto save $\(circle.amount ?? "Undefined") with you."
+        self.label.text = "\(user.firstName ?? "") and \(count - 1) others would like\nto save $\(circle.amount ?? 0) with you."
         
     }
 }

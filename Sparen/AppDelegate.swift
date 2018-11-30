@@ -9,9 +9,9 @@
 import UIKit
 import Foundation
 import Stripe
-//import LinkKit
 import Firebase
 import FirebaseCore
+import FirebaseDatabase
 import FirebaseMessaging
 import FirebaseInstanceID
 import FirebaseDynamicLinks
@@ -36,21 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
                 
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = self.customURLScheme
         FirebaseApp.configure()
-        
-        let bgQueue = DispatchQueue.global(qos: .background)
-        
-        let db = Firestore.firestore()
-        let settings = db.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
-        settings.dispatchQueue = bgQueue
+        Database.database().isPersistenceEnabled  = false
+
         DynamicLinks.performDiagnostics(completion: nil)
 
         // Stripe payment configuration
-        STPPaymentConfiguration.shared().companyName = "Circle"
+        STPPaymentConfiguration.shared().companyName = "Sparen"
         
         if !publishableKey.isEmpty {
             STPPaymentConfiguration.shared().publishableKey = publishableKey
@@ -74,6 +69,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
+    
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        print("Background fetch")
+//
+//        guard let circleID = UserDefaults.standard.string(forKey: "circleId") else {return}
+//        print("CIRCLE ID:", circleID)
+//        
+//        DataService.call.RefBase.child("timer").child(circleID).observe(.value) { (snapshot) in
+//            guard let value = snapshot.value else {return}
+//            
+//            let postDict = value as? [String : AnyObject] ?? [:]
+//            
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//            
+//            guard let dateString = postDict["end_date"] as? String else {return}
+//            
+//            let endDate = formatter.date(from: dateString)
+//            
+//            if endDate! < Date() {
+//                DataService.call.RefCircles.child(circleID).updateChildValues(["activated": true])
+//            }
+//           
+//            print("VALUE::", value)
+//            //completionHandler(.newData)
+//        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     var applicationStateString: String {
@@ -241,6 +272,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
+            
+            
+            DataService.call.RefUsers.child("circleId").observeSingleEvent(of: .value) { (snapshot) in
+                guard let value = snapshot.value as? String else {return}
+                print("value::::", value)
+                UserDefaults.standard.set(value, forKey: "circleId")
+            }
+            
+            
+            
             if !uid.isEmpty {
                 let initialViewController = DashboardVC()
                 let navigationController = UINavigationController(rootViewController: initialViewController)

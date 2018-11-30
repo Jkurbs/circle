@@ -28,14 +28,14 @@ class LoginVC: UIViewController {
 
        navigationItem.rightBarButtonItem = loginButton
         
-       label = UICreator.create.label("Log In", 35, .darkText, .left, .medium, view)
+       label = UICreator.create.label("Sparen", 35, .darkText, .center, .medium, view)
        emailPhoneField = UICreator.create.textField("Email or phone number", .default, view)
        passwordField = UICreator.create.textField("password", .default, view)
        passwordField.isSecureTextEntry = true
         
        emailPhoneField.addTarget(self, action: #selector(edited(_:)), for: .editingChanged)
         
-       resetButton = UICreator.create.button("Reset", nil, view.tintColor, nil, view)
+       resetButton = UICreator.create.button("Reset password", nil, view.tintColor, nil, view)
        resetButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
        resetButton.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
         
@@ -50,20 +50,23 @@ class LoginVC: UIViewController {
         super.viewDidLayoutSubviews()
         
         constrain(label, emailPhoneField, passwordField, resetButton, createAccountButton, view) { (label, emailPhoneField, passwordField, resetButton, createAccountButton, view) in
+            
             label.top == view.top + 150
-            label.left == view.left + 40
+            label.centerX == view.centerX
             
             emailPhoneField.top == label.bottom + 50
-            emailPhoneField.left == view.left + 40
+            emailPhoneField.centerX == view.centerX
             emailPhoneField.height == 45
+            emailPhoneField.width == view.width - 40
+
             
             passwordField.top == emailPhoneField.bottom + 10
-            passwordField.left == view.left + 40
-            passwordField.width == 150
+            passwordField.centerX == view.centerX
+            passwordField.width == view.width - 40
             passwordField.height == 45
             
             resetButton.top == passwordField.bottom + 10
-            resetButton.left == view.left + 40
+            resetButton.right == view.right - 40
             
             createAccountButton.top == resetButton.bottom + 50
             createAccountButton.left == view.left + 40
@@ -79,7 +82,7 @@ class LoginVC: UIViewController {
         activityIndicator.startAnimating()
         
         if let email = emailPhoneField.text, let pass = passwordField.text {
-            AuthService.instance.signIn(email: email, password: pass) { (success, error, circleId) in
+            AuthService.instance.signIn(email, pass) { (success, error, circleId) in
                 if !success {
                     self.alert(error!.localizedDescription)
                     self.loginButton = UIBarButtonItem(title: "Log In", style: .done, target: self, action: #selector(self.login))
@@ -88,12 +91,13 @@ class LoginVC: UIViewController {
                 } else {
                     UserDefaults.standard.set(email, forKey: "email")
                     UserDefaults.standard.set(pass, forKey: "password")
-                    let vc = DashboardVC()
+                    let vc =  DashboardVC()
+                    let nav =  UINavigationController(rootViewController: vc)
                     vc.circleId = circleId
                     self.loginButton = UIBarButtonItem(title: "Log In", style: .done, target: self, action: #selector(self.login))
                     self.navigationItem.rightBarButtonItem = self.loginButton
                     activityIndicator.stopAnimating()
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.present(nav, animated: true, completion: nil)
                 }
             }
         }
@@ -105,8 +109,10 @@ class LoginVC: UIViewController {
     }
     
     @objc func createAccount() {
+        
         let vc = NameVC()
-        navigationController?.pushViewController(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        self.present(nav, animated: true, completion: nil)
     }
     
     @objc func edited(_ textField: UITextField) {

@@ -11,7 +11,7 @@ target 'Sparen' do
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
     pod 'Firebase/Storage'
-    pod 'Firebase/Firestore'
+    pod 'Firebase/Database'
     pod 'Firebase/DynamicLinks'
     pod 'Firebase/Messaging'
     pod 'IGListKit', '~> 3.0'
@@ -21,9 +21,13 @@ target 'Sparen' do
     pod 'IQKeyboardManager'
     pod 'Cartography', '~> 3.0'
     pod 'Stripe'
-#    pod 'Plaid'
+    pod 'CountdownLabel'
+    pod 'MBProgressHUD', '~> 1.1.0'
     pod 'GSMessages'
-    pod 'lottie-ios'
+    pod 'SwiftDate', '~> 5.0'
+
+
+
 
 
 

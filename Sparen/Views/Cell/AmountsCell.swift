@@ -41,7 +41,7 @@ class AmountsCell: UICollectionViewCell {
         let width = self.frame.width
         
         
-        let font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         let descColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
         
@@ -81,16 +81,14 @@ class AmountsCell: UICollectionViewCell {
 
 class HeaderCell: UICollectionViewCell {
     
-    var label = UILabel()    
+    var label = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .white
         contentView.addSubview(label)
-
     }
-    
-    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -106,16 +104,15 @@ class HeaderCell: UICollectionViewCell {
         let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         
         label.textColor = color
+        label.textAlignment = .center
         label.font = font
-        label.frame = CGRect(x: 25, y: 5, width: width , height: 40)
-            
+        label.frame = CGRect(x: 0, y: 0, width: width , height: self.frame.height)
     }
     
     
     func configure(_ text: String) {
         label.text = text
     }
-    
 }
 
 class NextPayoutHeaderCell: UICollectionViewCell {
@@ -128,7 +125,6 @@ class NextPayoutHeaderCell: UICollectionViewCell {
         contentView.backgroundColor = .white
         contentView.addSubview(label)
     }
-    
     
     
     required init?(coder aDecoder: NSCoder) {

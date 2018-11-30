@@ -83,37 +83,11 @@ class SetupCircleView: UIView {
     @objc func activateCircle() {
         guard let circleId  = circle.id ?? UserDefaults.standard.string(forKey: "circleId") else {return}
         
-        let ref =  DataService.call.REF_CIRCLES.document(circleId)
-        let usersRef = ref.collection("users")
-        
-        usersRef.getDocuments { (snapshot, error) in
-            guard let snap = snapshot else {return}
-            let count = snap.count
-            if count < 3 {
-                self.alert(title: "Not enought people", message: "Your Circle must have at least 3 people.")
-                return
+        DataService.call.activateCircle(circle) { (success, error) in
+            if !success {
+                print("error:", error!.localizedDescription )
             } else {
-                for document in snap.documents {
-                    if document.exists {
-                        let data = document.data()
-                        guard let position = data["position"] as? Int else {return}
-                        let days_left = position * 7
-                        let daysData = ["days_left": days_left]
-                        document.reference.setData(daysData, merge: true)
-                        document.reference.collection("insights").document("activities").setData(daysData, merge: true)
-                    }
-                }
-                
-                let totalAmount = Int(self.circle.amount!) ?? 0
-                let weeklyAmount = totalAmount / count
-                
-                let days_total = count * 7
-                let days_left = days_total - 1
-                
-                let data = ["days_total": days_total, "days_left": days_left, "weekly_amount": weeklyAmount, "total_amount" : totalAmount, "date": FieldValue.serverTimestamp()] as [String : Any]
-                ref.updateData(["activated": true])
-                ref.collection("insights").document("activities").setData(data, merge: true)
-                
+                print("success")
             }
         }
     }

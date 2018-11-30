@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseMessaging
 
 
 class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -37,6 +38,7 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         self.view.addSubview(tableView)
+        
 
     }
     
@@ -118,25 +120,15 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
+
     @objc func notificationChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            UIApplication.shared.registerForRemoteNotifications()
-            let deviceToken = UserDefaults.standard.string(forKey: "deviceToken")
-            DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).updateData(["device_token": deviceToken ?? ""]) { (error) in
-                if let error = error {
-                    print("error", error.localizedDescription)
-                } else {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        } else {
-            DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).updateData(["device_token": ""]) { (error) in
-                if let error = error {
-                    print("error", error.localizedDescription)
-                } else {
-                    UIApplication.shared.unregisterForRemoteNotifications()
-                }
+        
+        guard let circleId = UserDefaults.standard.string(forKey: "circleId"), let deviceToken = UserDefaults.standard.string(forKey: "deviceToken") else {return}
+        DataService.call.saveToken(sender.isOn, deviceToken, circleId) { (success, error) in
+            if !success {
+                print("error", error!.localizedDescription)
+            } else {
+                print("success")
             }
         }
     }

@@ -46,19 +46,12 @@ final class EditAccountVC: UIViewController, ListAdapterDataSource {
     
     func retrieveCurrentUser() {
         
-        DataService.call.REF_USERS.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
-            if let error = error {
-                print("error", error.localizedDescription)
+        DataService.call.fetchCurrentUser { (success, error, user) in
+            self.user = []
+            if !success {
+                print("error:", error!.localizedDescription)
             } else {
-                
-                if let snap = snapshot {
-                    if snap.exists {
-                        let key = snap.documentID
-                        let data = snap.data()
-                        let user = User(key: key, data: data!)
-                        self.user.append(user)
-                    }
-                }
+                self.user.append(user)
                 self.adapter.performUpdates(animated: true, completion: nil)
             }
         }

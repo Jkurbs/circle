@@ -1,5 +1,5 @@
 //
-//  PaymentsVC.swift
+//  PaymentVC.swift
 //  Sparen
 //
 //  Created by Kerby Jean on 9/15/18.
@@ -7,67 +7,64 @@
 //
 
 import UIKit
+import IGListKit
+import FirebaseAuth
 
-class PaymentsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-
-    var tableView: UITableView!
-
-    let textCellIdentifier = "PaymentCell"
-
+class PaymentVC: UIViewController, ListAdapterDataSource {
+    
+    
+    var cards = [Card]()
+    
+    lazy var adapter: ListAdapter = {
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 2)
+    }()
+    
+    let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: ListCollectionViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
+    )
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.title = "Add card"
         view.backgroundColor = .white
 
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
+        collectionView.backgroundColor = .backgroundColor
+        view.addSubview(collectionView)
+        adapter.collectionView = collectionView
+        adapter.dataSource = self
+        
+        fetchCards()
+    }
 
-        tableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
-        tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: textCellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .white
-        self.view.addSubview(tableView)
-
+    
+    
+    
+    func fetchCards() {
+    
+        DataService.call.RefCards.child((Auth.auth().currentUser?.uid)!).observeSingleEvent(of: .value) { (snapshot) in
+            self.cards = [] 
+            guard let value = snapshot.value as? [String : Any] else {return}
+            let key = snapshot.key
+            let card = Card(key, value)
+            self.cards.append(card)
+        }
     }
 }
 
-extension PaymentsVC {
+extension PaymentVC {
     
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        cell.textLabel?.textColor = cell.tintColor
-        cell.textLabel?.text = "Add new Debit Card"
-        return cell
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return cards as! [ListDiffable]
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let vc = AddPaymentVC()
-        navigationController?.pushViewController(vc, animated: true)
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        return CardSection()
+    }
+    
+    func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        return nil
     }
 }
-
-
-
-
-
-
-
-
-

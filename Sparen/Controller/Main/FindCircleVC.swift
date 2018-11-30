@@ -29,13 +29,21 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
         collectionViewLayout: ListCollectionViewLayout(stickyHeaders: false, topContentInset: 0, stretchToEdge: false)
     )
     
+    
+    lazy var emptyLabel: UILabel = {
+        let label = UICreator.create.label("Sorry, no circles where found for the moment.", 17, .darkText, .center, .regular, view)
+        label.numberOfLines = 4
+        label.isHidden = true
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         collectionView.backgroundColor = .backgroundColor
         
-        self.title = "Find Circle"
+        self.title = "Find Circles"
 
         collectionView.isScrollEnabled = false
         view.addSubview(collectionView)
@@ -47,7 +55,17 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
         pulse.numPulse = 2
         pulse.backgroundColor = UIColor.sparenColor.cgColor
         pulse.position = CGPoint(x: view.center.x, y: view.center.y)
+        
+    
+        
+        
         view.layer.addSublayer(pulse)
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         findCircles()
     }
@@ -55,8 +73,11 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        constrain(collectionView, label, view) { (collectionView, label, view) in
+        constrain(collectionView, label, emptyLabel, view) { (collectionView, label, emptyLabel, view) in
 
+            
+            emptyLabel.center == view.center
+            
             label.bottom == view.bottom - 250
             label.width == view.width - 100
             label.height == 100
@@ -70,40 +91,29 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
     
     
     @objc func findCircles () {
-        self.circles = []
+    
         
-        label = UICreator.create.label("Hold on, I'm looking for circles you can join...", 17, .darkText, .center, .regular, view)
+        label = UICreator.create.label("Hold on, looking for circles you can join...", 17, .darkText, .center, .regular, view)
         label.numberOfLines = 4
 
         pulse.start()
         
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
-            
-            DataService.call.REF_CIRCLES.whereField("activated", isEqualTo: false).addSnapshotListener { (snapshot, error) in
-                guard let snap = snapshot else {
-                    return
-                }
-                
-                if snap.documents.count == 0 {
-                    self.label.text = "Sorry no matches were found for the moment."
+            DataService.call.findCircles(complete: { (success, error, circle) in
+
+                if !success {
+                    self.label.text = ""
+                    self.emptyLabel.isHidden = false
                     self.pulse.stop()
+                } else {
+                    self.circles = []
+                    self.emptyLabel.text = ""
+                    self.label.text = ""
+                    self.pulse.stop()
+                    self.circles.append(circle!)
+                    self.adapter.performUpdates(animated: true )
                 }
-                
-                for document in snap.documents {
-                    if document.exists {
-                        let key = document.documentID
-                        let data = document.data()
-                        let circle = Circle(key: key, data: data)
-                        self.circles.append(circle)
-                        self.adapter.performUpdates(animated: true, completion: nil)
-                        self.pulse.stop()
-                        self.label.text = ""
-                    } else {
-                        self.label.text = "Sorry no matches were found for the moment."
-                        self.pulse.stop()
-                    }
-                }
-            }
+            })
         }
     }
 }

@@ -9,25 +9,56 @@
 import UIKit
 import Cartography
 import FirebaseAuth
-import GSMessages
 import FirebaseFirestore
+import MBProgressHUD
+import GSMessages
 
 
-class CreateCircleVC: UIViewController {
+class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return suggestions.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return suggestions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let amount = suggestions[row]
+        self.amount = amount
+    }
 
     var user: User?
 
     var label: UILabel!
     var descLabel: UILabel!
-    var textField: UITextField!
+    
+    var pickerView = UIPickerView()
+    
+    
+    
+    
+//    var textField: UITextField!
     var button: UIButton!
     var infoButton = UIButton()
     
     var hashes = [UIButton : [Double]]()
     var buttons = [UIButton]()
     
+    var amount = ""
     
-    var suggestions = ["$1,000.00", "$2,500.00" , "$4,000.00"]
+    var array = [String]()
+
+    
+
+    
+    var suggestions = ["$1000", "$2500" , "$4000"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,58 +67,68 @@ class CreateCircleVC: UIViewController {
         view.backgroundColor = .backgroundColor
         self.title = "Create a circle"
         
+        let removeButton = UIBarButtonItem(image: UIImage(named: "Remove-20"), style: .done, target: self, action: #selector(close))
+
+        navigationItem.leftBarButtonItem = removeButton
+        
+        
         label = UICreator.create.label("", 30, .darkText, .center, .regular, view)
         descLabel = UICreator.create.label("\(user?.firstName ?? "") How much money would you like to save?", 20, .darkText, .center, .medium, view)
         
-        textField = UICreator.create.textField("Amount", .numberPad, view)
         
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        textField.font = UIFont.systemFont(ofSize: 40, weight: .medium)
-        textField.textAlignment = .center
+        self.view.addSubview(pickerView)
+        
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+//        textField = UICreator.create.textField("Amount", .numberPad, view)
+//
+//        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//        textField.font = UIFont.systemFont(ofSize: 40, weight: .medium)
+//        textField.textAlignment = .center
+//
+//        textField.delegate = self
 
 
-        infoButton.setImage(#imageLiteral(resourceName: "Info-20"), for: .normal)
-        infoButton.translatesAutoresizingMaskIntoConstraints = false
-        infoButton.clipsToBounds = true
-        infoButton.addTarget(self, action: #selector(info), for: .touchUpInside)
-        
-        view.addSubview(infoButton)
+//        infoButton.setImage(#imageLiteral(resourceName: "Info-20"), for: .normal)
+//        infoButton.translatesAutoresizingMaskIntoConstraints = false
+//        infoButton.clipsToBounds = true
+//        infoButton.addTarget(self, action: #selector(info), for: .touchUpInside)
+//
+//        view.addSubview(infoButton)
         
         button = UICreator.create.button("Create", nil, .sparenColor, .white, view)
         button.addTarget(self, action: #selector(create), for: .touchUpInside)
-        button.isEnabled = false
-        button.alpha = 0.5
         button.layer.shadowColor = UIColor.lightGray.cgColor
         button.layer.shadowRadius = 5.0
         button.layer.shadowOpacity = 0.5
         button.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
-            self.textField.becomeFirstResponder()
-        }
+//        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
+//            self.textField.becomeFirstResponder()
+//        }
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        constrain(descLabel, textField, infoButton, button, view) { (descLabel, textField, infoButton, button, view) in
+        constrain(descLabel, pickerView, infoButton, button, view) { (descLabel, pickerView, infoButton, button, view) in
 
             descLabel.top == view.top + 150
             descLabel.height == 100
             descLabel.width == view.width - 100
             descLabel.centerX == view.centerX
 
-            textField.top == descLabel.bottom + 50
-            textField.width == view.width - 150
-            textField.height == 60
-            textField.centerX == view.centerX
-            
-            infoButton.top == textField.top
-            infoButton.left == textField.right
-            infoButton.centerY == textField.centerY
-            infoButton.height == textField.height
-            infoButton.width == textField.height
+            pickerView.top == descLabel.bottom + 20
+            pickerView.width == view.width
+            pickerView.height == 150
+            pickerView.centerX == view.centerX
             
             button.top == descLabel.bottom + 200
             button.width == view.width - 100
@@ -98,69 +139,47 @@ class CreateCircleVC: UIViewController {
         button.cornerRadius = 25
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if let amountString = textField.text?.currencyInputFormatting() {
-            textField.text = amountString
-        }
-        
-        if (textField.text?.isEmpty)! {
-            button.isEnabled = false
-            button.alpha = 0.5
-        } else {
-            button.isEnabled = true
-            button.alpha = 1.0
-        }
-    }
+    
+
+    
+   
     
     @objc func create() {
-        let amount = Int((textField.text?.replacingOccurrences(of: "$", with: ""))!)
-        let userID = Auth.auth().currentUser!.uid
-        let data: [String: Any] = ["activated": false, "admin": userID, "amount": amount ?? ""]
-        let ref = Firestore.firestore().collection("circles").document()
-        let circleID = ref.documentID
-        ref.setData(data) { (error) in
-            if let error = error {
-                print("error creating circle:", error.localizedDescription)
-                self.showMessage("An error occured. Try again", type: .error)
+        
+        let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
+        loadingNotification.mode = MBProgressHUDMode.indeterminate
+        loadingNotification.label.text = "Creating"
+        
+        let totalAmount = Int(self.amount)
+        
+        DataService.call.createCircle(totalAmount ?? 1000) { (success, error) in
+            if !success {
+                loadingNotification.hide(animated: true)
+                // ERROR
             } else {
-                DataService.call.createLink(circleID: ref.documentID, completion: { (success, error, link) in
-                    if !success {
-                        self.showMessage("An error occured. Try again", type: .error)
-                    } else {
-                        DataService.call.REF_USERS.document(userID).setData(["circle": ref.documentID], merge: true)
-                        DataService.call.REF_CIRCLES.document(circleID).setData(["link": link], merge: true)
-                        DataService.call.REF_USERS.document(userID).getDocument(completion: { (snapshot, error) in
-                            guard let snap = snapshot else {
-                                print("error creating circle")
-                                self.showMessage("An error occured. Try again", type: .error)
-                                return
-                            }
-                            
-                            if snap.exists {
-                                if let data = snap.data() {
-                                    DataService.call.REF_CIRCLES.document(circleID).collection("users").document(userID).setData(data)
-                                    self.showMessage("Circle is successfully created", type: .success)
-                                }
-                            }
-                        })
-                    }
-                })
+                 loadingNotification.hide(animated: true)
             }
+
+        //add 1 day to the date:
+//        let currentDate = NSDate()
+//        let newDate = NSDate(timeInterval: 86400, since: currentDate as Date)
+//        UserDefaults.standard.setValue(newDate, forKey: "waitingDate")
+            
         }
     }
     
      @objc func info() {
         
-        textField.resignFirstResponder()
+//        textField.resignFirstResponder()
         GSMessage.infoBackgroundColor = .white
-        self.showMessage("This is the total amount you and anybody who join your Circle will receive.", type: .info, options: [
+        
+        self.showMessage("This is the total amount you and anybody who join your Circle will receive.", type: .success, options: [
             .autoHide(false),
             .height(150.0),
             .position(.bottom),
             .cornerRadius(20.0),
             .textColor(.darkText),
             .textNumberOfLines(6),
-            .showShadow(true),
             .hideOnTap(true)
         ])
     }

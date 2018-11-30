@@ -41,7 +41,7 @@ class CircleInsightCell: UICollectionViewCell {
         let width = self.frame.width
         
         
-        let font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        let font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         let color = UIColor(red: 85.0/255.0, green: 85.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         let descColor = UIColor(red: 181.0/255.0, green: 181.0/255.0, blue: 181.0/255.0, alpha: 1.0)
 

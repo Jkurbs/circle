@@ -16,26 +16,31 @@ final class Insight {
     var totalAmount: Int?
     var weeklyAmount: Int?
     var daysTotal: Int?
-    var daysLeft: Int?    
+    var daysLeft: Int?
+    var round: Int?
     
     init(key: String, data: [String: Any]) {
         
         self.id = key
 
-        if let totalAmount = data["total_amount"] as? Int {
+        if let totalAmount = data["totalAmount"] as? Int {
             self.totalAmount = totalAmount
         }
         
-        if let weeklyAmount = data["weekly_amount"] as? Int {
+        if let weeklyAmount = data["weeklyAmount"] as? Int {
             self.weeklyAmount = weeklyAmount
         }
         
-        if let daysTotal = data["days_total"] as? Int {
+        if let daysTotal = data["daysTotal"] as? Int {
             self.daysTotal = daysTotal
         }      
         
-        if let daysLeft = data["days_left"] as? Int {
+        if let daysLeft = data["daysLeft"] as? Int {
             self.daysLeft = daysLeft
+        }
+        
+        if let round = data["round"] as? Int {
+            self.round = round
         }
     }
 }

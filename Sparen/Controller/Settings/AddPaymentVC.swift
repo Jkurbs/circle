@@ -43,22 +43,42 @@ class AddPaymentVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @objc func addNewDebit() {
-        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PaymentsCell {
+        
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        activityIndicator.activityIndicatorViewStyle = .gray
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.setRightBarButton(barButton, animated: true)
+        activityIndicator.startAnimating()
+
+        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PaymentsCell {
+            
+            cell.paymentTextField.resignFirstResponder()
+            
             let cardParams = STPCardParams()
             cardParams.number = cell.paymentTextField.cardNumber
             cardParams.expMonth = cell.paymentTextField.expirationMonth
             cardParams.expYear = cell.paymentTextField.expirationYear
             cardParams.cvc = cell.paymentTextField.cvc
+            
+            let image = cell.paymentTextField.brandImage
+            
+            
+            let data = UIImageJPEGRepresentation(image!, 0.1)
+            
             STPAPIClient.shared().createToken(withCard: cardParams) { (token: STPToken?, error: Error?) in
-                guard let token = token, error == nil else {
+                guard let token = token, error == nil, let last4 = cardParams.last4() else {
+                     activityIndicator.stopAnimating()
                     return
                 }
-                DataService.call.REF_USERS.document((Auth.auth().currentUser?.uid)!).collection("payments").addDocument(data: ["token": token.tokenId], completion: { (error) in
-                    if let err = error {
-                        print("error:", err.localizedDescription)
-                        self.showMessage("An error occured", type: .error)
+                
+                DataService.call.addPayment(token.tokenId, last4, data!, complete: { (success, error) in
+                    if !success {
+                        print("error:", error!.localizedDescription)
+                        activityIndicator.stopAnimating()
                     } else {
-                        self.showMessage("You successfully added a new card", type: .error)
+                        print("success")
+                        activityIndicator.stopAnimating()
+                        self.navigationController?.popViewController(animated: true)
                     }
                 })
             }

@@ -17,26 +17,25 @@ class CircleInsightSection: ListSectionController {
        if index == 0 || index == 3 {
           return CGSize(width: collectionContext!.containerSize.width, height: 50)
        }
-        return CGSize(width: collectionContext!.containerSize.width, height: 90)
+        return CGSize(width: collectionContext!.containerSize.width, height: 60)
     }
     
     override init() {
         super.init()
-        print("INSIGHT::", insight?.id)
+
     }
     
     override func numberOfItems() -> Int {
-        return 4
+        return 3
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-
         
         if index == 0 {
             guard let cell = collectionContext?.dequeueReusableCell(of: HeaderCell.self, for: self, at: index) as? HeaderCell else {
                 fatalError()
             }
-            cell.configure("Circle Activity")
+            cell.configure("Round \(insight!.round ?? 0)")
             return cell
         }
         
@@ -46,17 +45,11 @@ class CircleInsightSection: ListSectionController {
             }
             cell.configure(insight!)
             return cell
-        } else if index == 2 {
+        } else  {
             let cell = collectionContext!.dequeueReusableCell(of: AmountsCell.self , for: self, at: index)
             if let cell = cell as? AmountsCell {
                 cell.configure(insight!)
             }
-            return cell
-        } else {
-            guard let cell = collectionContext?.dequeueReusableCell(of: NextPayoutHeaderCell.self, for: self, at: index) as? NextPayoutHeaderCell else {
-                fatalError()
-            }
-            //cell.configure("Next Payouts")
             return cell
         }
     }

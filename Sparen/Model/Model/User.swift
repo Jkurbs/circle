@@ -27,6 +27,7 @@ final class User {
     var payed: Bool?
     var position: Int?
     var daysLeft: Int?
+    var daysTotal: Int?
     var isAdmin: Bool?
     
     
@@ -55,7 +56,7 @@ final class User {
                 self.lastName = lastName
             }
             
-            if let email = data["email_address"] as? String {
+            if let email = data["email"] as? String {
                 self.email = email
             }
             
@@ -79,8 +80,12 @@ final class User {
                 self.position = position
             }
             
-            if let daysLeft = data["days_left"] as? Int {
+            if let daysLeft = data["daysLeft"] as? Int {
                 self.daysLeft = daysLeft
+            }
+            
+            if let daysTotal = data["daysTotal"] as? Int {
+                self.daysTotal = daysTotal
             }
             
             if let isAdmin = data["is_admin"] as? Bool {

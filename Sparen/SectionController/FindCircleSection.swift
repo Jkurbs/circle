@@ -11,7 +11,6 @@ import IGListKit
 class FindCircleSection: ListSectionController {
 
     private var circle: Circle?
-    var users = [User]()
     
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(width: collectionContext!.containerSize.width, height: 60)

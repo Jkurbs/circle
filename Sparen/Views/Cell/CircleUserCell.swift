@@ -21,8 +21,6 @@ class CircleUserCell: UICollectionViewCell {
     
     var gradientLayer: CAGradientLayer!
     
-
-
     var user: User! {
         didSet {
             if let url = URL(string: user.imageUrl ?? "") {
@@ -30,23 +28,8 @@ class CircleUserCell: UICollectionViewCell {
             } else {
                 imageView.image = #imageLiteral(resourceName: "Profile-20")
             }
-            if user.payed == true {
-                createGradientLayer()
-            } else {
-                paidView.removeFromSuperview()
-            }
         }
     }
-    
-    func configure(_ user: User) {
-        imageView.hero.id = "\(user.position ?? 0)"
-        if let url = URL(string: user.imageUrl!) {
-            imageView.sd_setImage(with: url)
-        } else {
-            imageView.image = #imageLiteral(resourceName: "Profile-20")
-        }
-    }
-    
     
 
     required override init(frame: CGRect) {
@@ -57,6 +40,9 @@ class CircleUserCell: UICollectionViewCell {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.borderColor = UIColor(white: 0.9, alpha: 1.0)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,7 +52,6 @@ class CircleUserCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         initLayout()
-
     }
     
     func initLayout() {
@@ -86,7 +71,6 @@ class CircleUserCell: UICollectionViewCell {
             
             self.view.clipsToBounds = true
             self.view.borderWidth = 3.5
-            self.view.borderColor = UIColor(white: 0.9, alpha: 1.0)
             
             self.view.cornerRadius = self.view.frame.size.width/2
             

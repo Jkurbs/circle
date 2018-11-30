@@ -10,6 +10,7 @@
 import UIKit
 import IGListKit
 import Cartography
+import FirebaseDatabase
 
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
         
@@ -70,7 +71,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
             } else {
                 pulsator.radius = 25.0
                 pulsator.animationDuration = 5
-                pulsator.pulseInterval = 1.0
+                pulsator.pulseInterval = 0.8
                 pulsator.backgroundColor = UIColor.sparenColor.cgColor
                 pulsator.position = position!
                 self.circleView.layer.addSublayer(pulsator)
@@ -100,7 +101,6 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     var timerTest : Timer?
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         
         initView()
@@ -137,7 +137,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
             constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
                 collectionView.edges == contentView.edges
                 circleView.height == collectionView.height
-                circleView.width == contentView.width * 0.7
+                circleView.width == contentView.width * 0.4
                 circleView.centerX == collectionView.centerX
             }
         }
@@ -145,13 +145,28 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     
     
     func initFetch() {
-        self.users = []
-        DataService.call.fetchUsers { (success, users, error) in
-            if !success {
-                print("error:", error!.localizedDescription)
-            } else {
-                self.users = users!
-                self.collectionView.reloadData()
+
+        guard let circleId  = UserDefaults.standard.string(forKey: "circleId") else {
+            return
+        }
+        
+        self.users.removeAll()
+
+        DataService.call.RefCircleMembers.child(circleId).observe( .value) { (snapshot) in
+            self.users = []
+
+            let enumerator = snapshot.children
+            while let rest = enumerator.nextObject() as? DataSnapshot {
+                let key = rest.key
+                DataService.call.RefUsers.child(key).queryOrdered(byChild: "position").observeSingleEvent(of: .value, with: { (snapshot) in
+                    guard let value = snapshot.value, let postDict = value as? [String : AnyObject] else {return}
+                    let key = snapshot.key
+                    let user = User(key: key, data: postDict)
+                    self.users.append(user)
+                    dispatch.async {
+                        self.collectionView.reloadData()
+                     }
+                })
             }
         }
     }
@@ -175,7 +190,6 @@ extension CircleCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
-    
     let user = users[indexPath.row]
     cell.user = user
     return cell
@@ -226,13 +240,18 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
 extension CircleCollectionViewCell {
     
     @objc func configureCirclePulse(_ notification: NSNotification) {
-        
+
         guard let dict = notification.userInfo as NSDictionary? else {return}
         guard let insight = dict["insight"] as? Insight else {return}
         
-        let daysPassed = insight.daysTotal! - insight.daysLeft!
-        let daysTotal = insight.daysTotal
-        self.circleView.maximumValue = CGFloat(daysTotal!)
+        print("INSIGHT:", insight)
+        
+        let daysTotal = insight.daysTotal ?? 0
+        let daysLeft = insight.daysLeft ?? 0
+        
+        let daysPassed = daysTotal - daysLeft
+            
+        self.circleView.maximumValue = CGFloat(daysTotal)
         self.circleView.endPointValue = CGFloat(daysPassed)
         
         if timerTest == nil {

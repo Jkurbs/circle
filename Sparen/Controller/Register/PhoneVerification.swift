@@ -84,15 +84,16 @@ class PhoneVerification: UIViewController, LTMorphingLabelDelegate {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
+                
         let firstName = data[0]
         let lastName = data[1]
         let email = data[2]
         let phoneNumber = data[3]
         let password = data[4]
         let code = textField.text!
-        let isAdmin = true
-        
-        AuthService.instance.createAccount(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, password: password, code: code, position: position ?? 1, isAdmin: isAdmin) { (success, error) in
+        let isAdmin = false
+                
+        AuthService.instance.createAccount(firstName, lastName, email, phoneNumber, password, code, position ?? 1, isAdmin) { (success, error) in
             if !success {
                 self.nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(self.nextStep))
                 self.navigationItem.rightBarButtonItem = self.nextButton

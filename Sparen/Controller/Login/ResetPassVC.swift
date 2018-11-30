@@ -56,12 +56,12 @@ class ResetPassVC: UIViewController {
         
         Auth.auth().sendPasswordReset(withEmail: "kerby.jean@hotmail.fr") { (error) in
             if let error = error {
-                self.showMessage(error.localizedDescription, type: .error)
+               // self.showMessage(error.localizedDescription, type: .error)
                 self.sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(self.send))
                 self.navigationItem.rightBarButtonItem = self.sendButton
                 activityIndicator.stopAnimating()
             } else {
-                self.showMessage("Password successfully reset", type: .success)
+               // self.showMessage("Password successfully reset", type: .success)
                 self.sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(self.send))
                 self.navigationItem.rightBarButtonItem = self.sendButton
                 activityIndicator.stopAnimating()

@@ -52,7 +52,6 @@ public enum GSMessageOption {
     case textAlignment(GSMessageTextAlignment)
     case textColor(UIColor)
     case textNumberOfLines(Int)
-    case showShadow(Bool)
 }
 
 extension UIViewController {
@@ -107,8 +106,6 @@ public class GSMessage: NSObject {
     public static var warningBackgroundColor : UIColor = UIColor(red: 230.0/255, green: 189.0/255, blue: 1.0/255,   alpha: 0.95)
     public static var errorBackgroundColor   : UIColor = UIColor(red: 219.0/255, green: 36.0/255,  blue: 27.0/255,  alpha: 0.70)
     public static var infoBackgroundColor    : UIColor = UIColor(red: 44.0/255,  green: 187.0/255, blue: 255.0/255, alpha: 0.90)
-    public static var shadowBackgroundColor    : UIColor = UIColor.black
-
     
     public class func showMessageAddedTo(text: String,
                                          type: GSMessageType,
@@ -148,25 +145,9 @@ public class GSMessage: NSObject {
     }
 
     public func show() {
-        
-     
 
         guard inView?.installedMessage == nil else {
             return
-        }
-        
-        if showShadow == true {
-            self.shadowView = UIView()
-            self.shadowView.frame = (self.inView?.frame)!
-            self.shadowView.backgroundColor = UIColor.black
-            self.shadowView.alpha = 0.0
-            self.inView?.addSubview( self.shadowView)
-
-            
-            UIView.animate(withDuration: 0.5) {
-                self.shadowView.alpha = 0.4
-            }
-            
         }
 
         inView?.installedMessage = self
@@ -227,13 +208,6 @@ public class GSMessage: NSObject {
 
     public func hide(animated: Bool) {
         
-        if showShadow == true {
-            UIView.animate(withDuration: 0.5) {
-                self.shadowView.alpha = 0.0
-                self.shadowView.removeFromSuperview()
-            }
-        }
-        
         guard
             inView.installedMessage === self &&
             inView?.uninstallMessage == nil else {
@@ -291,7 +265,6 @@ public class GSMessage: NSObject {
     public private(set) weak var inViewController: UIViewController?
     
     public private(set) var containerView = UIView()
-    public private(set) var shadowView = UIView()
     public private(set) var messageView = UIView()
     public private(set) var messageText = UILabel()
     
@@ -309,7 +282,6 @@ public class GSMessage: NSObject {
     public private(set) var textAlignment: GSMessageTextAlignment = .center
     public private(set) var textColor: UIColor = .white
     public private(set) var textNumberOfLines: Int = 1
-    public private(set) var showShadow: Bool = false
     
     public var messageWidth:  CGFloat {
         return inView.frame.width - margin.horizontal
@@ -348,7 +320,6 @@ public class GSMessage: NSObject {
             case let .textAlignment(value): textAlignment = value
             case let .textColor(value): textColor = value
             case let .textNumberOfLines(value): textNumberOfLines = value
-            case let .showShadow(value): showShadow = value
             }
         }
         
@@ -372,7 +343,6 @@ public class GSMessage: NSObject {
         
         containerView.layer.zPosition = 1
         containerView.addSubview(messageView)
-        containerView.addSubview(shadowView)
 
         messageText.attributedText = attributedText
         messageText.numberOfLines = textNumberOfLines
@@ -387,15 +357,10 @@ public class GSMessage: NSObject {
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         }
         
-        if hideOnTap {
-            messageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapForHide(_:))))
-            shadowView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapForHide(_:))))
-            
-        }
+        if hideOnTap { messageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapForHide(_:)))) }
         
         if handleTap != nil {
             messageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
-            shadowView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(_:))))
         }
 
         self.inView = inView
@@ -561,7 +526,6 @@ public class GSMessage: NSObject {
     
     func removeFromSuperview() {
         containerView.removeFromSuperview()
-        shadowView.removeFromSuperview()
         inView?.uninstallMessage = nil
     }
 

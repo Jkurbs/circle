@@ -29,51 +29,32 @@ class ActivatedView: UIView, ListAdapterDataSource {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
+        self.backgroundColor = .white
         initView()
-        fetchPayoutUsers()
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        
+        
         constrain(collectionView, self) { (collectionView, self) in
-            collectionView.width == self.width 
-            collectionView.height == self.height
+            collectionView.width == self.width - 20
+            collectionView.height == self.height - 20
             collectionView.centerX == self.centerX
         }
         
-        collectionView.cornerRadius = 10
-        collectionView.shadowRadius = 5.0
-        collectionView.layer.shadowColor = UIColor.lightGray.cgColor
-        collectionView.shadowOpacity = 0.2
-        
-        
-        //collectionView.frame = self.frame
+        collectionView.layer.addShadow()
+        collectionView.layer.roundCorners(radius: 5)
     }
     
     func initView() {
-        
         collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = true
         self.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
     }
-    
-    
-    func fetchPayoutUsers() {
-        DataService.call.fetchPayoutUsers { (success, user, error) in
-            if !success {
-                print("error:", error!.localizedDescription)
-            } else {
-                self.nextPayoutUsers.append(user!)
-                self.adapter.reloadData(completion: nil)
-            }
-        }
-    }
-
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -83,17 +64,11 @@ class ActivatedView: UIView, ListAdapterDataSource {
 extension ActivatedView {
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        var data = insights as [ListDiffable]
-        data += nextPayoutUsers as [ListDiffable]
-        return data
+        return insights as [ListDiffable]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        if object is Insight {
            return CircleInsightSection()
-        } else {
-            return NextPayoutSection()
-        }
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {

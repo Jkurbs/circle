@@ -42,19 +42,19 @@ class UserListViewModel {
 
 
     
-    init (apiService: DataServiceProtocol = DataService()) {
+    init (apiService: DataProtocol = DataService()) {
         self.apiService = apiService as! DataService
     }
     
     
     func fetchUser() {
-        apiService.fetchCurrentUser { (success, user, error) in
-            if !success {
-                print("ERROR:", error!.localizedDescription)
-            } else {
-                self.processFetchedUser(users: [user])
-            }
-        }
+//        apiService.fetchCurrentUser { (success, user, error) in
+//            if !success {
+//                print("ERROR:", error.localizedDescription)
+//            } else {
+//                self.processFetchedUser(users: [user])
+//            }
+//        }
     }
     
 

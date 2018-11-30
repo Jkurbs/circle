@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseAuth
-import GSMessages
 
 class ChangePasswordVC: UITableViewController {
 
@@ -39,7 +38,7 @@ class ChangePasswordVC: UITableViewController {
         guard let current = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? CurrentPasswordCell, let new = tableView.cellForRow(at:  IndexPath(row: 1, section: 0)) as? NewPasswordCell, let repeatPass = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? RepeatNewPasswordCell  else {return}
         guard let currentPassword = current.textField.text, let newPassword = new.textField.text, let repeatNewPassword = repeatPass.textField.text else {return}
         guard newPassword == repeatNewPassword else {
-            self.showMessage("Passwords do not match", type: .error)
+            // ERROR
             activityIndicator.stopAnimating()
             return
         }
@@ -48,17 +47,17 @@ class ChangePasswordVC: UITableViewController {
                 let credential = EmailAuthProvider.credential(withEmail: user.email!, password: currentPassword)
                 user.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
                     if let error = error {
-                        self.showMessage(error.localizedDescription, type: .error)
+                        //self.showMessage(error.localizedDescription, type: .error)
                         activityIndicator.stopAnimating()
                         return
                     } else {
                         user.updatePassword(to: newPassword, completion: { (error) in
                             if let error = error {
-                                self.showMessage(error.localizedDescription, type: .error)
+                                // ERROR
                                 activityIndicator.stopAnimating()
                                 return
                             } else {
-                                self.showMessage("Your password was successfully updated", type: .success)
+                                // SUCCESS
                                 activityIndicator.stopAnimating()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                                     self.navigationController?.popViewController(animated: true)

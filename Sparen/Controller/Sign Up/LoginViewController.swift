@@ -26,7 +26,7 @@ class LoginViewController {
     
     
     func retrieveUserInfo(_ userUID: String?, completion: @escaping (_ success: Bool, _ error: Error?, _ user: User?) -> ()) {
-        let ref = DataService.call.REF_USERS
+        //let ref = DataService.call.REF_USERS
 //        ref.document(Auth.auth().currentUser!.uid).getDocument { (snapshot, error) in
 //            if error != nil {
 //                completion(true, error, nil)

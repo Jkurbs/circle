@@ -9,12 +9,12 @@
 import UIKit
 import IGListKit
 import FirebaseAuth
-import GSMessages
 
 class EditAccountSection: ListSectionController {
     
     private var user: User?
-    private var handle: AuthStateDidChangeListenerHandle!
+    
+    var button: UIBarButtonItem!
     
     override func sizeForItem(at index: Int) -> CGSize {
         if index == 0 {
@@ -28,7 +28,7 @@ class EditAccountSection: ListSectionController {
         super.init()
         inset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
         
-        let button = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(updateUserProfile))
+        button = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(updateUserProfile))
         self.viewController?.navigationItem.rightBarButtonItem = button
     }
     
@@ -86,80 +86,30 @@ class EditAccountSection: ListSectionController {
         self.viewController?.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        
+        if let imageCell = self.collectionContext?.cellForItem(at: 0, sectionController: self) as? ProfileImageCell, let usernameCell = self.collectionContext?.cellForItem(at: 1, sectionController: self) as? UsernameCell, let displayNameCell = self.collectionContext?.cellForItem(at: 2, sectionController: self) as? DisplayNameCell, let emailCell = self.collectionContext?.cellForItem(at: 3, sectionController: self) as? EmailCell {
             
-            if let user = user {
-                let password = UserDefaults.standard.string(forKey: "password")
-                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password!)
-                user.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
-                    if let error = error {
-                        self.viewController?.showMessage(error.localizedDescription, type: .error)
+            guard let image = imageCell.imageView.image, let username = usernameCell.textField.text, let displayname = displayNameCell.textField.text, let email = emailCell.textField.text else {
+                return
+            }
+            
+            if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+                
+                let fullNameArr = displayname.components(separatedBy: " ")
+                let firstName = fullNameArr[0]
+                let lastName = fullNameArr[1]
+                
+                DataService.call.updateUserData(username, firstName, lastName, email, imageData) { (success, error) in
+                    if !success {
+                        // alert
+                          self.viewController?.navigationItem.rightBarButtonItem = self.button
+                        activityIndicator.stopAnimating()
                     } else {
-                        if let imageCell = self.collectionContext?.cellForItem(at: 0, sectionController: self) as? ProfileImageCell, let usernameCell = self.collectionContext?.cellForItem(at: 1, sectionController: self) as? UsernameCell, let displayNameCell = self.collectionContext?.cellForItem(at: 2, sectionController: self) as? DisplayNameCell, let emailCell = self.collectionContext?.cellForItem(at: 3, sectionController: self) as? EmailCell {
-                            
-                            guard let image = imageCell.imageView.image, let username = usernameCell.textField.text, let displayname = displayNameCell.textField.text, let email = emailCell.textField.text else {
-                                return
-                            }
-                            
-                            let storageItem = DataService.call.REF_STORAGE.child("profile_images").child(user.uid)
-                            if let data = UIImageJPEGRepresentation(image, 1.0) {
-                                storageItem.putData(data, metadata: nil) { (metadata, error) in
-                                    if let error = error {
-                                        self.viewController?.showMessage(error.localizedDescription, type: .error)
-                                        activityIndicator.stopAnimating()
-                                        return
-                                    } else {
-                                        storageItem.downloadURL(completion: { (url, error) in
-                                            if let error = error {
-                                                self.viewController?.showMessage("An error occured while updating your profile", type: .error)
-                                                activityIndicator.stopAnimating()
-                                                return
-                                            }
-                                            if let photoUrl = url?.absoluteString {
-                                                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                                                changeRequest?.displayName = username
-                                                changeRequest?.photoURL = URL(string: photoUrl)
-                                                changeRequest?.commitChanges { (error) in
-                                                    
-                                                    if let error = error {
-                                                        print("error commiting change", error.localizedDescription)
-                                                    } else {
-                                                        Auth.auth().currentUser?.updateEmail(to: email) { (error) in
-                                                            if let error = error {
-                                                              print("error updating email", error.localizedDescription)
-                                                            } else {
-                                                                let fullNameArr = displayname.components(separatedBy: " ")
-                                                                 let firstName = fullNameArr[0]
-                                                                let lastName = fullNameArr[1]
-                                                                let data = ["image_url": photoUrl, "user_name": username, "first_name": firstName, "last_name": lastName, "email_address": email] as [String : Any]
-                                                                DataService.call.REF_CIRCLES.document((self.user?.circle)!).collection("insiders").document(user.uid).updateData(data)
-                                                                
-                                                                DataService.call.REF_USERS.document(user.uid).updateData(data, completion: { (error) in
-                                                                    if let error = error {
-                                                                        print("error updating user data", error.localizedDescription)
-                                                                        activityIndicator.stopAnimating()
-                                                                    } else {
-                                                                        self.viewController?.showMessage("Your profile was successfully updated", type: .success)
-                                                                        activityIndicator.stopAnimating()
-                                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                                                        self.viewController?.navigationController?.popViewController(animated: true)
-                                                                        }
-                                                                    }
-                                                                })
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    }
-                                }
-                            }
-                        }
+                        self.viewController?.navigationItem.rightBarButtonItem = self.button
+                        activityIndicator.stopAnimating()
+                        self.viewController?.navigationController?.popViewController(animated: true)
                     }
-                })
-            } else {
-                print("NO USER")
+                }
             }
         }
     }

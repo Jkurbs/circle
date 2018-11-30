@@ -10,7 +10,7 @@ import UIKit
 
 class LoadingButton: UIButton {
     
-    var activityIndicator: ActivityIndicator!
+    var activityIndicator: UIActivityIndicatorView!
     
     
     func showLoading() {
@@ -22,17 +22,13 @@ class LoadingButton: UIButton {
     }
     
     func hideLoading() {
-        self.setTitleColor(.white, for: .normal)
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
     
-    private func createActivityIndicator() -> ActivityIndicator {
-        let activityIndicator = ActivityIndicator()
+    private func createActivityIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.strokeColor = .lightGray
-        activityIndicator.lineWidth = 2.0
-        activityIndicator.numSegments = 12
         return activityIndicator
     }
     

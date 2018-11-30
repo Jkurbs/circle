@@ -127,9 +127,10 @@ class EmailPhoneVC: UIViewController, LTMorphingLabelDelegate, CountryListDelega
         vc.data = self.data
         
         if isValidEmail(testStr: email) {
-            AuthService.instance.verifyPhone(phoneNumber: phone, viewController: self) { (success, error) in
+            AuthService.instance.verifyPhone(phone) { (success, error) in
                 if !success {
-                    self.alert("\(error!.localizedDescription)")
+                    print("ERROR::" ,error!.localizedDescription )
+//                    self.alert("\(error!.localizedDescription)")
                     self.nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(self.nextStep))
                     self.navigationItem.rightBarButtonItem = self.nextButton
                     activityIndicator.stopAnimating()
