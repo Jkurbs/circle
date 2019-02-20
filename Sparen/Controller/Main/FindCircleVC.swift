@@ -40,6 +40,8 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if currentReachabilityStatus == .notReachable {self.present(ErrorHandler.show.internetError(), animated: true, completion: nil)}
+        
         view.backgroundColor = .white
         collectionView.backgroundColor = .backgroundColor
         
@@ -55,13 +57,7 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
         pulse.numPulse = 2
         pulse.backgroundColor = UIColor.sparenColor.cgColor
         pulse.position = CGPoint(x: view.center.x, y: view.center.y)
-        
-    
-        
-        
         view.layer.addSublayer(pulse)
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,8 +70,6 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
         super.viewDidLayoutSubviews()
         
         constrain(collectionView, label, emptyLabel, view) { (collectionView, label, emptyLabel, view) in
-
-            
             emptyLabel.center == view.center
             
             label.bottom == view.bottom - 250
@@ -91,7 +85,6 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
     
     
     @objc func findCircles () {
-    
         
         label = UICreator.create.label("Hold on, looking for circles you can join...", 17, .darkText, .center, .regular, view)
         label.numberOfLines = 4
@@ -100,8 +93,8 @@ class FindCircleVC: UIViewController, ListAdapterDataSource {
         
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
             DataService.call.findCircles(complete: { (success, error, circle) in
-
                 if !success {
+                    print("ERROR:", error?.localizedDescription)
                     self.label.text = ""
                     self.emptyLabel.isHidden = false
                     self.pulse.stop()

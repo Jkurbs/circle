@@ -29,10 +29,9 @@ class DashboardSection: ListSectionController {
     
     @objc func updateUser(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
-            if let user = dict["user"] as? User {
+            if let user = dict["user"] as? User, let position = dict["position"] as? Int {
                 if let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? SelectedUserCell {
-                    cell.configure(user)
-
+                    cell.configure(user, position)
                     if user.userId == Auth.auth().currentUser?.uid {
                         self.viewController?.title = "Dashboard"
                     } else {
@@ -41,9 +40,7 @@ class DashboardSection: ListSectionController {
                 }
             }
         }
-    }
-    
-    
+    }    
     
     override func numberOfItems() -> Int {
         return 1
@@ -53,7 +50,7 @@ class DashboardSection: ListSectionController {
         guard let cell = collectionContext?.dequeueReusableCell(of: SelectedUserCell.self, for: self, at: index) as? SelectedUserCell else {
             fatalError()
         }
-        cell.configure(user!)
+        cell.configure(user!, index)
         return cell
     }
 

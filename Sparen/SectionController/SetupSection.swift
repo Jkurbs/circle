@@ -15,26 +15,38 @@ class SetupSection: ListSectionController {
     private var member: Int?
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: collectionContext!.containerSize.height)
+        let height = collectionContext!.containerSize.height
+        let width = collectionContext!.containerSize.width
+        if index == 0 {
+            return CGSize(width: width, height: height - 60)
+        } else {
+            return CGSize(width: width, height: 60)
+        }
     }
     
     override init() {
         super.init()
         self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-    
+
     
     override func numberOfItems() -> Int {
-        return 1
+        return 2
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: SetupCell.self, for: self, at: index) as? SetupCell else {
-            fatalError()
+        if index == 0 {
+            guard let cell = collectionContext?.dequeueReusableCell(of: SetupCell.self, for: self, at: index) as? SetupCell else {
+                fatalError()
+            }
+            cell.configure(member!)
+            return cell
+        } else {
+            guard let cell = collectionContext?.dequeueReusableCell(of: OptionCell.self, for: self, at: index) as? OptionCell else {
+                fatalError()
+            }
+            return cell
         }
-        
-        cell.configure(member!)
-        return cell
     }
     
     override func didUpdate(to object: Any) {

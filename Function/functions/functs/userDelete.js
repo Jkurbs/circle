@@ -1,6 +1,8 @@
 'use strict';
 
 const admin = require('firebase-admin');
+const stripe = require('stripe')('sk_test_QfBDc4JT7E6iz8EwrsuJcR58');
+
 
 // Sends a goodbye email to the given user.
 
@@ -57,16 +59,27 @@ const APP_NAME = 'Sparen';
 
 // [START sendByeEmail]
 /**
- * Send an account deleted email confirmation to users who delete their accounts.
- */
+* Send an account deleted email confirmation to users who delete their accounts.
+*/
 // [START onDeleteTrigger]
 exports = module.exports = functions.auth.user().onDelete(user => {
-	// [END onDeleteTrigger]
+// [END onDeleteTrigger]
 	const email = user.email;
 	const displayName = user.displayName;
-    
-	sendGoodbyeEmail(email, displayName);
-	
 
-	return admin.database().ref(`/users/${user.uid}`).remove();
+	const stripeRef = admin.database().ref('/stripe').child(user.uid);
+
+	let accountId; let customerId;
+	return stripeRef.once('value').then(function(snapshot) {
+		accountId = snapshot.val().accountId;
+		customerId = snapshot.val().customerId;
+	}).then(() => {
+		stripe.customers.del(customerId);
+		stripe.accounts.del(accountId);
+	}).then(() => {
+		//Remove everything
+		return admin.database().ref(`/users/${user.uid}`).remove();
+	}).then(() => {
+		return sendGoodbyeEmail(email, displayName);
+	});
 });

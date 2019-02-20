@@ -9,13 +9,20 @@
 import UIKit
 import IGListKit
 
+
+postfix operator %
+
+postfix func % (percentage: Double) -> Double {
+    return (percentage / 100)
+}
+
 class AmountsCell: UICollectionViewCell {
     
-    var weeklyAmountLabel = transformLabel()
-    var totalAmountLabel = transformLabel()
+    var weeklyAmountLabel = UILabel()
+    var totalAmountLabel = UILabel()
     
-    var weeklyDescLabel =  transformLabel()
-    var totalDescLabel = transformLabel()
+    var weeklyDescLabel =  UILabel()
+    var totalDescLabel = UILabel()
     
     
     override init(frame: CGRect) {
@@ -51,14 +58,14 @@ class AmountsCell: UICollectionViewCell {
         weeklyAmountLabel.font = font
         totalAmountLabel.font = font
         
-        weeklyAmountLabel.frame = CGRect(x: 20, y: 5, width: width / 3, height: 40)
+        weeklyAmountLabel.frame = CGRect(x: 20, y: 5, width: width / 3, height: 25)
         weeklyDescLabel.frame = CGRect(x: 20, y: weeklyAmountLabel.frame.maxY, width: width / 3 , height: 20)
         weeklyDescLabel.font = font
         weeklyDescLabel.textColor = descColor
         
         weeklyDescLabel.text = "Weekly"
         
-        totalAmountLabel.frame = CGRect(x: self.frame.maxX - 150, y: 5, width: width / 3, height: 40)
+        totalAmountLabel.frame = CGRect(x: self.frame.maxX - 150, y: 5, width: width / 3, height: 25)
         totalDescLabel.frame = CGRect(x: self.frame.maxX - 150, y: totalAmountLabel.frame.maxY, width: width / 3 , height: 20)
         totalDescLabel.font = font
         totalDescLabel.text = "Total"
@@ -69,13 +76,15 @@ class AmountsCell: UICollectionViewCell {
         weeklyAmountLabel.textAlignment = .center
         weeklyDescLabel.textAlignment = .center
     }
+
     
     
     func configure(_ insight: Insight) {
-        let weeklyAmount = insight.weeklyAmount ?? 0
-        let totalAmount = insight.totalAmount ?? 0
-        self.weeklyAmountLabel.text = "\(weeklyAmount) $"
-        self.totalAmountLabel.text = "\(totalAmount) $"
+        
+        let weeklyAmount =  insight.weeklyAmount!
+        let totalAmount = insight.totalAmount!
+        self.weeklyAmountLabel.text = "\(weeklyAmount.rounded()) $"
+        self.totalAmountLabel.text = "\(totalAmount.rounded()) $"
     }
 }
 
@@ -117,7 +126,7 @@ class HeaderCell: UICollectionViewCell {
 
 class NextPayoutHeaderCell: UICollectionViewCell {
     
-    var label = transformLabel()
+    var label = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -32,6 +32,8 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
         let font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.font = font
         self.textColor = UIColor.darkGray
+        
+        self.borderStyle = .roundedRect
     }
     
     
@@ -42,21 +44,7 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("lost focus")
     }
-    
 
-//    override func textRect(forBounds bounds: CGRect) -> CGRect {
-//        if self.leftView != nil {
-//            return bounds.insetBy(dx: 50, dy: 0)
-//        }
-//        return bounds.insetBy(dx: 10, dy: 0)
-//    }
-    
-//    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-//        if self.leftView != nil {
-//            return bounds.insetBy(dx: 50, dy: 0)
-//        }
-//        return bounds.insetBy(dx: 10, dy: 0)
-//    }
     
     func button(_ title: String? = nil, iconName: String? = nil) -> UIButton {
         self.leftView = nil
@@ -68,7 +56,7 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .regular)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.setTitle(title, for: UIControlState())
-            button.setTitleColor(UIColor.blueColor, for: UIControlState())
+            button.setTitleColor(UIColor.sparenColor, for: UIControlState())
             button.setTitleColor(UIColor.gray, for: .disabled)
             self.leftViewMode = .always
             self.leftView = button 
@@ -84,13 +72,6 @@ class BackgroundTextField: UITextField, UITextFieldDelegate {
         return button
     }
     
-    func errorDetected(superView: UIView, error: String, frame: CGRect) {
-        self.borderColor = UIColor.red
-        let errorLabel = Footnote()
-        errorLabel.frame = frame
-        errorLabel.textColor = UIColor.red
-        superView.addSubview(errorLabel)
-    }
     
     func ifPasswordValid(_ password: String) -> Bool {
         let passwordValidated = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{6,}")

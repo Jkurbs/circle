@@ -104,33 +104,45 @@ class UserCircleCell: UICollectionViewCell {
     }
     
     @objc func join() {
+        
+//        DataService.call.joinCircle(circle) { (success, error) in
+//            if !success {
+//                print("error:", error!.localizedDescription)
+//            } else {
+//                //self.parentViewController().showMessage("You successfully join the circle", type: .success)
+//                self.joinButton.setTitle("Joined", for: .normal)
+//                self.joinButton.setTitleColor(.darkGray, for: .normal)
+//                
+//            }
+//            
+//        }
 
-        let circleId = UserDefaults.standard.string(forKey: "circleId")
-        if circleId != nil {
-            
-            DataService.call.leaveCircle(circle) { (success, error) in
-                if !success {
-                    print("error:", error!.localizedDescription)
-                } else {
-                    //self.parentViewController().showMessage("You successfully left the circle", type: .success)
-                    self.joinButton.setTitle("Join", for: .normal)
-                    self.joinButton.setTitleColor(.sparenColor, for: .normal)
-                }
-            }
-        } else {
-
-            DataService.call.joinCircle(circle) { (success, error) in
-                if !success {
-                    print("error:", error!.localizedDescription)
-                } else {
-                    //self.parentViewController().showMessage("You successfully join the circle", type: .success)
-                    self.joinButton.setTitle("Joined", for: .normal)
-                    self.joinButton.setTitleColor(.darkGray, for: .normal)
-                    
-                }
-
-            }
-        }
+//        let circleId = UserDefaults.standard.string(forKey: "circleId")
+//        if circleId != nil {
+//
+//            DataService.call.leaveCircle(circle) { (success, error) in
+//                if !success {
+//                    print("error:", error!.localizedDescription)
+//                } else {
+//                    //self.parentViewController().showMessage("You successfully left the circle", type: .success)
+//                    self.joinButton.setTitle("Join", for: .normal)
+//                    self.joinButton.setTitleColor(.sparenColor, for: .normal)
+//                }
+//            }
+//        } else {
+//
+//            DataService.call.joinCircle(circle) { (success, error) in
+//                if !success {
+//                    print("error:", error!.localizedDescription)
+//                } else {
+//                    //self.parentViewController().showMessage("You successfully join the circle", type: .success)
+//                    self.joinButton.setTitle("Joined", for: .normal)
+//                    self.joinButton.setTitleColor(.darkGray, for: .normal)
+//
+//                }
+//
+//            }
+//        }
     }
 }
 
@@ -171,7 +183,7 @@ extension UserCircleCell {
     
     func addImages(_ user: User, _ count: Int) {
         imageView = UIImageView()
-        imageView.hero.id = "\(user.position ?? 0)"
+//        imageView.hero.id = "\(user.position ?? 0)"
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.borderColor = UIColor.white

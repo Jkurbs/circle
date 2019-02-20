@@ -10,18 +10,15 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
-import FirebaseFirestore
 import FirebaseDatabase
 import FirebaseDynamicLinks
 import FirebaseMessaging
-import SwiftDate
 
 
 
 typealias Completion = (_ success: Bool, _ error: Error?, _ data: Any?) -> Void
 
 class DataService: DataProtocol {
-    
     
     
     private static let _call = DataService()
@@ -60,6 +57,11 @@ class DataService: DataProtocol {
         return RefBase.child("circles")
     }
     
+    var RefRequests: DatabaseReference {
+        return RefBase.child("requests")
+    }
+    
+    
     var RefCircleMembers: DatabaseReference {
         return RefBase.child("members")
     }
@@ -86,6 +88,8 @@ class DataService: DataProtocol {
     var circleHandle: DatabaseHandle!
     var circleInsightHandle: DatabaseHandle!
     var circleMembersHandle: DatabaseHandle!
+    var requestHandle: DatabaseHandle!
+
     
     private var handle: AuthStateDidChangeListenerHandle!
 
@@ -103,34 +107,23 @@ class DataService: DataProtocol {
     
     // MARK: Get Current User
     
-    
-    
-    func fetchCurrentUserInfo(complete: @escaping (Bool, Error?) -> ()) {
-        
-        
-        
-    }
-    
-    
-    
-    
-    
     func fetchCurrentUser(complete: @escaping (Bool, Error?, User) -> ()) {
-        if let uid = Auth.auth().currentUser?.uid ?? UserDefaults.standard.value(forKey: "userId") as? String {
-
-            DataService.call.RefUsers.child(uid).observe(.value, with: { (snapshot) in
                 
-                guard let value = snapshot.value else {return}
-                
-                let postDict = value as? [String : AnyObject] ?? [:]
-                let key = snapshot.key
-                let user = User(key: key, data: postDict)
-                let firstName = user.firstName
-                UserDefaults.standard.set(firstName, forKey: "firstName")
-                complete(true, nil, user)
-            })
-        }
+      if let string = UserDefaults.standard.string(forKey: "userId"), !string.isEmpty {
+      DataService.call.RefUsers.child(string).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let value = snapshot.value else {return}
+            let postDict = value as? [String : AnyObject] ?? [:]
+            let key = snapshot.key
+            let user = User(key: key, data: postDict)
+        
+            let circleId =  user.circle ?? ""
+        
+            UserDefaults.standard.set(circleId, forKey: "circleId")
+            UserDefaults.standard.synchronize()
+            complete(true, nil, user)
+        })
     }
+}
 
     
     // MARK: User Activities
@@ -149,8 +142,11 @@ class DataService: DataProtocol {
     
     
     // MARK: Create Circle
+    
     func createCircle(_ amount: Int ,complete: @escaping (Bool, Error?) -> ()) {
-        let userID = Auth.auth().currentUser!.uid
+        
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        
         let data: [String: Any] = ["activated": false, "admin": userID, "amount": amount, "members": 0, "round": 0]
         
         RefCircles.childByAutoId().setValue(data) { (error, ref) in
@@ -158,17 +154,20 @@ class DataService: DataProtocol {
                 complete(false, err)
                 return
             } else {
-                UserDefaults.standard.set(ref.key, forKey: "circleId")
+                
+                guard let key = ref.key else {return}
+                
+                UserDefaults.standard.set(key, forKey: "circleId")
 
-                self.createLink(circleID: ref.key, completion: { (success, error, link) in
+                self.createLink(circleID: key, completion: { (success, error, link) in
                     if !success {
                         complete(false, error)
                     } else {
                         ref.updateChildValues(["link": link])
-                        self.RefCircleMembers.child(ref.key).setValue([userID: true])
+                        self.RefCircleMembers.child(key).setValue([userID: true])
                         
 //                        self.post(ref.key, endDate: myString)
-                        Messaging.messaging().subscribe(toTopic: ref.key)
+                        Messaging.messaging().subscribe(toTopic: key)
                         complete(true, nil)
                     }
                 })
@@ -194,6 +193,25 @@ class DataService: DataProtocol {
 //
 //
 //                })
+            }
+        }
+    }
+    
+    lazy var functions = Functions.functions()
+
+    
+    func retrieveBalance(complete: @escaping (_ success: Bool, _ error: Error?, _ balance: Int) -> ()) {
+        
+        functions.httpsCallable("RetrieveBalance").call(["userId": Auth.auth().currentUser?.uid]) { (result, error) in
+            if let error = error as NSError? {
+                if error.domain == FunctionsErrorDomain {
+                    let code = FunctionsErrorCode(rawValue: error.code)
+                    let message = error.localizedDescription
+                    let details = error.userInfo[FunctionsErrorDetailsKey]
+                }
+            }
+            if let text = (result?.data as? [String: Any])?["amount"] as? Int {
+                complete(true, nil, text/100)
             }
         }
     }
@@ -231,44 +249,25 @@ class DataService: DataProtocol {
     
 
     // MARK: Current User Circle
+    
     func fetchCurrentUserCircle(_ circleId: String?, complete: @escaping (Bool, Error?, Circle) -> ()) {
         guard let circleId = circleId else {return}
         
         self.circleHandle = RefCircles.child(circleId).observe(.value, with: { (snapshot) in
             guard let value = snapshot.value, let postDict = value as? [String : AnyObject]  else {return}
-            
-            print("VALUE::", value)
-            
-            
-            
+
             let key = snapshot.key
             let circle = Circle(key: key, data: postDict)
+            UserDefaults.standard.set( circle.link ?? "", forKey: "link")
             UserDefaults.standard.set( circle.adminId ?? "", forKey: "admin")
             UserDefaults.standard.set(circle.created, forKey: "time")
             complete(true, nil, circle)
         })
     }
-    
-    // MARK: User Ready
-    func userReady(complete: @escaping (Bool, Error?) -> ()) {
-
-        RefUsers.child((Auth.auth().currentUser?.uid)!).updateChildValues(["status": "ready"]) { (error, ref) in
-            if let error = error {
-                print("error:", error.localizedDescription)
-                complete(false, error)
-                return
-            } else {
-                UserDefaults.standard.set(true, forKey: "ready")
-                complete(true, nil)
-            }
-        }
-    }
-    
-    
-
 
     
     // MARK: Circle Insights
+    
     func fetchCircleInsights(_ circleId: String?, complete: @escaping (Bool, Error?, Insight) -> ()) {
         
         guard let circleId = circleId else {return}
@@ -287,11 +286,12 @@ class DataService: DataProtocol {
 
     
     // MARK: Circle Members
+    
     func fetchMembers(complete: @escaping (Bool, Error?, User) -> ()) {
         
         guard let circleId  = UserDefaults.standard.string(forKey: "circleId") else {return}
         
-        RefCircleMembers.child(circleId).observe( .value) { (snapshot) in
+        circleMembersHandle = RefCircleMembers.child(circleId).observe( .value) { (snapshot) in
             let enumerator = snapshot.children
             while let rest = enumerator.nextObject() as? DataSnapshot {
                 let key = rest.key
@@ -309,34 +309,29 @@ class DataService: DataProtocol {
     
     
     // MARK: Find Circles
+    
     func findCircles(complete: @escaping (Bool, Error?, Circle?) -> ()) {
         
         RefCircles.queryOrdered(byChild: "activated").queryEqual(toValue: false).observe(.value, with: { (snapshot) in
             
-            
-            if snapshot.exists() {
+            guard snapshot.exists() else { return }
+
                 let enumerator = snapshot.children
                 while let rest = enumerator.nextObject() as? DataSnapshot {
-                    
                     let key = rest.key
                     let data = rest.value as?  [String : AnyObject]
                     let circle = Circle(key: key, data: data!)
                     if circle.adminId == Auth.auth().currentUser?.uid {
                         return
                     }
-                    
                     complete(true, nil, circle)
                 }
-            } else {
-                complete(false, nil, nil)
-            }
         })
     }
     
     
      // MARK: Find Circles members
     func findCircleMembers(_ circleId: String, complete: @escaping (Bool, Error?, User, Int) -> ()) {
-        print("circle id::", circleId)
         RefCircleMembers.child(circleId).queryLimited(toLast: 3).observeSingleEvent(of: .value) { (snapshot) in
             
             let enumerator = snapshot.children
@@ -359,31 +354,112 @@ class DataService: DataProtocol {
         }
     }
     
-    
-    // MARK: Add Payment Token
-    
-    func addPayment(_ token: String, _ last4: String, _ data: Data, complete: @escaping (Bool, Error?) -> ()) {
+    func positionRequest(users: [User], _ first: Int, _ second: Int, complete: @escaping (Bool, Error?) -> ()) {
         
-        let storageItem = Storage.storage().reference().child("cards").child(token)
+        guard let circleId = UserDefaults.standard.string(forKey: "circleId") else { return }
+        
+        let from = Auth.auth().currentUser?.uid
+        let name = Auth.auth().currentUser?.displayName
+        let to = users[first].userId
+        
+        let values = ["from": from ?? "", "name": name ?? "", "position": first,  "forPosition": second, "seen": false,  "time": ServerValue.timestamp()] as [String : Any]
 
-        self.saveImageData(storageItem, data) { (url, success, error) in
-            if !success {
-                print("error:", error!.localizedDescription)
-            } else {
-                self.RefCards.child((Auth.auth().currentUser?.uid)!).updateChildValues(["token": token, "last4": last4, "image_url": url ?? ""]) { (error, ref) in
-                    if let err = error {
-                        complete(false, err)
+        if to == from && from == Auth.auth().currentUser!.uid {
+            complete(false, nil)
+            return
+        }
+        
+        
+        DataService.call.RefRequests.child(circleId).child(to!).observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                let enumerator = snapshot.children
+                while let rest = enumerator.nextObject() as? DataSnapshot {
+                    let postDict = rest.value as! [String : AnyObject]
+                    let forPosition = postDict["forPosition"] as! Int
+                    let from  = postDict["from"] as! String
+                    
+                    if forPosition == second , from == Auth.auth().currentUser!.uid {
+                        print("EQUAL")
+                        complete(false, nil)
                         return
                     }
-                    complete(true, nil)
                 }
+                
+                self.sendPositionRequest(circleId, to!, values, complete: { (success, error) in
+                    if !success {
+                        complete(false, error)
+                    } else {
+                        complete(true, nil)
+                    }
+                })
+            } else {
+                self.sendPositionRequest(circleId, to!, values, complete: { (success, error) in
+                    if !success {
+                        complete(false, error)
+                    } else {
+                        complete(true, nil)
+                    }
+                })
+            }
+        }
+    }
+    
+    func sendPositionRequest(_ circleId: String, _ to: String, _ values: [String: Any], complete: @escaping (Bool, Error?) -> ()) {
+        
+        DataService.call.RefBase.child("requests").child(circleId).child(to).childByAutoId().setValue(values) { (error, ref) in
+            if error != nil {
+                complete(false, error)
+            } else {
+                complete(true, error)
             }
         }
     }
     
     
     
+    
+    // MARK: Add Payment Token
+    
+    func addPayment(_ accountToken: String, _ sourceToken: String, _ type: String, _ expirationDate: String, _ last4: String, _ prefix: String, complete: @escaping (Bool, Error?) -> ()) {
+        
+        self.RefCards.child((Auth.auth().currentUser?.uid)!).childByAutoId().setValue(["accountToken": accountToken, "sourceToken": sourceToken,  "type": type, "expDate": expirationDate, "last4": last4, "prefix": prefix], withCompletionBlock: { (error, ref) in
+            if let err = error {
+                complete(false, err)
+                return
+            }
+            complete(true, nil)
+        })
+
+    }
+
+
+func addPayment(_ token: String, _ last4: String, _ data: Data, complete: @escaping (Bool, Error?) -> ()) {
+    
+    let storageItem = Storage.storage().reference().child("cards").child(token)
+    
+    self.saveImageData(storageItem, data) { (url, success, error) in
+        if !success {
+            print("error:", error!.localizedDescription)
+        } else {
+            self.RefCards.child((Auth.auth().currentUser?.uid)!).childByAutoId().setValue(["token": token, "last4": last4, "image_url": url ?? ""], withCompletionBlock: { (error, ref) in
+                if let err = error {
+                    complete(false, err)
+                    return
+                }
+                complete(true, nil)
+            })
+        }
+    }
+}
+    
+    
+    
+    
+    
+    
+    
     // MARK: Tokens
+    
     func saveToken(_ state: Bool, _ token: String, _ circleId: String, complete: @escaping (Bool, Error?) -> ()) {
         
         
@@ -412,23 +488,22 @@ class DataService: DataProtocol {
     
     // MARK: Join/Leave Circle
     
-    func joinCircle(_ circle: Circle, complete: @escaping (Bool, Error?) -> ()) {
+    func joinCircle(_ circleId: String?, complete: @escaping (_ success: Bool, _ error :Error?) -> ()) {
         
-        guard let userID = Auth.auth().currentUser?.uid, let circleId = circle.id else {return}
-        
-        self.RefCircleMembers.child(circleId).updateChildValues([userID: true]) { (error, ref) in
-            if let err = error  {
+        guard let userID = Auth.auth().currentUser?.uid, let circleId = circleId else {return}
+        self.RefCircleMembers.child(circleId).updateChildValues([userID: ServerValue.timestamp()]) { (error, ref) in
+
+            if let err = error {
+                print("error:", err)
                 complete(false, err)
                 return
+            } else {
+                complete(true, nil)
             }
-            
-            UserDefaults.standard.set(circleId, forKey: "circleId")
-            UserDefaults.standard.synchronize()
-            complete(true, nil)
-        }
     }
+}
     
-    func leaveCircle(_ circle: Circle, complete: @escaping (Bool, Error?) -> ()) {
+    func leaveCircle(_ circle: Circle, _ position: Int, complete: @escaping (Bool, Error?) -> ()) {
         
         guard let userID = Auth.auth().currentUser?.uid, let circleId = circle.id else {return}
         self.RefCircleMembers.child(circleId).child(userID).removeValue { (error, ref) in
@@ -436,15 +511,41 @@ class DataService: DataProtocol {
                 print("error:", err)
                 return
             } else {
-                if circle.members == 1 {
-                    self.RefCircles.child(circle.id!).removeValue()
-                }
                 self.RefUsers.child(userID).child("daysLeft").removeValue()
                 self.RefUsers.child(userID).child("daysTotal").removeValue()
+                self.RefUsers.child(userID).child("circleId").removeValue()
+                
+                DataService.call.RefCircles.child(circleId).child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+                    guard let value = snapshot.value else {return}
+                    let members = value as! Int
+                    DataService.call.RefCircles.child(circleId).updateChildValues(["members": members - 1])
+                 })
+                
                 Messaging.messaging().unsubscribe(fromTopic: circleId)
                 UserDefaults.standard.removeObject(forKey: "circleId")
                 UserDefaults.standard.synchronize()
                 complete(true, nil)
+            }
+        }
+        updateUsersPositions(circle.id!, position)
+    }
+    
+    
+    func updateUsersPositions(_ circleId: String, _ positionLeft: Int) {
+
+        DataService.call.RefCircleMembers.child(circleId).observeSingleEvent(of: .value) { (snapshot) in
+
+            let enumerator = snapshot.children
+            while let rest = enumerator.nextObject() as? DataSnapshot {
+                let key = rest.key
+
+                DataService.call.RefUsers.child(key).child("position").observeSingleEvent(of: .value, with: { (snapshot) in
+                    guard let value = snapshot.value else {return}
+                    let position = value as! Int
+                    if position > positionLeft {
+                        DataService.call.RefUsers.child(key).updateChildValues(["position": position - 1])
+                    }
+                })
             }
         }
     }
@@ -498,8 +599,9 @@ class DataService: DataProtocol {
     // MARK: Save User Data
     
     func saveUserData(_ userId: String, _ data: [String : Any], complete: @escaping (Bool, Error?) -> ()) {
-        RefCurrentUser.setValue(data) { (error, ref) in
+        RefUsers.child(userId).setValue(data) { (error, ref) in
             if let err = error {
+                print("ERROR::", err.localizedDescription)
                 complete(false, err)
             } else {
                 complete(true, nil)
@@ -510,58 +612,58 @@ class DataService: DataProtocol {
     
     // MARK: Save User Data
     
-    
-
-
-    
-    func updateUserData(_ username: String, _ firstName: String, _ lastName: String, _ email: String, _ imageData: Data, complete: @escaping (Bool, Error?) -> ()) {
+    func updateUserData(_ username: String, _ fullname: [String], _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> ()) {
         
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+            guard fullname.count > 1 else {return}
+            let firstName = fullname.first ?? ""
+            let lastName = fullname.last ?? ""
             
-            if let user = user {
-                guard let password = UserDefaults.standard.string(forKey: "password") else {return}
+            handle = Auth.auth().addStateDidChangeListener { (auth, user) in
                 
-                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
-                
-                user.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
-                    if let error = error {
-                        complete(false, error)
-                    } else {
-                        let storageItem = DataService.call.REF_STORAGE.child("profile_images").child(user.uid)
-                        
-                        self.saveImageData(storageItem, imageData, { (url, success, error) in
-                            if !success {
-                                complete(false, error)
-                            } else {
-                                
-                            if let url = url {
-                                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                                changeRequest?.displayName = firstName
-                                changeRequest?.photoURL = URL(string: url)
-                                changeRequest?.commitChanges { (error) in
-
-                                    if let err = error  {
-                                       complete(false, err)
-                                    }
-                                    
-                                    let data = ["image_url": url, "user_name": username, "first_name": firstName, "last_name": lastName, "email": email] as [String : Any]
-                                    
-                                    self.RefCurrentUserInfo.updateChildValues(data)
-                                    
-//                                    self.RefUsers.child(user.uid).updateChildValues(data, withCompletionBlock: { (error, ref) in
-//                                        
-//                                        if let error = error {
-//                                            complete(false, error)
-//                                        } else {
-//                                            complete(true, nil)
-//                                        }
-//                                        })
+                if let user = user {
+                    guard let password = UserDefaults.standard.string(forKey: "password") else {return}
+                    
+                    let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+                    
+                    user.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
+                        if let error = error {
+                            complete(false, error)
+                        } else {
+                            print("AUTHENTICATE")
+                            let storageItem = DataService.call.REF_STORAGE.child("profile_images").child(user.uid)
+                            
+                            self.saveImageData(storageItem, imageData, { (url, success, error) in
+                                if !success {
+                                    complete(false, error)
+                                } else {
+                                    print("SAVE IMAGE")
+                                    if let url = url {
+                                        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                                        changeRequest?.displayName = firstName
+                                        changeRequest?.photoURL = URL(string: url)
+                                        changeRequest?.commitChanges { (error) in
+                                            
+                                            if let err = error  {
+                                                complete(false, err)
+                                            }
+                                            
+                                            let data = ["image_url": url, "user_name": username, "first_name": firstName, "last_name": lastName, "email": email] as [String : Any]
+                                            self.RefUsers.child(user.uid).updateChildValues(data, withCompletionBlock: { (error, ref) in
+                                                
+                                                if let error = error {
+                                                    complete(false, error)
+                                                } else {
+                                                    complete(true, nil)
+                                                }
+                                            })
+                                        }
                                     }
                                 }
-                            }
-                        })
-                    }
-                })
+                            })
+                        }
+                    })
+                }
             }
         }
     }
@@ -595,29 +697,51 @@ class DataService: DataProtocol {
     }
     
     
-    
     func createLink(circleID: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String)->() ) {
         
-        guard let link = URL(string: "https://www.sparenapp.com/\(circleID)") else { return}
-        let dynamicLinksDomain = "sparen.page.link"
-        let linkBuilder = DynamicLinkComponents(link: link, domain: dynamicLinksDomain)
-        linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Sparen")
-        linkBuilder.iOSParameters?.appStoreID = "389801252"
         
-        linkBuilder.options = DynamicLinkComponentsOptions()
-        linkBuilder.options?.pathLength = .short
+        guard let link = URL(string: "https://www.sparenapp.com/?id=\(circleID)") else { return }
+        let dynamicLinksDomainURIPrefix = "https://sparen.page.link"
+        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+        linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Sparen")
         
-        linkBuilder.shorten { (url, warnings, error) in
-            if let error = error {
-                print("ERROR SHORTEN LINK:", error.localizedDescription)
-                return
-            }
-            guard let url = url else {return}
-            print("The short URL is: \(url)")
-            completion(true, nil, url.absoluteString)
-        }
-    }
+        
+        
+        
+        guard let longDynamicLink = linkBuilder?.url else { return }
+        print("The long URL is: \(longDynamicLink.absoluteString)")
+        
+        completion(true, nil,longDynamicLink.absoluteString)
 
+        
+        
+//        guard let link = URL(string: "https://www.sparenapp.com/id:\(circleID)") else { return}
+//        let dynamicLinksDomain = "sparen.page.link"
+//
+//        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomain)
+//
+//
+//        linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Sparen")
+//        linkBuilder?.iOSParameters?.appStoreID = "389801252"
+//
+//        linkBuilder?.options = DynamicLinkComponentsOptions()
+//        linkBuilder?.options?.pathLength = .default
+//
+//        guard let longDynamicLink = linkBuilder.url else { return }
+//
+//
+////        linkBuilder.shorten { (url, warnings, error) in
+////            if let error = error {
+////                print("ERROR SHORTEN LINK:", error.localizedDescription)
+////                return
+////            }
+////            guard let url = url else {return}
+////            print("The short URL is: \(url)")
+////        }
+//
+//        completion(true, nil,(linkBuilder?.link.absoluteString)!)
+
+    }
 
     
     var users = [User]()
@@ -829,10 +953,10 @@ func timeAgoSinceDate(date: Date, numericDates:Bool) -> String {
     let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
     
     if (components.year! >= 2) {
-        return "\(components.year!) years ago"
+        return "\(components.year!) y"
     } else if (components.year! >= 1){
         if (numericDates){
-            return "1 year ago"
+            return "1y"
         } else {
             return "Last year"
         }
@@ -845,39 +969,39 @@ func timeAgoSinceDate(date: Date, numericDates:Bool) -> String {
             return "Last month"
         }
     } else if (components.weekOfYear! >= 2) {
-        return "\(components.weekOfYear!) weeks ago"
+        return "\(components.weekOfYear!)w"
     } else if (components.weekOfYear! >= 1){
         if (numericDates){
-            return "1 week ago"
+            return "1w"
         } else {
             return "Last week"
         }
     } else if (components.day! >= 2) {
-        return "\(components.day!) days ago"
+        return "\(components.day!)d"
     } else if (components.day! >= 1){
         if (numericDates){
-            return "1 day ago"
+            return "1d"
         } else {
             return "Yesterday"
         }
     } else if (components.hour! >= 2) {
-        return "\(components.hour!) hours ago"
+        return "\(components.hour!)h"
     } else if (components.hour! >= 1){
         if (numericDates){
-            return "1 hour ago"
+            return "1h"
         } else {
             return "An hour ago"
         }
     } else if (components.minute! >= 2) {
-        return "\(components.minute!) mins ago"
+        return "\(components.minute!)m"
     } else if (components.minute! >= 1){
         if (numericDates){
-            return "1 min ago"
+            return "1m"
         } else {
             return "A min ago"
         }
     } else if (components.second! >= 3) {
-        return "\(components.second!) seconds ago"
+        return "\(components.second!)s"
     } else {
         return "Just now"
     }
@@ -889,7 +1013,7 @@ func convertDate(postDate: Int) -> String {
     let foo: TimeInterval = TimeInterval(date)
     let theDate = NSDate(timeIntervalSince1970: foo)
     let time = timeAgoSinceDate(date: theDate as Date, numericDates: true)
-    return time.uppercased()
+    return time.lowercased()
     
 }
 

@@ -8,93 +8,172 @@
 
 import UIKit
 import Cartography
-import Hero
-import LTMorphingLabel
 
-class NameVC: UIViewController, LTMorphingLabelDelegate {
+class NameVC: UIViewController, UITextFieldDelegate {
     
-    var label = LTMorphingLabel()
-    var secondLabel = LTMorphingLabel()
+    var label = UILabel()
+    var secondLabel = UILabel()
     var firstNameField: UITextField!
     var lastNameField: UITextField!
-    var nextButton: UIBarButtonItem!
+    var dateOfBirthField: UITextField!
+    var datePicker = UIDatePicker()
+    var nextButton: UIButton!
+    var data = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let bagColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+
+        
         firstNameField = UICreator.create.textField("First name", .default, self.view)
-        firstNameField.addTarget(self, action: #selector(edited(_:)), for: .editingChanged)
-        
         lastNameField = UICreator.create.textField("Last name", .default, self.view)
-        lastNameField.addTarget(self, action: #selector(edited(_:)), for: .editingChanged)
+        dateOfBirthField = UICreator.create.textField("Date of birth", .default, self.view)
         
-        firstNameField.alpha = 0.0
-        lastNameField.alpha = 0.0
+        dateOfBirthField.delegate = self
         
-        let font = UIFont.systemFont(ofSize: 30, weight: .medium)
+        firstNameField.backgroundColor = bagColor
+        lastNameField.backgroundColor = bagColor
+        dateOfBirthField.backgroundColor = bagColor
+        
+        datePicker.datePickerMode = .date
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        //done button & cancel button
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker))
+        
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        
+        // add toolbar to textField
+        dateOfBirthField.inputAccessoryView = toolbar
+        // add datepicker to textField
+        dateOfBirthField.inputView = datePicker
+      
+        
+        
+        let font = UIFont.systemFont(ofSize: 25, weight: .medium)
         label.numberOfLines = 4
         label.font = font
-        label.hero.id = "label"
-        label.text = "Hi, I'm Sparen"
-        label.morphingDuration = 1.0
-
-        label.delegate = self
+        label.text = "Name & Last Name"
+        label.textAlignment = .center
         
         view.addSubview(label)
         view.addSubview(secondLabel)
         
-        nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(nextStep))
+        nextButton = UICreator.create.button("Done", nil, .white, .red, view)
         nextButton.isEnabled = false
-        navigationItem.rightBarButtonItem = nextButton
+        nextButton.alpha = 0.5
+        nextButton.backgroundColor = UIColor.sparenColor
+        nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
+        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
 
     }
+    
+    @objc func donedatePicker(){
+        //For date formate
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM yyyy"
+        dateOfBirthField.text! = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func cancelDatePicker(){
+        //cancel button dismiss datepicker dialog
+        self.view.endEditing(true)
+    }
+
 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        constrain(label, secondLabel ,firstNameField, lastNameField,  view) { (label, secondLabel, firstNameField, lastNameField, view) in
-            label.top == view.top + 200
-            label.width == view.width - 100
-            label.left == view.left + 50
+        constrain(label, secondLabel ,firstNameField, lastNameField, dateOfBirthField, nextButton, view) { (label, secondLabel, firstNameField, lastNameField, dateOfBirthField, nextButton, view) in
+            
+            label.top == view.top + 150
+            label.width == view.width
+            label.centerX == view.centerX
             
             secondLabel.top == label.bottom + 20
             secondLabel.width == view.width - 100
-            secondLabel.left == view.left + 50
+            secondLabel.centerX == view.centerX
 
             firstNameField.top == secondLabel.bottom + 40
-            firstNameField.width == view.width - 50
-            firstNameField.left == view.left + 50
+            firstNameField.width == view.width - 40
+            firstNameField.height == 45
+            firstNameField.centerX == view.centerX
             
-            lastNameField.top == firstNameField.bottom + 20
-            lastNameField.width == view.width - 50
-            lastNameField.left == view.left + 50
+            lastNameField.top == firstNameField.bottom + 10
+            lastNameField.width == view.width - 40
+            lastNameField.height == 45
+            lastNameField.centerX == view.centerX
+            
+            dateOfBirthField.top == lastNameField.bottom + 10
+            dateOfBirthField.width == view.width - 40
+            dateOfBirthField.height == 45
+            dateOfBirthField.centerX == view.centerX
+            
+            nextButton.top == dateOfBirthField.bottom + 60
+            nextButton.centerX == view.centerX
+            nextButton.height == 50
+            nextButton.width == view.width - 40
         }
     }
     
     @objc func nextStep() {
-        let vc = EmailPhoneVC()
+        
+
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        activityIndicator.activityIndicatorViewStyle = .gray
+        let barButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.setRightBarButton(barButton, animated: true)
+        activityIndicator.startAnimating()
+        
         let firstName = firstNameField.text!
         let lastName = lastNameField.text!
-        vc.data.append(firstName)
-        vc.data.append(lastName)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc func edited(_ textField: UITextField) {
-        if (textField.text?.isEmpty)! && (lastNameField.text?.isEmpty)! {
-            nextButton.isEnabled = false
-        } else {
-            nextButton.isEnabled = true
+        let dateOfBirth  = dateOfBirthField.text?.components(separatedBy: " ")
+        
+        let phone = self.data[0]
+        let email = self.data[1]
+        let password =  self.data[2]
+        let code = self.data[3]
+        
+        AuthService.instance.createAccount(firstName, lastName, email, phone, password, code, false, dateOfBirth!) { (success, error) in
+            if !success {
+                print("error", error!.localizedDescription)
+                activityIndicator.stopAnimating()
+            } else {
+                if let string = UserDefaults.standard.string(forKey: "circleId"), !string.isEmpty {
+                    DataService.call.joinCircle(string, complete: { (success, error) in
+                        if !success {
+                            print("Error:", error?.localizedDescription)
+                        } else {
+                            print("NEW")
+                            dispatch.async {
+                                self.navigationController?.pushViewController(AddressVC(), animated: true)
+                            }
+                        }
+                    })
+                } else {
+                    print("NOT NEW")
+                    self.navigationController?.pushViewController(AddressVC(), animated: true)
+                    activityIndicator.stopAnimating()
+                }
+            }
         }
     }
     
-    func morphingDidComplete(_ label: LTMorphingLabel) {
-        self.secondLabel.text = "What's your name?"
-        UIView.animate(withDuration: 0.5) {
-            self.firstNameField.alpha = 1.0
-            self.lastNameField.alpha = 1.0
-            self.firstNameField.becomeFirstResponder()
+    @objc func textChanged(_ textField: UITextField) {
+        if firstNameField.hasText && lastNameField.hasText {
+            nextButton.isEnabled = true
+            nextButton.alpha = 1.0
+        } else {
+            nextButton.isEnabled = false
+            nextButton.alpha = 0.5
         }
     }
 }

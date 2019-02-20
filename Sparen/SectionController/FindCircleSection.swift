@@ -25,12 +25,12 @@ class FindCircleSection: ListSectionController {
     override func numberOfItems() -> Int {
         return 1
     }
-    
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        let cell = collectionContext?.dequeueReusableCell(of: FindCircleCell.self, for: self, at: index) as! FindCircleCell
-        cell.circle = circle
-        return cell
-    }
+//    
+//    override func cellForItem(at index: Int) -> UICollectionViewCell {
+//        let cell = collectionContext?.dequeueReusableCell(of: FindCircleCell.self, for: self, at: index) as! FindCircleCell
+//        cell.circle = circle
+//        return cell
+//    }
     
     override func didUpdate(to object: Any) {
         self.circle = object as? Circle

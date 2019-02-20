@@ -10,11 +10,11 @@ import UIKit
 
 class CircleInsightCell: UICollectionViewCell {
     
-    var endTimeLabel = transformLabel()
-    var endDescLabel = transformLabel()
+    var endTimeLabel = UILabel()
+    var endDescLabel = UILabel()
     
-    var nextPayoutLabel =  transformLabel()
-    var nextDescLabel = transformLabel()
+    var nextPayoutLabel =  UILabel()
+    var nextDescLabel = UILabel()
     
     
     override init(frame: CGRect) {
@@ -51,15 +51,15 @@ class CircleInsightCell: UICollectionViewCell {
         nextPayoutLabel.font = font
         endTimeLabel.font = font
         
-        endTimeLabel.frame = CGRect(x: 20, y: 5, width: width / 3, height: 40)
-        endDescLabel.frame = CGRect(x: 20, y: endTimeLabel.frame.maxY, width: width / 3 , height: 20)
+        endTimeLabel.frame = CGRect(x: 20, y: 5, width: width / 3, height: 25)
+        endDescLabel.frame = CGRect(x: 20, y: endTimeLabel.frame.maxY, width: width / 3 , height: 25)
         endDescLabel.font = font
         endDescLabel.textColor = descColor
 
         endDescLabel.text = "Total"
   
-        nextPayoutLabel.frame = CGRect(x: self.frame.maxX - 150, y: 5, width: width / 3, height: 40)
-        nextDescLabel.frame = CGRect(x: self.frame.maxX - 150, y: nextPayoutLabel.frame.maxY, width: width / 3 , height: 20)
+        nextPayoutLabel.frame = CGRect(x: self.frame.maxX - 150, y: 5, width: width / 3, height: 25)
+        nextDescLabel.frame = CGRect(x: self.frame.maxX - 150, y: nextPayoutLabel.frame.maxY, width: width / 3 , height: 25)
         nextDescLabel.font = font
         nextDescLabel.text = "Left"
         nextDescLabel.textColor = descColor

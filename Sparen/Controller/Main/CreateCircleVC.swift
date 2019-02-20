@@ -9,30 +9,11 @@
 import UIKit
 import Cartography
 import FirebaseAuth
-import FirebaseFirestore
 import MBProgressHUD
 import GSMessages
 
 
-class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return suggestions.count
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return suggestions[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let amount = suggestions[row]
-        self.amount = amount
-    }
+class CreateCircleVC: UIViewController, UITextFieldDelegate {
 
     var user: User?
 
@@ -63,6 +44,7 @@ class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if currentReachabilityStatus == .notReachable {self.present(ErrorHandler.show.internetError(), animated: true, completion: nil)}
         
         view.backgroundColor = .backgroundColor
         self.title = "Create a circle"
@@ -71,9 +53,8 @@ class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
 
         navigationItem.leftBarButtonItem = removeButton
         
-        
         label = UICreator.create.label("", 30, .darkText, .center, .regular, view)
-        descLabel = UICreator.create.label("\(user?.firstName ?? "") How much money would you like to save?", 20, .darkText, .center, .medium, view)
+        descLabel = UICreator.create.label("How much money would you like to save?", 20, .darkText, .center, .medium, view)
         
         
         self.view.addSubview(pickerView)
@@ -140,10 +121,6 @@ class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     }
     
     
-
-    
-   
-    
     @objc func create() {
         
         let loadingNotification = MBProgressHUD.showAdded(to: view, animated: true)
@@ -152,35 +129,34 @@ class CreateCircleVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         
         let totalAmount = Int(self.amount)
         
-        DataService.call.createCircle(totalAmount ?? 1000) { (success, error) in
-            if !success {
-                loadingNotification.hide(animated: true)
-                // ERROR
-            } else {
-                 loadingNotification.hide(animated: true)
+            DataService.call.createCircle(totalAmount ?? 1000) { (success, error) in
+                if !success {
+                    loadingNotification.hide(animated: true)
+                    // ERROR
+                } else {
+                     loadingNotification.hide(animated: true)
+                }
             }
-
-        //add 1 day to the date:
-//        let currentDate = NSDate()
-//        let newDate = NSDate(timeInterval: 86400, since: currentDate as Date)
-//        UserDefaults.standard.setValue(newDate, forKey: "waitingDate")
-            
         }
     }
+
+
+extension CreateCircleVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
-     @objc func info() {
-        
-//        textField.resignFirstResponder()
-        GSMessage.infoBackgroundColor = .white
-        
-        self.showMessage("This is the total amount you and anybody who join your Circle will receive.", type: .success, options: [
-            .autoHide(false),
-            .height(150.0),
-            .position(.bottom),
-            .cornerRadius(20.0),
-            .textColor(.darkText),
-            .textNumberOfLines(6),
-            .hideOnTap(true)
-        ])
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return suggestions.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return suggestions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let amount = suggestions[row]
+        self.amount = amount
     }
 }

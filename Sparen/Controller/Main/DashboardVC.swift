@@ -6,13 +6,10 @@
 //  Copyright © 2018 Kerby Jean. All rights reserved.
 //
 
-
 import UIKit
 import Firebase
 import FirebaseAuth
 import IGListKit
-
-
 
 class DashboardVC: UIViewController, ListAdapterDataSource {
     
@@ -22,6 +19,11 @@ class DashboardVC: UIViewController, ListAdapterDataSource {
     var insights: [String] = ["1"]
     var pending: [Int] = [1]
     var circle: Circle?
+    
+    var users = [User]()
+    
+    var notificationButton: SSBadgeButton!
+
 
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 2)
@@ -37,41 +39,40 @@ class DashboardVC: UIViewController, ListAdapterDataSource {
         let label = UILabel()
         label.frame = view.frame
         label.textColor = .darkText
-        label.backgroundColor = .backgroundColor
+        label.backgroundColor = .white
         label.textAlignment = .center
         label.numberOfLines = 5
         label.text = "Tap the search button to find a Circle to join \n or create your own with the + button."
         return label
     }()
     
+    
     var searchButton: UIBarButtonItem!
     var addButton: UIBarButtonItem!
-    var removeButton: UIBarButtonItem!
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        // Init the static view
         initView()
     }
     
-    
     func initView() {
-        self.title = "Dashboard"
-        self.view.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(leave(_:)), name: .leave, object: nil)
+        
+        if currentReachabilityStatus == .notReachable {self.present(ErrorHandler.show.internetError(), animated: true, completion: nil)} //true connected
+        
+        self.view.backgroundColor = .backgroundColor
         
         searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(search))
         addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
-        removeButton = UIBarButtonItem(image: UIImage(named: "Remove-20"), style: .done, target: self, action: #selector(leave))
 
-        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Menu-filled-20"), style: .plain, target: self, action:  #selector(settings))
-            
-        navigationItem.leftBarButtonItems = [searchButton, addButton]
-        navigationItem.rightBarButtonItem = settingsButton
+        navigationItem.leftBarButtonItems = [addButton]
         
-        collectionView.backgroundColor = .backgroundColor 
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
@@ -81,25 +82,34 @@ class DashboardVC: UIViewController, ListAdapterDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print("VIEW WILL APPEAR")
-        
-        
+                
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.view.backgroundColor = .clear
-        
-        fetchUser()
-        fetchCircle()
-        
-    }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        self.navigationController?.navigationBar.isTranslucent = false
 
+        initView()
+        fetchUser()
+        initFetch()
+        fetchCircle()
+
+        
+        notificationButton = SSBadgeButton()
+        notificationButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        notificationButton.badgeEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: -40, right: 0)
+        notificationButton.setImage(UIImage(named: "icons8-menu-filled-25")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        notificationButton.addTarget(self, action: #selector(news), for: .touchUpInside)
+        
+        let settingsButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Menu-filled-20"), style: .plain, target: self, action:  #selector(settings))
+        
+        let newsButton = UIBarButtonItem(customView: notificationButton)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationButton)
+        
+        navigationItem.rightBarButtonItems = [settingsButton, newsButton]
+        
+        observeForNews()
+        
+//        initFetch()
     }
 
     
@@ -108,77 +118,134 @@ class DashboardVC: UIViewController, ListAdapterDataSource {
         collectionView.frame = view.bounds
     }
     
+    @objc func news() {
+        let vc = NewsVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
-    private func fetchUser() {
-        DataService.call.fetchCurrentUser { (success, error, user) in
-            self.user.removeAll()
-            if !success {
-                print("error:", error!.localizedDescription)
-            } else {
-                self.user.removeAll()
-                self.user.append(user)
-                self.adapter.reloadData(completion: nil)
+    
+    
+    
+    @objc func initFetch() {
+        
+        self.users = []
+        
+        if let string = UserDefaults.standard.string(forKey: "circleId"), !string.isEmpty {
+            
+            var key: String!
+            
+            DataService.call.RefCircleMembers.child(string).observe( .value) { (snapshot) in
+                
+                let enumerator = snapshot.children
+                
+                while let rest = enumerator.nextObject() as? DataSnapshot {
+                    key = rest.key
+                    
+                    DataService.call.RefUsers.child(key).observeSingleEvent(of: .value, with: { (snapshot) in
+                        guard let value = snapshot.value, let postDict = value as? [String : AnyObject] else {return}
+                        let key = snapshot.key
+                        let user = User(key: key, data: postDict)
+                        self.users.append(user)
+                        NotificationCenter.default.post(name: .fetchUsers, object: nil, userInfo: ["users": self.users])
+                    })
+                }
             }
         }
     }
     
     
-    private func fetchCircle() {
+    // MARK: User
+    
+    private func fetchUser() {
+        self.user.removeAll()
+        DataService.call.fetchCurrentUser { (success, error, user) in
+            if !success {
+                print("error:", error!.localizedDescription)
+            } else {
+                self.user.append(user)
+                let firstName = self.user[0].firstName
+                self.title = firstName
+                self.adapter.reloadData(completion: nil)
+            }
+        }
+    }
 
-        print("fetch circle")
-        guard let circleId = UserDefaults.standard.string(forKey: "circleId") ?? circleId else {return}
-        print("CIRCLE ID::", circleId)
-        if !circleId.isEmpty {
+    
+    // MARK: Circle
+    
+    private func fetchCircle() {
+        self.circles.removeAll()
+        if let string = circleId ?? UserDefaults.standard.string(forKey: "circleId"), !string.isEmpty {
             self.emptyLabel.removeFromSuperview()
-           self.navigationItem.leftBarButtonItems  = [removeButton]
-            DataService.call.fetchCurrentUserCircle(circleId) { (success, error, circle) in
+            self.navigationItem.leftBarButtonItems  = []
+            DataService.call.fetchCurrentUserCircle(string) { (success, error, circle) in
                 self.circles.removeAll()
                 if !success {
                     print("error:", error?.localizedDescription ?? "")
                 } else {
-                    
-                    print("NOT EMPTY")
-                    
                     self.circles.append(circle)
-                    
                     if circle.activated == true {
-                         self.navigationItem.leftBarButtonItems = []
+                        self.notificationButton.badge = "1"
+                        self.navigationItem.leftBarButtonItems = []
                         self.insights = ["1"]
                         self.pending = []
                     } else {
+                        self.notificationButton.badge = nil
                         self.insights = []
                         self.pending = [1]
                     }
                     self.adapter.reloadData(completion: { (done) in
+                        NotificationCenter.default.post(name: .pulse, object: nil, userInfo: nil)
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "getCircle"), object: nil, userInfo: ["circle": circle])
                     })
                 }
             }
         } else {
-            self.navigationItem.leftBarButtonItems  = [searchButton, addButton]
-            self.collectionView.addSubview(emptyLabel)
+            self.navigationItem.leftBarButtonItems = [addButton]
+//            self.collectionView.addSubview(emptyLabel)
         }
     }
     
     
-    @objc func leave() {
+    // MARK: News
+    
+    func observeForNews() {
+        
+//        if let string = UserDefaults.standard.string(forKey: "circleId"), !string.isEmpty {
+//            DataService.call.RefBase.child("requests").child(string).child(Auth.auth().currentUser!.uid).queryOrdered(byChild: "seen").queryEqual(toValue: false).observe(.value) { (snapshot) in
+//                
+//                if snapshot.exists() {
+//                    self.notificationButton.badge = "1"
+//                } else {
+//                    self.notificationButton.badge = nil
+//                }
+//            }
+//        }
+    }
+
+    
+    @objc func leave(_ notification: Notification) {
         let alert = UIAlertController(title: "", message: "Are you sure you want to leave the Circle?", preferredStyle: .actionSheet)
         let leave = UIAlertAction(title: "Leave", style: .destructive) { (action) in
-            
-            guard let circle = self.circles[0] as? Circle else { return }
-                DataService.call.leaveCircle(circle) { (success, error) in
-                    if !success {
-                        print("error:", error!.localizedDescription)
-                    } else {
-                        self.circles.removeAll()
-                        self.pending.removeAll()
-                        self.adapter.reloadData(completion: { (done) in
+            let circle = self.circles[0]
+            let position = self.user[0].position
+            DataService.call.leaveCircle(circle, position!) { (success, error) in
+                if !success {
+                    print("error:", error!.localizedDescription)
+                } else {
+                    self.circles.removeAll()
+                    self.pending.removeAll()
+                    self.adapter.reloadData(completion: { (done) in
                         self.adapter.performUpdates(animated: true, completion: nil)
                         self.collectionView.addSubview(self.emptyLabel)
                         self.navigationItem.leftBarButtonItems  = [self.searchButton, self.addButton]
+                        UserDefaults.standard.removeObject(forKey: "circleId")
                     })
                 }
             }
+
+            
+//            NotificationCenter.default.post(name: .userLeft, object: nil, userInfo: nil)
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -190,15 +257,17 @@ class DashboardVC: UIViewController, ListAdapterDataSource {
 
     deinit {
         
-        DataService.call.RefCircles.removeObserver(withHandle: DataService.call.circleHandle)
-        DataService.call.RefUsers.removeObserver(withHandle: DataService.call.circleMembersHandle)
+        NotificationCenter.default.removeObserver(self)
+
+//        DataService.call.RefCircles.removeObserver(withHandle: DataService.call.circleHandle)
+//        DataService.call.RefUsers.removeObserver(withHandle: DataService.call.circleMembersHandle)
+
+        NotificationCenter.default.removeObserver(self, name: .fetchUsers, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "pushNotification"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "notificationName"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "getCircle"), object: nil)
     }
-    
-    
 }
 
 extension DashboardVC {
@@ -208,7 +277,6 @@ extension DashboardVC {
         data += circles as [ListDiffable]
         data += insights as [ListDiffable]
         data += pending as [ListDiffable]
-
         return data
     }
     
@@ -237,12 +305,10 @@ extension DashboardVC {
     }
     
     @objc func add() {
-        
         let vc = CreateCircleVC()
         let nav = UINavigationController(rootViewController: vc)
         self.present(nav, animated: true, completion: nil)
     }
-    
     
     @objc func settings() {
         let vc = SettingsVC()

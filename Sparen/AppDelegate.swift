@@ -15,7 +15,6 @@ import FirebaseDatabase
 import FirebaseMessaging
 import FirebaseInstanceID
 import FirebaseDynamicLinks
-import FirebaseFirestore
 import UserNotifications
 import IQKeyboardManager
 
@@ -32,11 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let plaidKey: String = "f4ca51e7acd2e7241957a0df256d8e"
     
     let gcmMessageIDKey = "gcm.message_id"
+    
+    var news = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-                
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
+    UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = self.customURLScheme
         FirebaseApp.configure()
@@ -56,55 +57,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        #else
 //            setupPlaidLinkWithSharedConfiguration()
 //        #endif
-        
+    
         IQKeyboardManager.shared().isEnabled = true
         
-        initialize(application)
-
+        
         application.registerForRemoteNotifications()
         requestNotificationAuthorization(application: application)
         if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] {
             NSLog("[RemoteNotification] applicationState: \(applicationStateString) didFinishLaunchingWithOptions for iOS9: \(userInfo)")
             //TODO: Handle background notification
         }
+        
+        initialize(application)
         return true
     }
     
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        print("Background fetch")
-//
-//        guard let circleID = UserDefaults.standard.string(forKey: "circleId") else {return}
-//        print("CIRCLE ID:", circleID)
-//        
-//        DataService.call.RefBase.child("timer").child(circleID).observe(.value) { (snapshot) in
-//            guard let value = snapshot.value else {return}
-//            
-//            let postDict = value as? [String : AnyObject] ?? [:]
-//            
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//            
-//            guard let dateString = postDict["end_date"] as? String else {return}
-//            
-//            let endDate = formatter.date(from: dateString)
-//            
-//            if endDate! < Date() {
-//                DataService.call.RefCircles.child(circleID).updateChildValues(["activated": true])
-//            }
-//           
-//            print("VALUE::", value)
-//            //completionHandler(.newData)
-//        }
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
 
     
     var applicationStateString: String {
@@ -143,26 +114,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
+    
     func handleDynamicLink(_ dynamicLink: DynamicLink) {
         
         let url = dynamicLink.url?.absoluteString ?? ""
         let components = URLComponents(string: url)!
 
         if let queryItems = components.queryItems,
-            let hlsvp = queryItems.first(where: { $0.name == "id" }) {
+            let circleId = queryItems.first(where: { $0.name == "id" })?.value {
             
-            //var matchConfidence: String
+            UserDefaults.standard.set(circleId, forKey: "circleId")
+            var matchConfidence: String
+            
             if dynamicLink.matchType == .weak {
-                //matchConfidence = "Weak"
+                matchConfidence = "Weak"
             } else {
-                //matchConfidence = "Strong"
-                let initialViewController = Welcome2()
-                //let pageViewController =  PageViewController()
-                //pageViewController.pages.insert(initialViewController, at: 0)
-                //initialViewController.circleId = hlsvp.value
-                            
-                self.window?.rootViewController = initialViewController
+                matchConfidence = "Strong"
+
+                window = UIWindow()
+                
                 self.window?.makeKeyAndVisible()
+                
+                let layout = UICollectionViewFlowLayout()
+                
+                layout.scrollDirection = .horizontal
+                let swipingController = SwipingVC(collectionViewLayout: layout)
+                swipingController.circleId = circleId
+                self.window?.rootViewController = swipingController
+
             }
             
         } else {
@@ -229,9 +208,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        if let refreshedToken = InstanceID.instanceID().token() {
-            print("InstanceID token: \(refreshedToken)")
-             UserDefaults.standard.setValue(refreshedToken, forKey: "deviceToken")
+
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instange ID: \(error)")
+            } else if let result = result {
+                UserDefaults.standard.setValue(result.token, forKey: "deviceToken")
+            }
         }
     }
     
@@ -259,40 +242,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
     
     
+
     private func initialize(_ application: UIApplication) {
     
         let color = UIColor.darkGray
-
+        
         UINavigationBar.appearance().tintColor = color
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : color]
         
         let initialViewController =  LoginVC()
         let navigationController = UINavigationController(rootViewController: initialViewController)
+        
         self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
+
         
         if let uid = UserDefaults.standard.value(forKey: "userId") as? String {
-            
-            
-            DataService.call.RefUsers.child("circleId").observeSingleEvent(of: .value) { (snapshot) in
+
+            DataService.call.RefUsers.child(uid).child("circleId").observeSingleEvent(of: .value) { (snapshot) in
+                
                 guard let value = snapshot.value as? String else {return}
-                print("value::::", value)
+    
                 UserDefaults.standard.set(value, forKey: "circleId")
-            }
-            
-            
-            
-            if !uid.isEmpty {
-                let initialViewController = DashboardVC()
-                let navigationController = UINavigationController(rootViewController: initialViewController)
-                let vc = navigationController
-                self.window?.rootViewController = vc
-                self.window?.makeKeyAndVisible()
-            } else {
-                let initialViewController =  LoginVC()
-                let navigationController = UINavigationController(rootViewController: initialViewController)
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
+                
+                if !uid.isEmpty {
+                    let initialViewController = DashboardVC()
+                    let navigationController = UINavigationController(rootViewController: initialViewController)
+                    initialViewController.circleId = value
+                    let vc = navigationController
+                    self.window?.rootViewController = vc
+                    self.window?.makeKeyAndVisible()
+                } else {
+                    let initialViewController =  SwipingVC()
+                    let navigationController = UINavigationController(rootViewController: initialViewController)
+                    self.window?.rootViewController = navigationController
+                    self.window?.makeKeyAndVisible()
+                }
             }
         }
     }

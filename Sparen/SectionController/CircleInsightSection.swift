@@ -9,14 +9,11 @@
 import UIKit
 import IGListKit
 
-class CircleInsightSection: ListSectionController {
+class CircleInsightSection: ListSectionController { 
     
     private var insight: Insight?
     
     override func sizeForItem(at index: Int) -> CGSize {
-       if index == 0 || index == 3 {
-          return CGSize(width: collectionContext!.containerSize.width, height: 50)
-       }
         return CGSize(width: collectionContext!.containerSize.width, height: 60)
     }
     
@@ -45,7 +42,7 @@ class CircleInsightSection: ListSectionController {
             }
             cell.configure(insight!)
             return cell
-        } else  {
+        } else {
             let cell = collectionContext!.dequeueReusableCell(of: AmountsCell.self , for: self, at: index)
             if let cell = cell as? AmountsCell {
                 cell.configure(insight!)

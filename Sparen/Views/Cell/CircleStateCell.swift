@@ -10,16 +10,13 @@ import UIKit
 import IGListKit
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
 import Cartography
 
 
 class CircleStateCell: UICollectionViewCell, ListAdapterDataSource {
     
     var viewController: UIViewController?
-    var nextPayoutUsers = [User]()
     var insights = [Insight]()
-
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: viewController, workingRangeSize: 2)
@@ -35,7 +32,7 @@ class CircleStateCell: UICollectionViewCell, ListAdapterDataSource {
         self.backgroundColor = .white
         initView()
         fetchCircleActivities()
-}
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -48,7 +45,7 @@ class CircleStateCell: UICollectionViewCell, ListAdapterDataSource {
         
         self.layer.addShadow()
         self.layer.roundCorners(radius: 10)
-    }
+     }
     
     func initView() {
         collectionView.backgroundColor = .white
@@ -98,69 +95,3 @@ extension CircleStateCell {
         return nil
     }
 }
-
-
-//class CircleStateCell: UICollectionViewCell {
-//
-//    var viewController: UIViewController?
-//    var setupCircleView = SetupCircleView()
-//    var readyView = ReadyView()
-//    var activatedView = ActivatedView()
-//    var pulsator = Pulsator()
-//
-//    var circle: Circle! {
-//        didSet {
-//            self.addView(view: readyView)
-//            self.readyView.circle = circle
-//        }
-//    }
-//
-//    var insight: Insight? {
-//        didSet {
-//            pulse()
-//            activatedView.insights = []
-//            activatedView.insights.append(insight!)
-//            activatedView.circle = circle
-//            activatedView.adapter.reloadData(completion: nil)
-//            activatedView.viewController = self.viewController
-//            self.pulsator.removeFromSuperlayer()
-//            self.addView(view: self.activatedView)
-//
-//
-//        }
-//    }
-//
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        contentView.backgroundColor = .yellow
-//        contentView.clipsToBounds = true
-//    }
-//
-//
-//    func addView(view: UIView) {
-//
-////        view.backgroundColor = .clear
-////        self.contentView.addSubview(view)
-////
-////        constrain(view, contentView) { (view, contentView) in
-////            view.height == contentView.height - 10
-////            view.width == contentView.width - 10
-////            view.center == contentView.center
-////        }
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//
-//    func pulse() {
-//        pulsator.numPulse = 2
-//        pulsator.radius = 30.0
-//        pulsator.backgroundColor = UIColor.sparenColor.cgColor
-//        pulsator.start()
-//        pulsator.position = CGPoint(x: contentView.frame.width - 40, y: contentView.center.y)
-//        contentView.layer.addSublayer(pulsator)
-//    }
-//}
-//

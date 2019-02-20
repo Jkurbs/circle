@@ -16,9 +16,7 @@
 
 #import "FIRMessagingRmq2PersistentStore.h"
 
-#import "sqlite3.h"
-
-#import "Protos/GtalkCore.pbobjc.h"
+#import <sqlite3.h>
 
 #import "FIRMessagingConstants.h"
 #import "FIRMessagingDefines.h"
@@ -26,6 +24,7 @@
 #import "FIRMessagingPersistentSyncMessage.h"
 #import "FIRMessagingUtilities.h"
 #import "NSError+FIRMessaging.h"
+#import "Protos/GtalkCore.pbobjc.h"
 
 #ifndef _FIRMessagingRmqLogAndExit
 #define _FIRMessagingRmqLogAndExit(stmt, return_value)   \
@@ -287,7 +286,6 @@ NSString * _Nonnull FIRMessagingStringFromSQLiteResult(int result) {
                               @"%@",
                               errorMessage);
       NSAssert(NO, errorMessage);
-      didOpenDatabase = NO;
       return;
     }
     [self createTableWithName:kTableOutgoingRmqMessages

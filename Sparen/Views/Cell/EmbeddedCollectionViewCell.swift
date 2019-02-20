@@ -12,20 +12,60 @@ import IGListKit
 import Cartography
 import FirebaseDatabase
 
+extension Array where Element: Equatable {
+    mutating func removeDuplicates() {
+        var result = [Element]()
+        for value in self {
+            if !result.contains(value) {
+                result.append(value)
+            }
+        }
+        self = result
+    }
+}
+
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
-        
+    
+    fileprivate var sourceIndexPath: IndexPath?
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         view.showsHorizontalScrollIndicator = false
         self.contentView.addSubview(view)
+        
+      
+        
         return view
     }()
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if gestureRecognizer.state != .ended {
+            return
+        }
+        
+        let p = gestureRecognizer.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: p)
+        if indexPath == nil {
+            print("Couldn't find index path")
+        } else {
+            let cell = self.collectionView.cellForItem(at: indexPath!)
+            if gestureRecognizer.state == .began {
+                print("began pressing::", indexPath?.row)
+            }
+        }
+    }
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.backgroundColor = .white
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
+        collectionView.addGestureRecognizer(longPress)
+        
     }
         
     required init?(coder aDecoder: NSCoder) {
@@ -51,6 +91,7 @@ final class EmbeddedCollectionViewCell: UICollectionViewCell {
 
 
 import IGListKit
+import FirebaseAuth
 
 final class CircleCollectionViewCell: UICollectionViewCell {
     
@@ -60,7 +101,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     var circle: Circle? {
         didSet {
             if circle == nil {
-                print("CIRCLE IS NIL")
+                
             }
         }
     }
@@ -68,6 +109,8 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     var position: CGPoint? {
         didSet {
             if (position?.x.isNaN)! && (position?.y.isNaN)! {
+                pulsator.start()
+
             } else {
                 pulsator.radius = 25.0
                 pulsator.animationDuration = 5
@@ -81,11 +124,10 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         }
         
         willSet {
-            self.pulsator.removeFromSuperlayer()
+            
         }
     }
 
-    
     lazy var collectionView: UICollectionView = {
         let layout = CircleLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -104,21 +146,27 @@ final class CircleCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         initView()
-        initFetch()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.configureCirclePulse(_:)), name: NSNotification.Name(rawValue: "pulseNotification"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadPositions(_:)), name: .reloadPosition, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUsersIndex), name: .userLeft, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(initFetch), name: .fetchUsers, object: nil)
+
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         initLayout()
     }
-    
+
     
     func initView() {
         contentView.addSubview(circleView)
         contentView.addSubview(collectionView)
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CircleUserCell.self, forCellWithReuseIdentifier: "CircleUserCell")
@@ -130,7 +178,7 @@ final class CircleCollectionViewCell: UICollectionViewCell {
             constrain(circleView, collectionView, contentView) { circleView, collectionView, contentView in
                 collectionView.edges == contentView.edges
                 circleView.height == collectionView.height
-                circleView.width == contentView.width * 0.7
+                circleView.width == collectionView.width - 130
                 circleView.centerX == collectionView.centerX
             }
         default:
@@ -144,33 +192,30 @@ final class CircleCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func initFetch() {
-
-        guard let circleId  = UserDefaults.standard.string(forKey: "circleId") else {
-            return
-        }
+    @objc func initFetch(_ notification: Notification) {
         
         self.users.removeAll()
-
-        DataService.call.RefCircleMembers.child(circleId).observe( .value) { (snapshot) in
-            self.users = []
-
-            let enumerator = snapshot.children
-            while let rest = enumerator.nextObject() as? DataSnapshot {
-                let key = rest.key
-                DataService.call.RefUsers.child(key).queryOrdered(byChild: "position").observeSingleEvent(of: .value, with: { (snapshot) in
-                    guard let value = snapshot.value, let postDict = value as? [String : AnyObject] else {return}
-                    let key = snapshot.key
-                    let user = User(key: key, data: postDict)
-                    self.users.append(user)
-                    dispatch.async {
-                        self.collectionView.reloadData()
-                     }
-                })
+        
+        guard let dict = notification.userInfo as NSDictionary? else {return}
+        guard let users = dict["users"] as? [User] else {return}
+        self.users = users
+        self.users.sort(by: {$0.position! < $1.position!})
+        self.collectionView.reloadData()
+    }
+    
+    
+    @objc func updateUsersIndex() {
+        for user in self.users {
+        DataService.call.RefUsers.child(user.userId!).child("position").observeSingleEvent(of: .value) { (snapshot) in
+             let value = snapshot.value as! Int
+                if value != 0 {
+                    let newPosition = value - 1
+                    DataService.call.RefUsers.child(user.userId!).updateChildValues(["position": newPosition])
+                }
             }
         }
     }
-    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -190,14 +235,15 @@ extension CircleCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CircleUserCell", for: indexPath) as! CircleUserCell
+    cell.imageView.image = nil  //Remove the image from the recycled cell
     let user = users[indexPath.row]
     cell.user = user
     return cell
 }
-        
+
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         self.viewModel.userPressed(at: indexPath)
 
         if(selectedIndex != indexPath) {
@@ -210,23 +256,17 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
                 })
                 indicesArray.append(selectedIndex!)
             }
-            
+
             let user  = self.users[indexPath.row]
-            let data = ["user": user]
+            let data = ["user": user, "position": indexPath.row] as [String : Any]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: data)
             Haptic.tic.occured()
             selectedIndex = indexPath
-            let cell = collectionView.cellForItem(at: indexPath) as! CircleUserCell
-            UIView.animate(withDuration: 0.3, animations: {
-                cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            }, completion: { (completion) in
-                UIView.animate(withDuration: 0.3, animations: {
-                cell.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-                })
-            })
             indicesArray.append(indexPath)
         }
     }
+
+
 
        
     func configure(_ insight: Insight) {
@@ -234,17 +274,15 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
         let daysTotal = insight.daysTotal
         self.circleView.maximumValue = CGFloat(daysTotal!)
         self.circleView.endPointValue = CGFloat(daysPassed)
-    }
+    }    
 }
 
 extension CircleCollectionViewCell {
     
     @objc func configureCirclePulse(_ notification: NSNotification) {
-
+        
         guard let dict = notification.userInfo as NSDictionary? else {return}
         guard let insight = dict["insight"] as? Insight else {return}
-        
-        print("INSIGHT:", insight)
         
         let daysTotal = insight.daysTotal ?? 0
         let daysLeft = insight.daysLeft ?? 0
@@ -272,11 +310,18 @@ extension CircleCollectionViewCell {
             timerTest = nil
         }
     }
+    
+    @objc func reloadPositions(_ notification: Notification) {
+        if let dict = notification.userInfo as NSDictionary? {
+            if let positions = dict["positions"] as? [String: Any] {
+                let position = positions["position"] as! Int
+                let forPosition = positions["forPosition"] as! Int
+                self.users.swapAt(position, forPosition)
+                self.collectionView.reloadData()
+            }
+        }
+    }
 }
-
-
-
-
 
     
     

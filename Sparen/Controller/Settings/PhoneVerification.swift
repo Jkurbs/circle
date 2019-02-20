@@ -8,71 +8,120 @@
 
 import UIKit
 import Cartography
-import LTMorphingLabel
 
-class PhoneVerification: UIViewController, LTMorphingLabelDelegate {
+class PhoneVerification: UIViewController {
 
-    var label = LTMorphingLabel()
-    var secondLabel = LTMorphingLabel()
+    var label = UILabel()
+    var changeButton = UIButton()
     var textField = UITextField()
-    var nextButton: UIBarButtonItem!
+    var nextButton: UIButton!
+    var resendButton = LoadingButton()
+
     var data = [String]()
-    
     var position: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        view.addSubview(label)
+//        self.navigationController?.isNavigationBarHidden = true
         
-        let font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        view.backgroundColor = .white
+        
+        let font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        
         label.numberOfLines = 4
         label.font = font
-        secondLabel.font = font
-        label.hero.id = "label"
-        label.text = "I've sent you a verification"
-        label.morphingDuration = 1.0
-        
-        label.delegate = self
+        label.textAlignment = .center
+        label.text = "Enter The Code We Sent to \(data[0]) "
         
         view.addSubview(label)
-        view.addSubview(secondLabel)
+        
+        changeButton.setTitleColor(.blueColor, for: .normal)
+        changeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        changeButton.setTitle("Change phone number", for: .normal)
+        changeButton.addTarget(self, action: #selector(changePhone), for: .touchUpInside)
+        
+        view.addSubview(changeButton)
         
         textField = UICreator.create.textField("Verification number", .numberPad , self.view)
-        textField.addTarget(self, action: #selector(edited), for: .editingChanged)
+        textField.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
         
-        textField.alpha = 0.0
+        resendButton.setTitleColor(.blueColor, for: .normal)
+        resendButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        resendButton.setTitle("Resend", for: .normal)
+        resendButton.addTarget(self, action: #selector(resend), for: .touchUpInside)
         
-        nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(nextStep))
+        textField.addSubview(resendButton)
+        
+        nextButton = UICreator.create.button("Next", nil, .white, .red, view)
         nextButton.isEnabled = false
-        navigationItem.rightBarButtonItem = nextButton
+        nextButton.alpha = 0.5
+        nextButton.backgroundColor = UIColor.sparenColor
+        nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
+        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        constrain(label, secondLabel, textField, view) { (label, secondLabel, textField, view) in
-            label.top == view.top + 200
+        constrain(label, changeButton, textField, resendButton, nextButton, view) { (label, changeButton, textField, resendButton,  nextButton, view) in
+            
+            label.top == view.top + 100
             label.width == view.width - 100
             label.left == view.left + 50
             
-            secondLabel.top == label.bottom + 10
-            secondLabel.width == view.width - 100
-            secondLabel.left == view.left + 50
+            changeButton.top == label.bottom + 10
+            changeButton.width == view.width - 100
+            changeButton.left == view.left + 50
             
-            textField.top == secondLabel.bottom + 40
-            textField.width == view.width - 50
-            textField.left == view.left + 50
+            textField.top == changeButton.bottom + 40
+            textField.width == view.width - 40
+            textField.centerX == view.centerX
+            textField.height == 45
+            
+            resendButton.centerY == textField.centerY
+            resendButton.right == textField.right - 10
+            
+            nextButton.top == textField.bottom + 60
+            nextButton.centerX == view.centerX
+            nextButton.height == 50
+            nextButton.width == view.width - 40
         }
     }
     
-    @objc func edited(_ textField: UITextField) {
-        if (textField.text?.isEmpty)! {
-            nextButton.isEnabled = false
-        } else {
+    @objc func resend() {
+        print("RESEND")
+        resendButton.showLoading()
+        let phone = self.data[0]
+        AuthService.instance.verifyPhone(phone) { (success, error) in
+            if !success {
+                ErrorHandler.show.showMessage(self, "Error resending code", .error)
+                self.resendButton.hideLoading()
+                self.resendButton.setTitle("Resend", for: .normal)
+            } else {
+                ErrorHandler.show.showMessage(self, "Code has been resend", .success)
+                self.resendButton.hideLoading()
+                self.resendButton.setTitle("Resend", for: .normal)
+            }
+        }
+    }
+    
+    
+    @objc func changePhone() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    
+    @objc func textChanged(_ textField: UITextField) {
+        if self.textField.hasText  {
             nextButton.isEnabled = true
-            
+            nextButton.alpha = 1.0
+        } else {
+            nextButton.isEnabled = false
+            nextButton.alpha = 0.5
         }
     }
     
@@ -84,40 +133,12 @@ class PhoneVerification: UIViewController, LTMorphingLabelDelegate {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
-        
         data.append(textField.text!)
-        
-        let firstName = data[0]
-        let lastName = data[1]
-        let email = data[2]
-        let phoneNumber = data[3]
-        let password = data[4]
         let code = textField.text!
-        let isAdmin = false
-                
-        AuthService.instance.createAccount(firstName, lastName, email, phoneNumber, password, code, position ?? 1, isAdmin) { (success, error) in
-            if !success {
-                self.nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(self.nextStep))
-                self.navigationItem.rightBarButtonItem = self.nextButton
-                activityIndicator.stopAnimating()
-                self.alert("Invalide verification number. Please try again.")
-                return 
-            } else {
-                self.nextButton = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(self.nextStep))
-                self.navigationItem.rightBarButtonItem = self.nextButton
-                activityIndicator.stopAnimating()
-                let vc = DashboardVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-    
-    func morphingDidComplete(_ label: LTMorphingLabel) {
-        self.secondLabel.text = "number at \(self.data[3])"
-        UIView.animate(withDuration: 0.5) {
-            self.textField.alpha = 1.0
-            self.textField.becomeFirstResponder()
-        }
+        data.append(code)
+        let vc = NameVC()
+        vc.data = data
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func alert(_ error: String) {

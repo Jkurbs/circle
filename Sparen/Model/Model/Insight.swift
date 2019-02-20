@@ -13,21 +13,22 @@ import IGListKit
 final class Insight {
 
     var id: String?
-    var totalAmount: Int?
-    var weeklyAmount: Int?
+    var totalAmount: Double?
+    var weeklyAmount: Double?
     var daysTotal: Int?
     var daysLeft: Int?
     var round: Int?
+    var time: Int?
     
     init(key: String, data: [String: Any]) {
         
         self.id = key
 
-        if let totalAmount = data["totalAmount"] as? Int {
+        if let totalAmount = data["totalAmount"] as? Double {
             self.totalAmount = totalAmount
         }
         
-        if let weeklyAmount = data["weeklyAmount"] as? Int {
+        if let weeklyAmount = data["weeklyAmount"] as? Double {
             self.weeklyAmount = weeklyAmount
         }
         
@@ -41,6 +42,10 @@ final class Insight {
         
         if let round = data["round"] as? Int {
             self.round = round
+        }
+        
+        if let time = data["time"] as? Int {
+            self.time = time
         }
     }
 }

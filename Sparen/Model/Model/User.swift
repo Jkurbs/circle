@@ -21,7 +21,9 @@ final class User {
     var firstName: String?
     var lastName: String?
     var phoneNumber: String?
-    var status: String?
+    var gender: String?
+
+    var status: Int?
     var signupDate: Date?
     var activated: Bool?
     var payed: Bool?
@@ -29,6 +31,7 @@ final class User {
     var daysLeft: Int?
     var daysTotal: Int?
     var isAdmin: Bool?
+    var joinTime: Int?
     
     
     init(key: String? , data: [String: Any]?) {
@@ -40,7 +43,11 @@ final class User {
                 self.accountId = accountId
             }
             
-            if let circle = data["circle"] as? String {
+            if let photoUrl = data["image_url"] as? String {
+                self.imageUrl = photoUrl
+            }
+            
+            if let circle = data["circleId"] as? String {
                 self.circle = circle
             }
             
@@ -60,11 +67,15 @@ final class User {
                 self.email = email
             }
             
-            if let photoUrl = data["image_url"] as? String {
-                self.imageUrl = photoUrl
+            if let phone = data["phoneNumber"] as? String {
+                self.phoneNumber = phone
             }
             
-            if let status = data["status"] as? String {
+            if let gender = data["gender"] as? String {
+                self.gender = gender
+            }
+
+            if let status = data["status"] as? Int {
                 self.status = status
             }
             
@@ -90,6 +101,11 @@ final class User {
             
             if let isAdmin = data["is_admin"] as? Bool {
                 self.isAdmin = isAdmin
+            }
+            
+            
+            if let joinTime = data["joinTIme"] as? Int {
+                self.joinTime = joinTime
             }
         }
     }

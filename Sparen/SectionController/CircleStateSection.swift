@@ -13,7 +13,7 @@ class CircleStateSection: ListSectionController {
     private var insight: String?
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width - 20, height: 200)
+        return CGSize(width: collectionContext!.containerSize.width - 20, height: collectionContext!.containerSize.height - 200)
     }
     
     override init() {

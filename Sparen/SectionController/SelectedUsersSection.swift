@@ -33,7 +33,7 @@ class SelectedUsersSection: ListSectionController {
         guard let cell = collectionContext?.dequeueReusableCell(of: SelectedUserCell.self, for: self, at: index) as? SelectedUserCell else {
             fatalError()
         }
-        cell.configure(user!)
+        cell.configure(user!, index)
         return cell
 
     }

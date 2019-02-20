@@ -16,19 +16,43 @@ class CircleUserCell: UICollectionViewCell {
     
     var imageView: UIImageView!
     var view = UIView()
-    
     var paidView = UIView()
+    
+    var row: Int?
     
     var gradientLayer: CAGradientLayer!
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.3) {
+            self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }
+        super.touchesBegan(touches, with: event)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.3) {
+            self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }
+        super.touchesEnded(touches, with: event)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
+    
     var user: User! {
         didSet {
+            imageView.image = nil 
             if let url = URL(string: user.imageUrl ?? "") {
                 imageView.sd_setImage(with: url)
             } else {
-                imageView.image = #imageLiteral(resourceName: "Profile-20")
+                imageView.image = UIImage(named: "profile")
             }
-        }
+        }        
     }
     
 
@@ -49,10 +73,13 @@ class CircleUserCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         initLayout()
     }
+    
     
     func initLayout() {
         dispatch.async {
@@ -61,8 +88,8 @@ class CircleUserCell: UICollectionViewCell {
                 view.height == cView.width - 3.5
                 view.center == cView.center
                 
-                imageView.width == view.width - 12
-                imageView.height == view.height - 12
+                imageView.width == view.width - 8
+                imageView.height == view.height - 8
                 imageView.center == view.center
             }
             

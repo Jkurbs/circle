@@ -25,6 +25,7 @@ class UICreator {
         button.setTitleColor(color, for: .normal)
         button.backgroundColor = backgroundColor
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.cornerRadius = 5
         contentView.addSubview(button)
         return button
     }
@@ -45,6 +46,7 @@ class UICreator {
     
     func imageView(_ image: UIImage?, _ contentView: UIView) -> UIImageView {
         let imageView = UIImageView()
+        imageView.image = image
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true 
         imageView.contentMode = .scaleAspectFill
@@ -57,12 +59,11 @@ class UICreator {
     
     func textField(_ placeholder: String?, _ keyboardType: UIKeyboardType, _ contentView: UIView) -> TextFieldRect {
         let field = TextFieldRect()
-        field.font = UIFont.systemFont(ofSize: 15)
+        field.font = UIFont.systemFont(ofSize: 16)
         field.textColor = .darkText
-        field.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
         field.borderColor = UIColor(white: 0.8, alpha: 0.3)
         field.borderWidth = 1.0
-        field.translatesAutoresizingMaskIntoConstraints = false 
+        field.translatesAutoresizingMaskIntoConstraints = false
         field.keyboardType = keyboardType
         field.cornerRadius = 5
         field.placeholder = placeholder
@@ -72,6 +73,10 @@ class UICreator {
     
     func textView (_ contentView: UIView) -> UITextView {
         let field = UITextView()
+        field.textColor = .darkText
+        field.isUserInteractionEnabled = false
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.font = UIFont.systemFont(ofSize: 16)
         contentView.addSubview(field)
         return field
     }

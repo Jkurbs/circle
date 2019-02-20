@@ -25,10 +25,12 @@ class ResetPassVC: UIViewController {
         
         label = UICreator.create.label("Reset password", 20, UIColor.darkText, .left, .medium, view)
         sendButton = UIBarButtonItem(title: "Reset", style: .done, target: self, action: #selector(send))
+        sendButton.isEnabled = false
         navigationItem.rightBarButtonItem = sendButton
         
         emailField = UICreator.create.textField("Email address", .emailAddress, view)
         emailField.addTarget(self, action: #selector(edited(_:)), for: .editingChanged)
+        emailField.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
         emailField.text = email ?? ""
         emailField.becomeFirstResponder()
     }
@@ -37,11 +39,13 @@ class ResetPassVC: UIViewController {
         super.viewDidLayoutSubviews()
         
         constrain(label, emailField, view) { (label, emailField, view) in
+            
             label.top == view.top + 150
-            label.left == view.left + 40
-            emailField.top == label.top + 40
-            emailField.left == view.left + 40
-            emailField.height == 60
+            label.centerX == view.centerX
+            
+            emailField.top == label.bottom + 80
+            emailField.centerX == view.centerX
+            emailField.height == 45
             emailField.width == view.width - 40
         }
     }
@@ -54,17 +58,21 @@ class ResetPassVC: UIViewController {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
-        Auth.auth().sendPasswordReset(withEmail: "kerby.jean@hotmail.fr") { (error) in
-            if let error = error {
-               // self.showMessage(error.localizedDescription, type: .error)
+        Auth.auth().sendPasswordReset(withEmail: emailField.text!) { (error) in
+            
+            if error != nil {
+                ErrorHandler.show.showMessage(self, error!.localizedDescription, .error)
                 self.sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(self.send))
                 self.navigationItem.rightBarButtonItem = self.sendButton
                 activityIndicator.stopAnimating()
             } else {
-               // self.showMessage("Password successfully reset", type: .success)
                 self.sendButton = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(self.send))
                 self.navigationItem.rightBarButtonItem = self.sendButton
                 activityIndicator.stopAnimating()
+                ErrorHandler.show.showMessage(self, "Password reset email sent", .success)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }

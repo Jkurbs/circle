@@ -1,0 +1,14 @@
+[debug] [2019-02-14T19:03:42.768Z] ----------------------------------------------------------------------
+[debug] [2019-02-14T19:03:42.772Z] Command:       /usr/local/Cellar/node/11.4.0/bin/node /usr/local/bin/firebase deploy
+[debug] [2019-02-14T19:03:42.773Z] CLI Version:   6.2.2
+[debug] [2019-02-14T19:03:42.773Z] Platform:      darwin
+[debug] [2019-02-14T19:03:42.773Z] Node Version:  v11.4.0
+[debug] [2019-02-14T19:03:42.774Z] Time:          Thu Feb 14 2019 14:03:42 GMT-0500 (Eastern Standard Time)
+[debug] [2019-02-14T19:03:42.774Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-14T19:03:42.792Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-14T19:03:42.792Z] > authorizing via signed-in user
+[debug] [2019-02-14T19:03:42.793Z] [iam] checking project sparen-1d39d for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2019-02-14T19:03:42.796Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/sparen-1d39d:testIamPermissions  
+
+[debug] [2019-02-14T19:03:43.094Z] <<< HTTP RESPONSE 200

@@ -18,11 +18,10 @@ class UpperSection: ListSectionController {
         return UserListViewModel()
     }()
     
-    
     override func sizeForItem(at index: Int) -> CGSize {
         let width =  collectionContext!.containerSize.width
-        let height = collectionContext!.containerSize.height - 200
-        return CGSize(width: width, height: height/2)
+        let height = collectionContext!.containerSize.height + 110
+        return CGSize(width: width, height: height/3)
     }
     
     

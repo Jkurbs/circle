@@ -11,10 +11,11 @@ import IGListKit
 final class Card {
     
     var key: String?
+    var type: String?
     var token: String?
     var last4: String?
-    var imageUrl: String?
-    
+    var expDate: String?
+    var prefix: String?
     
     init(_ key: String, _ data: [String: Any]) {
         
@@ -24,12 +25,20 @@ final class Card {
             self.token = token
         }
         
+        if let type = data["type"] as? String {
+            self.type = type
+        }
+        
         if let last4 = data["last4"] as? String {
             self.last4 = last4
         }
         
-        if let imageUrl = data["image_url"] as? String {
-            self.imageUrl = imageUrl
+        if let expDate = data["expDate"] as? String {
+            self.expDate = expDate
+        }
+        
+        if let prefix = data["prefix"] as? String {
+            self.prefix = prefix
         }
     }
 }

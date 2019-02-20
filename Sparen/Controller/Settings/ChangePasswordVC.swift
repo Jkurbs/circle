@@ -11,20 +11,30 @@ import FirebaseAuth
 
 class ChangePasswordVC: UITableViewController {
 
-    private var handle: AuthStateDidChangeListenerHandle!
     var data = ["Current password", "New password", "Repeat password"]
+    
+    var saveButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(save))
+        setupUI()
+       
+    }
+    
+    // MARK: Setup UI
+    
+    func setupUI() {
+        self.title = "Change Password"
+        
+        saveButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(save))
         navigationItem.rightBarButtonItem = saveButton
         tableView.register(CurrentPasswordCell.self, forCellReuseIdentifier: "current")
         tableView.register(NewPasswordCell.self, forCellReuseIdentifier: "New")
         tableView.register(RepeatNewPasswordCell.self, forCellReuseIdentifier: "repeat")
         tableView.tableFooterView = UIView()
-        
     }
+    
+    // MARK: Actions
     
     @objc func save() {
         
@@ -34,42 +44,34 @@ class ChangePasswordVC: UITableViewController {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
-        
         guard let current = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? CurrentPasswordCell, let new = tableView.cellForRow(at:  IndexPath(row: 1, section: 0)) as? NewPasswordCell, let repeatPass = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? RepeatNewPasswordCell  else {return}
         guard let currentPassword = current.textField.text, let newPassword = new.textField.text, let repeatNewPassword = repeatPass.textField.text else {return}
         guard newPassword == repeatNewPassword else {
-            // ERROR
+            ErrorHandler.show.showMessage(self, "Passwords do not match", .error)
             activityIndicator.stopAnimating()
             return
         }
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                let credential = EmailAuthProvider.credential(withEmail: user.email!, password: currentPassword)
-                user.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
-                    if let error = error {
-                        //self.showMessage(error.localizedDescription, type: .error)
-                        activityIndicator.stopAnimating()
-                        return
-                    } else {
-                        user.updatePassword(to: newPassword, completion: { (error) in
-                            if let error = error {
-                                // ERROR
-                                activityIndicator.stopAnimating()
-                                return
-                            } else {
-                                // SUCCESS
-                                activityIndicator.stopAnimating()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                    self.navigationController?.popViewController(animated: true)
-                                }
-                            }
-                        })
-                    }
-                })
+        
+        AuthService.instance.updatePassword(currentPassword, newPassword) { (success, error) in
+
+            if !success {
+                ErrorHandler.show.showMessage(self, error?.localizedDescription ?? "Enable to re-authenticate", .error)
+                activityIndicator.stopAnimating()
+                self.navigationItem.rightBarButtonItem = self.saveButton
+            } else {
+                activityIndicator.stopAnimating()
+                ErrorHandler.show.showMessage(self, "Password updated", .success)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
-    
+}
+
+// MARK: Tableview Delegate/Datasource
+
+extension ChangePasswordVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -89,11 +91,6 @@ class ChangePasswordVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "repeat", for: indexPath) as! RepeatNewPasswordCell
             return cell
         }
-    }
-
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
     
     

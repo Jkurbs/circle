@@ -33,7 +33,31 @@ extension DispatchQueue {
     }
 }
 
-var contentLayerName = "name"
+var contentLayerName = "shadowLayer"
+
+extension Notification.Name {
+    
+    static let newUser = Notification.Name("newUser")
+    static let userLeft = Notification.Name("userLeft")
+    
+    static let activation = Notification.Name("activation")
+    
+    static let leave = Notification.Name("leave")
+    static let invite = Notification.Name("invite")
+    static let reloadPosition = Notification.Name("reloadPosition")
+    static let pulse = Notification.Name("pulse")
+    static let isAdmin = Notification.Name("isAdmin")
+    static let fetchUsers = Notification.Name("fetchUsers")
+    static let insertNewUser = Notification.Name("insertNewUser")
+    static let newImageUrl = Notification.Name("newImageUrl")
+
+
+
+    
+    
+    
+    
+}
 
 
 

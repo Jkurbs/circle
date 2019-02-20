@@ -17,7 +17,7 @@ class CurrentPasswordCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(textField)
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        textField.textColor = .gray
+        textField.textColor = .darkText
         textField.placeholder = "Current password"
         textField.isSecureTextEntry = true
     }
@@ -42,7 +42,7 @@ class NewPasswordCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(textField)
-        textField.textColor = .gray
+        textField.textColor = .darkText
         textField.placeholder = "New password"
         textField.isSecureTextEntry = true
     }
@@ -66,7 +66,7 @@ class RepeatNewPasswordCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(textField)
-        textField.textColor = .gray
+        textField.textColor = .darkText
         textField.placeholder = "Retype new password"
         textField.isSecureTextEntry = true
     }
